@@ -1,71 +1,29 @@
-\documentclass[a4paper,12pt]{memoir}
-\usepackage{geometry}
-\geometry{a4paper,top=30mm,bottom=65mm,left=30mm,right=65mm,footskip=30mm}
-\usepackage[utf8]{inputenc}
-\usepackage{csquotes}
-\usepackage[dutch]{babel}
-\usepackage{libertine}
-\usepackage{microtype}
-\pagestyle{ruled}
-%\usepackage{setspace}
-%\setstretch{1.05}
+\documentclass[a4paper,12pt,dutch]{memoir}
 
-\RequirePackage{enumitem}
-\newlist{inlinelist}{enumerate*}{1}
-\setlist*[inlinelist,1]{%
-  label=(\roman*),
-}
+\input{preamble/language}
+\input{preamble/fonts}
+\input{preamble/layout}
+\input{preamble/declarative}
+\input{preamble/references}
 
-\title{Computernetwerken met TCP/IP}
+\usepackage{bytefield}
+
+\title{Computernetwerken met \TCPIP}
 \author{Tom Marcoen}
 
 \begin{document}
 \frontmatter
+
 \maketitle
 \thispagestyle{empty}
 
-\chapter{Inleiding}
-
-De TCP/IP \emph{protocol stack} is een verzameling van communicatieprotocollen die er voor zorgen dat het Internet werkt.
-Een gedegen kennis van TCP/IP is een must voor elke IT'er die professionele computernetwerken wilt opzetten en beheren.
-Deze cursus is dan ook een uitstekende introductie voor zij die de opleiding netwerk- en systeembeheer willen aanvatten.
-
-Tijdens deze training bespreken we de evolutie en ontwikkelingen in TCP/IP-netwerken en focussen we op de interne werking van het protocol.
-In de praktijklessen gaan we aan de slag met Packet Tracer, het visuele simulatieprogramma van Cisco.
-
-\section{Wat is een netwerk?}
-
-
-\section{De evolutie van computernetwerken}
-
-\section{Het OSI-model}
+\include{chapters/inleiding}
 
 \clearforchapter
 \tableofcontents
 
 \mainmatter
-\chapter{Physical layer (fysieke laag)}
+\include{chapters/ethernet}
 
-De \emph{physical layer} is de eerste of onderste laag uit het OSI-model.
-Deze bevat de elektrische en mechanische definities van het transportmedium en het signaal.
-De fysieke laag beschrijft
-\begin{inlinelist}
-\item het vertalen van binaire informatie naar een elektrisch signaal en weer terug;
-\item de definitie van de mechanische karakteristieken van connector en kabel, inclusief bijvoorbeeld de maximale lengte;
-\item de definitie van de signaalkarakteristieken zoals het elektrisch signaal bij transport over koper, het optische signaal bij transport over glasvezel, of het radiosignaal bij transport door de lucht.
-\end{inlinelist}
-Het meest bekende voorbeeld is Ethernet, maar ook protocollen zoals DSL, RS-232 of GSM bevinden zich in deze laag.
-
-Een hub of repeater en een Wi-Fi access point bevinden zich op deze laag.
-
-\chapter{Data link layer (datalinklaag)}
-
-De \emph{data link layer} beschrijft het transport op het lokale netwerk.
-De bekendste voorbeelden hiervan zijn IEEE~802.3 (Ethernet) en IEEE~802.11 (Wi-Fi).
-Beide protocollen gebruiken MAC-adressen voor het versturen van \emph{frames} doorheen het netwerk en switches om het netwerk op te bouwen.
-
-\chapter{Network layer (netwerklaag)}
-\chapter{Transport layer (transportlaag)}
-\chapter{Lagen 5--7}
 
 \end{document}

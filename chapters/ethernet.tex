@@ -1,0 +1,56 @@
+\chapter{Ethernet}
+\label{chap:ethernet}
+
+In dit eerste hoofdstuk gaan we dieper in op Ethernet, het dominante protocol op de datalinklaag.
+Twee netwerktoestellen die met elkaar willen communiceren, versturen \emph{frames} naar elkaar.
+Dit frame bevat een aantal belangrijke velden (\cref{fig:ethernet-frame}).
+\begin{description}
+    \item[destination address]
+    het \abbr{MAC}-adres van het toestel voor wie het frame bestemd is.
+    
+    \item[source address]
+    het \abbr{MAC}-adres van het toestel dat het frame verstuurt.
+    
+    \item[802.1q tag]
+    dit veld wordt gebruikt om virtuele netwerken te maken (\vref{sec:vlan}).
+    
+    \item[ethertype]
+    dit veld bevat een code die aangeeft welk soort data zich in het frame bevindt; bijvoorbeeld 0x0800 geeft aan dat de data een \abbr{IPv4}-pakket is, terwijl 0x86dd aangeeft dat de inhoud een \abbr{IPv6}-pakket is.
+    
+    \item[\abbr{CRC}]
+    een eenvoudige \emph{checksum} die gebruikt wordt door de ontvanger om te controleren dat de data intact is aangekomen.
+\end{description}
+
+Data die binnen komt op een interface van een repeater of een hub (ook wel een multiport repeater genoemd), wordt langs iedere andere interface weer naar buiten gestuurd.
+Hubs zijn dus domme elektrische aparaten zonder enige intelligentie.
+
+Als een frame daarentegen aankomt op een switch interface, voert de switch enkele acties uit.
+\begin{enumerate}
+    \item
+    De switch berekent de \abbr{CRC} en controleert deze met de waarde achteraan in het frame. Als beide waardes niet kloppen, wordt het frame verwijderd.
+    
+    \item
+    Als de switch het source \abbr{MAC}-adres nog niet kent, wordt deze opgeslagen in de \abbr{MAC} \emph{address table}, een tabel die bijhoudt op welke interface een \abbr{MAC}-adres gezien werd.
+    
+    \item
+    De switch zoekt het destination \abbr{MAC}-adres op in dezelfde \abbr{MAC} address table.
+    Als de switch het \abbr{MAC}-adres terugvindt, stuurt de switch het frame enkel via de bijhorende interface naar buiten.
+    Als de switch het \abbr{MAC}-adres niet kent, stuurt deze het frame langs alle interfaces naar buiten.
+    We spreken dan van een \emph{unknown unicast}.
+\end{enumerate}
+
+\begin{figure}
+    \centering
+    \input{images/ethernet-frame}
+    \caption{802.3 Ethernetframe}
+    \label{fig:ethernet-frame}
+\end{figure}
+
+
+
+\section{Lussen in het netwerk}
+\label{sec:stp}
+
+
+\section{Virtuele netwerken}
+\label{sec:vlan}
