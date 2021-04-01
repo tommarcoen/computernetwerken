@@ -1,0 +1,8 @@
+\begin{tikzpicture}
+
+\node [switch,label={[label distance=1mm]180:$a$}] (a) at (-10mm,0) {};
+\node [switch,label={[label distance=1mm]0:$b$}] (b) at (10mm,0) {};
+\node [switch,label={[label distance=1mm]0:$c$}] (c) at (0,15mm) {};
+
+\draw[thick] (a) -- (b) -- (c) -- (a);
+\end{tikzpicture}

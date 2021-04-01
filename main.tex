@@ -1,12 +1,18 @@
 \documentclass[a4paper,12pt,dutch]{memoir}
-
+\usepackage{xcolor}
 \input{preamble/language}
 \input{preamble/fonts}
 \input{preamble/layout}
 \input{preamble/declarative}
 \input{preamble/references}
+\input{preamble/listings}
+\input{preamble/exercises}
 
 \usepackage{bytefield}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{fit}
+\input{preamble/network-devices}
 
 \title{Computernetwerken met \TCPIP}
 \author{Tom Marcoen}
@@ -24,6 +30,10 @@
 
 \mainmatter
 \include{chapters/ethernet}
+\include{chapters/ip-adressen}
+\include{chapters/routering}
+\include{chapters/transportlaag}
+\include{chapters/applicaties}
 
 
 \end{document}

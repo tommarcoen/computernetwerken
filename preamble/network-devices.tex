@@ -1,0 +1,34 @@
+\tikzset{
+    router/.style={
+        circle,
+        minimum size=10mm,
+        draw=black,
+        fill=white,
+        thick,
+        path picture={
+            \draw[-stealth,very thick] (45:.2mm) -- (45:4mm);
+            \draw[-stealth,very thick] (-135:.2mm) -- (-135:4mm);
+            \draw[stealth-,very thick] (135:.2mm) -- (135:4mm);
+            \draw[stealth-,very thick] (-45:.2mm) -- (-45:4mm);
+        }
+    },
+    switch/.style={
+        rectangle,
+        minimum size=10mm,
+        draw=black,
+        fill=white,
+        thick,
+        path picture={
+            \draw[-stealth,very thick] ($(path picture bounding box.north west) + (.4,-.2) $) -- ($(path picture bounding box.north west) + (.9,-.2) $);
+            \draw[stealth-,very thick] ($(path picture bounding box.north west) + (.1,-.35) $) -- ($(path picture bounding box.north west) + (.6,-.35) $);
+            \draw[-stealth,very thick] ($(path picture bounding box.north west) + (.4,-.65) $) -- ($(path picture bounding box.north west) + (.9,-.65) $);
+            \draw[stealth-,very thick] ($(path picture bounding box.north west) + (.1,-.8) $) -- ($(path picture bounding box.north west) + (.6,-.8) $);
+        }
+    },
+    hlan/.style={
+        thick,
+        path picture={
+            \draw[thick] ($(path picture bounding box.north) - (.1,.1)$) rectangle ($(path picture bounding box.north) + (.1,.1)$);
+        }
+    }
+}

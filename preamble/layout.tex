@@ -31,3 +31,8 @@
     \marginpar{\begin{flushright}\footnotesize#1\end{flushright}}%
     \fi%
 }
+
+% Figures and tables
+\usepackage{caption}
+\DeclareCaptionLabelFormat{bringhurst}{\scshape\textls[50]{\MakeLowercase{#1}\,#2}}
+\captionsetup{font={sf,small},labelformat=bringhurst,format=hang}
