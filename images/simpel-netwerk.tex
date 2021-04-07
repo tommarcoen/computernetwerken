@@ -1,0 +1,12 @@
+\begin{tikzpicture}[node distance=20mm]
+
+
+\node [computer] (p1)               {};
+\node [switch]   (s1) [right of=p1] {};
+\node [router]   (r)  [right of=s1] {};
+\node [switch]   (s2) [right of=r]  {};
+\node [computer] (p2) [right of=s2] {};
+
+\draw [thick] (p1) -- (s1) -- (r) -- (s2) -- (p2);
+
+\end{tikzpicture}

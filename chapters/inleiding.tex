@@ -18,11 +18,13 @@ De communicatie verloopt via netwerkkabels of via een draadloos netwerk.
 In de netwerktopologie worden fysieke en logische topologieën onderscheiden.
 Men spreekt van een \abbr{LAN} in het geval van lokale plaatsgebonden bekabeling waarop computers binnen één gebouw of een campus aangesloten worden en een \abbr{WAN} wanneer er sprake is van verbindingen over grotere afstanden.
 
+\todo{Vervolledig dit deel met bv.\ de soorten topologieën.}
+
 
 
 \section{De evolutie van computernetwerken}
 
-
+\todo{Schrijf dit onderdeel.}
 
 
 
@@ -35,7 +37,7 @@ Men spreekt van een \abbr{LAN} in het geval van lokale plaatsgebonden bekabeling
 
 \subsection{Physical layer (fysieke laag)}
 
-De \emph{physical layer} is de eerste of onderste laag uit het OSI-model.
+De \emph{physical layer} is de eerste of onderste laag uit het \abbr{OSI}-model.
 Deze bevat de elektrische en mechanische definities van het transportmedium en het signaal.
 De fysieke laag beschrijft
 \begin{inlinelist}
@@ -43,17 +45,48 @@ De fysieke laag beschrijft
 \item de definitie van de mechanische karakteristieken van connector en kabel, inclusief bijvoorbeeld de maximale lengte;
 \item de definitie van de signaalkarakteristieken zoals het elektrisch signaal bij transport over koper, het optische signaal bij transport over glasvezel, of het radiosignaal bij transport door de lucht.
 \end{inlinelist}
-Het meest bekende voorbeeld is Ethernet, maar ook protocollen zoals DSL, RS-232 of GSM bevinden zich in deze laag.
+Het meest bekende voorbeeld is Ethernet, maar ook protocollen zoals \abbr{DSL}, \abbr{RS-232} of \abbr{GSM} bevinden zich in deze laag.
 
 Een hub of repeater en een Wi-Fi access point bevinden zich op deze laag.
+
+We zullen niet al te diep in gaan op deze laag in deze cursus.
+
+
 
 \subsection{Data link layer (datalinklaag)}
 
 De \emph{data link layer} beschrijft het transport op het lokale netwerk.
 De bekendste voorbeelden hiervan zijn IEEE~802.3 (Ethernet) en IEEE~802.11 (Wi-Fi).
-Beide protocollen gebruiken MAC-adressen voor het versturen van \emph{frames} doorheen het netwerk en switches om het netwerk op te bouwen.
+Beide protocollen gebruiken \abbr{MAC}-adressen voor het versturen van \emph{frames} doorheen het netwerk en switches om het netwerk op te bouwen.
+
+We behandelen deze laag in \cref{chap:ethernet}.
 
 
 \subsection{Network layer (netwerklaag)}
+
+We behandelen deze laag in \cref{chap:ip-addr,chap:routering}.
+
 \subsection{Transport layer (transportlaag)}
+
+We behandelen deze laag in \cref{chap:transport}.
+
 \subsection{Lagen 5--7}
+We behandelen deze laag in \cref{chap:applicaties}.
+
+
+
+
+\section{Encapsulatie en decapsulatie}
+\sidenote{%
+    Correcte Nederlandstalige termen zijn \emph{inpakken} en \emph{uitpakken}.
+    De termen \emph{encapsulatie} en \emph{decapsulatie} zijn letterlijke vertalingen van het Engels en zijn daardoor misschien duidelijker.
+}
+\begin{figure}
+    \centering
+    \input{images/simpel-netwerk}
+    \caption{Een eenvoudig netwerk}
+    \label{fig:simpel-netwerk}
+\end{figure}
+
+Hier komt een hele tekst die uitlegt hoe data over het netwerk verstuurd wordt.
+\abbr{TCP} verdeelt de data is stukjes, net zoals \abbr{IP} en Ethernet.

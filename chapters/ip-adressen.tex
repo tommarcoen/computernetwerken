@@ -1,12 +1,77 @@
 \chapter{\abbr{IP}-adressen}
 \label{chap:ip-addr}
 
+In dit hoofdstuk leren we eerst wat meer over computernetwerken op laag 3, meerbepaals over het scheiden van \emph{broadcas domains}.
+Vervolgens leren we alles over \abbr{IP}-adressen, \emph{subnet masks}, \emph{prefixen}, de \emph{default gateway} en meer.
+We leren ook over de schaarste aan \abbr{IP}-adressen en de belangrijkste manier om de introductie van \abbr{IP} versie~6 uit te stellen, namelijk \emph{network address translation}.
+
+Vervolgens behandelen we het Dynamic Host Configuration Protocol.
+Als applicatie hoort dit deel misschien beter in \vref{chap:applicaties} thuis, maar omdat het zo nauw verbonden is met \abbr{IP}-adressen, behandelen we het in dit hoofdstuk.
+
+Tot slot nemen we ook een kijkje naar \abbr{IP} versie 6.
+
 \section{Netwerken}
+In \vref{chap:ethernet} hebben we geleerd dat een switch een broadcast frame via alle interfaces naar buiten stuurt.
+Dit brengt een probleem met zich mee.
+Als we honderden computers met elkaar verbinden via switches en deze honderden computers versturen regelmatig broadcast verkeer, dan wordt het netwerk overspoeld door deze pakketjes.
+
+Een voorbeeld van een dergelijk broadcast frame zien we in \vref{sec:dhcp} waarbij een computer die opstart een broadcast verstuurt waarbij hij aan iedereen vraagt welk \abbr{IP}-adres hij kan gebruiken.
+Enkel de \abbr{DHCP}-server kan wat met deze vraag, alle andere computers in het netwerk die dit frame ook krijgen, negeren het gewoon.
+
+Over het algemeen wordt aangenomen dat 200~computers in een netwerk wel zo een beetje de maximale limiet is.
+Willen we meer computers in een netwerk met elkaar verbinden, dan moeten we meerder netwerken maken.
+Deze netwerken of \emph{broadcast domains} worden met elkaar verbonden door middel van \emph{routers}.
+Een router heeft dus als belangrijke eigenschap dat hij broadcast verkeer tegenhoudt.
+
+
+\begin{figure}
+    \centering
+    \input{images/router}
+    \caption{Drie eenvoudige netwerken met elkaar verbonden via een router}
+    \label{fig:router}
+\end{figure}
+
+
+In \cref{fig:router} zie je drie eenvoudige netwerken met elk slechts één switch.
+Deze netwerken werden met elkaar verbonden via een router.
+Als een van deze switches een broadcast frame doorstuurt via zijn interface naar de router, dan ontvangt de router het frame en kijkt of hij er wat mee aan moet vangen.
+Maar de router zal het broadcast frame niet doorsturen naar de tweede andere switches.
+
+
+\section{\abbr{IP} versie 4}
+\abbr{IP}-adressen werden gemaakt om te kunnen communiceren tussen verschillende netwerken.
+Elke interface heeft een eigen \abbr{IP}-adres.%
+    \footnote{Het is zelfs mogelijk voor interfaces om meerdere \abbr{IP}-adressen te hebben.}
+Zo is het mogelijk dat een computer meerdere \abbr{IP}-adressen heeft.
+
+Een \abbr{IP}-adres bestaat uit een netwerkgedeelte of een \emph{prefix} en een \emph{host}-gedeelte.
+Aan het \abbr{IP}-adres zelf kan je niet zien welk het netwerkgedeelte.
+Hier heb je de \emph{prefix length} voor nodig of het subnet masker.
+Maar laten we eerst eens kijken hoe een \abbr{IP}-adres er uit ziet.
+
+Een \abbr{IP}-adres bestaat uit 32 bits.
+Deze worden gegroepeerd in vier groepjes van acht bits of vier \emph{octetten}.
+Deze worden voorgesteld in decimaal met een puntje tussen de vier octetten, bv.~198.51.100.80.
+
+\begin{center}
+\small
+\begin{tabular}{rccccccc}
+\textit{binair}       & 1100 0110 & . & 0011 0011 & . & 0110 0100 & . & 0101 0000 \\
+\textit{hexadecimaal} & c6        & . & 33        & . & 64        & . & 50        \\
+\textit{decimaal}     & 198       & . & 51        & . & 100       & . & 80        \\
+\end{tabular}
+\end{center}
+
+De \emph{prefix length} geeft aan hoeveel bits -- vanaf links te tellen -- het netwerkgedeelte bepalen.
+Een prefix length van 24 bits betekent dus dat de eerste drie octetten het netwerk bepalen en het laatste octet ($32-24=8$) is dan het hostgedeelte.
+Dit wordt weergegeven met een slash: 198.51.100.80/24.
+Het is niet nodig dat de prefix length een veelvoud is van acht.
 
 
 \section{Network address translation}
 
 
-\section{DHCP}
+\section{\abbr{DHCP}}
+\label{sec:dhcp}
 
 \section{\abbr{IP} versie 6}
