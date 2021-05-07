@@ -1,92 +1,197 @@
-\chapter{Inleiding}
-\label{chap:inleiding}
-
-De \TCPIP\ \emph{protocol stack} is een verzameling van communicatieprotocollen die er voor zorgen dat het Internet werkt.
-Een gedegen kennis van \TCPIP\ is een must voor elke \abbr{IT}'er die professionele computernetwerken wilt opzetten en beheren.
-Deze cursus is dan ook een uitstekende introductie voor zij die de opleiding netwerk- en systeembeheer willen aanvatten.
-
-Tijdens%
-\sidenote{Eventueel worden sommige oefeningen gemaakt met behulp van de eve-ng virtualisatieomgeving.}
-deze training bespreken we de evolutie en ontwikkelingen in \TCPIP-netwerken en focussen we op de interne werking van het protocol.
-In de praktijklessen gaan we aan de slag met Packet Tracer,
-het visuele simulatieprogramma van Cisco.
-
-\section{Wat is een netwerk?}
-
-Een computernetwerk is een systeem voor communicatie tussen twee of meer computers.
-De communicatie verloopt via netwerkkabels of via een draadloos netwerk.
-In de netwerktopologie worden fysieke en logische topologieën onderscheiden.
-Men spreekt van een \abbr{LAN} in het geval van lokale plaatsgebonden bekabeling waarop computers binnen één gebouw of een campus aangesloten worden en een \abbr{WAN} wanneer er sprake is van verbindingen over grotere afstanden.
-
-\todo{Vervolledig dit deel met bv.\ de soorten topologieën.}
+\section*{Inleiding}
 
 
+\begin{frame}{Communicatie tussen computers}
+\begin{center}
+\includegraphics<presentation>[width=\textwidth]{images/http-request.png}
+\includegraphics<article>[width=.65\textwidth]{images/http-request.png}
+\end{center}
+\end{frame}
 
-\section{De evolutie van computernetwerken}
-
-\todo{Schrijf dit onderdeel.}
-
-
-
-
-
-
-
-\section{Het \abbr{OSI}-model}
-
-
-\subsection{Physical layer (fysieke laag)}
-
-De \emph{physical layer} is de eerste of onderste laag uit het \abbr{OSI}-model.
-Deze bevat de elektrische en mechanische definities van het transportmedium en het signaal.
-De fysieke laag beschrijft
-\begin{inlinelist}
-\item het vertalen van binaire informatie naar een elektrisch signaal en weer terug;
-\item de definitie van de mechanische karakteristieken van connector en kabel, inclusief bijvoorbeeld de maximale lengte;
-\item de definitie van de signaalkarakteristieken zoals het elektrisch signaal bij transport over koper, het optische signaal bij transport over glasvezel, of het radiosignaal bij transport door de lucht.
-\end{inlinelist}
-Het meest bekende voorbeeld is Ethernet, maar ook protocollen zoals \abbr{DSL}, \abbr{RS-232} of \abbr{GSM} bevinden zich in deze laag.
-
-Een hub of repeater en een Wi-Fi access point bevinden zich op deze laag.
-
-We zullen niet al te diep in gaan op deze laag in deze cursus.
-
-
-
-\subsection{Data link layer (datalinklaag)}
-
-De \emph{data link layer} beschrijft het transport op het lokale netwerk.
-De bekendste voorbeelden hiervan zijn IEEE~802.3 (Ethernet) en IEEE~802.11 (Wi-Fi).
-Beide protocollen gebruiken \abbr{MAC}-adressen voor het versturen van \emph{frames} doorheen het netwerk en switches om het netwerk op te bouwen.
-
-We behandelen deze laag in \cref{chap:ethernet}.
-
-
-\subsection{Network layer (netwerklaag)}
-
-We behandelen deze laag in \cref{chap:ip-addr,chap:routering}.
-
-\subsection{Transport layer (transportlaag)}
-
-We behandelen deze laag in \cref{chap:transport}.
-
-\subsection{Lagen 5--7}
-We behandelen deze laag in \cref{chap:applicaties}.
-
-
-
-
-\section{Encapsulatie en decapsulatie}
-\sidenote{%
-    Correcte Nederlandstalige termen zijn \emph{inpakken} en \emph{uitpakken}.
-    De termen \emph{encapsulatie} en \emph{decapsulatie} zijn letterlijke vertalingen van het Engels en zijn daardoor misschien duidelijker.
+\mode<article>{
+We beginnen met het voorbeeld dat een computer, de \emph{client}, een webpagina wilt ophalen bij een webserver.
+De client verstuurt een HTTP \emph{request} en de server antwoordt met een HTTP \emph{response}.
 }
-\begin{figure}
-    \centering
-    \input{images/simpel-netwerk}
-    \caption{Een eenvoudig netwerk}
-    \label{fig:simpel-netwerk}
-\end{figure}
 
-Hier komt een hele tekst die uitlegt hoe data over het netwerk verstuurd wordt.
-\abbr{TCP} verdeelt de data is stukjes, net zoals \abbr{IP} en Ethernet.
+
+
+\begin{frame}[fragile]{HTTP: client request}
+\usebeamerfont{verbatim}
+\begin{semiverbatim}
+GET /index.html HTTP/1.1
+Host: www.example.com
+\end{semiverbatim}
+\end{frame}
+
+
+
+\begin{frame}[fragile=singleslide]{HTTP: server response}
+\usebeamerfont{verbatim}
+\begin{verbatim}
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=UTF-8
+Content-Length: 155
+Server: Apache/1.3.3.7 (Unix) (Red-Hat/Linux)
+
+<html>
+  <head>
+    <title>An Example Page</title>
+  </head>
+  <body>
+    <p>Hello World!</p>
+  </body>
+</html>
+\end{verbatim}
+\end{frame}
+
+
+
+\begin{frame}{Enkele vragen}
+\begin{enumerate}
+\item<1-> Hoe kunnen we de server bereiken?
+\item<2-> Voor welke applicatie is de data bestemd?
+\item<3-> Hoe versturen we heel veel data?
+\item<4-> Wat als er dingen misgaan?
+\end{enumerate}
+\end{frame}
+
+\mode<article>{
+Maar wat is er allemaal nodig om deze request van de client tot bij de server te krijgen en het antwoord bij de client?
+}
+
+
+
+\begin{frame}{Hoe de server bereiken?}
+\begin{itemize}
+\item<1-> DNS-naam
+    \begin{itemize}
+    \item Adresbalk: \url{http://www.example.com/}
+    \item Hostheader: www.example.com
+    \end{itemize}
+\item<2-> IP-adres
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Voor welke applicatie is de data bestemd?}
+\begin{itemize}
+\item Elke serverapplicatie luistert op een bepaalde ``poort''
+\item Computerstandaarden bepalen poortnummers
+\item De client gebruikt een willekeurige poort
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Hoe versturen we heel veel data?}
+\begin{itemize}
+\item Fragmentatie: opsplitsen in kleine pakketjes
+\item Volgorde van de fragmenten
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Wat als er dingen mis gaan?}
+\begin{itemize}
+\item Pakketjes kunnen verloren gaan
+\item Er kunnen fouten optreden in de data
+\end{itemize}
+\end{frame}
+
+
+
+\subsection*{Verschillende lagen en modellen}
+
+\begin{frame}{Verschillende lagen}
+\begin{itemize}
+\item Structuur brengt orde
+\item Vereenvoudigt troubleshooten
+\item Maakt protocollen vervangbaar
+    \begin{itemize}
+    \item bv IPv4 wordt IPv6
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\mode<article>{
+In deze cursus zoeken we het antwoord op deze vragen en ontdekken we hoe computernetwerk opgebouwd zijn en hoe je kan communiceren tussen verschillende netwerken.
+
+De industrie heeft een aantal verschillende maar gelijkaardige modellen in het leven geroepen om stuctuur te brengen in de verschillende protocollen.
+De theorie en geschiedenis zijn niet belangrijk, maar een basiskennis van deze protocollen helpt wel om alles te plaatsen en om netwerkproblemen op te sporen en op te lossen.
+}
+
+
+
+\begin{frame}{Verschillende modellen (1/2)}
+\begin{itemize}
+\item OSI-model (7 lagen)
+\item TCP/IP-model of het DoD-model (4 lagen)
+\item hybride model (5 lagen)
+\end{itemize}
+\end{frame}
+
+\mode<article>{
+Er bestaan twee verschillende modellen, het OSI-model en het TCP/IP-model.
+Dit laatste model wordt ook wel het DoD-model genoemd.
+Zelf verkies ik een hybride model te gebruiken, gebaseerd op beide modellen.
+}
+
+
+
+\begin{frame}{Verschillende modellen (2/2)}
+\begin{table}
+    \centering
+    \small\sffamily
+    \begin{tabular}{rlll}
+      & \textbf{OSI}         & \textbf{TCP/IP}                   & \textbf{hybride}       \\[2ex]
+    \textit{7} & Applicatie  & \multirow{3}{*}{Applicatie}       & \multirow{3}{*}{Applicatie} \\
+    \textit{6} & Presentatie &                                   &                             \\
+    \textit{5} & Sessie      &                                   &                        \\[2ex]
+    \textit{4} & Transport   & Transport                         & Transport              \\[2ex]
+    \textit{3} & Netwerk     & Internet                          & Netwerk                \\[2ex]
+    \textit{2} & Datalink    & \multirow{2}{*}{Netwerkinterface} & Datalink                    \\
+    \textit{1} & Fysiek      &                                   & Fysiek                      \\
+    \end{tabular}
+    \caption{Drie verschillende modellen}
+    \label{tab:models-layers}
+\end{table}
+\end{frame}
+
+\mode<article>{
+Het is voor netwerbeheerders niet interessant wat exact thuishoort in de applicatielaag of in de sessielaag.
+Dit groeperen we allemaal in één applicatilaag, zoals bij het TCP/IP-model.
+Het is daarentegen wel interessant om een onderscheid te maken tussen de datalinklaag waar switches en MAC-adressen thuishoren, en de fysieke laag waar we bijvoorbeeld de \emph{tranceivers} en DWDM-apparaten terugvinden.
+Deze twee lagen houden we dus gescheiden, zoals in het OSI-model.
+}
+
+
+
+\begin{frame}{De lagen toegepast}
+\begin{itemize}
+\item Applicatielaag: HTTP client request
+\item Transportlaag: TCP-poort 80 voor HTTP
+\item Netwerklaag: IP-adres van client en server
+\item Datalinklaag: MAC-adressen
+\item Fysieke laag: stroom of licht op de kabel
+\end{itemize}
+\end{frame}
+
+
+
+\subsection*{Netwerktopologieën}
+
+\begin{frame}{Netwerktopologieën}
+\begin{itemize}
+\item point-to-point
+\item daisy chain (linear or ring)
+\item bus
+\item ster
+\item mesh
+\end{itemize}
+\end{frame}
+
+\mode<article>{
+Deze verschillende topologieën komen we tijdens de cursus tegen dus benoemen we deze eerst kort. 
+}

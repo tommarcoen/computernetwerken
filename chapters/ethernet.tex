@@ -1,114 +1,25 @@
-\chapter{Ethernet}
-\label{chap:ethernet}
+\section{Ethernet}
 
-In dit eerste hoofdstuk gaan we dieper in op Ethernet, het dominante protocol op de datalinklaag.
-Twee netwerktoestellen die met elkaar willen communiceren, versturen \emph{frames} naar elkaar.
-Dit frame bevat een aantal belangrijke velden (\cref{fig:ethernet-frame}).
-\begin{description}
-    \item[destination address]
-    het \abbr{MAC}-adres van het toestel voor wie het frame bestemd is.
-    
-    \item[source address]
-    het \abbr{MAC}-adres van het toestel dat het frame verstuurt.
-    
-    \item[802.1q tag]
-    dit veld wordt gebruikt om virtuele netwerken te maken (\vref{sec:vlan}).
-    
-    \item[ethertype]
-    dit veld bevat een code die aangeeft welk soort data zich in het frame bevindt; bijvoorbeeld 0x0800 geeft aan dat de data een \abbr{IPv4}-pakket is, terwijl 0x86dd aangeeft dat de inhoud een \abbr{IPv6}-pakket is.
-    
-    \item[\abbr{CRC}]
-    een eenvoudige \emph{checksum} die gebruikt wordt door de ontvanger om te controleren dat de data intact is aangekomen.
-\end{description}
+\begin{frame}{Ethernet}
+    Korte inleiding
+\end{frame}
 
-Data die binnen komt op een interface van een repeater of een hub (ook wel een multiport repeater genoemd), wordt langs iedere andere interface weer naar buiten gestuurd.
-Hubs zijn dus domme elektrische aparaten zonder enige intelligentie.
+\subsection{De werking van Ethernet}
 
-Als een frame daarentegen aankomt op een switch interface, voert de switch enkele acties uit.
-\begin{enumerate}
-    \item
-    De switch berekent de \abbr{CRC} en controleert deze met de waarde achteraan in het frame. Als beide waardes niet kloppen, wordt het frame verwijderd.
-    
-    \item
-    Als de switch het source \abbr{MAC}-adres nog niet kent, wordt deze opgeslagen in de \abbr{MAC} \emph{address table}, een tabel die bijhoudt op welke interface een \abbr{MAC}-adres gezien werd.
-    
-    \item
-    De switch zoekt het destination \abbr{MAC}-adres op in dezelfde \abbr{MAC} address table.
-    Als de switch het \abbr{MAC}-adres terugvindt, stuurt de switch het frame enkel via de bijhorende interface naar buiten.
-    Als de switch het \abbr{MAC}-adres niet kent, stuurt deze het frame langs alle interfaces naar buiten.
-    We spreken dan van een \emph{unknown unicast}.
-    
-    \item
-    Multicast- en broadcastverkeer worden steeds langs alle interfaces naar buiten gestuurd.%
-    \footnote{Dit klopt niet voor multicastverkeer als de \abbr{IGMP} \emph{snooping} feature geconfigureerd wordt op de switch. Deze feature wordt verder niet besproken in deze cursus.}
-\end{enumerate}
+\begin{frame}
+\end{frame}
 
-\begin{figure}
-    \centering
-    \input{images/ethernet-frame}
-    \caption{802.3 Ethernetframe}
-    \label{fig:ethernet-frame}
-\end{figure}
+\subsection{Lussen in het netwerk}
 
+\begin{frame}
+\end{frame}
 
+\subsection{Virtuele switches}
 
-\section{Lussen in het netwerk}
-\label{sec:stp}
+\begin{frame}
+\end{frame}
 
-Er schuilt een subtiel gevaar in de manier waarop switches werken.
-Neem bijvoorbeeld de opstelling in \vref{fig:drie-switches}.
-In het netwerk bestaande uit drie switches, werd een lus gemaakt door de eerste en de derde switch met elkaar te verbinden via een netwerkkabel.
-Op deze manier blijft netwerkconnectiviteit behouden ongeacht welk van de drie kabels defect gaat.
+\subsection{Virtuele kabels}
 
-
-\begin{figure}
-    \centering
-    \input{images/drie-switches}
-    \caption{Een eenvoudig netwerk met redundantie\ldots\ en het gevaar voor \emph{network loops}}
-    \label{fig:drie-switches}
-\end{figure}
-
-
-We zullen twee situaties bespreken.
-In de eerste situatie is een computer $A$ verbonden met switch $a$ en een computer $B$ met switch $b$.
-Verder kennen alle switches de \abbr{MAC}-adressen van beide computers.
-In de tweede situatie zijn dezelfde computers verbonden met dezelfde switches, maar kennen de switches de \abbr{MAC}-adressen niet.
-
-
-\section{Virtuele switches}
-\label{sec:vlan}
-Het is wenselijk om bepaalde toestellen van elkaar gescheiden te houden.
-Zo wil je bijvoorbeeld niet dat bezoekers op het gastennetwerk kunnen printen of aan je boekhouding kunnen.
-Het toepassen van \emph{firewall} regels gaat nagenoeg altijd gepaard met het maken van verschillende netwerken, dus met de introductie van een \emph{router} (zie later).
-\sidenote{\input{images/router}\par Hier komt een hele uitleg over bovenstaande tekening en hoe deze relevant is voor de hoofdtekst op deze pagina.}
-
-Het is echter niet wenselijk om voor elk netwerk een aparte switch te gebruiken.
-Stel dat je maar vier printers hebt, zou dat zonde zijn van de overige vierenveertig poorten op de switch die onbenut blijven.
-Om dit op te lossen, werd het mogelijk gemaakt om virtuele switches of \abbr{VLAN}'s te definiëren op een switch.
-Vervolgens kan je elke interfaces aan een bepaald \abbr{VLAN} koppelen.
-
-\begin{iosconfig}{Het maken van \abbr{VLAN}'s op een Cisco switch}
-vlan 100
-   name DMZ
-vlan 200
-   name printers
-vlan 300
-   name boekhouding
-\end{iosconfig}
-
-\begin{iosconfig}{Het toekennen van een \abbr{VLAN} aan een interface}
-interface GigabitEthernet1/1
-   description Printer eerste verdieping
-   switchport mode access
-   switchport access vlan 200
-!
-\end{iosconfig}
-
-Eerst geven we aan welke interface we wensen te configureren.
-Vervolgens geven we een omschrijving mee.
-Dit is louter informatief.
-De derde regel plaatst de interface in de modus \emph{access}; de andere mogelijkheid is \emph{trunk}.
-Als laatste geven we aan in welk virtueel netwerk we deze interface wensen te plaatsen.
-In dit geval is het \abbr{VLAN}~200, het printer-\abbr{VLAN}.
-
-\subsection{Trunkpoorten}
+\begin{frame}
+\end{frame}
