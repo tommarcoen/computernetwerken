@@ -97,6 +97,7 @@ Maar wat is er allemaal nodig om deze request van de client tot bij de server te
 \begin{itemize}
 \item Pakketjes kunnen verloren gaan
 \item Er kunnen fouten optreden in de data
+\item Pakketjes kunnen in de verkeerde volgorde aankomen
 \end{itemize}
 \end{frame}
 
@@ -165,6 +166,26 @@ Dit groeperen we allemaal in één applicatilaag, zoals bij het TCP/IP-model.
 Het is daarentegen wel interessant om een onderscheid te maken tussen de datalinklaag waar switches en MAC-adressen thuishoren, en de fysieke laag waar we bijvoorbeeld de \emph{tranceivers} en DWDM-apparaten terugvinden.
 Deze twee lagen houden we dus gescheiden, zoals in het OSI-model.
 }
+
+
+
+\begin{frame}{Communicatie gebeurt tussen lagen onderling}
+\begin{center}
+\includegraphics<presentation>[width=\textwidth]{images/tcpip_5_layer_overview.png}
+\includegraphics<article>[width=.65\textwidth]{images/tcpip_5_layer_overview.png}
+\end{center}
+Bron: \url{https://microchipdeveloper.com/}
+\end{frame}
+
+
+
+\begin{frame}{Elke laag voegt een header toe}
+\begin{center}
+\includegraphics<presentation>[width=\textwidth]{images/transmit_data.jpg}
+\includegraphics<article>[width=.65\textwidth]{images/transmit_data.jpg}
+\end{center}
+Bron: \url{https://microchipdeveloper.com/}
+\end{frame}
 
 
 

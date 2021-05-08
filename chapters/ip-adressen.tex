@@ -1,14 +1,18 @@
 \section{IP-adressen}
 
-\begin{frame}
+\begin{frame}{Netwerken}
 \begin{center}
-\includegraphics<presentation>[width=.8\textwidth]{images/client-server-2.jpeg}
-\includegraphics<article>[width=.65\textwidth]{images/client-server-2.jpeg}
+\includegraphics<presentation>[width=.65\textwidth]{images/client-server-2.png}
+\includegraphics<article>[width=.65\textwidth]{images/client-server-2.png}
 \end{center}
+\begin{itemize}
+   \item De client en server maken deel uit van een netwerk
+   \item Netwerken worden met elkaar verbonden via routers
+\end{itemize}
 \end{frame}
 
 \mode<article>{
-Als we de situatie uit de inleiding in meer detail bekijken, merken we dat zowel de client als de server deel uitmaken van een netwerk en dat deze netwerk met elkaar verbonden worden met behulp van \emph{routers}.
+Als we de situatie uit de inleiding in meer detail bekijken, merken we dat zowel de client als de server deel uitmaken van een netwerk en dat deze netwerken met elkaar verbonden worden met behulp van \emph{routers}.
 }
 
 
@@ -24,25 +28,58 @@ Als we de situatie uit de inleiding in meer detail bekijken, merken we dat zowel
     \item Netwerkdeel
     \item Hostdeel        
     \end{enumerate}
-    \begin{exampleblock}<4>{Voorbeeld: 192.0.2.1/24}
-    \begin{itemize}
-    \item Netwerkdeel: 192.0.2
-    \item Hostdeel: 1
-    \end{itemize}
-    \end{exampleblock}
 \item<5-> Elk netwerk heeft een eigen, uniek, netwerkdeel
 \end{itemize}
+\uncover<4>{
+   \begin{exampleblock}{Voorbeeld: 192.0.2.1/24}
+   \begin{itemize}
+   \item Netwerkdeel: 192.0.2
+   \item Hostdeel: 1
+   \end{itemize}
+   \end{exampleblock}
+ }
+\end{frame}
+
+
+
+\begin{frame}{Netwerken}
+   \begin{center}
+      \includegraphics<presentation>[width=.65\textwidth]{images/client-server-3.png}
+      \includegraphics<article>[width=.65\textwidth]{images/client-server-3.png}
+      \end{center}
+\end{frame}
+
+
+
+\begin{frame}{IP-adressen}
+\begin{itemize}
+\item<1->Een IP-adres bestaat uit 32 bits
+\item<2->De computer ziet het adres als één getal van 0 tot \num{4294967295}
+\item<3->Mensen vinden de \emph{dotted decimal} notatie duidelijker
+\item<5->Vier blokjes (\emph{octet}) van 8 bits
+\item<6->Elk octet is een getal van 0 tot 255
+\end{itemize}
+\uncover<4>{
+   \begin{exampleblock}{Voorbeeld}
+      \begin{itemize}
+      \item 192.0.2.1
+      \item 224.0.0.2
+      \item 198.15.67.32
+      \end{itemize}
+      \end{exampleblock}
+}
 \end{frame}
 
 
 
 \begin{frame}{Subnetmasker en prefix-length}
 \begin{itemize}
-\item Het netwerkgedeelte wordt bepaald door de prefix-length
-\item Deze kan je omzetten naar een subnetmasker
-\item Subnetmaskers zijn de oude manier van noteren
+\item<1-> De grootte van het netwerkgedeelte wordt bepaald door de prefix-length
+\item<2-> Deze kan je omzetten naar een subnetmasker
+\item<3-> Subnetmaskers zijn de oude manier van noteren
 \end{itemize}
 \end{frame}
+
 
 \subsection{Hiërarchische adressen}
 
