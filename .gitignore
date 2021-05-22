@@ -1,3 +1,6 @@
 *.aux
 *.log
 *.pdf
+main.fls
+main.*.vrb
+main.fdb_latexmk

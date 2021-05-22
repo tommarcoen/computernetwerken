@@ -13,6 +13,8 @@
 
 \mode<article>{
 Als we de situatie uit de inleiding in meer detail bekijken, merken we dat zowel de client als de server deel uitmaken van een netwerk en dat deze netwerken met elkaar verbonden worden met behulp van \emph{routers}.
+De werking van routers bestuderen we in een later hoofdstuk.
+In dit hoofdstuk focussen we op de IP-adressen.
 }
 
 
@@ -42,7 +44,7 @@ Als we de situatie uit de inleiding in meer detail bekijken, merken we dat zowel
 
 
 
-\begin{frame}{Netwerken}
+\begin{frame}{Netwerkadressen: een voorbeeld}
    \begin{center}
       \includegraphics<presentation>[width=.65\textwidth]{images/client-server-3.png}
       \includegraphics<article>[width=.65\textwidth]{images/client-server-3.png}
@@ -56,7 +58,7 @@ Als we de situatie uit de inleiding in meer detail bekijken, merken we dat zowel
 \item<1->Een IP-adres bestaat uit 32 bits
 \item<2->De computer ziet het adres als één getal van 0 tot \num{4294967295}
 \item<3->Mensen vinden de \emph{dotted decimal} notatie duidelijker
-\item<5->Vier blokjes (\emph{octet}) van 8 bits
+\item<5->Vier blokjes (\emph{octet}) van 8 bits, gescheiden door een punt
 \item<6->Elk octet is een getal van 0 tot 255
 \end{itemize}
 \uncover<4>{
@@ -75,8 +77,32 @@ Als we de situatie uit de inleiding in meer detail bekijken, merken we dat zowel
 \begin{frame}{Subnetmasker en prefix-length}
 \begin{itemize}
 \item<1-> De grootte van het netwerkgedeelte wordt bepaald door de prefix-length
-\item<2-> Deze kan je omzetten naar een subnetmasker
-\item<3-> Subnetmaskers zijn de oude manier van noteren
+\item<2-> Vanaf links te tellen bepaalt deze het netwerkgedeelte
+\item<3-> Deze kan je omzetten naar een subnetmasker
+\item<4-> Subnetmaskers zijn de oude manier van noteren
+\item<5-> $32-p$ bits vanaf rechts bepalen het hostgedeelte
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Subnetmaskers}
+\begin{exampleblock}{Voorbeelden}
+\begin{itemize}
+\item<1-> 192.168.23.7/25 \hfill 255.255.255.128 \hspace*{.3\textwidth}\null
+\item<2-> 203.0.113.154/26 \hfill 255.255.255.192 \hspace*{.3\textwidth}\null
+\item<3-> 172.17.3.22/12 \hfill 255.255.240.0 \hspace*{.3\textwidth}\null
+\end{itemize}
+\end{exampleblock}
+\end{frame}
+
+
+
+\begin{frame}{Speciale adressen}
+\begin{itemize}
+\item Het eerste en laatste adres in een netwerk zijn gereserveerd
+\item Het eerste adres is het \alert{netwerkadres}
+\item Het laatste adres is het \alert{broadcastadres}
 \end{itemize}
 \end{frame}
 
@@ -91,18 +117,8 @@ Als we de situatie uit de inleiding in meer detail bekijken, merken we dat zowel
 \begin{frame}
 \end{frame}
 
-\subsection{Dynamisch toekennen van adressen}
 
-\begin{frame}
-\end{frame}
 
-\subsection{Network address translation}
-
-\begin{frame}
-\end{frame}
-
-\subsection{IP versie 6}
-
-\begin{frame}
-\end{frame}
-
+\input{chapters/ip-adressen-dhcp}
+\input{chapters/ip-adressen-nat}
+\input{chapters/ip-adressen-ipv6}
