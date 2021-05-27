@@ -47,11 +47,11 @@ Server: Apache/1.3.3.7 (Unix) (Red-Hat/Linux)
 
 
 \begin{frame}{Enkele vragen}
-\begin{enumerate}
-\item<1-> Hoe kunnen we de server bereiken?
-\item<2-> Voor welke applicatie is de data bestemd?
-\item<3-> Hoe versturen we heel veel data?
-\item<4-> Wat als er dingen misgaan?
+\begin{enumerate}[<+->]
+\item Hoe kunnen we de server bereiken?
+\item Voor welke applicatie is de data bestemd?
+\item Hoe versturen we heel veel data?
+\item Wat als er dingen misgaan?
 \end{enumerate}
 \end{frame}
 
@@ -75,7 +75,7 @@ Maar wat is er allemaal nodig om deze request van de client tot bij de server te
 
 
 \begin{frame}{Voor welke applicatie is de data bestemd?}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item Elke serverapplicatie luistert op een bepaalde ``poort''
 \item Computerstandaarden bepalen poortnummers
 \item De client gebruikt een willekeurige poort
@@ -85,7 +85,7 @@ Maar wat is er allemaal nodig om deze request van de client tot bij de server te
 
 
 \begin{frame}{Hoe versturen we heel veel data?}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item Fragmentatie: opsplitsen in kleine pakketjes
 \item Volgorde van de fragmenten
 \end{itemize}
@@ -94,7 +94,7 @@ Maar wat is er allemaal nodig om deze request van de client tot bij de server te
 
 
 \begin{frame}{Wat als er dingen mis gaan?}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item Pakketjes kunnen verloren gaan
 \item Er kunnen fouten optreden in de data
 \item Pakketjes kunnen in de verkeerde volgorde aankomen
@@ -106,13 +106,13 @@ Maar wat is er allemaal nodig om deze request van de client tot bij de server te
 \subsection*{Verschillende lagen en modellen}
 
 \begin{frame}{Verschillende lagen}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item Structuur brengt orde
 \item Vereenvoudigt troubleshooten
 \item Maakt protocollen vervangbaar
-    \begin{itemize}
-    \item bv IPv4 wordt IPv6
-    \end{itemize}
+    \begin{example}
+    bv IPv4 wordt IPv6
+    \end{example}
 \end{itemize}
 \end{frame}
 
@@ -126,7 +126,7 @@ De theorie en geschiedenis zijn niet belangrijk, maar een basiskennis van deze p
 
 
 \begin{frame}{Verschillende modellen (1/2)}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item OSI-model (7 lagen)
 \item TCP/IP-model of het DoD-model (4 lagen)
 \item Hybride model (5 lagen)
@@ -205,7 +205,7 @@ Bron: \url{https://microchipdeveloper.com/}
 \subsection*{Netwerktopologieën}
 
 \begin{frame}{Netwerktopologieën}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item point-to-point
 \item daisy chain (linear or ring)
 \item bus
