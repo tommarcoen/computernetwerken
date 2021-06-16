@@ -1,6 +1,11 @@
 *.aux
+*.lof
 *.log
+*.out
 *.pdf
+*.snm
+*.toc
 main.fls
+main.*.nav
 main.*.vrb
 main.fdb_latexmk
