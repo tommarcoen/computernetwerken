@@ -2,24 +2,19 @@
 \chapter{IPv4 addressing concepts and issues}
 \label{chap:kozierok-ch16}
 
-The primary job of the Internet Protocol (IP) is delivering messages
-between devices, and like any good delivery service, it can't do its job
-too well if it doesn't know where the recipients are located. Obviously
-then, one of the most important functions of IP is {\emph{addressing}}.
-IP addressing is used not only to uniquely identify IP addresses, but
-also to facilitate the routing of IP datagrams over internetworks. IP
-addresses are used and referred to extensively in TCP/IP networking.
+The primary job of the Internet Protocol is delivering messages between devices, and like any good delivery service, it can't do its job
+too well if it doesn't know where the recipients are located.
+Obviously then, one of the most important functions of IP is \emph{addressing}.
+IP addressing is used not only to uniquely identify IP addresses, but also to facilitate the routing of IP datagrams over internetworks.
+IP addresses are used and referred to extensively in TCP/IP networking.
 
-Even though the original IP addressing scheme was relatively simple, it
-has become complex over time as changes have been made to it to allow it
-to deal with various addressing requirements. The more advanced styles
-of IP addressing, such as subnetting and classless addressing, are the
-ones used most in modern networks. However, they can be a bit confusing
-to understand. To help make sense of them, we must start at the
-beginning with a discussion of the fundamentals of IP addressing.
+Even though the original IP addressing scheme was relatively simple, it has become complex over time as changes have been made to it to allow it
+to deal with various addressing requirements.
+The more advanced styles of IP addressing, such as subnetting and classless addressing, are the ones used most in modern networks.
+However, they can be a bit confusing to understand.
+To help make sense of them, we must start at the beginning with a discussion of the fundamentals of IP addressing.
 
-In this chapter, I begin a larger exploration of
-\protect\hypertarget{ch16.htmlux5cux23idx-CHP-16-0646}{}{}IP addressing
+In this chapter, I begin a larger exploration of IP addressing
 by explaining the key concepts and issues behind it. I begin with an
 overview of IP addressing and a discussion of what it is all about. I
 describe the size of IP addresses, the concept of its address space, and
@@ -34,12 +29,11 @@ description of the process by which public IP addresses are registered
 and managed, and the organizations that do this work for the global
 Internet.
 
-{\textbf{BACKGROUND INFORMATION}} {\emph{If you are not familiar with at
-least the basics of how binary numbers work, and also with how to
-convert between binary and decimal numbers, I recommend reading
-\protect\hyperlink{ch04.html}{Chapter~4}, which provides some background
-on data representation and the mathematics of computing, before you
-proceed here}}.
+\begin{backgroundinfo}
+If you are not familiar with at least the basics of how binary numbers work, and also with how to
+convert between binary and decimal numbers, I recommend reading \protect\hyperlink{ch04.html}{Chapter~4}, which provides some background
+on data representation and the mathematics of computing, before you proceed here.
+\end{backgroundinfo}
 
 
 
@@ -47,10 +41,8 @@ proceed here}}.
 \section{IP addressing overview and fundamentals}
 
 
-IP addressing is important because it facilitates the primary function
-of the IP: the delivery of datagrams across an internetwork. When you
-examine this in more detail, it becomes apparent that the IP address
-actually has two different functions, as follows:
+IP addressing is important because it facilitates the primary function of the Internet Protocol: the delivery of datagrams across an internetwork.
+When you examine this in more detail, it becomes apparent that the IP address actually has two different functions, as follows:
 \begin{description}
    \item[Network interface identification]
       Like a street address, the IP address provides unique identification of the interface between a device and the network.
@@ -62,25 +54,21 @@ actually has two different functions, as follows:
 \end{description}
 
 You may have noticed a couple of things about this short list.
-One is
-that I said the IP address identifies the {\emph{network interface}},
-not that it identifies the {\emph{device}} itself. This distinction is
+One is that I said the IP address identifies the {\emph{network interface}},
+not that it identifies the \emph{device} itself. This distinction is
 important because it underscores the concept that IP is oriented around
-connections to a large, virtual network at layer~3, which can span
-multiple physical networks. Some devices, such as routers, will have
-more than one network connection, necessary to take datagrams from one
-network and route them onto another. This means they will also have more
-than one IP address -- one per connection.
+connections to a large, virtual network at layer~3, which can span multiple physical networks.
+Some devices, such as routers, will have more than one network connection, necessary to take datagrams from one network and route them onto another.
+This means they will also have more than one IP address -- one per connection.
 
-You might also find it curious that I said that the IP address
-facilitates routing. How can it do that? The answer is that the
-addressing system is designed with a structure that can be interpreted
-to allow routers to determine what to do with a datagram based on the
-values in the address. Numbers related to the IP address, such as the
-subnet mask when subnetting is used, support this function.
+You might also find it curious that I said that the IP address facilitates routing.
+How can it do that?
+The answer is that the addressing system is designed with a structure that can be interpreted to allow routers to determine what to do with a datagram based on the values in the address.
+Numbers related to the IP address, such as the subnet mask when subnetting is used, support this function.
 
-Let's look at some of the more important issues and characteristics
-associated with IP addresses in general terms.
+Let's look at some of the more important issues and characteristics associated with IP addresses in general terms.
+
+
 
 \subsection{Number of IP addresses per device}
 
@@ -134,13 +122,10 @@ creation of Mobile IP (covered in
 
 \subsection{Contrasting IP addresses and data link layer addresses}
 
-\protect\hypertarget{ch16.htmlux5cux23idx-CHP-16-0648}{}{}IP addresses
-are used for network-layer data delivery across an internetwork. This
+IP addresses are used for network-layer data delivery across an internetwork. This
 makes IP addresses quite different from the data link layer address of a
 device, such as its Ethernet MAC address. (In TCP/IP parlance, these are
-sometimes called {\emph{physical addresses}} or
-\protect\hypertarget{ch16.htmlux5cux23idx-CHP-16-0649}{}{}{\emph{hardware
-addresses}}.)
+sometimes called \emph{physical addresses} or \emph{hardware addresses}.)
 
 At the network layer, a single datagram may be sent from device~A to device~B.
 However, the actual delivery of the datagram may require that it passes through a dozen or more physical devices if device~A and device~B are not on the same network.
@@ -174,7 +159,7 @@ There are also advanced techniques now, such as IP network address translation (
 IP addresses can be set up as either a static or dynamic configuration.
 In a {\emph{static configuration}} setup, each device is manually configured with an IP address that doesn't change.
 This is fine for small networks but quickly becomes an administrative nightmare in larger networks, when changes are required.
-The alternative, {\emph{dynamic configuration}}, allows \protect\hypertarget{ch16.htmlux5cux23idx-CHP-16-0652}{}{}IP addresses to be assigned to devices and changed under software control.
+The alternative, {\emph{dynamic configuration}}, allows IP addresses to be assigned to devices and changed under software control.
 The two host configuration protocols, BOOTP and DHCP, were created to fill this latter function (see \protect\hyperlink{pt14.html}{Part~III-3}).
 
 Additionally, provision is included in the IP addressing scheme for all three basic types of addressing: unicast, multicast, and broadcast.
@@ -224,7 +209,7 @@ used here.
 
 Most people still find hexadecimal a bit difficult to work with.
 So, IP addresses are normally expressed with each octet of eight bits converted to a
-decimal number and the octets separated by a period (a {\emph{dot}}).
+decimal number and the octets separated by a period (a \emph{dot}).
 Thus, the previous example would become 227.82.157.177, as shown in \cref{fig:ip-address-notation}.
 This is usually called {\emph{dotted decimal notation}} for rather
 obvious reasons. Each of the octets in an IP address can take on the
@@ -244,11 +229,8 @@ create dotted decimal notation.
    \label{fig:ip-address-notation}
 \end{figure}
 
-Dotted decimal notation provides a convenient way to work with
-\protect\hypertarget{ch16s02.htmlux5cux23idx-CHP-16-0658}{}{}IP
-addresses when communicating among people. Never forget that to the
-computers, the IP address is always a 32-bit
-\protect\hypertarget{ch16s02.htmlux5cux23idx-CHP-16-0659}{}{}binary
+Dotted decimal notation provides a convenient way to work with IP addresses when communicating among people.
+Never forget that to the computers, the IP address is always a 32-bit binary
 number; you'll understand the importance of this when you look at how
 the IP address is logically divided into components in the next topic,
 and when you examine techniques that manipulate IP addresses, such as
@@ -278,7 +260,7 @@ address space of IPv4 is $2^{32}$ or 4,294,967,296 addresses.
 However, not all of these addresses can be used, for a variety of reasons.
 
 This IP address space dictates the limit on the number of addressable
-interfaces in {\emph{each}} IP internetwork. So, if you have a private
+interfaces in \emph{each} IP internetwork. So, if you have a private
 network, you can, in theory, have four-billion-plus addresses. However,
 in a public network such as the Internet, alldevices must share the
 available address space. Techniques such as Classless Inter-Domain
@@ -313,7 +295,7 @@ two components:
       The remainder of the bits is used to identify the host on the network.
 \end{description}
 
-\subsubsection[Note]{\texorpdfstring{\protect\hypertarget{ch16s03.htmlux5cux23note-62}{}{}Note}{Note}}
+\subsubsection{Note}
 
 {\emph{By convention, IP devices are often called hosts for simplicity,
 as I do throughout this book. Even though each host usually has a single
@@ -372,8 +354,7 @@ of the host 0.82.157.177. (In practice, network addresses of this sort
 are routinely seen with the added zeros; network IDs are not seen as
 often in 32-bit form this way.)
 
-Lest you think from these examples that the
-\protect\hypertarget{ch16s03.htmlux5cux23idx-CHP-16-0663}{}{}division
+Lest you think from these examples that the division
 must always be between whole octets of the address, you should know that
 it's also possible to divide it in the middle of an octet. For example,
 you could split the IP address 227.82.157.177 so that there were 20 bits
@@ -400,9 +381,6 @@ interpret the address. This information is conveyed either implicitly or
 explicitly, depending on the type of IP addressing in use, as I discuss
 next.
 
-\protect\hypertarget{ch16s03.htmlux5cux23mid-octet_ip_address_division_ip_address}{}{}
-
-\protect\hypertarget{ch16s03.htmlux5cux23I_mediaobject2_d1e16127}{}{}
 %\includegraphics{httpatomoreillycomsourcenostarchimages287797.png.jpg}
 
 Figure~16-4.~Mid-octet IP address division IP addresses need not be
@@ -461,7 +439,7 @@ classes of addresses -- A, B, and C -- are differentiated based on how
 many octets are used for the network ID and how many for the host ID.
 For example, class C addresses devote 24 bits to the network ID and 8
 bits to the host ID. This type of addressing is now often referred to by
-the made-up word {\emph{classful}} to differentiate it from the newer
+the made-up word \emph{classful} to differentiate it from the newer
 classless scheme.
 
 This most basic addressing type uses the simplest method to divide the
@@ -537,10 +515,8 @@ implied.
 However, if either subnetting or classless addressing is used, then the {\emph{subnet mask}} (or {\emph{slash number}}, which is equivalent) is required to fully qualify the address.
 These numbers are considered adjuncts to the IP address and usually mentioned with the address itself, because without them, it is not possible to know where the network ID ends and the host ID begins.
 
-One other number that is often specified along with the IP address for a
-device is the
-\protect\hypertarget{ch16s04.htmlux5cux23idx-CHP-16-0666}{}{}{\emph{default
-gateway}} identifier. In simplest terms, this is the IP address of the
+One other number that is often specified along with the IP address for a device is the \emph{default gateway} identifier.
+In simplest terms, this is the IP address of the
 router that provides default routing functions for a particular device.
 When a device on an IP network wants to send a datagram to a device it
 can't see on its local IP network, it sends it to the default gateway,
@@ -555,17 +531,17 @@ routing protocols, for more information.
 \section{Number of IP addresses and multihoming}
 Each network interface on an IP internetwork has a separate IP address.
 In a classic network, each regular computer, usually called a
-{\emph{host}}, attaches to the network in exactly only one place, so it
+\emph{host}, attaches to the network in exactly only one place, so it
 will have only one IP address. This is what most of us are familiar with
 when using an IP network (and is also why most people use the term
-{\emph{host}} when they really mean {\emph{network interface}}).
+\emph{host} when they really mean {\emph{network interface}}).
 
 If a device has more than one interface to the internetwork, it will
 have more than one IP address. The most obvious case where this occurs
 is with routers, which connect together different networks and thus must
 have an IP address for the interface on each one. It is also possible
 for hosts to have more than one IP address, however. Such a device is
-sometimes said to be {\emph{multihomed}}.
+sometimes said to be \emph{multihomed}.
 
 There are two ways that a host can be multihomed:
 
@@ -576,9 +552,8 @@ They will have two IP addresses on the same network with the same
 network ID.
 
 {\textbf{Interfaces to Two or More Different Networks}} Devices may have
-multiple interfaces to different networks. The
-\protect\hypertarget{ch16s05.htmlux5cux23idx-CHP-16-0669}{}{}IP
-addresses will typically have different network IDs in them.
+multiple interfaces to different networks.
+The IP addresses will typically have different network IDs in them.
 
 \protect\hyperlink{ch16s06.htmlux5cux23multihomed_devices_on_an_ip_internetwork}{Figure~16-5}
 shows examples of both types of multihomed device. Of course, these
@@ -587,21 +562,18 @@ a third to another network. There are also some other special cases,
 such as a host with a single network connection having multiple IP
 address aliases.
 
-\subsubsection[Note]{\texorpdfstring{\protect\hypertarget{ch16s05.htmlux5cux23note-63}{}{}Note}{Note}}
+\subsubsection{Note}
 
 {\emph{When subnetting is used, the same distinction can be made between
 multihoming to the same subnet or a different subnet}}.
 
 Now, let's consider the second case. If a host has interfaces to two or
 more different networks, could it pass IP datagrams between them? Yes,
-if it had the right
-\protect\hypertarget{ch16s05.htmlux5cux23idx-CHP-16-0670}{}{}software
+if it had the right software
 running on it. And wouldn't that make the host a router, of sorts? In
 fact, that is exactly the case. A multihomed host with interfaces to two
 networks can use software to function as a router. This is sometimes
-called
-\protect\hypertarget{ch16s05.htmlux5cux23idx-CHP-16-0671}{}{}{\emph{software
-routing}}.
+called \emph{software routing}.
 
 Using a host as a router has certain advantages and disadvantages
 compared to a hardware router. A server that is multihomed can perform
@@ -622,10 +594,8 @@ this in your home without realizing it.
 
 Suppose you have two PCs networked together and a single phone line to
 connect to the Internet. One computer dials up to your Internet service
-provider (ISP) and runs software such as Microsoft's
-\protect\hypertarget{ch16s05.htmlux5cux23idx-CHP-16-0672}{}{}Internet
-Connection Sharing
-(\protect\hypertarget{ch16s05.htmlux5cux23idx-CHP-16-0673}{}{}ICS) to
+provider (ISP) and runs software such as Microsoft's Internet
+Connection Sharing (ICS) to
 let the other computer access the Internet. Millions of people do this
 every day -- they have a multihomed system (the one connecting to the
 Internet and the other PC) with ICS acting in the role of a software
@@ -641,9 +611,7 @@ too pleased. Neither would you or your mail carrier! And all of you
 folks are much smarter than computers. Like street addresses, IP
 addresses must be unique for them to be useful.
 
-\protect\hypertarget{ch16s06.htmlux5cux23multihomed_devices_on_an_ip_internetwork}{}{}
 
-\protect\hypertarget{ch16s06.htmlux5cux23I_mediaobject2_d1e16338}{}{}
 %\includegraphics{httpatomoreillycomsourcenostarchimages287799.png.jpg}
 
 Figure~16-5.~Multihomed devices on an IP internetwork This internetwork
@@ -658,8 +626,7 @@ Since IP datagrams are sent only within the confines of the IP
 internetwork, they must be unique within each internetwork. If you are a
 company with your own private internetwork, this isn't really a big
 problem. Whoever is in charge of maintaining the internetwork keeps a
-list of what numbers have been used where and makes sure that no two
-\protect\hypertarget{ch16s06.htmlux5cux23idx-CHP-16-0675}{}{}devices are
+list of what numbers have been used where and makes sure that no two devices are
 given the same address. However, what happens in a public network with
 many different organizations? Here, it is essential that the IP address
 space be managed across the organizations to ensure that they use

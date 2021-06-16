@@ -88,5 +88,9 @@
 % Boxes
 \usepackage{tcolorbox}
 \usepackage{newfloat}
+
 \DeclareFloatingEnvironment[fileext=kct,placement={!ht},name=Concept]{floatkeyconcept}
 \newenvironment{keyconcept}{\begin{floatkeyconcept}\begin{tcolorbox}\textbf{Key concept:}\quad}{\end{tcolorbox}\end{floatkeyconcept}}
+
+\DeclareFloatingEnvironment[fileext=kct,placement={!ht},name=Concept]{floatbackground}
+\newenvironment{backgroundinfo}{\begin{floatbackground}\begin{tcolorbox}\textbf{Background information:}\quad}{\end{tcolorbox}\end{floatbackground}}
