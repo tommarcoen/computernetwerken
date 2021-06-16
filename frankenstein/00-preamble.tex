@@ -1,0 +1,92 @@
+
+\usepackage[T1]{fontenc}
+\usepackage[mono=false]{libertine}
+\usepackage[libertine]{newtxmath}
+\usepackage[scaled=.8]{beramono}
+\usepackage{microtype}
+\AtBeginEnvironment{verbatim}{\microtypesetup{activate=false}}
+
+\usepackage{graphicx}
+\usepackage{longtable}
+
+\firmlists
+\pagestyle{ruled}
+
+% Colours
+\usepackage{xcolor}
+\definecolor{thered}    {rgb}  {0.65,0.04,0.07}
+\definecolor{thegreen}  {rgb}  {0.06,0.44,0.08}
+\definecolor{theblue}   {rgb}  {0.02,0.04,0.48}
+\definecolor{sectioning}{gray} {0.44}
+\definecolor{thegrey}   {gray} {0.5}
+\definecolor{theframe}  {gray} {0.75}
+\definecolor{theshade}  {gray} {0.94}
+\definecolor{spotcolor} {named}{thered}
+\definecolor{house}     {rgb}  {0.26,0.46,0.76}
+
+% Code listings
+\usepackage{changepage}
+\usepackage[final]{listings}
+\lstset{
+    % Text formatting
+    basicstyle=\ttfamily\small
+    ,commentstyle=\color{thegreen}
+    ,keepspaces=true
+    ,showspaces=false
+    % Syntax highlighting
+    %,morecomment=[l]\#
+    % Line numbers
+    ,numbers=left
+    ,numbersep=5pt
+    ,numberstyle=\footnotesize
+    ,stepnumber=5
+    ,numberfirstline=false
+    ,firstnumber=1
+    % Caption and frame
+    ,captionpos=t
+    ,frame=tb
+    ,framerule=1.2pt
+    ,rulecolor=\color{thegreen}
+}
+\lstnewenvironment{config}[1][]{%
+   \IfNoValueF{#1}{\lstset{#1}}
+%%   \begin{adjustwidth*}{0pt}{20mm}
+}{}%\end{adjustwidth*}}
+\lstnewenvironment{cli}[1][]{%
+   \lstset{%
+      rulecolor=\color{theblue},
+      backgroundcolor=\color{theshade},
+      numbers=none,
+      deletecomment=[l]\#
+   }
+   \IfNoValueF{#1}{\lstset{#1}}
+}{}
+% Add spaces between chapters in the List of Listings
+% https://tex.stackexchange.com/a/461523/102323
+% https://stackoverflow.com/a/3029507/10780268
+%\usepackage{etoolbox} % Already loaded
+\renewcommand{\memchapinfo}[4]{%
+  \addtocontents{lol}{\protect\addvspace{10pt}}}
+\newcommand*{\param}[1]{\textlangle{}#1\textrangle}
+
+% Hyperlinks
+\usepackage{varioref}       % MUST be loaded before hyperref
+\usepackage{hyperref}
+\usepackage{cleveref}       % MUST be loaded after hyperref
+\hypersetup{
+   bookmarksopen
+   ,pdfdisplaydoctitle
+   ,linktocpage=true
+   ,colorlinks
+   ,allcolors=black
+}
+\urlstyle{rm}
+
+
+
+
+% Boxes
+\usepackage{tcolorbox}
+\usepackage{newfloat}
+\DeclareFloatingEnvironment[fileext=kct,placement={!ht},name=Concept]{floatkeyconcept}
+\newenvironment{keyconcept}{\begin{floatkeyconcept}\begin{tcolorbox}\textbf{Key concept:}\quad}{\end{tcolorbox}\end{floatkeyconcept}}
