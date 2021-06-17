@@ -1,3 +1,5 @@
+\usepackage[backend=biber]{biblatex}
+\addbibresource{resources.bib}
 
 \usepackage[T1]{fontenc}
 \usepackage[mono=false]{libertine}
@@ -92,5 +94,8 @@
 \DeclareFloatingEnvironment[fileext=kct,placement={!ht},name=Concept]{floatkeyconcept}
 \newenvironment{keyconcept}{\begin{floatkeyconcept}\begin{tcolorbox}\textbf{Key concept:}\quad}{\end{tcolorbox}\end{floatkeyconcept}}
 
-\DeclareFloatingEnvironment[fileext=kct,placement={!ht},name=Concept]{floatbackground}
+\DeclareFloatingEnvironment[fileext=kct,placement={!ht},name=Background]{floatbackground}
 \newenvironment{backgroundinfo}{\begin{floatbackground}\begin{tcolorbox}\textbf{Background information:}\quad}{\end{tcolorbox}\end{floatbackground}}
+
+\DeclareFloatingEnvironment[fileext=kct,placement={!ht},name=Note]{floatnote}
+\newenvironment{note}{\begin{floatnote}\begin{tcolorbox}\textbf{Note:}\quad}{\end{tcolorbox}\end{floatnote}}

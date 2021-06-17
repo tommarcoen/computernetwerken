@@ -31,7 +31,7 @@ Internet.
 
 \begin{backgroundinfo}
 If you are not familiar with at least the basics of how binary numbers work, and also with how to
-convert between binary and decimal numbers, I recommend reading \protect\hyperlink{ch04.html}{Chapter~4}, which provides some background
+convert between binary and decimal numbers, I recommend reading \vref{chap:binary-numbers}, which provides some background
 on data representation and the mathematics of computing, before you proceed here.
 \end{backgroundinfo}
 
@@ -76,15 +76,13 @@ Any device that has data sent to it at the network layer will have at
 least one IP address: one per network interface. This means that normal
 hosts such as computers and network-capable printers usually get one IP
 address, while routers get more than one IP address. Some special hosts
-may have more than one IP address if they are multihomed -- connected to
-more than one network.
+may have more than one IP address if they are multihomed -- connected to more than one network.
 
 Lower-level network interconnection devices -- such as repeaters,
 bridges, and switches -- don't require an IP address because they pass
 traffic based on layer~2 (data link layer) addresses. Network segments
-connected by bridges and switches form a single broadcast domain, and
-any devices on them can send data to each other directly without
-routing. To IP, these devices are essentially invisible; they are no
+connected by bridges and switches form a single \emph{broadcast domain}, and any devices on them can send data to each other directly without routing.
+To IP, these devices are essentially invisible; they are no
 more significant than the wires that connect devices together (with a
 couple of exceptions). Such devices may, however, optionally have an IP
 address for management purposes. In this regard, they are acting like a
@@ -93,7 +91,7 @@ regular host on the network.
 \Cref{fig:ip-interfaces} shows the IP interfaces of a few common LAN devices as small circles.
 Each regular host has one interface, while the router that serves this LAN has three, since it connects to three different networks.
 Note that the LAN switch has no IP interfaces; it connects the hosts and router at layer~2.
-(Also see \protect\hyperlink{ch16s06.htmlux5cux23multihomed_devices_on_an_ip_internetwork}{Figure~16-5}, which shows the IP interfaces of devices in a more complex configuration.)
+(Also see Figure~16-5, which shows the IP interfaces of devices in a more complex configuration.)
 
 
 \begin{figure}
@@ -108,15 +106,13 @@ Note that the LAN switch has no IP interfaces; it connects the hosts and router 
 \subsection{Address uniqueness and network specificity}
 
 Each IP address on a single internetwork must be unique.
-(This seems rather obvious, although there are exceptions in IPv6, in the form of special anycast addresses, as discussed in \protect\hyperlink{ch25.html}{Chapter~25}.)
+(This seems rather obvious, although there are exceptions in IPv6,\footnote{As well as in IPv4.} in the form of special anycast addresses, as discussed in \protect\hyperlink{ch25.html}{Chapter~25}.)
 
 Since IP addresses represent network interfaces and are used for routing, the IP address is
-specific to the network to which it is connected. If the device moves to
-a new network, the IP address will usually have to change as well. For
-the full reason why, see the discussion of basic IP address structure
-later in this chapter. This issue was a primary motivation for the
-creation of Mobile IP (covered in
-\protect\hyperlink{ch30.html}{Chapter~30}).
+specific to the network to which it is connected.
+If the device moves to a new network, the IP address will usually have to change as well.
+For the full reason why, see the discussion of basic IP address structure later in this chapter.
+This issue was a primary motivation for the creation of Mobile IP.% (covered in \protect\hyperlink{ch30.html}{Chapter~30}).
 
 
 
@@ -160,12 +156,18 @@ IP addresses can be set up as either a static or dynamic configuration.
 In a {\emph{static configuration}} setup, each device is manually configured with an IP address that doesn't change.
 This is fine for small networks but quickly becomes an administrative nightmare in larger networks, when changes are required.
 The alternative, {\emph{dynamic configuration}}, allows IP addresses to be assigned to devices and changed under software control.
-The two host configuration protocols, BOOTP and DHCP, were created to fill this latter function (see \protect\hyperlink{pt14.html}{Part~III-3}).
+The two host configuration protocols, BOOTP and DHCP, were created to fill this latter function.
+% (see \protect\hyperlink{pt14.html}{Part~III-3}).
+We will not cover BOOTP as it is too old but will cover DHCP in \vref{chap:dhcp}.
 
 Additionally, provision is included in the IP addressing scheme for all three basic types of addressing: unicast, multicast, and broadcast.
+And, contrary to popular belief, IPv4 \emph{also} supports anycast addressing.
 
-{\textbf{KEY CONCEPT}} IP addresses serve the dual function of device identification and routing. Each network interface requires one IP address, which is network specific. IP addresses can be either statically or dynamically allocated, and come in unicast, multicast, and broadcast forms.
-
+\begin{keyconcept}
+IP addresses serve the dual function of device identification and routing.
+Each network interface requires one IP address, which is network specific.
+IP addresses can be either statically or dynamically allocated, and come in unicast, multicast, and broadcast forms, and with support for anycast routing.
+\end{keyconcept}
 
 
 \section{IP address size, address space, and notation}
@@ -190,9 +192,8 @@ differentiate. (Quick, which of these is larger:
 For this reason, when you use IP addresses, you don't work with them in
 binary except when absolutely necessary.
 
-The first thing that people would naturally do with a long string of
-bits is to split it into four eight-bit octets (or bytes, even though
-the two aren't technically the same; see \protect\hyperlink{ch04.html}{Chapter~4}), to make it more manageable.
+The first thing that people would naturally do with a long string of bits is to split it into four eight-bit octets (or bytes, even though
+the two aren't technically the same; see \vref{chap:binary-numbers}), to make it more manageable.
 So 1110\-0011\-0101\-0010\-1001\-1011\-1011\-0001 would become 11100011 - 01010010 -
 10011101 - 10110001. Then you could convert each of those octets into a
 more manageable two-digit hexadecimal number to yield the following: E3
@@ -216,16 +217,18 @@ obvious reasons. Each of the octets in an IP address can take on the
 values from 0 to 255, so the lowest value is theoretically 0.0.0.0 and
 the highest is 255.255.255.255.
 
-{\textbf{KEY CONCEPT}} IP addresses are 32-bit binary numbers, which can
-be expressed in binary, hexadecimal, or decimal form. Most commonly,
-they are expressed by dividing the 32 bits into four bytes and
-converting each to decimal, then separating these numbers with dots to
-create dotted decimal notation.
+\begin{keyconcept}
+IP addresses are 32-bit binary numbers, which can be expressed in binary, hexadecimal, or decimal form.
+Most commonly, they are expressed by dividing the 32 bits into four octets and converting each to decimal, then separating these numbers with dots to create dotted decimal notation.
+\end{keyconcept}
+
 
 \begin{figure}
    \centering
    \includegraphics[width=.7\textwidth]{images/ip-address-notation.jpg}
-   \caption{IP address binary, hexadecimal, and dotted decimal representations -- The binary, hexadecimal, and decimal representations of an IP address are all equivalent.}
+   \caption
+      [IP address binary, hexadecimal, and dotted decimal representations]
+      {IP address binary, hexadecimal, and dotted decimal representations -- The binary, hexadecimal, and decimal representations of an IP address are all equivalent.}
    \label{fig:ip-address-notation}
 \end{figure}
 
@@ -255,29 +258,25 @@ address space was not conserved. This caused difficulty as the Internet
 grew in size. (You'll see more about this in \vref{chap:kozierok-ch17}, which covers classful addressing.)
 
 
-{\textbf{KEY CONCEPT}} Since IP addresses are 32 bits long, the total
-address space of IPv4 is $2^{32}$ or 4,294,967,296 addresses.
+\begin{keyconcept}
+Since IP addresses are 32 bits long, the total address space of IPv4 is $2^{32}$ or 4,294,967,296 addresses.
 However, not all of these addresses can be used, for a variety of reasons.
+\end{keyconcept}
 
 This IP address space dictates the limit on the number of addressable
 interfaces in \emph{each} IP internetwork. So, if you have a private
 network, you can, in theory, have four-billion-plus addresses. However,
-in a public network such as the Internet, alldevices must share the
-available address space. Techniques such as Classless Inter-Domain
-Routing (CIDR), or supernetting, and NAT were designed in part to
-utilize the existing Internet IP address space more efficiently. IPv6
-expands the IP address size from 32 bits all the way up to 128, which
-increases the address space to a ridiculously large number and makes the
-entire matter of address space size moot.
+in a public network such as the Internet, all devices must share the
+available address space. Techniques such as \emph{classless inter-domain routing} (CIDR), or \emph{supernetting}, and NAT were designed in part to
+utilize the existing Internet IP address space more efficiently.
+IPv6 expands the IP address size from 32 bits all the way up to 128, which increases the address space to a ridiculously large number and makes the entire matter of address space size moot.
 
 
 
 \section{IP basic address structure and main components}
 
-As I mentioned in the IP addressing overview, one of the ways that IP
-addresses are used is to facilitate the routing of datagrams in an IP
-internetwork. This is made possible because of the way that IP addresses
-are structured and how that structure is interpreted by network routers.
+As I mentioned in the IP addressing overview, one of the ways that IP addresses are used is to facilitate the routing of datagrams in an IP internetwork.
+This is made possible because of the way that IP addresses are structured and how that structure is interpreted by network routers.
 
 
 
@@ -295,14 +294,11 @@ two components:
       The remainder of the bits is used to identify the host on the network.
 \end{description}
 
-\subsubsection{Note}
-
-{\emph{By convention, IP devices are often called hosts for simplicity,
-as I do throughout this book. Even though each host usually has a single
-IP address, you should remember that IP addresses are strictly
-associated with network layer network interfaces, not physical devices,
-and a device may therefore have more than one IP address (especially a
-router or multihomed host)}}.
+\begin{note}
+By convention, IP devices are often called hosts for simplicity, as I do throughout this book.
+Even though each host usually has a single IP address, you should remember that IP addresses are strictly associated with network layer network interfaces,
+not physical devices, and a device may therefore have more than one IP address (especially a router or multihomed host).
+\end{note}
 
 As you can see in \cref{fig:ip-address-division},
 this really is a fairly simple concept. The fundamental division of the
@@ -328,31 +324,30 @@ network.
 \begin{figure}
    \centering
    \includegraphics[width=.6\textwidth]{images/ip-address-division.jpg}
-   \caption{Basic IP address division: network ID and host ID -- This diagram shows one of the many ways to divide an IP address into a network ID and host ID.}
+   \caption
+      [Basic IP address division: network ID and host ID]
+      {Basic IP address division: network ID and host ID -- This diagram shows one of the many ways to divide an IP address into a network ID and host ID.}
    \label{fig:ip-address-division}
 \end{figure}
 
 
 
-\subsection{Location of the Division Between Network ID and Host ID}
+\subsection{Location of the division between network ID and host ID}
 
 One difference between IP addresses and phone numbers is that the
 dividing point between the bits used to identify the network and those
 that identify the host isn't fixed. It depends on the nature of the
 address, the type of addressing being used, and other factors.
 
-Take the previous example of 227.82.157.177 (see
-\protect\hyperlink{ch16s02.htmlux5cux23ip_address_binary_hexadecimal_and_dotted}{Figure~16-2}).
-It is possible to divide this into a network ID of 227.82 and a host ID
-of 157.177. Alternatively, the network ID might be 227 and the host ID
-might be 82.157.177 within that network.
+Take the previous example of 227.82.157.177 (see \vref{fig:ip-address-notation}).
+It is possible to divide this into a network ID of 227.82 and a host ID of 157.177.
+Alternatively, the network ID might be 227 and the host ID might be 82.157.177 within that network.
 
 To express the network and host IDs as 32-bit addresses, you add zeros
 to replace the missing pieces. With a network ID of 227 and a host ID of
 82.157.177, the address of the network becomes 227.0.0.0 and the address
-of the host 0.82.157.177. (In practice, network addresses of this sort
-are routinely seen with the added zeros; network IDs are not seen as
-often in 32-bit form this way.)
+of the host 0.82.157.177.
+(In practice, network addresses of this sort are routinely seen with the added zeros; host IDs are not seen as often in 32-bit form this way.)
 
 Lest you think from these examples that the division
 must always be between whole octets of the address, you should know that
@@ -362,18 +357,15 @@ for the network ID and 12 bits for the host ID. The process is the same,
 but determining the dotted decimal ID values is more tricky because
 here, the 157 is split into two binary numbers. The results are
 227.82.144.0 for the network ID and 0.0.0.13.177 for the host ID, as
-shown in
-\protect\hyperlink{ch16s03.htmlux5cux23mid-octet_ip_address_division_ip_address}{Figure~16-4}.
+shown in \cref{fig:slash-20}.
 
 Since IP addresses are normally expressed as four dotted-decimal
 numbers, educational resources often show the division between the
 network ID and host ID occurring on an octet boundary. However, it's
 essential to remember that the dividing point often appears in the
-middle of one of these eight-bit numbers. In
-\protect\hyperlink{ch16s03.htmlux5cux23mid-octet_ip_address_division_ip_address}{Figure~16-4},
-the network ID is 20 bits long, and the host ID 12 bits long. This
-results in the third number of the original IP address, 157, being split
-into 144 and 13.
+middle of one of these eight-bit numbers.
+In \cref{fig:slash-20}, the network ID is 20~bits long, and the host ID 12~bits long.
+This results in the third number of the original IP address,~157, being split into~144 and~13.
 
 The place where the line is drawn between the network ID and the host ID
 must be known in order for devices such as routers to know how to
@@ -381,18 +373,22 @@ interpret the address. This information is conveyed either implicitly or
 explicitly, depending on the type of IP addressing in use, as I discuss
 next.
 
-%\includegraphics{httpatomoreillycomsourcenostarchimages287797.png.jpg}
 
-Figure~16-4.~Mid-octet IP address division IP addresses need not be
-divided between network ID and host ID on octet boundaries. The division
-here is into a 20-bit network ID and a 12-bit host ID.
+\begin{figure}
+   \centering
+   \includegraphics[width=.6\textwidth]{images/slash-20.jpg}
+   \caption
+      [Mid-octet IP address division]
+      {Mid-octet IP address division -- IP addresses need not be divided between network ID and host ID on octet boundaries.
+      The division here is into a 20-bit network ID and a 12-bit host ID.}
+   \label{fig:slash-20}
+\end{figure}
 
 
-{\textbf{KEY CONCEPT}} The basic structure of an IP address consists of
-two components: the network ID and host ID. The dividing point of the
-32-bit address is not fixed, but depends on a number of factors and can
-occur in a variety of places, including in the middle of a
-dotted-decimal octet.
+\begin{keyconcept}
+The basic structure of an IP address consists of two components: the network ID and host ID.
+The dividing point of the 32-bit address is not fixed, but depends on a number of factors and can occur in a variety of places, including in the middle of a dotted-decimal octet.
+\end{keyconcept}
 
 Since the IP address can be split into network ID and host ID
 components, it is also possible to use either one or the other by
@@ -493,11 +489,10 @@ bits are used for the network ID, that network would be specified as
 zeros.
 
 
-{\textbf{KEY CONCEPT}} An essential factor in determining how an IP
-address is interpreted is the addressing scheme in which it is used. The
-three methods, arranged in increasing order of age, complexity, and
-flexibility, are classful addressing, subnetted classful addressing, and
-classless addressing.
+\begin{keyconcept}
+An essential factor in determining how an IP address is interpreted is the addressing scheme in which it is used.
+The three methods, arranged in increasing order of age, complexity, and flexibility, are classful addressing, subnetted classful addressing, and classless addressing.
+\end{keyconcept}
 
 This introduction to the concepts of classful, subnetted, and classless
 addressing was designed to show you how they impact the way the IP
@@ -544,28 +539,24 @@ for hosts to have more than one IP address, however. Such a device is
 sometimes said to be \emph{multihomed}.
 
 There are two ways that a host can be multihomed:
+\begin{description}
+   \item[Two or more interfaces to the same network]
+      Devices such as servers or high-powered workstations may be equipped with two physical interfaces to the same network for performance and reliability reasons.
+      They will have two IP addresses on the same network with the same network ID.
 
-{\textbf{Two or More Interfaces to the Same Network}} Devices such as
-servers or high-powered workstations may be equipped with two physical
-interfaces to the same network for performance and reliability reasons.
-They will have two IP addresses on the same network with the same
-network ID.
+   \item[Interfaces to two or more different networks]
+      Devices may have multiple interfaces to different networks.
+      The IP addresses will typically have different network IDs in them.
+\end{description}
 
-{\textbf{Interfaces to Two or More Different Networks}} Devices may have
-multiple interfaces to different networks.
-The IP addresses will typically have different network IDs in them.
 
-\protect\hyperlink{ch16s06.htmlux5cux23multihomed_devices_on_an_ip_internetwork}{Figure~16-5}
-shows examples of both types of multihomed device. Of course, these
-could be combined, with a host having two connections to one network and
-a third to another network. There are also some other special cases,
-such as a host with a single network connection having multiple IP
-address aliases.
+\Vref{fig:multihomed-devices} shows examples of both types of multihomed device.
+Of course, these could be combined, with a host having two connections to one network and a third to another network.
+There are also some other special cases, such as a host with a single network connection having multiple IP address aliases.
 
-\subsubsection{Note}
-
-{\emph{When subnetting is used, the same distinction can be made between
-multihoming to the same subnet or a different subnet}}.
+\begin{note}
+When subnetting is used, the same distinction can be made between multihoming to the same subnet or a different subnet.
+\end{note}
 
 Now, let's consider the second case. If a host has interfaces to two or
 more different networks, could it pass IP datagrams between them? Yes,
@@ -582,10 +573,12 @@ router is designed for the job of routing and usually will be more
 efficient than a software program running on a host.
 
 
-{\textbf{KEY CONCEPT}} A host with more than one IP network interface is
-said to be multihomed. A multihomed device can have multiple connections
-to the same network, to different networks, or both. A host connected to
-two networks can be configured to function as a router.
+\begin{keyconcept}
+A host with more than one IP network interface is said to be multihomed.
+A multihomed device can have multiple connections to the same network, to different networks, or both.
+A host connected to two networks can be configured to function as a router.
+\end{keyconcept}
+
 
 Multihoming was once considered a fairly esoteric application, but has
 become more common in recent years. This is also true of multihoming on
@@ -612,15 +605,19 @@ folks are much smarter than computers. Like street addresses, IP
 addresses must be unique for them to be useful.
 
 
-%\includegraphics{httpatomoreillycomsourcenostarchimages287799.png.jpg}
+\begin{figure}
+   \centering
+   \includegraphics[width=\textwidth]{images/multihomed-devices.jpg}
+   \caption
+      [Multihomed devices on an IP internetwork]
+      {Multihomed devices on an IP internetwork -- This internetwork consists of two LANs, A (above) and B (below).
+      LAN A has a multihomed workstation, shown with two IP network interface ``circles.''
+      The two LANs are connected together through a multihomed, shared server that has been configured to route traffic between them.
+      Note that this server also handles all traffic passing between LAN B and the Internet (since the Internet connection is in LAN A only).
+      }
+   \label{fig:multihomed-devices}
+\end{figure}
 
-Figure~16-5.~Multihomed devices on an IP internetwork This internetwork
-consists of two LANs, A (above) and B (below). LAN A has a multihomed
-workstation, shown with two IP network interface ``circles.'' The two LANs
-are connected together through a multihomed, shared server that has been
-configured to route traffic between them. Note that this server also
-handles all traffic passing between LAN B and the Internet (since the
-Internet connection is in LAN A only).
 
 Since IP datagrams are sent only within the confines of the IP
 internetwork, they must be unique within each internetwork. If you are a
@@ -652,20 +649,15 @@ Authority (IANA)}}. IANA was responsible for allocating IP addresses,
 along with other important centralized coordination functions such as
 managing universal parameters used for TCP/IP protocols. In the late
 1990s, a new organization called the {\emph{Internet Corporation for
-Assigned Names and Numbers (ICANN)}} was created. ICANN now oversees the
-IP address assignment task of IANA, as well as managing other tasks such
-as Domain Name System (DNS) name registration (see
-\protect\hyperlink{ch54.html}{Chapter~54}).
+Assigned Names and Numbers (ICANN)}} was created.
+ICANN now oversees the IP address assignment task of IANA, as well as managing other tasks such as Domain Name System (DNS) name registration (see \vref{chap:dns}).
 
-IP addresses were originally allocated directly to organizations. The
-original IP addressing scheme was based on classes, and so IANA would
-assign addresses in class A, B, and C blocks. Today, addressing is
-classless, using CIDR's hierarchical addressing scheme. IANA doesn't
-assign addresses directly, but rather delegates them to regional
-Internet registries (RIRs). These are APNIC, ARIN, LACNIC, and RIPE NCC.
-Each RIR can, in turn, delegate blocks of addresses to lower-level
-registries such as national Internet registries (NIRs) and local
-Internet registries (LIRs).
+IP addresses were originally allocated directly to organizations.
+The original IP addressing scheme was based on classes, and so IANA would assign addresses in class A, B, and C blocks.
+Today, addressing is classless, using CIDR's hierarchical addressing scheme.
+IANA doesn't assign addresses directly, but rather delegates them to regional Internet registries (RIRs).
+These are APNIC, ARIN, LACNIC, and RIPE NCC.
+Each RIR can, in turn, delegate blocks of addresses to lower-level registries such as national Internet registries (NIRs) and local Internet registries (LIRs).
 
 Eventually, blocks of addresses are obtained by ISPs for distribution to
 end-user organizations. Some of the ISP's customers are end-user
@@ -673,11 +665,9 @@ organizations, but others are (smaller) ISPs themselves. They can, in
 turn, use or delegate the addresses in their blocks. This can continue
 for several stages in a hierarchical fashion. This arrangement helps
 ensure that IP addresses are assigned and used in the most efficient
-manner possible. See \vref{chap:kozierok-ch20}, which
-discusses CIDR, for more information on how this works.
+manner possible. See \vref{chap:kozierok-ch20}, which discusses CIDR, for more information on how this works.
 
-IANA, ICANN, and the RIRs are responsible for more than just IP address
-allocation, though I have concentrated on IP addresses here for obvious
-reasons. For more general information on IANA, ICANN, APNIC, ARIN,
-LACNIC, and RIPE NCC, try a can of alphabet soup -- or \protect\hyperlink{ch03.html}{Chapter~3}, which provides an overview of the Internet registration authorities.
+IANA, ICANN, and the RIRs are responsible for more than just IP address allocation, though I have concentrated on IP addresses here for obvious reasons.
+For more general information on IANA, ICANN, APNIC, ARIN, LACNIC, and RIPE NCC, try a can of alphabet soup
+-- or \protect\hyperlink{ch03.html}{Chapter~3}, which provides an overview of the Internet registration authorities.
 

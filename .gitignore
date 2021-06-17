@@ -1,9 +1,13 @@
 *.aux
+*.bbl
+*.bcf
+*.blg
 *.lof
 *.log
 *.lot
 *.out
 *.pdf
+*.run.xml
 *.snm
 *.toc
 main.fls
