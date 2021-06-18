@@ -1,5 +1,5 @@
 % Kozierok, ch. 19
-\chapter{IP subnetting: practical subnet design and address determination example}
+\chapter[IP subnetting: examples]{IP subnetting: practical subnet design and address determination example}
 \label{chap:kozierok-ch19}
 
 When educators ask students what they consider to be the most confusing
@@ -18,32 +18,23 @@ many bits to use for the subnet ID and host ID; and then determining
 important numbers such as the subnet mask, subnet addresses, and host
 addresses.
 
-My focus here is on showing the practical ``how'' of subnetting. The
-topics work through two
-\protect\hypertarget{ch19.htmlux5cux23idx-CHP-19-0746}{}{}examples using
-a class B and a class C sample network to show you how subnetting is
-done, and I am explicit in showing how everything is calculated. This
-means the section is a bit number heavy. Also, I try not to duplicate
-conceptual issues covered in the previous section, though a certain
-amount of overlap does occur. Overall, if you are not familiar with how
-subnetting works at all, you will want to read the previous chapter
-first. I do refer to topics in that chapter where appropriate,
-especially the summary tables. Incidentally, I only cover conventional
-subnetting here, not Variable Length Subnet Masking (VLSM).
+My focus here is on showing the practical ``how'' of subnetting.
+The topics work through two examples using a class B and a class C sample network to show you how subnetting is
+done, and I am explicit in showing how everything is calculated.
+This means the chapter is a bit number heavy.
+Also, I try not to duplicate conceptual issues covered in the previous chapter, though a certain amount of overlap does occur.
+Overall, if you are not familiar with how subnetting works at all, you will want to read the previous chapter first.
+I do refer to topics in that chapter where appropriate, especially the summary tables.
+Incidentally, I only cover conventional subnetting here, not variable-length subnet masking (VLSM).
 
-This section may serve as a useful refresher or summary of subnetting
-\protect\hypertarget{ch19.htmlux5cux23idx-CHP-19-0747}{}{}for someone
-who is already familiar with the basics but just wants to review the
-steps performed in subnetting. Again, bear in mind that subnetting is
-based on the older, classful IP addressing scheme, and today's Internet
-is classless, using Classless Inter-Domain Routing (CIDR; see \vref{chap:kozierok-ch20}).
+This chapter may serve as a useful refresher or summary of subnetting for someone who is already familiar with the basics but just wants to review the
+steps performed in subnetting.
+Again, bear in mind that subnetting is based on the older, classful IP addressing scheme, and today's Internet is classless, using classless inter-domain routing (CIDR; see \vref{chap:kozierok-ch20}).
 
-\subsubsection[Note]{\texorpdfstring{\protect\hypertarget{ch19.htmlux5cux23note-77}{}{}Note}{Note}}
-
-{\emph{If in reading this chapter, you find yourself wanting to do
-binary-to-decimal conversions or binary math, remember that most
-versions of Windows (and many other operating systems) have a calculator
-program that incorporates scientific functions}}.
+\begin{note}
+If in reading this chapter, you find yourself wanting to do binary-to-decimal conversions or binary math, remember that most
+versions of Windows (and many other operating systems) have a calculator program that incorporates scientific functions.
+\end{note}
 
 When you are building or upgrading a network as a whole, the first step
 isn't buying hardware, or figuring out protocols, or even design. It's
@@ -62,29 +53,25 @@ questions, here's a list of the most important questions in analyzing
 subnetting requirements:
 
 \begin{itemize}
-\item
-  What class is the IP address block?
-\item
-  How many physical subnets are on the network today? (A {\emph{physical
-  subnet}} generally refers to a broadcast domain on a LAN -- a set of
-  hosts on a physical network bounded by routers.)
-\item
-  Do you anticipate adding any more physical networks in the near
-  future, and if so, how many?
-\item
-  How many hosts do you have in the largest of the subnets today?
-\item
-  How many hosts do you anticipate having in the largest subnet in the
-  near future?
+   \item
+      What class is the IP address block?
+   \item
+      How many physical subnets are on the network today?
+      (A \emph{physical subnet} generally refers to a broadcast domain on a LAN -- a set of hosts on a physical network bounded by routers.)
+   \item
+      Do you anticipate adding any more physical networks in the near future, and if so, how many?
+   \item
+      How many hosts do you have in the largest of the subnets today?
+   \item
+      How many hosts do you anticipate having in the largest subnet in the near future?
 \end{itemize}
 
 
-{\textbf{KEY CONCEPT}} To successfully subnet a network, you must begin
-by learning what the requirements of the network will be. The most
-important parameters to determine are the number of subnets required and
-the maximum number of hosts needed per subnet. Numbers should not be
-based on just present needs, but also take into account requirements
-anticipated in the near future.
+\begin{keyconcept}
+To successfully subnet a network, you must begin by learning what the requirements of the network will be.
+The most important parameters to determine are the number of subnets required and the maximum number of hosts needed per subnet.
+Numbers should not be based on just present needs, but also take into account requirements anticipated in the near future.
+\end{keyconcept}
 
 The first question is important because everything in subnetting is
 based around dividing up a class A, class B, or class C network, so you
@@ -116,15 +103,14 @@ So what is the ``near future?''
 The term is necessarily vague, because it depends on how far into the future the organization wants to look.
 On the one hand, planning for several years' growth can make sense, if you
 have enough IP addresses to do it. On the other, you don't want to plan
-too far out, since changes in the short term may cause you to completely
-redesign your network anyway.
+too far out, since changes in the short term may cause you to completely redesign your network anyway.
 
 After you complete the brief requirements analysis, you should know the
 two critical parameters that you must have in order to subnet the
 network: the number of subnets required for the network and the maximum
 number of hosts per subnetwork. In using these figures to design the
 subnetted network, you will be faced with the key design decision in
-subnetting: how to divide the 8, 16, or 24 bits in the classful host ID
+subnetting: how to divide the 8, 16, or 24~bits in the classful host ID
 into the subnet ID and host ID.
 
 Put another way, you need to decide how many bits to steal from the host
@@ -133,107 +119,101 @@ subnet masks in the previous chapter, the fundamental trade-off in
 choosing this number is as follows:
 
 \begin{itemize}
-\item
-  Each bit taken from the host ID for the subnet ID doubles the number
-  of subnets that are possible in the network.
-\item
-  Each bit taken from the host ID for the subnet ID (approximately)
-  halves the number of hosts that are possible within each subnet on the
-  network.
+   \item
+   Each bit taken from the host ID for the subnet ID doubles the number of subnets that are possible in the network.
+   \item
+   Each bit taken from the host ID for the subnet ID (approximately) halves the number of hosts that are possible within each subnet on the network.
 \end{itemize}
 
-There are six possible ways this decision can be made for a class C
-network, as illustrated in
-\protect\hyperlink{ch19s02.htmlux5cux23subnetting_design_trade-off_for_class_c_}{Figure~19-1}.
+There are six possible ways this decision can be made for a class C network, as illustrated in \cref{fig:subnetting-design-trade-off}.
+The relationship between the bits and the number of subnets and hosts is as follows:
 
-\protect\hypertarget{ch19s02.htmlux5cux23subnetting_design_trade-off_for_class_c_}{}{}
 
-\protect\hypertarget{ch19s02.htmlux5cux23I_mediaobject5_d1e20630}{}{}
-%\includegraphics{httpatomoreillycomsourcenostarchimages287827.png.jpg}
+\begin{figure}
+   \centering
+   \includegraphics[width=.7\textwidth]{images/subnetting-design-trade-off.jpg}
+   \caption
+      [Subnetting design trade-off for class C networks]
+      {Subnetting design trade-off for class C networks -- This drawing shows the options for subnetting a class C network.
+      As you increase the number of bits for the host ID, you increase the number of subnets, but decrease the size of each.}
+   \label{fig:subnetting-design-trade-off}
+\end{figure}
 
-Figure~19-1.~Subnetting design trade-off for class C networks This
-drawing shows the options for subnetting a class C network. As you
-increase the number of bits for the host ID, you increase the number of
-subnets, but decrease the size of each.
-
-The relationship between the bits and the number of subnets and hosts is
-as follows:
 
 \begin{itemize}
-\item
-  The number of subnets allowed in the network is two to the power of
-  the number of subnet ID bits.
-\item
-  The number of hosts allowed per subnet is two to the power of the
-  number of host ID bits, less two.
+   \item
+      The number of subnets allowed in the network is two to the power of the number of subnet ID bits.
+   \item
+      The number of hosts allowed per subnet is two to the power of the number of host ID bits, less two.
 \end{itemize}
 
 You subtract two from the number of hosts in each subnet to exclude the
-special meaning cases where the host ID is all zeros or all ones. As I
-explained in the previous chapter, this exclusion was originally also
-applied to the subnet ID, but is no longer in newer systems.
+special meaning cases where the host ID is all zeros (network address) or all ones (broadcast address).
+As I explained in the previous chapter, this exclusion was originally also applied to the subnet ID, but is no longer in newer systems.
 
-To choose how many bits to use for the subnet, you could use trial and
-error. By this, I mean you could try to first calculate the number of
-subnets and hosts when you use one bit for the subnet ID and leave the
-rest for the host ID. You could then try with two bits for the subnet
-ID, and then try with three, and so on. This would be silly, however;
-it's time-consuming and makes it hard for you to choose the best option.
-There's an easier method: You can use the subnetting summary tables,
-presented in the previous chapter. They let you look at all the options,
-and you can usually see immediately the best one for you.
+To choose how many bits to use for the subnet, you could use trial and error.
+By this, I mean you could try to first calculate the number of subnets and hosts when you use one bit for the subnet ID and leave the rest for the host ID.
+You could then try with two bits for the subnet ID, and then try with three, and so on.
+This would be silly, however; it's time-consuming and makes it hard for you to choose the best option.
+There's an easier method: You can use the subnetting summary tables, presented in the previous chapter.
+They let you look at all the options, and you can usually see immediately the best one for you.
 
 \section{Class C subnetting design example}
 
-\protect\hypertarget{ch19s02.htmlux5cux23idx-CHP-19-0748}{}{}Let's take
-an example. Suppose you have a class C network, base address
-211.77.20.0, with a total of seven subnets. The maximum number of hosts
-per subnet is 25. Looking at the subnetting summary table for class C
-(\protect\hyperlink{ch18s07.htmlux5cux23subnetting_summary_table_for_class_c_net}{Table~18-5}
-in \protect\hyperlink{ch18.html}{Chapter~18}), the answer is instantly
-clear: You need three bits for the subnet ID. Why? This allows you eight
-subnets and 30 hosts per subnet. If you try to choose two bits, you
-can't define enough subnets (only four). As
-\protect\hyperlink{ch19s02.htmlux5cux23example_of_class_c_subnetting_in_this_pa}{Figure~19-2}
-shows, if you choose four bits for the subnet ID, then you can have only
-14 hosts per subnet.
+Let's take an example.
+Suppose you have a class C network, with base address 211.77.20.0, and you need a total of seven subnets.
+This means you need at least three bits for the subnet ID, as $2^3=8\geqslant 7$.
+The maximum number of hosts per subnet is 25, which requires five bits for the host ID ($2^5 = 32 \geqslant 25$).
+As $3+5=8$ this fits perfectly in a class C network.
+%Looking at the subnetting summary table for class C (Table~18--5 in Chapter~18), the answer is instantly clear: You need three bits for the subnet ID.
+%Why?
+%This allows you eight subnets and 30 hosts per subnet.
+If you try to choose two bits, you can't define enough subnets (only four).
+As \cref{fig:subnetting-class-c-options} shows, if you choose four bits for the subnet ID, then you can have only 14 hosts per subnet.
 
-\protect\hypertarget{ch19s02.htmlux5cux23example_of_class_c_subnetting_in_this_pa}{}{}
-
-\protect\hypertarget{ch19s02.htmlux5cux23I_mediaobject5_d1e20669}{}{}
-%\includegraphics{httpatomoreillycomsourcenostarchimages287829.png.jpg}
-
-Figure~19-2.~Example of class C subnetting In this particular example,
-where seven subnets are needed and 25 hosts are needed for the largest
-subnet, there is only one choice of subnet ID size that meets the
-requirements. It's an easy decision!
+ 
+\begin{figure}
+   \centering
+   \includegraphics[width=.8\textwidth]{images/subnetting-class-c-options.jpg}
+   \caption
+      [Example of class C subnetting]
+      {Example of class C subnetting --
+      In this particular example, where seven subnets are needed and 25 hosts are needed for the largest subnet,
+      there is only one choice of subnet ID size that meets the requirements. It's an easy decision!}
+   \label{fig:subnetting-class-c-options}
+\end{figure}
 
 \section{Class B subnetting design example}
 
-In some cases, especially with larger networks, you may have multiple
-choices. Consider, as a more interesting
-\protect\hypertarget{ch19s02.htmlux5cux23idx-CHP-19-0749}{}{}example,
-the larger class B network 166.113.0.0, where you have a total of 15
-subnets and the largest has 450 hosts. Examining the subnet summary
-table for class B
-(\protect\hyperlink{ch18s07.htmlux5cux23subnetting_summary_table_for_class_b_net}{Table~18-4}
-in \protect\hyperlink{ch18.html}{Chapter~18}) suggests four acceptable
-options, as shown in
-\protect\hyperlink{ch19s02.htmlux5cux23example_of_class_b_subnetting_this_class}{Figure~19-3}.
+In some cases, especially with larger networks, you may have multiple choices.
+Consider, as a more interesting example, the larger class B network 166.113.0.0, where you have a total of 15 subnets and the largest has 450 hosts.
+%Examining the subnet summary table for class B (Table~18-4 in Chapter~18) suggests four acceptable options, as shown in Figure~19-3.
+Using trial and error or a subnetting lookup table, one can determine four acceptable options, as shown in \cref{fig:subnetting-class-b-options}.
 
-In all four of these options, the number of subnets is equal to 15 or
-greater, and the number of hosts per subnet is over 450. So which option
-should you choose? Usually, you want to pick something in the middle. If
-you use four bits for the subnet ID, this gives you a maximum of only 16
-subnets, which limits growth in the number of subnets, since you already
-have 15. The same applies to the choice of seven bits for the subnet ID,
-since you already have 450 hosts in one subnet now, and that limits you
-to 510. Thus, you probably want either five or six bits here. If you
-expect more growth in the number of hosts in the largest subnet, you
+
+\begin{figure}
+   \centering
+   \includegraphics[width=.8\textwidth]{images/subnetting-class-b-options.jpg}
+   \caption
+      [Example of class B subnetting]
+      {Example of class B subnetting --
+      This class B network needs at least 15 subnets and must allow up to 450 hosts per subnet.
+      Three subnet ID bits are too few, and eight bits means only 254 hosts per subnet, which is insufficient.
+      This leaves four acceptable options, so you must choose wisely.}
+   \label{fig:subnetting-class-b-options}
+\end{figure}
+
+
+In all four of these options, the number of subnets is equal to 15 or greater, and the number of hosts per subnet is over 450.
+So which option should you choose?
+Usually, you want to pick something in the middle.
+If you use four bits for the subnet ID, this gives you a maximum of only 16 subnets, which limits growth in the number of subnets, since you already have 15.
+The same applies to the choice of seven bits for the subnet ID, since you already have 450 hosts in one subnet now, and that limits you to 510.
+Thus, you probably want either five or six bits here.
+If you expect more growth in the number of hosts in the largest subnet, you
 should choose five bits; if you expect more growth in the number of
 subnets, you should choose six bits. If you're unsure, it's probably
-best to assume more growth in the number of hosts per subnet, so here
-you would choose five bits.
+best to assume more growth in the number of hosts per subnet, so here you would choose five bits.
 
 The converse problem may also occur: You may be in a position where
 there don't appear to be any options -- no rows in the summary table
@@ -245,25 +225,14 @@ of 450. In this situation, you would need to divide the large subnet
 into a smaller one, use more than one IP address block, or upgrade to a
 larger block.
 
-\protect\hypertarget{ch19s02.htmlux5cux23example_of_class_b_subnetting_this_class}{}{}
+ 
 
-\protect\hypertarget{ch19s02.htmlux5cux23I_mediaobject5_d1e20701}{}{}
-%\includegraphics{httpatomoreillycomsourcenostarchimages287831.png.jpg}
-
-Figure~19-3.~Example of class B subnetting This class B network needs at
-least 15 subnets and must allow up to 450 hosts per subnet. Three subnet
-ID bits are too few, and eight bits means only 254 hosts per subnet,
-which is insufficient. This leaves four acceptable options, so you must
-choose wisely.
-
-
-{\textbf{KEY CONCEPT}} If there is more than one combination of subnet
-ID and host ID sizes that will meet requirements, try to choose a
-middle-of-the-road option that best anticipates future growth
-requirements. If no combination meets the requirements, the requirements
-have to change!
-
-\protect\hypertarget{ch19s03.html}{}{}
+\begin{keyconcept}
+If there is more than one combination of subnet ID and host ID sizes that will meet requirements,
+try to choose a middle-of-the-road option that best anticipates future growth requirements.
+If no combination meets the requirements, the requirements have to change!
+\end{keyconcept}
+ 
 
 Once you have decided how many bits to use for the subnet ID and how
 many to leave for the host ID, you can determine the custom subnet mask
@@ -284,127 +253,105 @@ the process, remember this: The subnet mask is a 32-bit binary number
 where a one represents each bit that is part of the network ID or subnet
 ID, and a zero represents each bit of the host ID.
 
-\subsection{class C Custom Subnet Mask Calculation Example}
+\subsection{Class C custom subnet mask calculation example}
 
-Refer back to the class C example in the previous section
-(\protect\hyperlink{ch19s02.htmlux5cux23example_of_class_c_subnetting_in_this_pa}{Figure~19-2}).
-Say you decided to use three bits for the subnet ID, leaving five bits
-for the host ID. Here are the steps you will follow to determine the
-custom subnet mask for this network (illustrated in
-\protect\hyperlink{ch19s03.htmlux5cux23determining_the_custom_subnet_mask_for_a}{Figure~19-4}):
+Refer back to the class C example in the previous section (\vref{fig:subnetting-class-c-options}).
+Say you decided%
+   \footnote{There is not much to decide if it is your only option.}
+to use three bits for the subnet ID, leaving five bits for the host ID.
+Here are the steps you will follow to determine the custom subnet mask for this network (illustrated in \cref{fig:determining-custom-subnet-c}):
+
+
+\begin{figure}
+   \centering
+   \includegraphics[width=.8\textwidth]{images/determining-custom-subnet-c.jpg}
+   \caption{Determining the custom subnet mask for a class C network}
+   \label{fig:determining-custom-subnet-c}
+\end{figure}
+
 
 \begin{enumerate}
-\item
-  {\textbf{Determine Default Subnet Mask}} Each of Classes A, B, and C
-  has a default subnet mask, which is the subnet mask for the network
-  prior to subnetting. It has a one for each network ID bit and a zero
-  for each host ID bit. For class C, the subnet mask is 255.255.255.0.
-  In binary, this is:
+   \item
+      \textsc{Determine the default subnet mask}:
+      Each of classes A, B, and C has a default subnet mask, which is the subnet mask for the network prior to subnetting.
+      It has a one for each network ID bit and a zero for each host ID bit.
+      For class C, the subnet mask is 255.255.255.0. In binary, this is:
+      \begin{quote}
+         1111 1111\quad 1111 1111\quad 1111 1111\quad 0000 0000
+      \end{quote}
 
-  \begin{longtable}[]{@{}l@{}}
-  \toprule
-  \endhead
-  11111111 11111111 11111111 00000000\tabularnewline
-  \bottomrule
-  \end{longtable}
-\item
-  {\textbf{Change Leftmost Zeros to Ones for Subnet Bits}} You have
-  decided to use three bits for the subnet ID. The subnet mask must have
-  a one for each of the network ID or subnet ID bits. The network ID
-  bits are already one from the default subnet mask, so, you change the
-  three {\emph{leftmost}} zero bits in the default subnet mask from a 0
-  to 1, as shown in bold here. This results in the following custom
-  subnet mask for the network:
+   \item
+      \textsc{Change the leftmost zeros to ones for the subnet bits}:
+      You have calculated you need three bits for the subnet ID.
+      The subnet mask must have a one for each of the network ID or subnet ID bits.
+      The network ID bits are already one from the default subnet mask, so,
+      you change the three \emph{leftmost} zero bits in the default subnet mask from a 0 to 1, as shown in bold here.
+      This results in the following custom subnet mask for the network:
+      \begin{quote}
+      1111 1111\quad 1111 1111\quad 1111 1111\quad \textbf{000}0 0000
+      \end{quote}
+      
+   \item
+      \textsc{Convert the subnet mask to dotted decimal notation}:
+      You take each of the octets in the subnet mask and convert it to decimal.
+      The result is the custom subnet mask in the form you usually see it: 255.255.255.\textbf{224}.
 
-  \begin{longtable}[]{@{}l@{}}
-  \toprule
-  \endhead
-  11111111 11111111 11111111 {\textbf{111}}00000\tabularnewline
-  \bottomrule
-  \end{longtable}
-\item
-  {\textbf{Convert Subnet Mask to Dotted Decimal Notation}} You take
-  each of the octets in the subnet mask and convert it to decimal. The
-  result is the custom subnet mask in the form you usually see it:
-  255.255.255.224.
-\item
-  {\textbf{Express Subnet Mask in
-  \protect\hypertarget{ch19s03.htmlux5cux23idx-CHP-19-0750}{}{}Slash
-  Notation}} Alternatively, you can express the subnet mask in
-  {\emph{slash notation}}. This is just a slash followed by the number
-  of ones in the subnet mask. 255.255.255.224 is equivalent to /27.
+   \item
+      \textsc{Express the subnet mask in slash notation}:
+      Alternatively, you can express the subnet mask in \emph{slash notation}.
+      This is just a slash followed by the number of ones in the subnet mask: 255.255.255.224 is equivalent to /27.
 \end{enumerate}
 
-\subsection{Class B Custom Subnet Mask Calculation Example}
+
+\subsection{Class B custom subnet mask calculation example}
 
 Now let's do the same example with the class B network (166.113.0.0)
-with five bits for the subnet ID (with a bit less narration this time;
-see
-\protect\hyperlink{ch19s03.htmlux5cux23determining_the_custom_subnet_mask-id001}{Figure~19-5}):
+with five bits for the subnet ID (with a bit less narration this time; see \cref{fig:determining-custom-subnet-b}):
 
 \begin{enumerate}
-\item
-  {\textbf{Determine Default Subnet Mask}} For class B, the subnet mask
-  is 255.255.0.0. In binary, this is:
+   \item
+      \textsc{Determine the default subnet mask}:
+      For class B, the subnet mask is 255.255.0.0. In binary, this is:
+      \begin{quote}
+         1111 1111\quad 1111 1111\quad 0000 0000\quad 0000 0000
+      \end{quote}
 
-  \begin{longtable}[]{@{}l@{}}
-  \toprule
-  \endhead
-  11111111 11111111 00000000 00000000\tabularnewline
-  \bottomrule
-  \end{longtable}
-\item
-  {\textbf{Change Leftmost Zeros to Ones for Subnet Bits}} If you use
-  five bits for the subnet ID, you change the five leftmost zero bits
-  from a 0 to 1, as shown in bold, to give you the binary custom subnet
-  mask, as follows:
+   \item
+      \textsc{Change the leftmost zeros to ones for the subnet bits}:
+      If you use five bits for the subnet ID, you change the five leftmost zero bits from a 0 to 1,
+      as shown in bold, to give you the binary custom subnet mask, as follows:
+      \begin{quote}
+         1111 1111\quad 1111 1111\quad \textbf{0000 0}000\quad 0000 0000
+      \end{quote}
 
-  \begin{longtable}[]{@{}l@{}}
-  \toprule
-  \endhead
-  11111111 11111111 {\textbf{11111}}000 00000000\tabularnewline
-  \bottomrule
-  \end{longtable}
+   \item
+      \textsc{Convert the subnet mask to dotted decimal notation}:
+      You take each of the octets in the subnet mask and convert it to decimal to give you a custom subnet mask of 255.255.\textbf{248}.0.
 
-  \protect\hypertarget{ch19s03.htmlux5cux23determining_the_custom_subnet_mask_for_a}{}{}
-
-  \protect\hypertarget{ch19s03.htmlux5cux23I_mediaobject5_d1e20800}{}{}
-%\includegraphics{httpatomoreillycomsourcenostarchimages287833.png.jpg}
-
-  Figure~19-4.~Determining the custom subnet mask for a class C network
-\item
-  {\textbf{Convert Subnet Mask to Dotted Decimal Notation}} You take
-  each of the octets in the subnet mask and convert it to decimal to
-  give you a custom subnet mask of 255.255.{\textbf{248}}.0.
-\item
-  {\textbf{Express Subnet Mask in Slash Notation}} You can express the
-  subnet mask 255.255.248.0 as /21, since it is 21 ones followed by 11
-  zeros. In other words, its prefix length is 21.
+   \item
+      \textsc{Express the subnet mask in slash notation}:
+      You can express the subnet mask 255.255.248.0 as /21, since it is 21 ones followed by 11 zeros.
+      In other words, its prefix length is 21.
 \end{enumerate}
 
-\protect\hypertarget{ch19s03.htmlux5cux23determining_the_custom_subnet_mask-id001}{}{}
-
-\protect\hypertarget{ch19s03.htmlux5cux23I_mediaobject5_d1e20821}{}{}
-%\includegraphics{httpatomoreillycomsourcenostarchimages287835.png.jpg}
-
-Figure~19-5.~Determining the custom subnet mask for a class B network
-
-
+ 
+\begin{figure}
+   \centering
+   \includegraphics[width=.8\textwidth]{images/determining-custom-subnet-b.jpg}
+   \caption{Determining the custom subnet mask for a class B network}
+   \label{fig:determining-custom-subnet-b}
+\end{figure}
 
 
 \section{Determining the custom subnet mask using subnetting tables}
 
-Now, what could be easier than that? Well, you could simply refer to the
-subnetting summary tables, presented in
-\protect\hyperlink{ch18.html}{Chapter~18}. Find the table for the
-appropriate class, and then find the row that you selected in the
-previous step that matches the number of subnet ID bits you want to use.
+Now, what could be easier than that? Well, you could simply refer to the subnetting summary tables, presented in \protect\hyperlink{ch18.html}{Chapter~18}.
+Find the table for the appropriate class, and then find the row that you selected in the previous step that matches the number of subnet ID bits you want to use.
 You can see the matching subnet mask right there.
 
-(Hey, it's good to know how to do it yourself! You may not always have
-tables to refer to!)
+(Hey, it's good to know how to do it yourself! You may not always have tables to refer to!)
 
-\protect\hypertarget{ch19s04.html}{}{}
+ 
 
 The network ID assigned to the network applies to the entire network.
 This includes all subnets and all hosts in all subnets. Each subnet,
@@ -421,52 +368,40 @@ addresses is to always work in binary form, and then convert to decimal
 later. You will also look at a shortcut for determining addresses in
 decimal directly, which is faster but less conceptually simple.
 
-\subsubsection[Note]{\texorpdfstring{\protect\hypertarget{ch19s04.htmlux5cux23note-78}{}{}Note}{Note}}
+\begin{note}
+I assume in this description that you will be using the all-zeros and all-ones subnet numbers.
+In the original RFC~950 subnetting system, those two subnets are not used, which changes most of the following calculations.
+See \cref{chap:kozierok-ch18} for an explanation.
+\end{note}
 
-{\emph{I assume in this description that you will be using the all-zeros
-and all-ones subnet numbers. In the original RFC 950 subnetting system,
-those two subnets are not used, which changes most of the following
-calculations. See \protect\hyperlink{ch18.html}{Chapter~18} for an
-explanation}}.
 
-You number the subnets starting with 0, and then 1, 2, 3, and so on, up
-to the highest subnet ID that you need. You determine the subnet IDs and
-addresses as follows:
+You number the subnets starting with 0, and then 1, 2, 3, and so on, up to the highest subnet ID that you need.
+You determine the subnet IDs and addresses as follows:
+\begin{description}
+   \item[Subnet ID]
+      This is just the subnet number, and it can be expressed in either binary or decimal form.
+   \item[Subnet address]
+      This is the address formed by taking the address of the network as a whole and substituting the (binary) subnet ID for the subnet ID bits.
+      You need to do this in binary, but only for the octets where there are subnet ID bits;
+      the ones where there are only network ID bits or only host ID bits are left alone.
+\end{description}
+Seem complicated? Let's go back to the examples, and you'll see that it really isn't.
 
-{\textbf{Subnet ID}} This is just the subnet number, and it can be
-expressed in either binary or decimal form.
 
-{\textbf{Subnet Address}} This is the address formed by taking the
-address of the network as a whole and substituting the (binary) subnet
-ID for the subnet ID bits. You need to do this in binary, but only for
-the octets where there are subnet ID bits; the ones where there are only
-network ID bits or only host ID bits are left alone.
+\section{Class C subnet ID and address determination example}
 
-Seem complicated? Let's go back to the examples, and you'll see that it
-really isn't.
+You'll recall the class C example network, 211.77.20.0.
+The network address in binary is as follows:
+\begin{quote}
+1101 0011\quad 0100 1101\quad 0001 0100\quad 0000 0000
+\end{quote}
 
-\section{Class C Subnet ID and Address Determination Example}
+You are subnetting using three bits for the subnet ID, leaving five bits for the host ID.
+Now let's see the network address with the subnet bits in bold:
 
-You'll recall the class C example network, 211.77.20.0. The network
-address in binary is as follows:
-
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-11010011 01001101 00010100 00000000\tabularnewline
-\bottomrule
-\end{longtable}
-
-You are subnetting using three bits for the subnet ID, leaving five bits
-for the host ID. Now let's see the network address with the subnet bits
-in bold:
-
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-11010011 01001101 00010100 {\textbf{000}}00000\tabularnewline
-\bottomrule
-\end{longtable}
+\begin{quote}
+1101 0011\quad 0100 1101\quad 0001 0100\quad \textbf{000}0 0000
+\end{quote}
 
 These are the bits that you substitute with the subnet ID for each
 subnet. Notice that since the first three octets contain network ID
@@ -474,107 +409,95 @@ bits, and the network ID is the same for every subnet, they never
 change. You don't even really need to look at them in binary form,
 though for clarity, you will do so here.
 
-Here's how you determine the subnet IDs and addresses, again, starting
-with 0 (see
-\protect\hyperlink{ch19s04.htmlux5cux23determining_subnet_addresses_for_a_class}{Figure~19-6}):
+Here's how you determine the subnet IDs and addresses, again, starting with~0 (see \cref{fig:class-c-subnet-addresses}):
+\begin{description}
+   \item[Subnet 0]
+      This has a subnet ID of 0, or 000 in binary.
+      To find the address, you start with the network address in binary and substitute 000 for the subnet ID bits.
+      Well gee, those bits are already all zero!
+      What this means is that the address for subnet 0 is the same as the address for the network as a whole: 211.77.20.0.
+      This is always the case: subnet 0 always has the same address as the network.
 
-{\textbf{Subnet 0}} This has a subnet ID of 0, or 000 in binary. To find
-the address, you start with the network address in binary and substitute
-000 for the subnet ID bits. Well gee, those bits are already all zero!
-What this means is that the address for subnet 0 is the same as the
-address for the network as a whole: 211.77.20.0. This is always the
-case: subnet 0 always has the same address as the network.
+   \item[Subnet 1]
+      This has a subnet ID of 1 in decimal or 001 in binary.
+      To find the address, you substitute 001 for the subnet ID bits, which yields the following:
+      \begin{quote}
+         1101 0011\quad 0100 1101\quad 0001 0100\quad \textbf{001}0 0000
+      \end{quote}
+      Converting to decimal, you get 211.77.20.\textbf{32}.
 
-{\textbf{Subnet 1}} This has a subnet ID of 1 in decimal or 001 in
-binary. To find the address, you substitute 001 for the subnet ID bits,
-which yields the following:
+   \item[Subnet 2]
+      This has a subnet ID of 2, or 010 in binary.
+      To find its address, you substitute 010 for the subnet ID bits, to give you the following:
+      \begin{quote}
+         1101 0011\quad 0100 1101\quad 0001 0100\quad \textbf{010}0 0000
+      \end{quote}
+      Converting to decimal, you get 211.77.20.\textbf{64}.
 
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-11010011 01001101 00010100 {\textbf{001}}00000\tabularnewline
-Converting to decimal, you get 211.77.20.32.\tabularnewline
-\bottomrule
-\end{longtable}
+   \item[Subnet 3]
+      This has a subnet ID of 011.
+      As you can see, the first three octets of the address are always 211.77.20.
+      The last octet here is \textbf{011}0~0000, which is 96 in decimal, so the whole address is 211.77.20.96.
 
-{\textbf{Subnet 2}} This has a subnet ID of 2, or 010 in binary. To find
-its address, you substitute 010 for the subnet ID bits, to give you the
-following:
+      Starting to see a pattern here?
+      Yes, the address of any subnet can be found by adding 32 to the last octet of the previous subnet.
+      This pattern occurs for all subnetting choices; the increment depends on how many bits you are using for the subnet ID.
+      Here, the increment is 32, which is $2^5$; 5 is the number of host ID bits left after you took three subnet ID bits.
 
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-11010011 01001101 00010100 {\textbf{010}}00000\tabularnewline
-Which is 211.77.20.64 in binary.\tabularnewline
-\bottomrule
-\end{longtable}
+   \item[Subnet 4]
+      This has a subnet ID of 100.
+      Its address is 211.77.20.128.
 
-{\textbf{Subnet 3}} This has a subnet ID of 011. As you can see, the
-first three octets of the address are always 211.77.20. The last octet
-here is {\textbf{011}}00000, which is 96 in decimal, so the whole
-address is 211.77.20.96.
+   \item[Subnet 5]
+      This has a subnet ID of 101.
+      Its address is 211.77.20.160.
 
-Starting to see a pattern here? Yes, the address of any subnet can be
-found by adding 32 to the last octet of the previous subnet. This
-pattern occurs for all subnetting choices; the increment depends on how
-many bits you are using for the subnet ID. Here, the increment is 32,
-which is 2\textsuperscript{5}; 5 is the number of host ID bits left
-after you took three subnet ID bits.
+   \item[Subnet 6]
+      This has a subnet ID of 110.
+      Its address is 211.77.20.192.
 
-{\textbf{Subnet 4}} This has a subnet ID of 100. Its address is
-211.77.20.128.
+   \item[Subnet 7]
+      This has a subnet ID of 111.
+      Its address is 211.77.20.224.
+\end{description}
+ 
 
-{\textbf{Subnet 5}} This has a subnet ID of 101. Its address is
-211.77.20.160.
-
-{\textbf{Subnet 6}} This has a subnet ID of 110. Its address is
-211.77.20.192.
-
-{\textbf{Subnet 7}} This has a subnet ID of 111. Its address is
-211.77.20.224.
-
-\protect\hypertarget{ch19s04.htmlux5cux23determining_subnet_addresses_for_a_class}{}{}
-
-\protect\hypertarget{ch19s04.htmlux5cux23I_mediaobject5_d1e20949}{}{}
-%\includegraphics{httpatomoreillycomsourcenostarchimages287837.png.jpg}
-
-Figure~19-6.~Determining subnet addresses for a class C network This
-diagram shows each of the eight possible subnets created when you use
-three bits for the subnet ID in a class C network. The binary subnet ID
-is simply substituted for the subnet bits, and the resulting 32-bit
-number is converted to dotted decimal form.
+\begin{figure}
+   \centering
+   \includegraphics[width=\textwidth]{images/class-c-subnet-addresses.jpg}
+   \caption
+      [Determining subnet addresses for a class C network]
+      {Determining subnet addresses for a class C network --
+      This diagram shows each of the eight possible subnets created when you use three bits for the subnet ID in a class C network.
+      The binary subnet ID is simply substituted for the subnet bits, and the resulting 32-bit number is converted to dotted decimal form.}
+   \label{fig:class-c-subnet-addresses}
+\end{figure}
 
 
-{\textbf{KEY CONCEPT}} The subnet addresses in a subnetted network are
-always evenly spaced numerically, with the spacing depending on the
-number of subnet ID bits.
+\begin{keyconcept}
+The subnet addresses in a subnetted network are always evenly spaced numerically, with the spacing depending on the number of subnet ID bits.
+\end{keyconcept}
 
-This example needed only seven subnets, 0 through 6. Subnet 7 would be a
-spare. Notice that the last subnet has the same last octet as the subnet
-mask for the network? That's because I substituted 111 for the subnet ID
-bits, just as in the subnet mask calculation.
+This example needed only seven subnets, 0 through 6.
+Subnet 7 would be a spare.
+Notice that the last subnet has the same last octet as the subnet mask for the network?
+That's because I substituted 111 for the subnet ID bits, just as in the subnet mask calculation.
 
-\section{Class B Subnet ID and Address Determination Example}
 
-Let's look at the other example now, class B network 166.113.0.0. In
-binary this is as follows:
 
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-0100110 01110001 00000000 00000000\tabularnewline
-\bottomrule
-\end{longtable}
+\section{Class B subnet ID and address determination example}
 
-You're using five bits for the subnet ID, leaving 11 host ID bits. The
-network address with the subnet ID bits highlighted is as follows:
+Let's look at the other example now, class B network 166.113.0.0.
+In binary this is as follows:
+\begin{quote}
+1010 0110\quad 0111 0001\quad 0000 0000\quad 0000 0000
+\end{quote}
 
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-0100110 01110001 {\textbf{00000}}000 00000000\tabularnewline
-\bottomrule
-\end{longtable}
+You're using five bits for the subnet ID, leaving 11 host ID bits.
+The network address with the subnet ID bits highlighted is as follows:
+\begin{quote}
+1010 0110\quad 0111 0001\quad \textbf{0000 0}000\quad 0000 0000
+\end{quote}
 
 Here, only the third octet will ever change for the different subnets.
 The first two will always be 166.113, and the last octet will always be
@@ -603,9 +526,9 @@ This is 116.113.8.0 in decimal.\tabularnewline
 {\textbf{Subnet 3}} This has a subnet ID of 00011 and a subnet address
 of 116.113.24.0.
 
-\protect\hypertarget{ch19s04.htmlux5cux23determining_subnet_addresses_for_a-id001}{}{}
+ 
 
-\protect\hypertarget{ch19s04.htmlux5cux23I_mediaobject5_d1e21014}{}{}
+ 
 %\includegraphics{httpatomoreillycomsourcenostarchimages287839.png.jpg}
 
 Figure~19-7.~Determining subnet addresses for a class B network This is
@@ -614,7 +537,7 @@ the same as
 but for a class B network with five subnet ID bits (I have not shown all
 32 subnets, for obvious reasons).
 
-\protect\hypertarget{ch19s04.htmlux5cux23idx-CHP-19-0751}{}{}Again, the
+ Again, the
 pattern here is obvious: You add eight to the third octet to get
 successive addresses. The last subnet here is 31, which has a subnet
 address of 116.113.248.0, which has the same third and fourth octets as
@@ -625,7 +548,7 @@ the subnet mask of 255.255.248.0.
 
 \section{Using subnet address formulas to calculate subnet addresses}
 
-\protect\hypertarget{ch19s04.htmlux5cux23idx-CHP-19-0752}{}{}Since the
+ Since the
 subnet addresses form a pattern, and the pattern depends on the number
 of subnet ID bits, it is possible to express the subnet addresses using
 a single formula for each subnetting option. I have shown these formulas
@@ -706,7 +629,7 @@ This is 6*8 or 48. So subnet address 987654 is 21.120.144.48.
 
 (Don't drink and drive. Don't drink and subnet either.)
 
-\protect\hypertarget{ch19s05.html}{}{}
+ 
 
 Once you know the addresses of each of the subnets in the network, you
 use these addresses as the basis for assigning IP addresses to the
@@ -828,9 +751,9 @@ ones for the host ID. For subnet 0, this would be 211.77.20.31. For
 subnet 6, it would be 211.77.20.223. That's pretty much all there is to
 it.
 
-\protect\hypertarget{ch19s05.htmlux5cux23determining_host_addresses_for_a_class_c}{}{}
+ 
 
-\protect\hypertarget{ch19s05.htmlux5cux23I_mediaobject5_d1e21218}{}{}
+ 
 %\includegraphics{httpatomoreillycomsourcenostarchimages287841.png.jpg}
 
 Figure~19-8.~Determining host addresses for a class C network This
@@ -845,7 +768,7 @@ resulting in a final octet value of 11000010, or 194.
 
 \section{Class B host address determination example}
 
-\protect\hypertarget{ch19s05.htmlux5cux23idx-CHP-19-0753}{}{}You can do
+ You can do
 the same thing for the class B network, naturally. The address of that
 network is 166.113.0.0. Now say you want to define the hosts that go in
 subnet 13. You substitute 13 in binary (01101) for the subnet ID bits to
@@ -876,7 +799,7 @@ of {\emph{S}} for the network's subnet ID bits, and the binary value of
 
 \section{Shortcuts for Computing Host Addresses}
 
-\protect\hypertarget{ch19s05.htmlux5cux23idx-CHP-19-0754}{}{}\protect\hypertarget{ch19s05.htmlux5cux23idx-CHP-19-0755}{}{}As
+  As
 you can see, defining the host IDs is really quite straightforward. If
 you can substitute bits and convert to decimal, you have all you need to
 know. You can also see that, as was the case with defining the subnet
@@ -950,6 +873,3 @@ addresses in a subnet environment:
 \item
   Subnetting is fun! (Okay, okay, sorry\ldots.)
 \end{itemize}
-
-
-
