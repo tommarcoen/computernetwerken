@@ -443,8 +443,7 @@ This is illustrated in \cref{fig:isp-divide-15}.
 \end{figure}
 
 
-The actual process of division might follow the progression described in the following section and illustrated in
-\protect\hyperlink{ch20s04.htmlux5cux23hierarchical_address_division_using_cidr}{Figure~20-4}.
+The actual process of division might follow the progression described in the following section and illustrated in \cref{fig:cidr-hierarchical-division}.
 
 
 
@@ -452,14 +451,9 @@ The actual process of division might follow the progression described in the fol
 
 The ``pie'' is initially cut down the middle by using the single leftmost host ID bit as an extra network bit.
 Here's the network address block, 71.94.0.0/15 in binary, with the leftmost host ID bit shown in bold:
-
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-01000111 0101111{\textbf{0}} 00000000 00000000\tabularnewline
-\bottomrule
-\end{longtable}
-
+\begin{quote}
+0100 0111\quad 0101 111\textbf{0}\quad 0000 0000\quad 0000 0000
+\end{quote}
 
 
 To make the split, you make one network equal to this binary network
@@ -468,47 +462,34 @@ it changed to a one. This creates two subnetworks -- not subnets as in
 the classful sense of the word, but portions of the original
 network -- that I have numbered based on the numeric value of what is
 substituted into the new network ID bits, as follows:
+\begin{itemize}
+   \item Subnetwork 0: 0100 0111\quad 0101 111\textbf{0}\quad 0000 0000\quad 0000 0000
+   \item Subnetwork 1: 0100 0111\quad 0101 111\textbf{1}\quad 0000 0000\quad 0000 0000
+\end{itemize}
 
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-Subnetwork 0: 01000111 0101111{\textbf{0}} 00000000
-00000000\tabularnewline
-Subnetwork 1: 01000111 0101111{\textbf{1}} 00000000
-00000000\tabularnewline
-\bottomrule
-\end{longtable}
-
-Because bit 16 is now also part of the network address, these are /16
-networks, the size of a classful class B network. So the subnetworks are
-as follows:
-
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-Subnetwork 0: 71.94.0.0/16\tabularnewline
-Subnetwork 1: 71.95.0.0/16\tabularnewline
-\bottomrule
-\end{longtable}
-
-You'll notice subnetwork 0 has the same IP address as the larger network
-it came from; this is always true of the subnetwork 0 in a network.
+Because bit 16 is now also part of the network address, these are /16 networks, the size of a classful class B network.
+So the subnetworks are as follows:
+\begin{itemize}
+   \item Subnetwork 0: 71.94.0.0/16
+   \item Subnetwork 1: 71.95.0.0/16
+\end{itemize}
+You'll notice subnetwork 0 has the same IP address as the larger network it came from; this is always true of the subnetwork 0 in a network.
 
 
+\begin{figure}
+   \centering
+   %\includegraphics{httpatomoreillycomsourcenostarchimages287849.png.jpg}
+   \caption{Hierarchical address division using CIDR}
+   \label{fig:cidr-hierarchical-division}
+\end{figure}
 
 
-%\includegraphics{httpatomoreillycomsourcenostarchimages287849.png.jpg}
-
-Figure~20-4.~Hierarchical address division using CIDR
-
-\section{Second Level of Division}
+\section{Second level of division}
 
 Let's say you set aside subnetwork 0 earlier for future ISP allocations.
-You then choose to divide the second subnetwork into four. These you
-will then further subdivide into different sizes to meet the customer's
-needs. To divide into four groups, you need two more bits from the host
-ID of subnetwork 1, as shown here in bold and underlined next to the
-original subnet bit:
+You then choose to divide the second subnetwork into four.
+These you will then further subdivide into different sizes to meet the customer's needs.
+To divide into four groups, you need two more bits from the host ID of subnetwork 1, as shown here in bold and underlined next to the original subnet bit:
 
 \begin{longtable}[]{@{}l@{}}
 \toprule
