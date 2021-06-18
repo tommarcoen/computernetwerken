@@ -11,27 +11,21 @@ tackle the problems in general terms. Some of these issues remain due to
 the use of classes even with subnets.
 
 While development began on version 6 of the Internet Protocol
-(\protect\hypertarget{ch20.htmlux5cux23idx-CHP-20-0756}{}{}IPv6; see
-\protect\hyperlink{pt07.html}{Part~II-4}) and its roomy 128-bit
-addressing system in the mid-1990s, developers recognized that it would
-take many years before widespread deployment of IPv6 would be possible.
-In order to extend the life of IPv4 until the newer version could be
-completed, it was necessary to take a new approach to addressing IPv4
-devices. This new system calls for eliminating the notion of address
-classes entirely, creating a new {\emph{classless addressing}} scheme
-sometimes called {\emph{Classless Inter-Domain Routing
-(CIDR)}}\protect\hypertarget{ch20.htmlux5cux23idx-CHP-20-0757}{}{}.
+(IPv6; see \vref{chap:ipv6}) and its roomy 128-bit
+addressing system in the mid-1990s, developers recognized that it would take many years before widespread deployment of IPv6 would be possible.
+In order to extend the life of IPv4 until the newer version could be completed, it was necessary to take a new approach to addressing IPv4 devices.
+This new system calls for eliminating the notion of address classes entirely, creating a new {\emph{classless addressing}} scheme sometimes called \emph{classless inter-domain routing} (CIDR).
 
 In this chapter, I describe modern classless IP addressing. I begin with
 an overview of the concepts behind classless addressing and the idea
 behind {\emph{supernetting}}, including why it was created and what its
 advantages and disadvantages are. I then define
-\protect\hypertarget{ch20.htmlux5cux23idx-CHP-20-0758}{}{}CIDR and
+CIDR and
 describe how the system works in more detail, including the notation
 used for address blocks. I list each of the CIDR address block sizes and
 show how they relate to the older class A, B, and C networks. I conclude
 with a CIDR addressing example that's similar to the examples in
-\protect\hyperlink{ch19.html}{Chapter~19}, but this one focuses on CIDR
+\cref{chap:kozierok-ch19}, but this one focuses on CIDR
 and is a bit more condensed.
 
 Subnet addressing was an important development in the evolution of IP
@@ -42,7 +36,7 @@ to have its own two-level hierarchy, thereby giving the administrator of
 each network the equivalent of an Internet within the Internet.
 
 When you looked at the advantages of subnetting in
-\protect\hyperlink{ch18.html}{Chapter~18}, you saw that subnetting was
+\cref{chap:kozierok-ch18}, you saw that subnetting was
 local within each organization and invisible to other organizations.
 This is an advantage in that it lets each organization tailor its
 network without other groups having to worry about the details of how
@@ -55,7 +49,7 @@ based on classes.
 \section{The Main Problem with Classful Addressing}
 
 A key weakness of the subnetting system is its low
-\protect\hypertarget{ch20.htmlux5cux23idx-CHP-20-0759}{}{}granularity. A
+granularity. A
 class B address block contains a very large number of addresses
 (65,534), but a class C block has only a relatively small number (254).
 There are many thousands of medium-sized organizations that need more
@@ -99,7 +93,7 @@ as many entries for routers to maintain.
 It was clear that as long as there were only three sizes of networks,
 the allocation efficiency problem could never be properly rectified. The
 solution was to get rid of the classes completely, in favor of a
-\protect\hypertarget{ch20.htmlux5cux23idx-CHP-20-0760}{}{}{\emph{classless}}
+{\emph{classless}}
 allocation scheme. This system would solve both of the main problems
 with classful addressing: inefficient address space use and the
 exponential growth of routing tables.
@@ -124,7 +118,7 @@ Internet, you need to be able to have subnets of different sizes. After
 all, that's one of the primary goals in eliminating the classes. So,
 more accurately, CIDR is an Internet-wide application of not just
 regular one-level subnetting, but of Variable Length Subnet Masking
-(VLSM), introduced in \protect\hyperlink{ch18.html}{Chapter~18}. Just as
+(VLSM), introduced in \cref{chap:kozierok-ch18}. Just as
 VLSM allows you split a network as many times as you want to create
 subnets, sub-subnets, and sub-sub-subnets, CIDR lets you do this with
 the entire Internet, as many times as needed.
@@ -170,9 +164,9 @@ method used on the Internet to subdivide its internal network into
 subnets of arbitrary complexity, without needing a separate subnetting
 mechanism.
 
-\protect\hypertarget{ch20.htmlux5cux23classless_addressing_cidr_solves_the_gra}{}{}
 
-\protect\hypertarget{ch20.htmlux5cux23I_mediaobject6_d1e21463}{}{}
+
+
 %\includegraphics{httpatomoreillycomsourcenostarchimages287843.png.jpg}
 
 Figure~20-1.~Classless addressing (CIDR) solves the granularity problem
@@ -193,7 +187,7 @@ and how many represent the host ID. A bit more care needs to be used in
 setting up routers as well, to make sure that routing is accomplished
 correctly.
 
-\protect\hypertarget{ch20s02.html}{}{}
+
 
 When you first looked at IP addressing in
 \cref{chap:kozierok-ch17}, you saw that IP addresses
@@ -201,7 +195,7 @@ were designed to be divided into a network identifier (network ID) and
 host identifier (host ID). Then, when subnets were introduced, you
 ``stole'' bits from the host ID to create a subnet ID, giving the IP
 address a total of three
-\protect\hypertarget{ch20s02.htmlux5cux23idx-CHP-20-0761}{}{}hierarchical
+hierarchical
 levels. With VLSM, you further subnetted the subnets, taking more bits
 from the host ID to give you a multiple-level hierarchy with
 sub-subnets, sub-sub-subnets, and so forth.
@@ -218,7 +212,7 @@ many different sizes to suit the needs of the organization.
 As the name implies, classless addressing completely eliminates the
 prior notions of classes. There are no more class A, B, and C blocks
 that are divided by the first few bits of the address. Instead, under
-\protect\hypertarget{ch20s02.htmlux5cux23idx-CHP-20-0762}{}{}CIDR, all
+CIDR, all
 Internet blocks can be of arbitrary size. Instead of having all networks
 use 8 (class A), 16 (class B), or 24 (class C) bits for the network ID,
 you can have large networks with, say, 13 bits for the network ID
@@ -229,7 +223,7 @@ bits.
 
 \section{CIDR (slash) notation}
 
-\protect\hypertarget{ch20s02.htmlux5cux23idx-CHP-20-0763}{}{}\protect\hypertarget{ch20s02.htmlux5cux23idx-CHP-20-0764}{}{}You'll
+You'll
 recall that when you used subnetting, you had a problem: Subnetting
 could be done by taking any number of available host ID bits, so how
 would devices know where the line was between the subnet ID and host ID?
@@ -248,7 +242,7 @@ between host ID and network ID. However, for simplicity, under CIDR you
 don't usually work with 32-bit binary subnet masks. Instead, you use
 {\emph{slash notation}}, more properly called {\emph{CIDR notation}}.
 This notation shows the size of the network, sometimes called the
-\protect\hypertarget{ch20s02.htmlux5cux23idx-CHP-20-0765}{}{}{\emph{prefix
+{\emph{prefix
 length}}, by following an IP address with an integer that tells you how
 many bits are used for the network ID (prefix).
 
@@ -257,9 +251,9 @@ many bits are used for the network ID (prefix).
 cannot tell the size of the network ID of an address from the address
 alone. In CIDR, the length of the prefix (network ID) is indicated by
 placing it following a
-\protect\hypertarget{ch20s02.htmlux5cux23idx-CHP-20-0766}{}{}slash after
+slash after
 the address. This is called
-\protect\hypertarget{ch20s02.htmlux5cux23idx-CHP-20-0767}{}{}{\emph{CIDR
+{\emph{CIDR
 notation}}, or {\emph{slash notation}}.
 
 For example, consider the network specification 184.13.152.0/22. The 22
@@ -271,9 +265,9 @@ This sample network provides a total of 1,022 hosts (210--2). The table
 in the following section shows all the different possible network sizes
 that can be configured under CIDR.
 
-\protect\hypertarget{ch20s02.htmlux5cux23cidr_slash_notation_and_its_subnet_mask_}{}{}
 
-\protect\hypertarget{ch20s02.htmlux5cux23I_mediaobject6_d1e21549}{}{}
+
+
 %\includegraphics{httpatomoreillycomsourcenostarchimages287845.png.jpg}
 
 Figure~20-2.~CIDR (slash) notation and its subnet mask equivalent A
@@ -283,7 +277,7 @@ of the address are the network ID. The equivalent subnet mask can be
 calculated by creating a 32-bit number with 22 ones followed by 10
 zeros.
 
-\subsubsection[Note]{\texorpdfstring{\protect\hypertarget{ch20s02.htmlux5cux23note-79}{}{}Note}{Note}}
+\subsubsection[Note]{\texorpdfstring{Note}{Note}}
 
 {\emph{You may recall that under classful subnetting, the bits used for
 the subnet ID did not need to be contiguous. Even though this ability
@@ -307,9 +301,9 @@ Under CIDR, you have many hierarchical levels: You split big blocks into
 smaller blocks, and then still-smaller blocks, and so on. It makes sense
 to manage blocks in a similar hierarchical manner as well. So what
 happens is that
-\protect\hypertarget{ch20s02.htmlux5cux23idx-CHP-20-0768}{}{}IANA/ICANN
+IANA/ICANN
 divides addresses into large blocks, which it distributes to the four
-\protect\hypertarget{ch20s02.htmlux5cux23idx-CHP-20-0769}{}{}{\emph{regional
+{\emph{regional
 Internet registries (RIRs)}}: APNIC, ARIN, LACNIC, and RIPE NCC. These
 then further divide the address blocks and distribute them to
 lower-level national Internet registries (NIRs), local Internet
@@ -364,7 +358,7 @@ assuming that they are operating in a classful environment, they will
 not properly interpret addresses. Since CIDR has now been around for
 more than a decade, this is usually not a problem with modern systems.
 
-\protect\hypertarget{ch20s03.html}{}{}
+
 
 Because CIDR allows you to divide IP addresses into network IDs and host
 IDs along any bit boundary, it allows for the creation of dozens of
@@ -377,7 +371,7 @@ simultaneously. Larger networks are created and subdivided into smaller
 ones.
 
 Since many people are used to looking at IP address
-\protect\hypertarget{ch20s03.htmlux5cux23idx-CHP-20-0770}{}{}blocks in
+blocks in
 terms of their classful sizes, it is common to express CIDR address
 blocks in terms of their classful equivalents. First, at this point it
 should be simple to see that a CIDR /8 network is equal in size to a
@@ -426,7 +420,7 @@ Keep the following things in mind while looking at this table:
   /6 as being 262,144 class C networks.
 \end{itemize}
 
-\protect\hypertarget{ch20s03.htmlux5cux23cidr_address_blocks_and_classful_address}{}{}
+
 
 Table~20-1.~CIDR Address Blocks and Classful Address Equivalents
 
@@ -441,7 +435,7 @@ Prefix Length in Slash Notation
 Equivalent Subnet Mask
 
 \# of Equivalent Classful
-\protect\hypertarget{ch20s03.htmlux5cux23idx-CHP-20-0771}{}{}Addressing
+Addressing
 Networks
 
 ~
@@ -940,7 +934,7 @@ class C
 
 1/64
 
-\protect\hypertarget{ch20s04.html}{}{}
+
 
 The multiple hierarchical levels of CIDR make the technology seem rather
 complicated. However, understanding how CIDR works really is not that
@@ -952,7 +946,7 @@ accomplished, and in the terminology.
 
 To show how CIDR works better, let's take an example that will
 illustrate the power of classless
-\protect\hypertarget{ch20s04.htmlux5cux23idx-CHP-20-0772}{}{}addressing:
+addressing:
 its ability to selectively subdivide a large block of addresses into
 smaller ones that suit the needs of various organizations. Since address
 allocation in CIDR typically starts with larger blocks owned by larger
@@ -1004,9 +998,9 @@ host ID bit as an extra network bit. Here's the network address block,
 \bottomrule
 \end{longtable}
 
-\protect\hypertarget{ch20s04.htmlux5cux23example_of_a_hierarchical_division_of_a_}{}{}
 
-\protect\hypertarget{ch20s04.htmlux5cux23I_mediaobject6_d1e22480}{}{}
+
+
 %\includegraphics{httpatomoreillycomsourcenostarchimages287847.png.jpg}
 
 Figure~20-3.~Example of a hierarchical division of a /15 CIDR address
@@ -1050,9 +1044,9 @@ Subnetwork 1: 71.95.0.0/16\tabularnewline
 You'll notice subnetwork 0 has the same IP address as the larger network
 it came from; this is always true of the subnetwork 0 in a network.
 
-\protect\hypertarget{ch20s04.htmlux5cux23hierarchical_address_division_using_cidr}{}{}
 
-\protect\hypertarget{ch20s04.htmlux5cux23I_mediaobject6_d1e22510}{}{}
+
+
 %\includegraphics{httpatomoreillycomsourcenostarchimages287849.png.jpg}
 
 Figure~20-4.~Hierarchical address division using CIDR

@@ -500,132 +500,116 @@ The network address with the subnet ID bits highlighted is as follows:
 \end{quote}
 
 Here, only the third octet will ever change for the different subnets.
-The first two will always be 166.113, and the last octet will always be
-0. There are 32 possible subnets; I'll list the first few so you can see
-the pattern (refer to
-\protect\hyperlink{ch19s04.htmlux5cux23determining_subnet_addresses_for_a-id001}{Figure~19-7}
-as well):
+The first two will always be 166.113, and the last octet will always be~0.
+There are 32~possible subnets; I'll list the first few so you can see the pattern (refer to \cref{fig:class-b-subnet-addresses} as well):
 
-{\textbf{Subnet 0}} This has a subnet ID of 00000. This means the
-address will be 166.113.0.0, which is the network address, as you would
-expect.
+\begin{description}
+   \item[Subnet 0]
+      This has a subnet ID of 00000.
+      This means the address will be 166.113.0.0, which is the network address, as you would expect.
 
-{\textbf{Subnet 1}} This has a subnet ID of 00001. The address becomes
+   \item[Subnet 1]
+      This has a subnet ID of 00001.
+      The address becomes
+      \begin{quote}
+      1010 0110\quad 0111 0001\quad \textbf{0000 1}000\quad 0000 0000
+      \end{quote}
+      which is 116.113.8.0 in decimal.
+      
+   \item[Subnet 2]
+      This has a subnet ID of 00010, giving an address of 116.113.\textbf{0001 0}000.0 or 116.113.\textbf{16}.0.
 
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-10100110 01110001 {\textbf{00001}}000 00000000\tabularnewline
-This is 116.113.8.0 in decimal.\tabularnewline
-\bottomrule
-\end{longtable}
-
-{\textbf{Subnet 2}} This has a subnet ID of 00010, giving an address of
-116.113.{\textbf{00010}}000.0 or 116.113.16.0.
-
-{\textbf{Subnet 3}} This has a subnet ID of 00011 and a subnet address
-of 116.113.24.0.
-
+   \item[Subnet 3]
+      This has a subnet ID of 00011 and a subnet address of 116.113.\textbf{24}.0.
+\end{description}
  
 
- 
-%\includegraphics{httpatomoreillycomsourcenostarchimages287839.png.jpg}
+\begin{figure}
+   \centering
+   \includegraphics[width=.9\textwidth]{images/class-b-subnet-addresses.jpg}
+   \caption
+      [Determining subnet addresses for a class B network]
+      {Determining subnet addresses for a class B network --
+      This is the same as \cref{fig:class-c-subnet-addresses}, but for a class B network with five subnet ID bits
+      (I have not shown all 32~subnets, for obvious reasons).}
+   \label{fig:class-b-subnet-addresses}
+\end{figure}
 
-Figure~19-7.~Determining subnet addresses for a class B network This is
-the same as
-\protect\hyperlink{ch19s04.htmlux5cux23determining_subnet_addresses_for_a_class}{Figure~19-6},
-but for a class B network with five subnet ID bits (I have not shown all
-32 subnets, for obvious reasons).
-
- Again, the
-pattern here is obvious: You add eight to the third octet to get
-successive addresses. The last subnet here is 31, which has a subnet
-address of 116.113.248.0, which has the same third and fourth octets as
-the subnet mask of 255.255.248.0.
+Again, the pattern here is obvious: You add eight to the third octet to get successive addresses.
+The last subnet here is 31, which has a subnet address of 116.113.248.0, which has the same third and fourth octets as the subnet mask of~255.255.248.0.
 
 
 
 
 \section{Using subnet address formulas to calculate subnet addresses}
 
- Since the
-subnet addresses form a pattern, and the pattern depends on the number
-of subnet ID bits, it is possible to express the subnet addresses using
-a single formula for each subnetting option. I have shown these formulas
-for each of the Classes A, B, and C in the subnetting summary tables in
-\protect\hyperlink{ch18.html}{Chapter~18}. The formulas can be used to
-directly calculate the address of subnet {\emph{N}}, where {\emph{N}} is
-numbered from 0 up to one less than the total number of subnets, as I
-have done earlier.
+Since the subnet addresses form a pattern, and the pattern depends on the number of subnet ID bits, it is possible to express the subnet addresses using
+a single formula for each subnetting option.
+I have shown these formulas for each of the classes A, B, and C in the subnetting summary tables in \cref{chap:kozierok-ch18}.
+The formulas can be used to directly calculate the address of subnet $n$, where $n$ is
+numbered from 0 up to one less than the total number of subnets ($N$), as I have done earlier.
 
-In these formulas, the network ID bits are shown as x., x.y., or x.y.z.
-for the three classes. This just means that the subnet addresses have as
-those octets whatever the numbers are in those octets for the network
-address. In the examples, x.y would be 166.113 for the class B network,
-and x.y.z would be 211.77.20 for the class C network.
+\[n \in \{ 0, 1, \ldots N \} \]
 
-When the number of subnet bits is eight or less, the formula is
-relatively simple, and a calculation is done for only one octet, as a
-multiplication of {\emph{N}}, such as {\emph{N}}*4 or {\emph{N}}*32.
-This is usually the case, since the number of subnets is usually less
-than 256, and it's the case with both of the examples.
+In these formulas, the network ID bits are shown as $x$., $x$.$y$., or $x$.$y$.$z$. for the three classes.
+This just means that the subnet addresses have as those octets whatever the numbers are in those octets for the network address.
+In the examples, $x$.$y$ would be 166.113 for the class B network, and $x$.$y$.$z$ would be 211.77.20 for the class C network.
 
-In the class C network with three subnet ID bits, the formula from the
-table is x.y.z.{\emph{N}}*32. For this network, all subnets are of the
-form 211.77.20.{\emph{N}}*32, with {\emph{N}} going from zero to seven.
-So, subnet 5 is 211.77.20.(5*32), which is 211.77.20.160, as you saw
-before. Similarly, in the class B network with five subnet ID bits, the
-formula is x.y.{\emph{N}}*8.0. In this case, x.y is 166.113. Subnet 26
-would have the address 166.113.(26*8).0, or 166.113.208.0.
+When the number of subnet bits is eight or less, the formula is relatively simple, and a calculation is done for only one octet, as a
+multiplication of $n$, such as $n\times 4$ or $n\times 32$.
+This is usually the case, since the number of subnets is usually less than 256, and it's the case with both of the examples.
 
-This is pretty simple stuff, and it makes the formulas a good shortcut
-for quickly determining subnet addresses, especially when there are many
-subnets. They can also be used in a spreadsheet.
+In the class C network with three subnet ID bits, the formula from the table is $x$.$y$.$z$.$(n\times 32)$.
+For this network, all subnets are of the form 211.77.20.$(n\times 32)$, with $n \in \{ 0, 1, \ldots 7\}$.
+So, subnet 5 is 211.77.20.$(5\times 32)$, which is 211.77.20.160, as you saw before.
+Similarly, in the class B network with five subnet ID bits, the formula is $x$.$y$.$(n\times 8)$.0.
+In this case, $x$.$y$ is 166.113.
+Subnet 26 would have the address 166.113.$(26\times 8)$.0, or 166.113.208.0.
 
-The only place where using the formulas requires a bit of care is when
-the number of subnet bits is nine or more. This means that the subnet
-identifier crosses an octet boundary, and this causes the formula to
-become more complex.
+This is pretty simple stuff, and it makes the formulas a good shortcut for quickly determining subnet addresses, especially when there are many subnets.
+They can also be used in a spreadsheet.
 
-When the number of subnet bits is greater than eight, some of the octets
-are of the form {\emph{N}} divided by an integer, such as {\emph{N}}/8.
-This is an integer division, which means divide {\emph{N}} by 8, keep
-the integer part, and drop the fractional part or remainder. Other
-octets are calculated based on the modulo of {\emph{N}}, shown as
-{\emph{N}}\%8. This is the exact opposite: It means divide {\emph{N}} by
-8, drop the integer, and keep the remainder. For example, 33/5 in
-integer math is 6 (6 with a remainder of 3, drop the remainder, or
-alternately, 6.6, drop the fraction), and 33\%5 is 3 (6 with a remainder
-of 3, drop the 6, keep the remainder).
+The only place where using the formulas requires a bit of care is when the number of subnet bits is nine or more.
+This means that the subnet identifier crosses an octet boundary, and this causes the formula to become more complex.
 
-Let's take as an example the class B network and suppose that for some
-strange reason you decided to use ten bits for the subnet ID instead of
-five. In this case, the formula is x.y.{\emph{N}}/4.(N\%4)*64. Subnet 23
-in this case would have the address 166.113.23/4.(23\%4)*64. The 23/4
-becomes just 5 (the fractional .75 is dropped). 23 modulo 4 is 3, which
-is multiplied by 64 to get 192. So the subnet address is 166.113.5.192.
-Subnet 709 would be 116.113.709/4.(709\%4)*64, which is 116.113.177.64.
+When the number of subnet bits is greater than eight, some of the octets are of the form $n$ divided by an integer, such as $n/8$.
+This is an integer division, which means divide $n$ by 8, keep the integer part, and drop the fractional part or remainder.
+Other octets are calculated based on the modulo of $n$, shown as $n\mod 8$ (or $n$\,\%\,8).
+This is the exact opposite: It means divide $n$ by 8, drop the integer, and keep the remainder.
+For example, $33/5$ in integer math is 6 (6 with a remainder of 3, drop the remainder, or alternately, 6.6, drop the fraction),
+and $33\mod 5 = 3$ (6 with a remainder of 3, drop the 6, keep the remainder).
+
+Let's take as an example the class B network and suppose that for some strange reason you decided to use ten bits for the subnet ID instead of five.
+In this case, the formula is $x$.$y$.$(n/4)$.$(n\mod 4 \times 64)$.
+Subnet 23
+in this case would have the address 166.113.$(23/4)$.$(23\mod 4\times 64)$.
+The $23/4$ becomes just 5 (the fractional .75 is dropped) and $23 \mod 4 = 3$, which is multiplied by 64 to get 192.
+So the subnet address is 166.113.5.192.
+Subnet 709 would be 116.113.$(709/4)$.$(709\mod 4\times 64)$, which is 116.113.177.64.
 
 Okay, now for the real fun! If you subnet a class A address using more
 than 16 bits for the subnet ID, you are crossing {\emph{two}} octet
-boundaries, and the formulas become very \ldots{} interesting, involving
-both integer division {\emph{and}} modulo. Suppose you were in charge of
-class A address 21.0.0.0 and decide to subnet it. However, you sat down
-to do this after having had a few stiff ones at the office holiday
-party, so your judgment is a bit impaired. You decide that it would be a
-great idea to choose 21 bits for the subnet ID, since you like the
-number 21. This gives you a couple million subnets.
+boundaries, and the formulas become very\ldots{} interesting, involving both integer division \emph{and} modulo.
+Suppose you were in charge of class A address 21.0.0.0 and decide to subnet it.
+However, you sat down to do this after having had a few stiff ones at the office holiday party, so your judgment is a bit impaired.
+You decide that it would be a great idea to choose 21 bits for the subnet ID, since you like the number 21.
+This gives you a couple million subnets.
 
-The formula for subnet addresses in this case is rather long and
-complicated: x.{\emph{N}}/8192.({\emph{N}}/32)\%256.({\emph{N}}\%32)*8.
-Yikes. Well, this is a bit involved -- so much so that it might be easier
+The formula for subnet addresses in this case is rather long and complicated:
+
+\[ x \quad.\quad n/8192 \quad.\quad (n/32)\mod 256 \quad.\quad (n\mod 32)\times 8 \]
+
+Yikes.
+Well, this is a bit involved -- so much so that it might be easier
 to just take a subnet number and do it in binary, the long way. But
 let's take an example and see how it works for, say, subnet 987654. The
 first octet is 21. The second octet is 987654/8192, integer division.
-This is 120. The third octet is (987654/32)\%256. The result of the
-division is 30864 (you drop the fraction). Then you take 30864\%256,
-which yields a remainder of 144. The fourth octet is (987654\%32)*8.
-This is 6*8 or 48. So subnet address 987654 is 21.120.144.48.
+This is 120. The third octet is $(987654/32)\mod 256$.
+The result of the division is 30864 (you drop the fraction).
+Then you take $30864\mod 256$, which yields a remainder of 144.
+The fourth octet is $(987654\mod 32)\times 8$.
+This is $6\times 8 = 48$.
+So subnet address 987654 is 21.120.144.48.
 
 (Don't drink and drive. Don't drink and subnet either.)
 
@@ -651,17 +635,12 @@ emerges. You'll look at those near the end of the chapter.
 
 \section{Class C host address determination example}
 
-Let's start with the class C example again, 211.77.20.0, which you
-divided into eight subnets using three subnet bits. Here's how the
-address appears with the subnet bits shown in bold, and the host ID bits
-shown in italics:
+Let's start with the class C example again, 211.77.20.0, which you divided into eight subnets using three subnet bits.
+Here's how the address appears with the subnet bits shown in bold, and the host ID bits shown in italics:
 
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-11010011 01001101 00010100 {\textbf{000}}{00000}\tabularnewline
-\bottomrule
-\end{longtable}
+\begin{quote}
+1101 0011\quad 0100 1101\quad 0001 0100\quad \textbf{000}\textit{0 0000}
+\end{quote}
 
 The first subnet is subnet 0, which has all zeros for those subnet bits,
 and thus the same address as the network as a whole: 211.77.20.0. You
@@ -670,117 +649,82 @@ the host IDs. (Remember that you don't start with zero here because for
 the host ID, the all-zeros and all-ones binary patterns have special
 meaning). So it goes like this:
 
-The first host address has the number 1 for the host ID, or 00001 in
-binary. So it is as follows:
-
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-11010011 01001101 00010100 {\textbf{000}}{00001}\tabularnewline
-\bottomrule
-\end{longtable}
-
+The first host address has the number 1 for the host ID, or 00001 in binary.
+So it is as follows:
+\begin{quote}
+1101 0011\quad 0100 1101\quad 0001 0100\quad \textbf{000}\textit{0 0001}
+\end{quote}
 In decimal, this is 211.77.20.1.
 
-The second host address has the number 2 for the host ID, or 00010 in
-binary. Its binary value is as follows:
-
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-11010011 01001101 00010100 {\textbf{000}}{00010}\tabularnewline
-\bottomrule
-\end{longtable}
-
+The second host address has the number 2 for the host ID, or 00010 in binary.
+Its binary value is as follows:
+\begin{quote}
+1101 0011\quad 0100 1101\quad 0001 0100\quad \textbf{000}\textit{0 0010}
+\end{quote}
 In decimal, this is 211.77.20.2.
 
-I'm sure you get the picture already; the third host will be
-211.77.20.3, the fourth 211.77.20.4, and so on. There is a maximum of 30
-hosts in each subnet, as you saw earlier. So the last host in this
-subnet will be found by substituting 30 (11110 in binary) for the host
-ID bits, resulting in a decimal address of 211.77.20.30.
+I'm sure you get the picture already; the third host will be 211.77.20.3, the fourth 211.77.20.4, and so on.
+There is a maximum of 30 hosts in each subnet, as you saw earlier.
+So the last host in this subnet will be found by substituting 30 (11110 in binary) for the host ID bits, resulting in a decimal address of 211.77.20.30.
 
-You can do the same thing for each of the other subnets; the only thing
-that changes is the values in the subnet ID bits. Let's take subnet 6,
-for example. It has 110 for the subnet bits instead of 000. So its
-subnet base address is 211.77.20.192, or
+You can do the same thing for each of the other subnets; the only thing that changes is the values in the subnet ID bits.
+Let's take subnet 6, for example.
+It has 110 for the subnet bits instead of 000.
+So its subnet base address is 211.77.20.192, or
+\begin{quote}
+1101 0011\quad 0100 1101\quad 0001 0100\quad \textbf{110}\textit{0 0000}
+\end{quote}
 
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-11010011 01001101 00010100 {\textbf{110}}{00000}\tabularnewline
-\bottomrule
-\end{longtable}
-
-You assign hosts to this subnet by substituting 00001, then 00010, then
-00011 for the host ID bits as shown earlier. Let's take the hosts one at
-a time:
+You assign hosts to this subnet by substituting 00001, then 00010, then 00011 for the host ID bits as shown earlier.
+Let's take the hosts one at a time:
 
 The first host address is as follows:
-
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-11010011 01001101 00010100 {\textbf{110}}{00001}\tabularnewline
-\bottomrule
-\end{longtable}
-
+\begin{quote}
+1101 0011\quad 0100 1101\quad 0001 0100\quad \textbf{110}\textit{0 0001}
+\end{quote}
 or 211.77.20.193.
 
 The second host address is
-
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-11010011 01001101 00010100 {\textbf{110}}{00010}\tabularnewline
-\bottomrule
-\end{longtable}
-
+\begin{quote}
+1101 0011\quad 0100 1101\quad 0001 0100\quad \textbf{110}\textit{0 0010}
+\end{quote}
 or 211.77.20.194.
 
-And so on, all the way up to the last host in the subnet, which is
-211.77.20.222.
-\protect\hyperlink{ch19s05.htmlux5cux23determining_host_addresses_for_a_class_c}{Figure~19-8}
-shows graphically how subnet and host addresses are calculated for this
-sample network.
+And so on, all the way up to the last host in the subnet, which is 211.77.20.222.
+\Cref{fig:class-c-host-addresses} shows graphically how subnet and host addresses are calculated for this sample network.
 
-One more address you may wish to calculate is the broadcast address for
-the subnet. This is one of the special cases, as discussed in
-\protect\hyperlink{ch18.html}{Chapter~18}, found by substituting all
-ones for the host ID. For subnet 0, this would be 211.77.20.31. For
-subnet 6, it would be 211.77.20.223. That's pretty much all there is to
-it.
+One more address you may wish to calculate is the broadcast address for the subnet.
+This is one of the special cases, as discussed in \cref{chap:kozierok-ch18}, found by substituting all ones for the host ID.
+For subnet 0, this would be 211.77.20.31.
+For subnet 6, it would be 211.77.20.223.
+That's pretty much all there is to it.
 
- 
 
- 
-%\includegraphics{httpatomoreillycomsourcenostarchimages287841.png.jpg}
+\begin{figure}
+   \centering
+   \includegraphics{images/class-c-host-addresses.jpg}
+   \caption
+      [Determining host addresses for a class C network]
+      {Determining host addresses for a class C network --
+      This diagram shows how both subnet addresses and host addresses are determined in a two-step process.
+      The subnet addresses are found by substituting subnet ID values (shown in bold) for the subnet ID bits of the network.
+      Then, for any given subnet address, you can determine a host address by substituting a host number (shown in bold and italicized)
+      for the host ID bits within that subnet.
+      So, for example, host 2 in subnet 6 has 110 for the subnet ID and 00010 for the host ID, resulting in a final octet value of 11000010, or 194.}
+   \label{fig:class-c-host-addresses}
+\end{figure}
 
-Figure~19-8.~Determining host addresses for a class C network This
-diagram shows how both subnet addresses and host addresses are
-determined in a two-step process. The subnet addresses are found by
-substituting subnet ID values (shown in bold) for the subnet ID bits of
-the network. Then, for any given subnet address, you can determine a
-host address by substituting a host number (shown in bold and
-italicized) for the host ID bits within that subnet. So, for example,
-host 2 in subnet 6 has 110 for the subnet ID and 00010 for the host ID,
-resulting in a final octet value of 11000010, or 194.
 
 \section{Class B host address determination example}
 
- You can do
-the same thing for the class B network, naturally. The address of that
-network is 166.113.0.0. Now say you want to define the hosts that go in
-subnet 13. You substitute 13 in binary (01101) for the subnet ID bits to
-get the following subnet address, which is shown with the subnet ID bits
-in bold and the host ID bits in italics:
-
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-10100110 01110001 {\textbf{01101}}{000 00000000}\tabularnewline
-\bottomrule
-\end{longtable}
+You can do the same thing for the class B network, naturally.
+The address of that network is 166.113.0.0.
+Now say you want to define the hosts that go in subnet 13.
+You substitute 13 in binary (01101) for the subnet ID bits to get the following subnet address,
+which is shown with the subnet ID bits in bold and the host ID bits in italics:
+\begin{quote}
+1010 0110\quad 0111 0001\quad \textbf{0110 1}\textit{000\quad 0000 0000}
+\end{quote}
 
 This is the subnet address 166.113.104.0. Now you have 11 bits of host
 ID, so you can have a maximum of 2,046 hosts. The first is found by
@@ -788,19 +732,19 @@ substituting 000 00000001 for the host ID bits, which gives an address
 of 166.113.104.1. The second host is 166.113.104.2, and so on. The last
 is found by substituting 111 11111110, which gives an address of
 166.113.111.254. Note that since the host ID bits extend over two
-octets, two octets change as you increment the host ID, unlike the Class
-C example. The broadcast address is 166.113.111.255.
+octets, two octets change as you increment the host ID, unlike the class~C example. The broadcast address is 166.113.111.255.
+
+\begin{keyconcept}
+In a subnetted network, the address of Host $H$ within subnet number $S$ is found by
+plugging in the binary value of $S$ for the network's subnet ID bits, and the binary value of
+$H$ for the subnet's host ID bits.
+\end{keyconcept}
 
 
-{\textbf{KEY CONCEPT}} In a subnetted network, the address of Host H
-within subnet number {\emph{S}} is found by plugging in the binary value
-of {\emph{S}} for the network's subnet ID bits, and the binary value of
-{\emph{H}} for the subnet's host ID bits.
 
-\section{Shortcuts for Computing Host Addresses}
+\section{Shortcuts for computing host addresses}
 
-  As
-you can see, defining the host IDs is really quite straightforward. If
+As you can see, defining the host IDs is really quite straightforward. If
 you can substitute bits and convert to decimal, you have all you need to
 know. You can also see that, as was the case with defining the subnet
 addresses, there are patterns that you can use in defining host IDs and
@@ -812,46 +756,41 @@ brave.
 
 The following are some of the shortcuts you can use in determining host
 IP addresses in a subnet environment:
+\begin{description}
+   \item[First host address]
+      \emph{The first host address is always the subnet address with the last octet incremented by 1}.
+      So in the class C example, subnet 3's base address is 211.77.20.96.
+      The first host address in subnet 3 is thus 211.77.20.97.
 
-{\textbf{First Host Address}} {\emph{The first host address is always
-the subnet address with the last octet incremented by 1}}. So in the
-class C example, subnet 3's base address is 211.77.20.96. The first host
-address in subnet 3 is thus 211.77.20.97.
+   \item[Subsequent host addresses]
+      After you find the first host address, to get the next one, you just add one to the last octet of the previous address.
+      If this makes the last octet 256 (which can happen only if there are more than eight host ID bits),
+      you ``wrap around'' this to zero and increment the third octet.
 
-{\textbf{Subsequent Host Addresses}} After you find the first host
-address, to get the next one, you just add one to the last octet of the
-previous address. If this makes the last octet 256 (which can happen
-only if there are more than eight host ID bits), you ``wrap around'' this
-to zero and increment the third octet.
+   \item[Directly calculating host addresses]
+      If the number of host ID bits is eight or less, you can find host $h$'s address by addin $h$ to the last octet's decimal value.
+      For example, in the class C example, subnet 3's base address is 211.77.20.96.
+      Therefore, host 23 in this subnet has an address of 211.77.20.119.
+      If there are more than eight bits in the host ID, this works for only the first 255 hosts,
+      after which you need to wrap around and increase the value of the third octet.
+      Consider again subnet 13 in the class B example, which has a base address of 166.113.104.0.
+      Host 214 on this subnet has address 166.113.104.0, but host 314 isn't 166.113.104.314.
+      It is 166.113.105.58 (host 255 is 166.113.104.255, then host 256 is 166.113.105.0, and you count up 58 more ($314-256$) to get to 314, 166.113.105.58).
 
-{\textbf{Directly Calculating Host Addresses}} If the number of host ID
-bits is eight or less, you can find host {\emph{N}}'s address by adding
-{\emph{N}} to the last octet's decimal value. For example, in the Class
-C example, subnet 3's base address is 211.77.20.96. Therefore, host 23
-in this subnet has an address of 211.77.20.119. If there are more than
-eight bits in the host ID, this works for only the first 255 hosts,
-after which you need to wrap around and increase the value of the third
-octet. Consider again subnet 13 in the class B example, which has a base
-address of 166.113.104.0. Host 214 on this subnet has address
-166.113.104.0, but host 314 isn't 166.113.104.314. It is 166.113.105.58
-(host 255 is 166.113.104.255, then host 256 is 166.113.105.0, and you
-count up 58 more (314--256) to get to 314, 166.113.105.58).
+   \item[Range of host addresses]
+      For a range of hosts for any subnet, the first address is the base address of subnet with last octet incremented by one.
+      The last address is the base address of \emph{next subnet after this one}, less two in the last octet
+      (which may require changing a 0 in the last octet to 254 and reducing the value of the third octet by 1).
+      For example, consider subnet 17 in the class B example.
+      Its subnet address is 166.113.136.0.
+      The address of subnet 18 is 166.113.144.0.
+      So the range of hosts for subnet 17 is 166.113.136.1 to 166.113.143.254.
 
-{\textbf{Range of Host Addresses}} For a range of hosts for any subnet,
-the first address is the base address of subnet with last octet
-incremented by one. The last address is the base address of {\emph{next
-subnet after this one}}, less two in the last octet (which may require
-changing a 0 in the last octet to 254 and reducing the value of the
-third octet by 1). For example, consider subnet 17 in the class B
-example. Its subnet address is 166.113.136.0. The address of subnet 18
-is 166.113.144.0. So the range of hosts for subnet 17 is 166.113.136.1
-to 166.113.143.254.
-
-{\textbf{Broadcast Address}} {\emph{The broadcast address for a subnet
-is always one less than the base address of the subsequent subnet}}. Or
-alternatively, one more than the last real host address of the subnet.
-So for subnet 17 in the class B example, the broadcast address is
-166.113.143.255.
+   \item[Broadcast address]
+      \emph{The broadcast address for a subnet is always one less than the base address of the subsequent subnet}.
+      Or alternatively, one more than the last real host address of the subnet.
+      So for subnet 17 in the class B example, the broadcast address is 166.113.143.255.
+\end{description}
 
 Did I just confuse you? Well, remember that these are shortcuts, and
 sometimes when you take a shortcut, you get lost. Just kidding; it's
