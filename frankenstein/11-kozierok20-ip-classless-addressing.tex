@@ -489,107 +489,68 @@ You'll notice subnetwork 0 has the same IP address as the larger network it came
 Let's say you set aside subnetwork 0 earlier for future ISP allocations.
 You then choose to divide the second subnetwork into four.
 These you will then further subdivide into different sizes to meet the customer's needs.
-To divide into four groups, you need two more bits from the host ID of subnetwork 1, as shown here in bold and underlined next to the original subnet bit:
+To divide into four groups, you need two more bits from the host ID of subnetwork 1, as shown here in bold and italics next to the original subnet bit:
+\begin{quote}
+0100 0111\quad 0101 111\textbf{1 \textit{00}}00 0000\quad 0000 0000
+\end{quote}
 
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-01000111 0101111{\textbf{1 {00}}}000000 00000000\tabularnewline
-\bottomrule
-\end{longtable}
-
-These two bits are replaced by the patterns 00, 01, 10, and 11 to get
-four sub-subnetworks. They will be /18 networks, since you took two
-extra bits from the host ID of a /16 as shown here:
-
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-Sub-subnetwork 1-0: 01000111 0101111{\textbf{1 {00}}}000000 00000000
-(71.95.0.0/18)\tabularnewline
-Sub-subnetwork 1-1: 01000111 0101111{\textbf{1 {01}}}000000 00000000
-(71.95.64.0/18)\tabularnewline
-Sub-subnetwork 1-2: 01000111 0101111{\textbf{1 {10}}}000000 00000000
-(71.95.128.0/18)\tabularnewline
-Sub-subnetwork 1-3: 01000111 0101111{\textbf{1 {11}}}000000 00000000
-(71.95.192.0/18)\tabularnewline
-\bottomrule
-\end{longtable}
-
+These two bits are replaced by the patterns 00, 01, 10, and 11 to get four sub-subnetworks.
+They will be /18 networks, since you took two extra bits from the host ID of a /16 as shown here:
+\begin{itemize}
+   \item Sub-subnetwork 1-0: 0100 0111\quad 0101 111\textbf{1 \textit{00}}00 0000\quad 0000 0000 (71.95.0.0/18)
+   \item Sub-subnetwork 1-1: 0100 0111\quad 0101 111\textbf{1 \textit{01}}00 0000\quad 0000 0000 (71.95.64.0/18)
+   \item Sub-subnetwork 1-2: 0100 0111\quad 0101 111\textbf{1 \textit{10}}00 0000\quad 0000 0000 (71.95.128.0/18)
+   \item Sub-subnetwork 1-3: 0100 0111\quad 0101 111\textbf{1 \textit{11}}00 0000\quad 0000 0000 (71.95.192.0/18)
+\end{itemize}
 Each of these has 16,382 addresses.
 
 
 
 
-\section{Third Level of Division}
+\section{Third level of division}
 
 You now take each of the four /18 networks and further subdivide it. You
 want to make each of these contain a number of blocks of different sizes
 corresponding to the potential customers. One way to do this would be as
 follows:
+\begin{description}
+   \item[Larger organizations]
+      Customers needing up to 510 addresses require a /23 network.
+      You divide sub-subnetwork 1-0, 71.95.0.0/18 by taking five bits from the host ID field:
+      \begin{quote}
+      0100 0111\quad 0101 111\textbf{1 \textit{00}}\emph{00 000}0\quad 0000 0000
+      \end{quote}
+      You substitute into these five bits 00000, 00001, 00010 and so on, giving you 32 different /23 networks in this block,
+      each containing nine bits for the host ID, for 510 hosts.
+      The first will be sub-sub-subnetwork 1-0-0, 71.95.0.0/23; the second sub-sub-subnetwork 1-0-1, 71.95.2.0/23;
+      the last will be sub-sub-subnetwork 1-0-31: 71.95.62.0/23.
 
-{\textbf{Larger Organizations}} Customers needing up to 510 addresses
-require a /23 network. You divide sub-subnetwork 1-0, 71.95.0.0/18 by
-taking five bits from the host ID field:
+   \item[Medium-sized organizations]
+      For customers needing up to 254 addresses, you divide sub-subnetwork 1-1, 71.95.64.0/18, by taking six bits from the host ID field:
+      \begin{quote}
+      0100 0111\quad 0101 111\textbf{1 \textit{01}}\emph{00 0000}\quad 0000 0000
+      \end{quote}
+      This gives you 64 different /24 networks.
+      The first will be sub-sub-subnetwork 1-1-0, 71.95.64.0/24, the second sub-sub-subnetwork 1-1-1, 71.95.65.0/24, and so on.
 
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-01000111 0101111{\textbf{1 {00}}}{{00000}}0 00000000\tabularnewline
-\bottomrule
-\end{longtable}
+   \item[Smaller organizations]
+      For customers with up to 126 hosts, you divide sub-subnetwork 1-2, 71.95.128.0/18, by taking seven bits from the host ID field, as follows:
+      \begin{quote}
+      0100 0111\quad 0101 111\textbf{1 \textit{10}}\emph{00 0000\quad 0}000 0000
+      \end{quote}
 
-You substitute into these five bits 00000, 00001, 00010 and so on,
-giving you 32 different /23 networks in this block, each containing nine
-bits for the host ID, for 510 hosts. The first will be
-sub-sub-subnetwork 1-0-0, 71.95.0.0/23; the second sub-sub-subnetwork
-1-0-1, 71.95.2.0/23; the last will be sub-sub-subnetwork 1-0-31:
-71.95.62.0/23.
+      Seven bits allow 128 of these /25 networks within the /18 block.
+      The first will be 71.95.128.0/25, the second 71.95.128.128/25, the third 71.95.129.0/25, and so on.
 
-{\textbf{Medium-Sized Organizations}} For customers needing up to 254
-addresses, you divide sub-subnetwork 1-1, 71.95.64.0/18, by taking six
-bits from the host ID field:
-
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-01000111 0101111{\textbf{1 {01}}}{{000000}} 00000000\tabularnewline
-\bottomrule
-\end{longtable}
-
-This gives you 64 different /24 networks. The first will be
-sub-sub-subnetwork 1-1-0, 71.95.64.0/24, the second sub-sub-subnetwork
-1-1-1, 71.95.65.0/24, and so on.
-
-{\textbf{Smaller Organizations}} For customers with up to 126 hosts, you
-divide sub-subnetwork 1-2, 71.95.128.0/18, by taking seven bits from the
-host ID field, as follows:
-
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-01000111 0101111{\textbf{1}} {\textbf{{10}}}{{000000
-0}}0000000\tabularnewline
-\bottomrule
-\end{longtable}
-
-Seven bits allow 128 of these /25 networks within the /18 block. The
-first will be 71.95.128.0/25, the second 71.95.128.128/25, the third
-71.95.129.0/25, and so on.
-
-{\textbf{Very Small Organizations}} For customers with up to 60 hosts,
-you divide sub-subnetwork 1-3, 71.95.192.0/18, by taking eight bits from
-the host ID field:
-
-\begin{longtable}[]{@{}l@{}}
-\toprule
-\endhead
-01000111 0101111{\textbf{1 {11}}}{{000000}} {{00}}000000\tabularnewline
-\bottomrule
-\end{longtable}
-
-This gives you 256 different /26 networks within the /18 block. The
-first will be 71.95.192.0/26, the second 71.95.192.64/26, and so on.
+   \item[Very small organizations]
+      For customers with up to 60 hosts, you divide sub-subnetwork 1-3, 71.95.192.0/18, by taking eight bits from the host ID field:
+      \begin{quote}
+      0100 0111\quad 0101 111\textbf{1 \textit{11}}\emph{00 0000\quad 00}00 0000
+      \end{quote}
+      
+      This gives you 256 different /26 networks within the /18 block.
+      The first will be 71.95.192.0/26, the second 71.95.192.64/26, and so on.
+\end{description}
 
 This example shows only one of many different ways to slice up this pie.
 The ISP might decide that creating four different sizes of customer
