@@ -1,58 +1,40 @@
 \chapter{IP routing}
 \label{chap:ip-routing}
 
-It's time now to turn our focus toward the core topic of the ubiquitous IP
-routing process. It's integral to networking because it pertains to all
-routers and configurations that use it, which is easily the lion's
-share. IP routing is basically the process of moving packets from one
-network to another network using routers. And by routers, I mean Cisco
-routers, of course! However, the terms \emph{router} and \emph{layer 3
-device} are interchangeable, and throughout this chapter when I use the
-term \emph{router}, I am referring to any layer 3 device.
+It's time now to turn our focus toward the core topic of the ubiquitous IP routing process.
+It's integral to networking because it pertains to all routers and configurations that use it, which is easily the lion's share.
+IP routing is basically the process of moving packets from one network to another network using routers.
+%And by routers, I mean Cisco routers, of course!
+However, the terms \emph{router} and \emph{layer 3 device} are interchangeable, and throughout this chapter when I use the term \emph{router},
+I am referring to any layer 3 device.
 
-Before jumping into this chapter, I want to make sure you understand the
-difference between a \emph{routing protocol} and a \emph{routed
-protocol}. Routers use routing protocols to dynamically find all
-networks within the greater internetwork and to ensure that all routers
-have the same routing table. Routing protocols are also employed to
-determine the best path a packet should take through an internetwork to
-get to its destination most efficiently. RIP, RIPv2, EIGRP, and OSPF are
-great examples of the most common routing protocols.
+Before jumping into this chapter, I want to make sure you understand the difference between a \emph{routing protocol} and a \emph{routed protocol}.
+Routers use routing protocols to dynamically find all networks within the greater internetwork and to ensure that all routers have the same routing table.
+Routing protocols are also employed to determine the best path a packet should take through an internetwork t get to its destination most efficiently.
+RIP, RIPv2, EIGRP, and OSPF are great examples of the most common routing protocols.
 
-Once all routers know about all networks, a routed protocol can be used
-to send user data (packets) through the established enterprise. Routed
-protocols are assigned to an interface and determine the method of
-packet delivery. Examples of routed protocols are IP and IPv6.
+Once all routers know about all networks, a routed protocol can be used to send user data (packets) through the established enterprise.
+Routed protocols are assigned to an interface and determine the method of packet delivery.
+Examples of routed protocols are IPv4 and IPv6.
 
-I'm pretty confident I don't have to underscore how crucial it is for
-you to have this chapter's material down to a near instinctive level. IP
-routing is innately what Cisco routers do, and they do it very well, so
-having a firm grasp of the fundamentals and basics of this topic is
-vital if you want to excel during the exam and in a real-world
-networking environment as well!
+I'm pretty confident I don't have to underscore how crucial it is for you to have this chapter's material down to a near instinctive level.
+IP routing is innately what routers do, and they do it very well,
+so having a firm grasp of the fundamentals and basics of this topic is vital if you want to excel during the exam and in a real-world networking environment as well!
 
-In this chapter, I'm going to show you how to configure and verify IP
-routing with Cisco routers and guide you through these five key
-subjects:
+In this chapter, I'm going to show you how to configure and verify IP routing with Cisco routers and guide you through these five key subjects:
+\begin{itemize}
+\item routing basics
+\item the IP routing process
+\item static routing
+\item default routing
+\item dynamic routing
+\end{itemize}
 
-\begin{enumerate}
-\tightlist
-\item
-  Routing basics
-\item
-  The IP routing process
-\item
-  Static routing
-\item
-  Default routing
-\item
-  Dynamic routing
-\end{enumerate}
+I want to start by nailing down the basics of how packets actually move through an internetwork, so let's get started!
 
-I want to start by nailing down the basics of how packets actually move
-through an internetwork, so let's get started!
 
-\section{Routing Basics}
+
+\section{Routing basics}
 
 Once you create an internetwork by connecting your WANs and LANs to a
 router, you'll need to configure logical network addresses, like IP
@@ -72,19 +54,13 @@ is to route traffic to all the networks in your internetwork, but this
 is rarely the case! So here's an important list of the minimum factors a
 router must know to be able to effectively route packets:
 
-\begin{enumerate}
-\tightlist
-\item
-  Destination address
-\item
-  Neighbor routers from which it can learn about remote networks
-\item
-  Possible routes to all remote networks
-\item
-  The best route to each remote network
-\item
-  How to maintain and verify routing information
-\end{enumerate}
+\begin{itemize}
+\item destination address
+\item neighbor routers from which it can learn about remote networks
+\item possible routes to all remote networks
+\item the best route to each remote network
+\item how to maintain and verify routing information
+\end{itemize}
 
 The router learns about remote networks from neighboring routers or from
 an administrator. The router then builds a routing table, which is
@@ -113,24 +89,21 @@ simple example that demonstrates how a router uses the routing table to
 route packets out of an interface. We'll be going into a more detailed
 study of the process soon, but I want to show you something called the
 ``longest match rule'' first. With it, IP will scan a routing table to
-find the longest match as compared to the destination address of a
-packet. Let's take a look at
-\protect\hyperlink{c09.xhtmlux5cux23figure9-1}{Figure 9.1} to get a
-picture of this process.
+find the longest match as compared to the destination address of a packet.
+Let's take a look at \cref{fig:simple-routing-example} to get a picture of this process.
 
-\protect\hypertarget{c09.xhtmlux5cux23Page_360}{}{}
 
 \begin{figure}
-\centering
-%\includegraphics{images/c09f001.jpg}
-\caption{{\protect\hyperlink{c09.xhtmlux5cux23figureanchor9-1}{\textbf{FIGURE
-9.1}} A simple routing example}}
+   \centering
+   \includegraphics[width=.5\textwidth]{images/c09f001.jpg}
+   \caption{A simple routing example}
+   \label{fig:simple-routing-example}
 \end{figure}
 
-\protect\hyperlink{c09.xhtmlux5cux23figure9-1}{Figure 9.1} shows a
-simple network. Lab\_A has four interfaces. Can you see which interface
-will be used to forward an IP datagram to a host with a destination IP
-address of 10.10.10.30?
+
+\Cref{fig:simple-routing-example} shows a simple network.
+Lab\_A has four interfaces.
+Can you see which interface will be used to forward an IP datagram to a host with a destination IP address of 10.10.10.30?
 
 By using the command \texttt{show\ ip\ route} on a router, we can see
 the routing table (map of the internetwork) that Lab\_A has used to make
