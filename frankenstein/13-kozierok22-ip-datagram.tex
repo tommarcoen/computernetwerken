@@ -24,40 +24,31 @@ possibly by routers along the path to the destination, and how they are
 reassembled by the recipient.
 
 
-{\textbf{BACKGROUND INFORMATION}} {\emph{Understanding fragmentation and
-reassembly requires some knowledge of the basic format of IP datagrams
-and some of the fields they contain. If you haven't yet read the chapter
-describing the general format of IP datagrams in
-\protect\hyperlink{ch21.html}{Chapter~21}, you may wish to review it
-before proceeding here.}}
+\begin{backgroundinfo}
+Understanding fragmentation and reassembly requires some knowledge of the basic format of IP datagrams and some of the fields they contain.
+If you haven't yet read the chapter describing the general format of IP datagrams in \cref{chap:kozierok-ch21}, you may wish to review it before proceeding here.
+\end{backgroundinfo}
 
-\protect\hypertarget{ch22.htmlux5cux23idx-CHP-22-0793}{}{}As the core
-network layer protocol of the TCP/IP protocol suite, IP is designed to
-implement potentially large internetworks of devices. When we work with
-IP, we get used to the concept of hosts being able to send information
+As the core network layer protocol of the TCP/IP protocol suite, IP is designed to implement potentially large internetworks of devices.
+When we work with IP, we get used to the concept of hosts being able to send information
 back and forth, even though the hosts may be quite far apart. Although
 we can usually consider the TCP/IP internetwork to be like a large,
 abstract virtual network of devices, we must always remember that
 underneath the network layer, data always travels across one or more
-physical networks. The implementation of IP must take this reality into
-account as well.
+physical networks. The implementation of IP must take this reality into account as well.
 
-In order to send messages using IP, we encapsulate the higher-layer data
-into IP datagrams. These datagrams must then be sent down to the data
-link layer, where they are further encapsulated into the frames of
-whatever technology will be used to physically convey them, either
-directly to their destination or indirectly to the next intermediate
-step in their journey to their intended recipient. The data link layer
-implementation puts the entire IP datagram into the data portion (the
-payload) of its frame format, just as IP puts transport layer
-messages -- transport headers and all -- into its IP Data field. This
-immediately presents us with a potential issue: matching the size of the
-IP datagram to the size of the underlying data link layer frame size.
+In order to send messages using IP, we encapsulate the higher-layer data into IP datagrams.
+These datagrams must then be sent down to the data link layer,
+where they are further encapsulated into the frames of whatever technology will be used to physically convey them,
+either directly to their destination or indirectly to the next intermediate step in their journey to their intended recipient.
+The data link layer implementation puts the entire IP datagram into the data portion (the payload) of its frame format,
+just as IP puts transport layer messages -- transport headers and all -- into its IP Data field.
+This immediately presents us with a potential issue: matching the size of the IP datagram to the size of the underlying data link layer frame size.
 
 
 
 
-\section{IP Datagram Size and the Underlying Network Frame Size}
+\section{IP datagram size and the underlying network frame size}
 
 The underlying network that a device uses to connect to other devices
 could be a local area network (LAN) connection (like Ethernet or Token
@@ -68,147 +59,114 @@ own frame format, and each format has a limit on how much data can be
 sent in a single frame. If the IP datagram is too large for the data
 link layer frame format's payload section, we have a problem!
 
-For example, consider a
-\protect\hypertarget{ch22.htmlux5cux23idx-CHP-22-0794}{}{}Fiber
-Distributed Data Interface
-(\protect\hypertarget{ch22.htmlux5cux23idx-CHP-22-0795}{}{}FDDI)
-network. The maximum size of the data field in FDDI is around 4,470
-bytes. This means FDDI can handle an IP datagram of up to 4,470 bytes.
-In contrast, a regular Ethernet frame uses a frame format that limits
-the size of the payload it sends to 1,500 bytes. This means that
-Ethernet cannot deal with IP datagrams greater than 1,500 bytes.
+For example, consider an FDDI network.
+The maximum size of the data field in FDDI is around 4470~bytes.
+This means FDDI can handle an IP datagram of up to 4470~bytes.
+In contrast, a regular Ethernet frame uses a frame format that limits the size of the payload it sends to 1500~bytes.%
+\footnote{Jumbo frames support frame sizes up to about 9000~bytes.}
+This means that Ethernet cannot deal with IP datagrams greater than 1500~bytes.
 
-Now, remember that in sending a datagram across an internetwork, it may
-pass across more than one physical network. To access a site on the
-Internet, for example, we typically send a request through our local
-router, which then connects to other routers that eventually relay the
-request to the Internet site. Each hop as the datagram is forwarded may
-use a different physical network, with a different maximum underlying
-frame size.
+Now, remember that in sending a datagram across an internetwork, it may pass across more than one physical network.
+To access a site on the Internet, for example, we typically send a request through our local router,
+which then connects to other routers that eventually relay the request to the Internet site.
+Each hop as the datagram is forwarded may use a different physical network, with a different maximum underlying frame size.
 
-The whole idea behind a network layer protocol is to implement this
-concept of a virtual network where devices can communicate over great
-distances. This means that higher layers shouldn't need to worry about
-details like the size limits of underlying data link layer technologies.
-This task falls to
-\protect\hypertarget{ch22.htmlux5cux23idx-CHP-22-0796}{}{}IP.
+The whole idea behind a network layer protocol is to implement this concept of a virtual network where devices can communicate over great distances.
+This means that higher layers shouldn't need to worry about details like the size limits of underlying data link layer technologies.
+This task falls to IP.
 
 
 
-\section{MTU and Datagram Fragmentation}
+\section{MTU and datagram fragmentation}
 
-\protect\hypertarget{ch22.htmlux5cux23idx-CHP-22-0797}{}{}\protect\hypertarget{ch22.htmlux5cux23idx-CHP-22-0798}{}{}
-Each device on an IP internetwork must know the capacity of its
-immediate data link layer connection to other devices. This capacity is
-called the
-\protect\hypertarget{ch22.htmlux5cux23idx-CHP-22-0799}{}{}{\emph{maximum
-transmission unit
-(MTU)}}\protect\hypertarget{ch22.htmlux5cux23idx-CHP-22-0800}{}{} of the
-network, also known as the
-\protect\hypertarget{ch22.htmlux5cux23idx-CHP-22-0801}{}{}{\emph{maximum
-transfer unit}}.
+Each device on an IP internetwork must know the capacity of its immediate data link layer connection to other devices.
+This capacity is called the \emph{maximum transmission unit} (MTU) of the network, also known as the \emph{maximum transfer unit}.
 
 If an IP layer receives a message to be sent across the internetwork, it
 looks at the size of the message and then computes how large the IP
 datagram would be after the addition of the 20 or more bytes needed for
 the IP header. If the total length is greater than the MTU of the
-underlying network, the IP layer will fragment the message into multiple
-IP fragments. Thus, if a host is connected to its local network using an
-Ethernet LAN, it may use an MTU of 1,500 bytes for IP datagrams, and it
-will fragment anything larger.
+underlying network, the IP layer will fragment the message into multiple IP fragments.
+Thus, if a host is connected to its local network using an Ethernet LAN, it may use an MTU of 1500~bytes for IP datagrams,
+and it will fragment anything larger.
 
-\protect\hyperlink{ch22.htmlux5cux23ip_maximum_transmission_unit_mtu_and_fra}{Figure~22-1}
-shows an example of different MTUs and fragmentation.
+\Cref{fig:mtu-fragmentation} shows an example of different MTUs and fragmentation.
 
 
-{\textbf{KEY CONCEPT}} The size of the largest IP datagram that can be
-transmitted over a physical network is called that network's
-{\emph{maximum transmission unit (MTU)}}. If a datagram is passed from a
-network with a high MTU to one with a low MTU, it must be fragmented to
-fit the other network's smaller MTU.
+\begin{keyconcept}
+The size of the largest IP datagram that can be transmitted over a physical network is called that network's \emph{maximum transmission unit} (MTU).
+If a datagram is passed from a network with a high MTU to one with a low MTU, it must be fragmented to fit the other network's smaller MTU.
+\end{keyconcept}
 
 Since some physical networks on the path between devices may have a
 smaller MTU than others, it may be necessary to fragment the datagram
 more than once. For example, suppose the source device wants to send an
 IP message 12,000 bytes long. Its local connection has an MTU of 3,300
 bytes. It will need to divide this message into four fragments for
-transmission: three that are about 3,300 bytes long and a fourth remnant
-about 2,100 bytes long. (I'm oversimplifying by ignoring the extra
-headers required; the ``The IP Message Fragmentation Process'' section
-later in this chapter includes the full details of the fragmentation
-process.)
-
-\protect\hypertarget{ch22.htmlux5cux23ip_maximum_transmission_unit_mtu_and_fra}{}{}
-
-\protect\hypertarget{ch22.htmlux5cux23I_mediaobject8_d1e23789}{}{}
-%\includegraphics{httpatomoreillycomsourcenostarchimages287857.png.jpg}
-
-Figure~22-1.~IP maximum transmission unit (MTU) and fragmentation In
-this simple example, Device A is sending to Device B over a small
-internetwork consisting of one router and two physical links. The link
-from Device A to the router has an MTU of 3,300 bytes, but from the
-router to Device B, it is only 1,300 bytes. Thus, any IP datagrams
-larger than 1,300 bytes will need to be fragmented.
+transmission: three that are about 3,300 bytes long and a fourth remnant about 2,100 bytes long.
+(I'm oversimplifying by ignoring the extra headers required;
+\vref{sec:ip-fragmentation-process} includes the full details of the fragmentation process.)
 
 
-
-\section{Multiple-Stage Fragmentation}
-
-While the \protect\hypertarget{ch22.htmlux5cux23idx-CHP-22-0802}{}{}IP
-fragments are in transit, they may need to pass over a hop between two
-routers where the physical network's MTU is only 1,300 bytes. In this
-case, each of the fragments will again need to be fragmented. The
-3,300-byte fragments will end up in three pieces each (two of about
-1,300 bytes and one of around 700 bytes), and the final 2,100-byte
-fragment will become a 1,300-byte and 800-byte fragment. So, instead of
-having four fragments, we will end up with eleven (3*3+1*2) fragments,
-as shown in
-\protect\hyperlink{ch22.htmlux5cux23ipv4_datagram_fragmentation_this_example}{Figure~22-2}.
-
-\protect\hypertarget{ch22.htmlux5cux23ipv4_datagram_fragmentation_this_example}{}{}
-
-\protect\hypertarget{ch22.htmlux5cux23I_mediaobject8_d1e23810}{}{}
-%\includegraphics{httpatomoreillycomsourcenostarchimages287859.png.jpg}
-
-Figure~22-2.~IPv4 datagram fragmentation. This example illustrates a
-two-step fragmentation of a large IP datagram. The boxes represent
-datagrams or datagram fragments and are shown to scale. The original
-datagram is 12,000 bytes, represented by the large, gray box. To
-transmit this data over the first local link, Device A splits it into
-four fragments, shown on the left. The first router must fragment each
-of these into smaller fragments to send them over the 1,300-byte MTU
-link, as shown on the bottom. Note that the second router does not
-reassemble the 1,300-byte fragments, even though its link to Device B
-has an MTU of 3,300 bytes. (The ``IP Fragmentation Process'' section later
-in this chapter describes the process by which the fragments in this
-example are created.)
+\begin{figure}
+   \centering
+   \includegraphics[width=.7\textwidth]{images/mtu-fragmentation.jpg}
+   \caption
+      [IP MTU and fragmentation]
+      {IP maximum transmission unit (MTU) and fragmentation --
+      In this simple example, device A is sending to device B over a small internetwork consisting of one router and two physical links.
+      The link from device A to the router has an MTU of 3,300 bytes, but from the router to device B, it is only 1,300 bytes.
+      Thus, any IP datagrams larger than 1,300 bytes will need to be fragmented.}
+   \label{fig:mtu-fragmentation}
+\end{figure}
 
 
 
-\section{Internet Minimum MTU: 576 Bytes}
+\section{Multiple-stage fragmentation}
 
-\protect\hypertarget{ch22.htmlux5cux23idx-CHP-22-0803}{}{}Routers are
-required to handle an MTU of at least 576 bytes. This value is specified
-in RFC 791; it was chosen to allow a data block of at least 512 bytes,
-plus room for the standard IP header and options. Since this is the
-minimum size specified in the IP standard, 576 bytes has become a common
-default MTU value used for IP datagrams. Even if a host is connected
-over a local network with an MTU larger than 576 bytes, it may choose to
-use an MTU value of 576 to ensure that no further fragmentation will be
-required by intermediate routers.
+While the IP fragments are in transit, they may need to pass over a hop between two routers where the physical network's MTU is only 1,300 bytes.
+In this case, each of the fragments will again need to be fragmented.
+The 3,300-byte fragments will end up in three pieces each (two of about 1,300 bytes and one of around 700 bytes), and the final 2,100-byte
+fragment will become a 1,300-byte and 800-byte fragment.
+So, instead of having four fragments, we will end up with eleven ($3\times 3+1\times 2$) fragments,
+as shown in \protect\hyperlink{ch22.htmlux5cux23ipv4_datagram_fragmentation_this_example}{Figure~22-2}.
 
-\subsubsection[Note]{\texorpdfstring{\protect\hypertarget{ch22.htmlux5cux23note-82}{}{}Note}{Note}}
+\begin{figure}
+   \centering
+   \includegraphics[width=.7\textwidth]{images/ipv4-datagram-fragmentation.jpg}
+   \caption
+      [IPv4 datagram fragmentation]
+      {IPv4 datagram fragmentation --
+      This example illustrates a two-step fragmentation of a large IP datagram.
+      The boxes represent datagrams or datagram fragments and are shown to scale.
+      The original datagram is 12,000 bytes, represented by the large, gray box.
+      To transmit this data over the first local link, device A splits it into four fragments, shown on the left.
+      The first router must fragment each of these into smaller fragments to send them over the 1,300-byte MTU link, as shown on the bottom.
+      Note that the second router does not reassemble the 1,300-byte fragments, even though its link to device B has an MTU of 3,300 bytes.
+      (\Vref{sec:ip-fragmentation-process} describes the process by which the fragments in this example are created.)}
+   \label{fig:ipv4-datagram-fragmentation}
+\end{figure}
 
-{\emph{While intermediate routers may further fragment an
-already-fragmented IP message, they do not reassemble fragments.
-Reassembly is done only by the recipient device. This has some
-advantages and some disadvantages, as we will see when we examine the
-reassembly process in the ``IP Message Reassembly'' section later in this
-chapter}}.
+
+
+\section{Internet minimum MTU: 576 bytes}
+
+Routers are required to handle an MTU of at least 576 bytes.
+This value is specified in RFC 791; it was chosen to allow a data block of at least 512 bytes, plus room for the standard IP header and options.
+Since this is the minimum size specified in the IP standard, 576 bytes has become a common default MTU value used for IP datagrams.
+Even if a host is connected over a local network with an MTU larger than 576 bytes,
+it may choose to use an MTU value of 576 to ensure that no further fragmentation will be required by intermediate routers.
+
+\begin{note}
+While intermediate routers may further fragment an already-fragmented IP message, they do not reassemble fragments.
+Reassembly is done only by the recipient device.
+This has some advantages and some disadvantages, as we will see when we examine the reassembly process in the ``IP Message Reassembly'' section later in this
+chapter.
+\end{note}
 
 
 
-\section{MTU Path Discovery}
+\section{MTU path discovery}
 
 \protect\hypertarget{ch22.htmlux5cux23idx-CHP-22-0804}{}{}When we're
 trying to send a great deal of data, efficiency in message transmissions
@@ -248,7 +206,6 @@ destination has a smaller MTU. It tries again using a smaller datagram
 size, and it continues until it finds the largest MTU that can be used
 on the path.
 
-\protect\hypertarget{ch22s02.html}{}{}
 
 As explained in the previous section, when an IP datagram is too large
 for the MTU of the underlying data link layer technology used for the
@@ -258,8 +215,7 @@ sent in a single IP datagram, but rather broken down into fragments that
 are sent separately. In some cases, the fragments themselves may need to
 be fragmented further.
 
-\protect\hypertarget{ch22s02.htmlux5cux23idx-CHP-22-0807}{}{}Fragmentation
-is key to implementing a network-layer internetwork that is independent
+Fragmentation is key to implementing a network-layer internetwork that is independent
 of lower-layer details, but it introduces significant complexity to IP.
 Remember that IP is an unreliable, connectionless protocol. IP datagrams
 can take any of several routes on their way from the source to the
@@ -296,7 +252,8 @@ fragments of the message; others are different for each fragment.
 
 
 
-\section{The IP Fragmentation Process}
+\section{The IP fragmentation process}
+\label{sec:ip-fragmentation-process}
 
 \protect\hypertarget{ch22s02.htmlux5cux23idx-CHP-22-0808}{}{}The device
 performing the fragmentation follows a specific algorithm to divide the

@@ -126,16 +126,12 @@ and control fields, while the payload carries the actual data to be sent
 over the internetwork. Unlike some message formats, IP datagrams do not
 have a footer following the payload.
 
-Even though IP is a relatively simple, connectionless, and unreliable
-protocol, the IPv4 header carries a fair bit of information, which makes
-it rather large. It is at least 20 bytes long, and with options it can
-be significantly longer. The IP datagram format is described in Tables
+Even though IP is a relatively simple, connectionless, and unreliable protocol, the IPv4 header carries a fair bit of information, which makes it rather large.
+It is at least 20 bytes long, and with options it can be significantly longer.
+The IP datagram format is described in Tables
 \protect\hyperlink{ch21s02.htmlux5cux23internet_protocol_version__ipv_datagram}{Table~21-1},
 \protect\hyperlink{ch21s02.htmlux5cux23ipv_flags_subfields}{Table~21-2},
-and
-\protect\hyperlink{ch21s02.htmlux5cux23ipv_protocol_subfields}{Table~21-3},
-and illustrated in
-\protect\hyperlink{ch21s02.htmlux5cux23ipv4_datagram_format_this_diagram_shows_}{Figure~21-2}.
+and \cref{tab:ipv4-protocols}, and illustrated in \cref{fig:ipv4-datagram-format}.
 
 
 
@@ -234,81 +230,63 @@ one.\tabularnewline
 \end{longtable}
 
 
-
-Table~21-2.~IPv4 Flags Subfields
-
-\begin{longtable}[]{@{}lll@{}}
-\toprule
-Subfield Name & Size (Bytes) & Description\tabularnewline
-\midrule
-\endhead
-Reserved & 1/8 (1 bit) & Not used.\tabularnewline
-DF & 1/8 (1 bit) & When set to 1, this says that the datagram should not
-be fragmented. Since the fragmentation process is generally invisible to
-higher layers, most protocols don't care about this and don't set this
-flag. It is, however, used for testing the maximum transmission unit
-(MTU) of a link.\tabularnewline
-MF & 1/8 (1 bit) & When set to 0, this indicates the last fragment in a
-message; when set to 1, it indicates that more fragments are yet to come
-in the fragmented message. If no fragmentation is used for a message,
-there is only one fragment (the whole message), and this flag is 0. If
-fragmentation is used, all fragments but the last set this flag to 1 so
-that the recipient knows when all fragments have been
-sent.\tabularnewline
-\bottomrule
-\end{longtable}
+\begin{table}
+   \centering
+   \begin{tabular}{rrl}
+      \textit{name}     & size (bits) & description \\[1ex]
+      \textit{reserved} & 1           & not used\\
+      \textit{DF}       & 1           & When set (1), the datagram should not be fragmented\\
+      \textit{MF}       & 1           & When set (1), more fragments are to come in the fragmented message\\
+   \end{tabular}
+   \caption{IPv4 flags subfields}
+   \label{tab:ipv4-flags}
+\end{table}
 
 
+\begin{table}
+   \centering
+   \begin{tabular}{rrl}
+      value (hex) & value (dec) & protocol\\[1ex]
+      00 & 0 & reserved\\
+      01 & 1 & ICMP\\
+      02 & 2 & IGMP\\
+      %03 & 3 & GGP\\
+      04 & 4 & IP-in-IP Encapsulation\\
+      06 & 6 & TCP\\
+      %08 & 8 & EGP\\
+      11 & 17 & UDP\\
+      32 & 50 & ESP extension header\\
+      33 & 51 & AH extension header\\
+   \end{tabular}
+   \caption{IPv4 protocol subfields}
+   \label{tab:ipv4-protocols}
+\end{table}
 
-Table~21-3.~IPv4 Protocol Subfields
 
-\begin{longtable}[]{@{}lll@{}}
-\toprule
-Value (Hexadecimal) & Value (Decimal) & Protocol\tabularnewline
-\midrule
-\endhead
-00 & 0 & Reserved\tabularnewline
-01 & 1 & ICMP\tabularnewline
-02 & 2 & IGMP\tabularnewline
-03 & 3 & GGP\tabularnewline
-04 & 4 & IP-in-IP Encapsulation\tabularnewline
-06 & 6 & TCP\tabularnewline
-08 & 8 & EGP\tabularnewline
-11 & 17 & UDP\tabularnewline
-32 & 50 & Encapsulating Security Payload (ESP) Extension
-Header\tabularnewline
-33 & 51 & Authentication Header (AH) Extension Header\tabularnewline
-\bottomrule
-\end{longtable}
+%\begin{note}
+%The last two entries in \cref{tab:ipv4-protocols} are used when IPSec inserts additional headers into the datagram: the AH or ESP headers.
+%%See \protect\hyperlink{ch29.html}{Chapter~29} for more information}}.
+%\end{note}
 
-\subsubsection[Note]{\texorpdfstring{Note}{Note}}
 
-{\emph{The last two entries in
-\protect\hyperlink{ch21s02.htmlux5cux23ipv_protocol_subfields}{Table~21-3}
-are used when IPSec inserts additional headers into the datagram: the AH
-or ESP headers. See \protect\hyperlink{ch29.html}{Chapter~29} for more
-information}}.
+\begin{figure}
+   \centering
+   \includegraphics[width=.7\textwidth]{images/ipv4-datagram-format.jpg}
+   \caption
+      [IPv4 datagram format]
+      {IPv4 datagram format -- This diagram shows the all-important IPv4 datagram format.
+      The first 20 bytes are the fixed IP header, followed by an optional Options section, and a variable-length data area.
+      Note that the Type of Service field is shown as originally defined in the IPv4 standard.}
+   \label{fig:ipv4-datagram-format}
+\end{figure}
 
 
 
+\section{IP datagram time-to-live (TTL) field}
 
-%\includegraphics{httpatomoreillycomsourcenostarchimages287853.png.jpg}
-
-Figure~21-2.~IPv4 datagram format This diagram shows the all-important
-IPv4 datagram format. The first 20 bytes are the fixed IP header,
-followed by an optional Options section, and a variable-length Data
-area. Note that the Type of Service field is shown as originally defined
-in the IPv4 standard.
-
-\section{IP Datagram Time to Live (TTL) Field}
-
-Let's look at the
-Time to
-Live (TTL) field. Since IP datagrams are sent from router to router as
-they travel across an internetwork, a datagram could be passed from
-Router A to Router B to Router C, and then back to Router A. This is
-called a \emph{router loop}, and it's something that we don't want to
-happen.
+Let's look at the time-to-live (TTL) field.
+Since IP datagrams are sent from router to router as they travel across an internetwork, a datagram could be passed from Router A to Router B to Router C, and then back to Router A.
+This is called a \emph{router loop}\index{router loop}, and it's something that we don't want to happen.
 
 To ensure that datagrams don't circle around endlessly, the TTL
 field was
@@ -322,34 +300,23 @@ stale or pass their expiration date.
 In practice, this field is not used in exactly this manner. Routers
 today are fast and usually take far less than a second to forward a
 datagram, which makes it impractical to measure the time that a datagram
-lives. Instead, this field is used as a maximum hop count for the
-datagram. Each time a router processes a datagram, it reduces the value
-of the TTL field by one. If doing this results in the field being zero,
-the datagram is said to have expired, at which point it is dropped, and
-usually an Internet Control Message Protocol (ICMP) Time Exceeded
-message is sent to inform the originator of the message that it has
-expired. The TTL field is one of the primary mechanisms by which
-networks are protected from
-router
-loops. (See the description of ICMP Time Exceeded messages in
-\protect\hyperlink{ch32.html}{Chapter~32} for more on how TTL helps IP
-handle router
-loops.)
+lives. Instead, this field is used as a \emph{maximum hop count} for the datagram.
+Each time a router processes a datagram, it reduces the value of the TTL field by one.
+If doing this results in the field being zero, the datagram is said to have expired, at which point it is dropped,
+and usually an Internet Control Message Protocol (ICMP) Time Exceeded
+message is sent to inform the originator of the message that it has expired.
+The TTL field is one of the primary mechanisms by which networks are protected from router loops.
+(See the description of ICMP Time Exceeded messages in \protect\hyperlink{ch32.html}{Chapter~32} for more on how TTL helps IP handle router loops.)
 
 
 
 
 
-\section{IP Datagram Type of Service (TOS) Field}
+\section{IP datagram type of service (TOS) field}
 
-The
-Type of
-Service (TOS) field is a one-byte field that was originally intended to
-provide certain quality-of-service (QoS) features for IP datagram
-delivery. It allowed IP datagrams to be tagged with information
-indicating not only their precedence, but also the preferred manner in
-which they should be delivered. It was divided into a number of
-subfields, as shown in
+The Type-of-Service (TOS) field is a one-byte field that was originally intended to provide certain quality-of-service (QoS) features for IP datagram delivery.
+It allowed IP datagrams to be tagged with information indicating not only their precedence, but also the preferred manner in which they should be delivered.
+It was divided into a number of subfields, as shown in
 \protect\hyperlink{ch21s02.htmlux5cux23original_definition_of_ipv_type_of_servi}{Table~21-4}
 and
 \protect\hyperlink{ch21s02.htmlux5cux23ipv4_datagram_format_this_diagram_shows_}{Figure~21-2}.
@@ -420,9 +387,10 @@ Reserved & 2/8 (2 bits) & Not used.\tabularnewline
 \end{longtable}
 
 
+\section{IP datagram options, and option format}
 
-All
-IP datagrams must include the standard 20-byte header that contains key
+
+All IP datagrams must include the standard 20-byte header that contains key
 information such as the source and destination address of the datagram,
 fragmentation control parameters, length information, and more. In
 addition to these invariable fields, the creators of IPv4 included the
@@ -560,23 +528,20 @@ traceroute messages.\tabularnewline
 \end{longtable}
 
 
-{\textbf{KEY CONCEPT}} Each IPv4 datagram has a 20-byte mandatory header
-and may also include one or more \emph{options}. Each option has its
-own field format, and most are variable in size.
+\begin{keyconcept}
+Each IPv4 datagram has a 20-byte mandatory header and may also include one or more \emph{options}.
+Each option has its own field format, and most are variable in size.
+\end{keyconcept}
 
-Normally, IP datagrams are routed without any specific instructions from
-devices about the path a datagram should take from the source to the
-destination. It's the job of routers to use routing protocols and to
-figure out those details. In some cases, however, it may be advantageous
-to have the source of a datagram specify the route a datagram takes
-through the network. This process is called \emph{source routing}.
+Normally, IP datagrams are routed without any specific instructions from devices about the path a datagram should take from the source to the destination.
+It's the job of routers to use routing protocols and to figure out those details.
+In some cases, however, it may be advantageous to have the source of a datagram specify the route a datagram takes through the network.
+This process is called \emph{source routing}\index{source routing}.\footnote{Source routing is a huge security issue and must not be allowed on your network.}
 
-There are two IP options that support source routing. In each, the
-option includes a list of IP addresses that specify the routers that
-must be used to reach the destination. When \emph{strict} source
-routing is used, the path specified in the option must be used exactly,
-in sequence, with no other routers permitted to handle the datagram at
-all. In contrast, \emph{loose} source routing specifies a list of IP
-addresses that must be followed in sequence, but it allows intervening
-hops between the devices on the list. (For full details on the exact
-structure used by each option type, please refer to RFC 791.)
+There are two IP options that support source routing.
+In each, the option includes a list of IP addresses that specify the routers that must be used to reach the destination.
+When \emph{strict} source routing is used, the path specified in the option must be used exactly, in sequence,
+with no other routers permitted to handle the datagram at all.
+In contrast, \emph{loose} source routing specifies a list of IP addresses that must be followed in sequence,
+but it allows intervening hops between the devices on the list.
+(For full details on the exact structure used by each option type, please refer to RFC 791.)

@@ -1,6 +1,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage[backend=biber]{biblatex}
 \addbibresource{resources.bib}
+\usepackage{imakeidx}
+\makeindex
 
 \usepackage[T1]{fontenc}
 \usepackage[mono=false]{libertine}
@@ -73,6 +75,7 @@
 \renewcommand{\memchapinfo}[4]{%
   \addtocontents{lol}{\protect\addvspace{10pt}}}
 \newcommand*{\param}[1]{\textlangle{}#1\textrangle}
+\renewcommand{\cmd}[1]{\lstinline{#1}}
 
 % Hyperlinks
 \usepackage{varioref}       % MUST be loaded before hyperref
