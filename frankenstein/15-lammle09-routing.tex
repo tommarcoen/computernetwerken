@@ -109,7 +109,7 @@ By using the command \texttt{show\ ip\ route} on a router, we can see
 the routing table (map of the internetwork) that Lab\_A has used to make
 its forwarding decisions:
 
-\begin{verbatim}
+\begin{cli}
 Lab_A#sh ip route
 Codes: L - local, C - connected, S - static,
 [output cut]
@@ -121,7 +121,7 @@ L       10.10.0.1/32 is directly connected, FastEthernet0/2
 C       10.10.10.0/24 is directly connected, FastEthernet0/1
 L       10.10.10.1/32 is directly connected, FastEthernet0/1
 S*      0.0.0.0/0 is directly connected, FastEthernet0/0
-\end{verbatim}
+\end{cli}
 
 The \texttt{C} in the routing table output means that the networks
 listed are ``directly connected,'' and until we add a routing protocol
@@ -150,7 +150,7 @@ Here's another example: Based on the output of the next routing table,
 which interface will a packet with a destination address of 10.10.10.14
 be forwarded from?
 
-\begin{verbatim}
+\begin{cli}
 Lab_A#sh ip route
 [output cut]
 Gateway of last resort is not set
@@ -162,41 +162,36 @@ C      10.10.10.4/30 is directly connected, FastEthernet0/2
 L      10.10.10.5/32 is directly connected, FastEthernet0/2
 C      10.10.10.0/30 is directly connected, Serial 0/0
 L      10.10.10.1/32 is directly connected, Serial0/0
-\end{verbatim}
+\end{cli}
 
 To figure this out, look closely at the output until you see that the
 network is subnetted and each interface has a different mask. And I have
 to tell you---you just can't answer this question if you can't subnet!
 10.10.10.14 would be a host in the 10.10.10.8/29 subnet that's connected
 to the FastEthernet0/1 interface. Don't freak if you're struggling and
-don't get this! Instead, just go back and reread Chapter 4, ``Easy
-Subnetting,'' until it becomes clear to you.
+don't get this! Instead, just go back and reread \cref{chap:kozierok-ch19} until it becomes clear to you.
 
-\section{The IP Routing Process}
 
-The IP routing process is fairly simple and doesn't change, regardless
-of the size of your network. For a good example of this fact, I'll use
-\protect\hyperlink{c09.xhtmlux5cux23figure9-2}{Figure 9.2} to describe
-step-by-step what happens when Host A wants to communicate with Host B
-on a different network.
+\section{The IP routing process}
+
+The IP routing process is fairly simple and doesn't change, regardless of the size of your network.
+For a good example of this fact, I'll use \cref{fig:ip-routing-example} to describe step-by-step what happens when Host A wants to communicate with Host B on a different network.
+
 
 \begin{figure}
-\centering
-%\includegraphics{images/c09f002.jpg}
-\caption{{\protect\hyperlink{c09.xhtmlux5cux23figureanchor9-2}{\textbf{FIGURE
-9.2}} IP routing example using two hosts and one router}}
+   \centering
+   \includegraphics{images/c09f002.jpg}
+   \caption{IP routing example using two hosts and one router}
+   \label{fig:ip-routing-example}
 \end{figure}
 
-\protect\hypertarget{c09.xhtmlux5cux23Page_362}{}{}In
-\protect\hyperlink{c09.xhtmlux5cux23figure9-2}{Figure 9.2} a user on
-Host\_A pinged Host\_B's IP address. Routing doesn't get any simpler
-than this, but it still involves a lot of steps, so let's work through
-them now:
+In \cref{fig:ip-routing-example} a user on Host~A pinged Host~B's IP address.
+Routing doesn't get any simpler than this, but it still involves a lot of steps, so let's work through them now:
 
 \begin{enumerate}
 \item
   Internet Control Message Protocol (ICMP) creates an echo request
-  payload, which is simply the alphabet in the data field.
+  payload, which contains simply the alphabet in the data field.
 \item
   ICMP hands that payload to Internet Protocol (IP), which then creates
   a packet. At a minimum, this packet contains an IP source address, an
@@ -214,24 +209,14 @@ them now:
   network. The Registry in Windows is parsed to find the configured
   default gateway.
 \item
-  The default gateway of Host\_A is configured to 172.16.10.1. For this
-  packet to be sent to the default gateway, the hardware address of the
-  router's interface Ethernet 0, which is configured with the IP address
-  of 172.16.10.1, must be known. Why? So the packet can be handed down
-  to the Data Link layer, framed, and sent to the router's interface
-  that's connected to the 172.16.10.0 network. Because hosts communicate
-  only via hardware addresses on the local LAN, it's important to
-  recognize that for Host\_A to communicate to Host\_B, it has to send
-  packets to the Media Access Control (MAC) address of the default
-  gateway on the local network.
-
-  \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-%\includegraphics{images/note.png}
-   MAC addresses are always local on
-  the LAN and never go through and past a router.
-
-  \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+   The default gateway of Host~A is configured to 172.16.10.1.
+   For this packet to be sent to the default gateway, the hardware address of the router's interface Ethernet 0, which is configured with the IP address of 172.16.10.1, must be known.
+   Why? So the packet can be handed down to the Data Link layer, framed, and sent to the router's interface
+   that's connected to the 172.16.10.0 network.
+   Because hosts communicate only via hardware addresses on the local LAN, it's important to
+   recognize that for Host~A to communicate to Host~B, it has to send packets to the Media Access Control (MAC) address of the default
+   gateway on the local network.%
+      \footnote{MAC addresses are always local on the LAN and never go through and past a router.}
 \item
   Next, the Address Resolution Protocol (ARP) cache of the host is
   checked to see if the IP address of the default gateway has already
@@ -242,43 +227,36 @@ them now:
   handed down with that packet. To view the ARP cache on your host, use
   the following command:
 
-\begin{verbatim}
+\begin{cli}
 C:\>arp -a
 Interface: 172.16.10.2 --- 0x3
   Internet Address      Physical Address      Type
   172.16.10.1          00-15-05-06-31-b0     dynamic
-\end{verbatim}
+\end{cli}
 
-  If the hardware address isn't already in the ARP cache of the host, an
-  ARP broadcast will be sent out onto the local network to search for
-  the 172.16.10.1 hardware address. The router then responds to the
-  request and provides the hardware address of Ethernet 0, and the host
-  caches this address.
+  If the hardware address isn't already in the ARP cache of the host, an ARP broadcast will be sent out onto the local network to search for the 172.16.10.1 hardware address.
+  The router then responds to the request and provides the hardware address of Ethernet 0, and the host caches this address.
 \item
-  Once the packet and destination hardware address are handed to the
-  Data Link layer, the LAN driver is used to provide media access via
-  the type of LAN being used, which
-  \protect\hypertarget{c09.xhtmlux5cux23Page_363}{}{}is Ethernet in this
-  case. A frame is then generated, encapsulating the packet with control
-  information. Within that frame are the hardware destination and source
-  addresses plus, in this case, an Ether-Type field, which identifies
-  the specific Network layer protocol that handed the packet to the Data
-  Link layer. In this instance, it's IP. At the end of the frame is
-  something called a Frame Check Sequence (FCS) field that houses the
-  result of the cyclic redundancy check (CRC). The frame would look
-  something like what I've detailed in
-  \protect\hyperlink{c09.xhtmlux5cux23figure9-3}{Figure 9.3}. It
-  contains Host A's hardware (MAC) address and the destination hardware
-  address of the default gateway. It does not include the remote host's
-  MAC address---remember that!
+   Once the packet and destination hardware address are handed to the
+   Data Link layer, the LAN driver is used to provide media access via
+   the type of LAN being used, which is Ethernet in this
+   case. A frame is then generated, encapsulating the packet with control
+   information. Within that frame are the hardware destination and source
+   addresses plus, in this case, an Ether-Type field, which identifies
+   the specific Network layer protocol that handed the packet to the Data
+   Link layer. In this instance, it's IP. At the end of the frame is
+   something called a Frame Check Sequence (FCS) field that houses the
+   result of the cyclic redundancy check (CRC). The frame would look
+   something like what I've detailed in \cref{fig:host-a-frame}.
+   It contains Host A's hardware (MAC) address and the destination hardware address of the default gateway.
+   It does not include the remote host's MAC address---remember that!
 
-  \begin{figure}
-  \centering
-  %\includegraphics{images/c09f003.jpg}
-  \caption{{\protect\hyperlink{c09.xhtmlux5cux23figureanchor9-3}{\textbf{FIGURE
-  9.3}} Frame used from Host A to the Lab\_A router when Host B is
-  pinged}}
-  \end{figure}
+   \begin{figure}
+      \centering
+      \includegraphics{images/c09f003.jpg}
+      \caption{Frame used from Host A to the Lab A router when Host B is pinged}
+      \label{fig:host-a-frame}
+   \end{figure}
 \item
   Once the frame is completed, it's handed down to the Physical layer to
   be put on the physical medium (in this example, twisted-pair wire) one
@@ -289,7 +267,6 @@ Interface: 172.16.10.2 --- 0x3
   If the answers don't match, the frame is discarded.
 
   \begin{enumerate}
-  \tightlist
   \item
     If the CRC matches, then the hardware destination address is checked
     to see if it matches (which, in this example, is the router's
@@ -313,26 +290,22 @@ Interface: 172.16.10.2 --- 0x3
   sent back to the originating device with a destination network
   unreachable message.
 \item
-  If the router does find an entry for the destination network in its
-  table, the packet is switched to the exit interface---in this example,
-  interface Ethernet 1. The following output displays the Lab\_A
-  router's routing table. The \texttt{C} means ``directly connected.''
-  No routing protocols are needed in this network since all networks
-  (all two of them) are directly connected.
+   If the router does find an entry for the destination network in its   table, the packet is switched to the exit interface -- in this example, interface Ethernet1.
+   The following output displays the Lab~A router's routing table.
+   The \texttt{C} means ``directly connected.''
+   No routing protocols are needed in this network since all networks (all two of them) are directly connected.
 
-\begin{verbatim}
+\begin{cli}
 Lab_A>sh ip route
 C       172.16.10.0 is directly connected,    Ethernet0
 L       172.16.10.1/32 is directly connected, Ethernet0
 C       172.16.20.0 is directly connected,    Ethernet1
 L       172.16.20.1/32 is directly connected, Ethernet1
-\end{verbatim}
+\end{cli}
 \item
-  \protect\hypertarget{c09.xhtmlux5cux23Page_364}{}{}The router
-  packet-switches the packet to the Ethernet 1 buffer.
+   The router packet-switches the packet to the Ethernet1 buffer.
 \item
-  The Ethernet 1 buffer needs to know the hardware address of the
-  destination host and first checks the ARP cache.
+   The Ethernet1 buffer needs to know the hardware address of the destination host and first checks the ARP cache.
 
   \begin{enumerate}
   \item
@@ -343,7 +316,7 @@ L       172.16.20.1/32 is directly connected, Ethernet1
     \texttt{show\ ip\ arp} command:
 
 \begin{verbatim}
-Lab_A#sh ip arp
+Lab_A#show ip arp
 Protocol  Address     Age(min) Hardware Addr  Type   Interface
 Internet  172.16.20.1   -     00d0.58ad.05f4  ARPA   Ethernet1
 Internet  172.16.20.2   3     0030.9492.a5dd  ARPA   Ethernet1
