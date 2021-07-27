@@ -168,25 +168,17 @@ chapter.
 
 \section{MTU path discovery}
 
-\protect\hypertarget{ch22.htmlux5cux23idx-CHP-22-0804}{}{}When we're
-trying to send a great deal of data, efficiency in message transmissions
-becomes important. The larger the IP datagram we send, the smaller the
-percentage of bytes wasted for overhead such as header fields. This
-means that, ideally, we want to use the largest MTU possible without
-requiring fragmentation for its transmission.
+When we're trying to send a great deal of data, efficiency in message transmissions becomes important.
+The larger the IP datagram we send, the smaller the percentage of bytes wasted for overhead such as header fields.
+This means that, ideally, we want to use the largest MTU possible without requiring fragmentation for its transmission.
 
 To determine the optimal MTU to use for a route between two devices, we
-would need to know the MTU of every link on that route -- information
-that the endpoints of the connection simply don't have. However, the
-connection endpoint can determine the MTU of the overall route by using
-{\emph{MTU path discovery}}, which uses an error-reporting mechanism
-built into TCP/IP
-\protect\hypertarget{ch22.htmlux5cux23idx-CHP-22-0805}{}{}Internet
-Control Message Protocol (ICMP).
+would need to know the MTU of every link on that route -- information that the endpoints of the connection simply don't have.
+However, the connection endpoint can determine the MTU of the overall route by using
+\emph{MTU path discovery},\index{MTU path discovery} which uses an error-reporting mechanism built into ICMP.
 
 One of the message types defined in ICMP version 4 (ICMPv4) is the
-\protect\hypertarget{ch22.htmlux5cux23idx-CHP-22-0806}{}{}Destination
-Unreachable message (see \protect\hyperlink{ch32.html}{Chapter~32}),
+Destination Unreachable message (see \protect\hyperlink{ch32.html}{Chapter~32}),
 which is returned under various conditions where an IP datagram cannot
 be delivered. One of these situations is when a datagram is too large to
 be forwarded by a router over a physical link, but this datagram has its
@@ -223,31 +215,27 @@ destination, and some may not even make it to the destination at all.
 When a message is fragmented, this converts a single datagram into many,
 which introduces several new concerns:
 
-{\textbf{Sequencing and Placement}} The fragments will typically be sent
-in sequential order from the beginning of the message to the end, but
-they won't necessarily show up in the order in which they were sent. The
-receiving device must be able to determine the sequence of the fragments
-to reassemble them in the correct order. In fact, some implementations
-send the last fragment first, so the receiving device will immediately
-know the full size of the original, complete datagram. This makes
-keeping track of the order of segments even more essential.
+\begin{description}
+   \item[Sequencing and placement]
+      The fragments will typically be sent in sequential order from the beginning of the message to the end,
+      but they won't necessarily show up in the order in which they were sent.
+      The receiving device must be able to determine the sequence of the fragments to reassemble them in the correct order.
+      In fact, some implementations send the last fragment first, so the receiving device will immediately know the full size of the original, complete datagram.
+      This makes keeping track of the order of segments even more essential.
 
-{\textbf{Separation of Fragmented Messages}} A source device may need to
-send more than one fragmented message at a time, or it may send multiple
-datagrams that are fragmented en route. This means that the destination
-may be receiving multiple sets of fragments that must be put back
-together. Imagine a box containing pieces from two, three, or more
-jigsaw puzzles, and you understand this issue.
+   \item[Separation of fragmented messages]
+      A source device may need to send more than one fragmented message at a time, or it may send multiple datagrams that are fragmented en route.
+      This means that the destination may be receiving multiple sets of fragments that must be put back together.
+      Imagine a box containing pieces from two, three, or more jigsaw puzzles, and you understand this issue.
 
-{\textbf{Completion}} The destination device must be able to tell when
-it has received all of the fragments so it knows when to start
-reassembly (or when to give up if it didn't get all the pieces).
+   \item[Completion]
+      The destination device must be able to tell when it has received all of the fragments so it knows when to start reassembly
+      (or when to give up if it didn't get all the pieces).
+\end{description}
 
-To address these concerns and allow the proper reassembly of the
-fragmented message, IP includes several fields in the IP format header
-that convey information from the source to the destination about the
-fragments. Some of these fields contain a common value for all the
-fragments of the message; others are different for each fragment.
+To address these concerns and allow the proper reassembly of the fragmented message,
+IP includes several fields in the IP format header that convey information from the source to the destination about the fragments.
+Some of these fields contain a common value for all the fragments of the message; others are different for each fragment.
 
 
 
@@ -255,67 +243,56 @@ fragments of the message; others are different for each fragment.
 \section{The IP fragmentation process}
 \label{sec:ip-fragmentation-process}
 
-\protect\hypertarget{ch22s02.htmlux5cux23idx-CHP-22-0808}{}{}The device
-performing the fragmentation follows a specific algorithm to divide the
-message into fragments for transmission. The exact implementation of the
+The device performing the fragmentation follows a specific algorithm to divide the message into fragments for transmission.
+The exact implementation of the
 fragmentation process depends on the device. For example, consider an IP
 message 12,000 bytes wide (including the 20-byte IP header) that needs
 to be sent over a link with an MTU of 3,300 bytes.
-\protect\hyperlink{ch22s02.htmlux5cux23ipv4_datagram_fragmentation_process_in_t}{Figure~22-3}
-depicts a typical method by which this fragmentation might be performed.
+\Cref{fig:ipv4-datagram-fragmentation-process} depicts a typical method by which this fragmentation might be performed.
 
-\protect\hypertarget{ch22s02.htmlux5cux23ipv4_datagram_fragmentation_process_in_t}{}{}
 
-\protect\hypertarget{ch22s02.htmlux5cux23I_mediaobject8_d1e23900}{}{}
-%\includegraphics{httpatomoreillycomsourcenostarchimages287861.png.jpg}
+\begin{figure}
+   \centering
+   %\includegraphics{httpatomoreillycomsourcenostarchimages287861.png.jpg}
+   \caption
+      [IPv4 datagram fragmentation process]
+      {IPv4 datagram fragmentation process -- In this diagram, the MF and Fragment Offset fields of each fragment are shown for reference.
+      The Data fields are shown to scale (the length of each is proportional to the number of bytes in the fragment).}
+   \label{fig:ipv4-datagram-fragmentation-process}
+\end{figure}
 
-Figure~22-3.~IPv4 datagram fragmentation process In this diagram, the MF
-and Fragment Offset fields of each fragment are shown for reference. The
-Data fields are shown to scale (the length of each is proportional to
-the number of bytes in the fragment).
 
-The four fragments shown in
-\protect\hyperlink{ch22s02.htmlux5cux23ipv4_datagram_fragmentation_process_in_t}{Figure~22-3}
-are created as follows:
+The four fragments shown in \cref{fig:ipv4-datagram-fragmentation-process} are created as follows:
 
 \begin{itemize}
-\item
-  The first fragment is created by taking the first 3,300 bytes of the
-  12,000-byte IP datagram. This includes the original header, which
-  becomes the IP header of the first fragment (with certain fields
-  changed, as described in the next section). So, 3,280 bytes of data
-  are in the first fragment. This leaves 8,700 bytes (11,980--3,280) to
-  encapsulate.
-\item
-  The next 3,280 bytes of data are taken from the 8,700 bytes that
-  remain after the first fragment is built and paired with a new header
-  to create the second fragment. This leaves 5,420 bytes.
-\item
-  The third fragment is created from the next 3,280 bytes of data, with
-  a 20-byte header. This leaves 2,140 bytes of data.
-\item
-  The remaining 2,140 bytes are placed into the fourth fragment, with a
-  20-byte header.
+   \item
+      The first fragment is created by taking the first 3,300 bytes of the 12,000-byte IP datagram.
+      This includes the original header, which becomes the IP header of the first fragment (with certain fields changed, as described in the next section).
+      So, 3,280 bytes of data are in the first fragment.
+      This leaves 8,700 bytes ($11980-3280$) to encapsulate.
+   \item
+      The next 3280 bytes of data are taken from the 8700~bytes that remain after
+      the first fragment is built and paired with a new header to create the second fragment.
+      This leaves 5420 bytes.
+   \item
+      The third fragment is created from the next 3280 bytes of data, with a 20-byte header. This leaves 2140 bytes of data.
+   \item
+      The remaining 2140 bytes are placed into the fourth fragment, with a 20-byte header.
 \end{itemize}
 
-There are two important points here. First, IP fragmentation does
-{\emph{not}} work by fully encapsulating the original IP message into
-the Data fields of the fragments. If this were the case, the first 20
-bytes of the Data field of the first fragment would contain the original
-IP header. (This technique is used by some other protocols, such as the
-PPP Multilink Protocol, discussed in
-\protect\hyperlink{ch09.html}{Chapter~9}.) The original IP header is
-transformed into the IP header of the first fragment.
+There are two important points here. First, IP fragmentation does \emph{not} work by fully encapsulating the original IP message into the Data fields of the fragments.
+If this were the case, the first 20~bytes of the Data field of the first fragment would contain the original
+IP header.
+(This technique is used by some other protocols, such as the PPP Multilink Protocol.)
+The original IP header is transformed into the IP header of the first fragment.
 
-Second, note that the total number of bytes transmitted increases: we
-are sending 12,060 bytes (3,300*3+2,160), instead of 12,000 bytes. The
-extra 60 bytes are from the additional headers in the second, third, and
-fourth fragments. (The increase in size could theoretically be even
-larger if the headers contain options.)
+Second, note that the total number of bytes transmitted increases: we are sending 12,060 bytes ($3300\times 3 + 2160$), instead of 12,000 bytes.
+The extra 60 bytes are from the additional headers in the second, third, and fourth fragments.
+(The increase in size could theoretically be even larger if the headers contain options.)
 
 
 
-\section{Fragmentation-Related IP Datagram Header Fields}
+\section{Fragmentation-related IP datagram header fields}
 
 \protect\hypertarget{ch22s02.htmlux5cux23idx-CHP-22-0809}{}{}When a
 sending device or router fragments a datagram, it must provide
@@ -324,17 +301,15 @@ fragments and reassemble them into the original datagram. This
 information is recorded by the fragmenting device in a number of fields
 in the IP datagram header:
 
-{\textbf{Total Length}} After fragmenting, the
-\protect\hypertarget{ch22s02.htmlux5cux23idx-CHP-22-0810}{}{}Total
-Length field indicates the length of each fragment, not the length of
-the overall message. Normally, the fragment size is selected to match
-the MTU value in bytes. However, fragments must have a length that is a
-multiple of 8, to allow proper offset specification (handled by the
-Fragment Offset field). The last fragment will usually be shorter than
-the others because it will contain a leftover piece, unless the message
-length happens to be an exact multiple of the fragment size.
+\begin{description}
+   \item[Total length]
+      After fragmenting, the Total Length field indicates the length of each fragment, not the length of the overall message.
+      Normally, the fragment size is selected to match the MTU value in bytes.
+      However, fragments must have a length that is a multiple of 8, to allow proper offset specification (handled by the Fragment Offset field).
+      The last fragment will usually be shorter than the others because it will contain a leftover piece, unless the message length happens to be an exact multiple of the fragment size.
 
-{\textbf{Identification}} To solve the problem of pieces from many
+   \item[Identification]
+      To solve the problem of pieces from many
 jigsaw puzzles in the same box, a unique identifier is assigned to each
 message being fragmented. This is like writing a different number on the
 bottom of each piece of a jigsaw puzzle before tossing it in the box.
@@ -346,23 +321,22 @@ different identifier. The source can decide how it generates unique
 identifiers. This may be done through something as simple as a counter
 that is incremented each time a new set of fragments is created.
 
-{\textbf{\protect\hypertarget{ch22s02.htmlux5cux23idx-CHP-22-0811}{}{}More
-Fragments}} The More Fragments flag is set to a 1 for all fragments
-except the last one, which has it set to 0. When the fragment with a
+   \item[More fragments]
+      The More Fragments flag is set to a 1 for all fragments except the last one, which has it set to 0. When the fragment with a
 value of 0 in the More Fragments flag is seen, the destination knows it
 has received the last fragment of the message.
 
-{\textbf{Fragment Offset}} The Fragment Offset field solves the problem
+   \item[Fragment offset]
+      The Fragment Offset field solves the problem
 of sequencing fragments by indicating to the recipient device where in
 the overall message each particular fragment should be placed. The field
 is 13 bits wide, so the offset can be from 0 to 8,191. Fragments are
-specified in units of 8 bytes, which is why fragment length must be a
-multiple of 8. Uncoincidentally, 8,191*8 is 65,528, just about the
-maximum size allowed for an IP datagram. In the example shown in
-\protect\hyperlink{ch22s02.htmlux5cux23ipv4_datagram_fragmentation_process_in_t}{Figure~22-3},
-the first fragment would have a Fragment Offset of 0, the second would
-have an offset of 410 (3,280/8), the third would have an offset of 820
+specified in units of 8 bytes, which is why fragment length must be a multiple of eight.
+Uncoincidentally, $8191\times 8$ is 65,528, just about the maximum size allowed for an IP datagram.
+In the example shown in \protect\hyperlink{ch22s02.htmlux5cux23ipv4_datagram_fragmentation_process_in_t}{Figure~22-3},
+the first fragment would have a Fragment Offset of 0, the second would have an offset of 410 (3,280/8), the third would have an offset of 820
 (6,560/8), and the fourth would have an offset of 1,230.
+\end{description}
 
 An IP datagram has a couple of other fields related to fragmentation.
 First, if a datagram containing options must be fragmented, some of the
@@ -388,8 +362,8 @@ Destination Unreachable error message: ``Fragmentation Needed and Don't
 Fragment Bit Set.'' This is used in MTU path discovery, as described
 earlier in this chapter.
 
-
-{\textbf{KEY CONCEPT}} When an MTU requirement forces a datagram to be
+\begin{keyconcept}
+When an MTU requirement forces a datagram to be
 fragmented, it is split into several smaller IP datagrams, each
 containing part of the original. The header of the original datagram is
 changed into the header of the first fragment, and new headers are
@@ -398,17 +372,13 @@ value to mark them as part of the same original datagram. The Fragment
 Offset of each is set to the location where the fragment belongs in the
 original. The More Fragments field is set to 1 for all fragments but the
 last, to let the recipient know when it has received all the fragments.
+\end{keyconcept}
 
-\protect\hypertarget{ch22s03.html}{}{}
-
-\protect\hypertarget{ch22s03.htmlux5cux23idx-CHP-22-0814}{}{}When a
-datagram is fragmented, it becomes multiple fragment datagrams. The
+When a datagram is fragmented, it becomes multiple fragment datagrams. The
 destination of the overall message must collect these fragments and
 reassemble them into the original message.
 
-While
-\protect\hypertarget{ch22s03.htmlux5cux23idx-CHP-22-0815}{}{}reassembly
-is the complement to fragmentation, the two processes are not symmetric.
+While reassembly is the complement to fragmentation, the two processes are not symmetric.
 A primary differentiation between the two is that intermediate routers
 can fragment a single datagram or further fragment a datagram that is
 already a fragment, but intermediate devices do not perform reassembly;
@@ -416,7 +386,7 @@ reassembly happens only at the message's ultimate destination. Thus, if
 a datagram at an intermediate router on one side of a physical network
 with an MTU of 1,300 bytes causes fragmentation of a 3,300-byte
 datagram, the router on the other end of this 1,300 MTU link will
-{\emph{not}} restore the 3,300-byte datagram to its original state. It
+\emph{not} restore the 3,300-byte datagram to its original state. It
 will send all the 1,300-byte fragments on down the internetwork, as
 shown in
 \protect\hyperlink{ch22.htmlux5cux23ipv4_datagram_fragmentation_this_example}{Figure~22-2},
@@ -458,35 +428,35 @@ from the source device. Most of its efforts are geared toward dealing
 with the potential difficulties associated with IP being an unreliable
 protocol.
 
-The details of implementation of the reassembly process are specific to
-each device, but reassembly generally includes the following functions:
-
-{\textbf{Fragment Recognition and Fragmented Message Identification}}
-The recipient knows it has received a message fragment the first time it
-sees a datagram with the More Fragments bit set to 1 or the Fragment
-Offset a value other than 0. It identifies the message based on the
-source and destination IP addresses, the protocol specified in the
+The details of implementation of the reassembly process are specific to each device, but reassembly generally includes the following functions:
+\begin{description}
+\item[Fragment recognition and fragmented message identification]
+   The recipient knows it has received a message fragment the first time it sees a datagram with the More Fragments bit set to 1 or the Fragment
+Offset a value other than 0.
+It identifies the message based on the source and destination IP addresses, the protocol specified in the
 header, and the Identification field generated by the sender.
 
-{\textbf{Buffer Initialization}} The receiving device initializes a
-buffer where it can store the fragments of the message as they are
+\item[Buffer initialization]
+The receiving device initializes a buffer where it can store the fragments of the message as they are
 received. It keeps track of which portions of this buffer have been
 filled with received fragments, perhaps using a special table. By doing
 this, it knows when the buffer is partially filled with received
 fragments and when it is completely full.
 
-{\textbf{Timer Initialization}} The receiving device sets up a timer for
+\item[Timer initialization]
+The receiving device sets up a timer for
 reassembly of the message. Since it is possible that some fragments may
 never show up, this timer ensures that the device will not wait an
 infinite time trying to reassemble the message.
 
-{\textbf{Fragment Receipt and Processing}} Whenever a fragment of this
-message arrives (as indicated by it having the same source and
+\item[Fragment receipt and processing]
+Whenever a fragment of this message arrives (as indicated by it having the same source and
 destination addresses, protocol, and Identification as the first
 fragment), the fragment is processed. It is inserted into the message
 buffer in the location indicated by its Fragment Offset field. The
 device also makes note of the fact that this portion of the message has
 been received.
+\end{description}
 
 Reassembly is complete when the entire buffer has been filled and the
 fragment with the More Fragments bit set to 0 is received, indicating

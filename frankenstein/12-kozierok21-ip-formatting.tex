@@ -15,8 +15,8 @@ In this chapter, I take a look at how IP takes data passed to it from
 higher layers and packages it for transmission. I begin with a general
 discussion of IP datagrams and encapsulation. I then describe the
 general format of IP datagrams, including the fields used in the IP
-header and how they are interpreted. I also include a brief discussion
-of IP datagram options and their use.
+header and how they are interpreted.
+I also include a brief discussion of IP datagram options and their use.
 
 
 \begin{backgroundinfo}
@@ -128,106 +128,68 @@ have a footer following the payload.
 
 Even though IP is a relatively simple, connectionless, and unreliable protocol, the IPv4 header carries a fair bit of information, which makes it rather large.
 It is at least 20 bytes long, and with options it can be significantly longer.
-The IP datagram format is described in Tables
-\protect\hyperlink{ch21s02.htmlux5cux23internet_protocol_version__ipv_datagram}{Table~21-1},
-\protect\hyperlink{ch21s02.htmlux5cux23ipv_flags_subfields}{Table~21-2},
-and \cref{tab:ipv4-protocols}, and illustrated in \cref{fig:ipv4-datagram-format}.
+The IP datagram format is described in next, as well as in \vref{tab:ipv4-flags,tab:ipv4-protocols}, and illustrated in \vref{fig:ipv4-datagram-format}.
 
-
-
-Table~21-1.~Internet Protocol Version 4 (IPv4) Datagram Format
-
-\begin{longtable}[]{@{}lll@{}}
-\toprule
-Field Name & Size (Bytes) & Description\tabularnewline
-\midrule
-\endhead
-Version & 1/2 (4 bits) & Identifies the version of IP used to generate
-the datagram. For IPv4, this is the number 4. This field ensures
-compatibility between devices that may be running different versions of
-IP. In general, a device running an older version of IP will reject
-datagrams created by newer implementations, under the assumption that
-the older version may not be able to interpret the newer datagram
-correctly.\tabularnewline
-IHL & 1/2 (4 bits) & Specifies the length of the IP header, in 32-bit
-words. This includes the length of any options fields and padding. The
-normal value of this field when no options are used is 5 (5 32-bit words
-= 5*4 = 20 bytes). Contrast this with the longer Total Length field in
-this table.\tabularnewline
-TOS & 1 & A field designed to carry information to provide
-quality-of-service features, such as prioritized delivery for IP
-datagrams. This has not been as widely used as originally defined, and
-its meaning has been redefined for use by a technique called
-\emph{differentiated services} (DS), as discussed in the ``IP Datagram
-Type of Service (TOS) Field'' section of this chapter.\tabularnewline
-TL & 2 & Specifies the total length of the IP datagram, in bytes. Since
-this field is 16 bits wide, the maximum length of an IP datagram is
-65,535 bytes, though most are much smaller.\tabularnewline
-Identification & 2 & This field contains a 16-bit value that is common
-to each of the fragments belonging to a particular message; for
-datagrams originally sent unfragmented, it is still filled in so it can
-be used if the datagram must be fragmented by a router during delivery.
-The recipient uses this field to reassemble messages without
-accidentally mixing fragments from different messages. This is needed
-because fragments may arrive from multiple messages mixed together,
-since IP datagrams can be received out of order from any device. (See
-the discussion of IP message fragmentation in
-\protect\hyperlink{ch22.html}{Chapter~22}.)\tabularnewline
-Flags & 3/8 (3 bits) & Three control flags, two of which are used to
-manage fragmentation (as described in the topic on fragmentation), and
-one that is reserved. See
-\protect\hyperlink{ch21s02.htmlux5cux23ipv_flags_subfields}{Table~21-2}.\tabularnewline
-Fragment Offset & 1 5/8 (13 bits) & When fragmentation of a message
-occurs, this field specifies the offset, or position, in the message
-where the data in this fragment goes in units of eight bytes (64 bits).
-The first fragment has an offset of 0. (See the discussion of
-fragmentation in \protect\hyperlink{ch27.html}{Chapter~27} for a
-description of how the field is used.)\tabularnewline
-TTL & 1 & This specifies how long the datagram is allowed to live on the
-network, in router hops. Each router decrements the value of the TTL
-field (reduces it by one) prior to transmitting it. If the TTL field
-drops to zero, the datagram is assumed to have taken too long a route
-and is discarded. (See the ``IP Datagram Time to Live (TTL) Field''
-section later in this chapter for more information.)\tabularnewline
-Protocol & 1 & Identifies the higher-layer protocol (generally either a
-transport layer protocol or encapsulated network layer protocol) carried
-in the datagram.
-\protect\hyperlink{ch21s02.htmlux5cux23ipv_protocol_subfields}{Table~21-3}
-shows the protocol values of this field, which were originally defined
-by the IETF ``Assigned Numbers'' standard, RFC 1700, and are now
-maintained by the Internet Assigned Numbers Authority
-(IANA).\tabularnewline
-Header Checksum & 2 & A checksum is computed over the header to provide
-basic protection against corruption in transmission. This is not the
-more complex cyclic redundancy check (CRC) code that's typically used by
-data link layer technologies such as Ethernet; it's just a 16-bit
-checksum. It is calculated by dividing the header bytes into words (a
-word is two bytes) and then adding them together. Only the header is
-checksummed; not the data. At each hop, the device receiving the
-datagram does the same checksum calculation, and if there is a mismatch,
-it discards the datagram as damaged.\tabularnewline
-Source Address & 4 & This is the 32-bit IP address of the originator of
-the datagram. Note that even though intermediate devices such as routers
-may handle the datagram, they do not normally put their address into
-this field -- the address is always that of the device that originally
-sent the datagram.\tabularnewline
-Destination Address & 4 & This is the 32-bit IP address of the intended
-recipient of the datagram. Again, even though devices such as routers
-may be the intermediate targets of the datagram, this field is always
-used to specify the ultimate destination.\tabularnewline
-Options & Variable & One or more of several types of options may be
-included after the standard headers in certain IP datagrams, as
-discussed later in this chapter, in the ``IP Datagram Options and Option
-Format'' section.\tabularnewline
-Padding & Variable & If one or more options are included, and the number
-of bits used for them is not a multiple of 32, enough 0 bits are added
-to pad out the header to a multiple of 32 bits (four
-bytes).\tabularnewline
-Data & Variable & This is the data that will be transmitted in the
-datagram. It is either an entire higher-layer message or a fragment of
-one.\tabularnewline
-\bottomrule
-\end{longtable}
+\begin{description}
+\item[Version (4 bits)]
+   Identifies the version of IP used to generate the datagram.
+   For IPv4, this is the number 4.
+   This field ensures compatibility between devices that may be running different versions of IP.
+   In general, a device running an older version of IP will reject datagrams created by newer implementations, under the assumption that the older version may not be able to interpret the newer datagram correctly.
+\item[IP header length (4 bits)]
+   Specifies the length of the IP header, in 32-bit words.
+   This includes the length of any options fields and padding.
+   The normal value of this field when no options are used is 5 (five 32-bit words or $5\times 4 = 20$ bytes).
+   Contrast this with the longer Total Length field in this table.
+\item[Type of service (1 byte)]
+   A field designed to carry information to provide quality-of-service features, such as prioritized delivery for IP datagrams.
+   This has not been as widely used as originally defined, and its meaning has been redefined for use by a technique called \emph{differentiated services} (DS), as discussed in \vref{sec:ip-datagram-tos}.
+\item[Total length (2 bytes)]
+   Specifies the total length of the IP datagram, in bytes.
+   Since this field is 16 bits wide, the maximum length of an IP datagram is 65,535 bytes, though most are much smaller.
+\item[Identification (2 bytes)]
+   This field contains a 16-bit value that is common to each of the fragments belonging to a particular message;
+   for datagrams originally sent unfragmented, it is still filled in so it can be used if the datagram must be fragmented by a router during delivery.
+   The recipient uses this field to reassemble messages without accidentally mixing fragments from different messages.
+   This is needed because fragments may arrive from multiple messages mixed together, since IP datagrams can be received out of order from any device.
+   (See the discussion of IP message fragmentation in \cref{chap:kozierok-ch22}.)
+\item[Flags (3 bits)]
+   Three control flags, two of which are used to manage fragmentation (as described in the topic on fragmentation), and one that is reserved.
+   See \vref{tab:ipv4-flags}.
+\item[Fragment offset (13 bits)]
+   When fragmentation of a message occurs, this field specifies the offset, or position, in the message where the data in this fragment goes in units of eight bytes (64 bits).
+   The first fragment has an offset of 0.
+   (See the discussion of fragmentation in \protect\hyperlink{ch27.html}{Chapter~27} for a description of how the field is used.)
+\item[Time to live (1 byte)]
+   This specifies how long the datagram is allowed to live on the network, in router hops.
+   Each router decrements the value of the TTL field (reduces it by one) prior to transmitting it.
+   If the TTL field drops to zero, the datagram is assumed to have taken too long a route and is discarded.
+   (See \vref{sec:ip-datagram-ttl} for more information.)
+\item[Protocol (1 byte)]
+   Identifies the higher-layer protocol (generally either a transport layer protocol or encapsulated network layer protocol) carried in the datagram.
+   \Vref{tab:ipv4-protocols} shows the protocol values of this field, which were originally defined by the IETF ``Assigned Numbers'' standard,
+   RFC 1700, and are now maintained by the Internet Assigned Numbers Authority (IANA).
+\item[Header checksum (2 bytes)]
+   A checksum is computed over the header to provide basic protection against corruption in transmission.
+   This is not the more complex cyclic redundancy check (CRC) code that's typically used by data link layer technologies such as Ethernet;
+   it's just a 16-bit checksum.
+   It is calculated by dividing the header bytes into words (a word is two bytes) and then adding them together.
+   Only the header is checksummed; not the data.
+   At each hop, the device receiving the datagram does the same checksum calculation, and if there is a mismatch, it discards the datagram as damaged.
+\item[Source address (4 bytes)]
+   This is the 32-bit IP address of the originator of the datagram.
+   Note that even though intermediate devices such as routers may handle the datagram, they do not normally put their address into this field -- the address is always that of the device that originally sent the datagram.
+\item[Destination address (4 bytes)]
+   This is the 32-bit IP address of the intended recipient of the datagram.
+   Again, even though devices such as routers may be the intermediate targets of the datagram, this field is always used to specify the ultimate destination.
+\item[Options (variable)]
+   One or more of several types of options may be included after the standard headers in certain IP datagrams, as discussed in \vref{sec:ip-datagram-options}.
+\item[Padding (variable)]
+   If one or more options are included, and the number of bits used for them is not a multiple of 32, enough 0~bits are added to pad out the header to a multiple of 32~bits (four bytes).
+\item[Data (variable)]
+   This is the data that will be transmitted in the datagram.
+   It is either an entire higher-layer message or a fragment of one.
+\end{description}
 
 
 \begin{table}
@@ -255,8 +217,11 @@ one.\tabularnewline
       06 & 6 & TCP\\
       %08 & 8 & EGP\\
       11 & 17 & UDP\\
+      2f & 47 & GRE\\
       32 & 50 & ESP extension header\\
       33 & 51 & AH extension header\\
+      58 & 88 & EIGRP \\
+      59 & 89 & OSPF \\
    \end{tabular}
    \caption{IPv4 protocol subfields}
    \label{tab:ipv4-protocols}
@@ -283,36 +248,32 @@ one.\tabularnewline
 
 
 \section{IP datagram time-to-live (TTL) field}
+\label{sec:ip-datagram-ttl}
 
 Let's look at the time-to-live (TTL) field.
 Since IP datagrams are sent from router to router as they travel across an internetwork, a datagram could be passed from Router A to Router B to Router C, and then back to Router A.
-This is called a \emph{router loop}\index{router loop}, and it's something that we don't want to happen.
+This is called a \emph{routing loop}\index{routing loop}, and it's something that we don't want to happen.
 
-To ensure that datagrams don't circle around endlessly, the TTL
-field was
-designed to contain a time value (in seconds), which would be filled in
-when the datagram was originally sent. Routers would decrease the time
-value periodically, and if it ever hit zero, destroy the datagram. The
-TTL field
-was also designed to ensure that time-critical datagrams wouldn't become
-stale or pass their expiration date.
+To ensure that datagrams don't circle around endlessly, the TTL field was designed to contain a time value (in seconds),
+which would be filled in when the datagram was originally sent.
+Routers would decrease the time value periodically, and if it ever hit zero, destroy the datagram.
+The TTL field was also designed to ensure that time-critical datagrams wouldn't become stale or pass their expiration date.
 
-In practice, this field is not used in exactly this manner. Routers
-today are fast and usually take far less than a second to forward a
-datagram, which makes it impractical to measure the time that a datagram
-lives. Instead, this field is used as a \emph{maximum hop count} for the datagram.
+In practice, this field is not used in exactly this manner.
+Routers today are fast and usually take far less than a second to forward a datagram, which makes it impractical to measure the time that a datagram lives.
+Instead, this field is used as a \emph{maximum hop count} for the datagram.
 Each time a router processes a datagram, it reduces the value of the TTL field by one.
 If doing this results in the field being zero, the datagram is said to have expired, at which point it is dropped,
-and usually an Internet Control Message Protocol (ICMP) Time Exceeded
-message is sent to inform the originator of the message that it has expired.
-The TTL field is one of the primary mechanisms by which networks are protected from router loops.
-(See the description of ICMP Time Exceeded messages in \protect\hyperlink{ch32.html}{Chapter~32} for more on how TTL helps IP handle router loops.)
+and usually an Internet Control Message Protocol (ICMP) Time Exceeded message is sent to inform the originator of the message that it has expired.
+The TTL field is one of the primary mechanisms by which networks are protected from routing loops.
+%(See the description of ICMP Time Exceeded messages in \protect\hyperlink{ch32.html}{Chapter~32} for more on how TTL helps IP handle routing loops.)
 
 
 
 
 
 \section{IP datagram type of service (TOS) field}
+\label{sec:ip-datagram-tos}
 
 The Type-of-Service (TOS) field is a one-byte field that was originally intended to provide certain quality-of-service (QoS) features for IP datagram delivery.
 It allowed IP datagrams to be tagged with information indicating not only their precedence, but also the preferred manner in which they should be delivered.
@@ -337,57 +298,40 @@ bits of the TOS field to support a technique called
 (See RFC 2474 for all the details.)
 
 
-{\textbf{RELATED INFORMATION}} {\emph{Be sure to read the remainder of
-this chapter for more information on how IP options are used in
-datagrams and \protect\hyperlink{ch22.html}{Chapter~22} for some more
-context on the use of fragmentation-related fields such as
-Identification, Fragment Offset, and More Fragments}}.
+\begin{note}
+Be sure to read the remainder of this chapter for more information on how IP options are used in datagrams and \cref{chap:kozierok-ch22} for some more
+context on the use of fragmentation-related fields such as Identification, Fragment Offset, and More Fragments.
+\end{note}
 
 
+\begin{description}
+   \item[Precedence (3 bits)]
+      A field indicating the priority of the datagram.
+      There were eight defined values, from lowest to highest priority:
+      \begin{itemize}
+         \item 000: routine
+         \item 001: priority
+         \item 010: immediate
+         \item 011: flash
+         \item 100: flash override
+         \item 101: critical or ECP
+         \item 110: internetwork control
+         \item 111: network control
+      \end{itemize}
+   \item[D (1 bit)]
+      Set to 0 to request normal delay in delivery; set to 1 if a low delay delivery is requested.
+   \item[T (1 bit)]
+      Set to 0 to request normal delivery throughput; set to 1 if higher throughput delivery is requested.
+   \item[R (1 bit)]
+      Set to 0 to request normal reliability in delivery; set to 1 if higher reliability delivery is requested.
+   \item[Reserved (2 bits)]
+      Not used.
+\end{description}
 
-Table~21-4.~Original Definition of IPv4 Type of Service (TOS) Field
-
-\begin{longtable}[]{@{}lll@{}}
-\toprule
-Subfield Name & Size (Bytes) & Description\tabularnewline
-\midrule
-\endhead
-\begin{minipage}[t]{0.30\columnwidth}\raggedright
-Precedence\strut
-\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
-3/8 (3 bits)\strut
-\end{minipage} & \begin{minipage}[t]{0.30\columnwidth}\raggedright
-A field indicating the priority of the datagram. There were eight
-defined values, from lowest to highest priority:
-
-000: Routine
-
-001: Priority
-
-010: Immediate
-
-011: Flash
-
-100: Flash Override
-
-101: CRITIC/ECP
-
-110: Internetwork Control
-
-111: Network Control\strut
-\end{minipage}\tabularnewline
-D & 1/8 (1 bit) & Set to 0 to request normal delay in delivery; set to 1
-if a low delay delivery is requested.\tabularnewline
-T & 1/8 (1 bit) & Set to 0 to request normal delivery throughput; set to
-1 if higher throughput delivery is requested.\tabularnewline
-R & 1/8 (1 bit) & Set to 0 to request normal reliability in delivery;
-set to 1 if higher reliability delivery is requested.\tabularnewline
-Reserved & 2/8 (2 bits) & Not used.\tabularnewline
-\bottomrule
-\end{longtable}
 
 
 \section{IP datagram options, and option format}
+\label{sec:ip-datagram-options}
 
 
 All IP datagrams must include the standard 20-byte header that contains key
