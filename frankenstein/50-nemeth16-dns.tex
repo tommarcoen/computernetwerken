@@ -19,12 +19,10 @@ without exception they exist to support this primary objective.
 
 Over the history of the Internet, DNS has been both praised and
 criticized. Its initial elegance and simplicity encouraged adoption in
-the early years and enabled the Internet to grow quickly with little
-centralized management. As needs for additional functionality grew, so
-did the DNS system. Sometimes, these functions were bolted on in a way
-that looks ugly today. Naysayers point out weaknesses in the DNS
-infrastructure as evidence that the Internet is on the verge of
-collapse.
+the early years and enabled the Internet to grow quickly with little centralized management.
+As needs for additional functionality grew, so did the DNS.
+Sometimes, these functions were bolted on in a way that looks ugly today.
+Naysayers point out weaknesses in the DNS infrastructure as evidence that the Internet is on the verge of collapse.
 
 Say what you will, but the fundamental concepts and protocols of DNS
 have so far withstood growth from a few hundred hosts in a single
@@ -35,46 +33,29 @@ Without DNS, the Internet would have failed long ago.
 
 
 
-
 \section{DNS architecture}
 
-\protect\hypertarget{part0024_split_001.htmlux5cux23_idIndexMarker1968}{}{}DNS
-is a distributed database. Under this model, one site stores the data
-for computers it knows about, another site stores the data for its own
-set of computers, and the sites cooperate and share data when one site
-needs to look up the other's data. From an administrative point of view,
-the DNS servers you have configured for your domain answer queries from
-the outside world about names in your domain; they also query other
-domains' servers on behalf of your users.
+DNS is a distributed database.
+Under this model, one site stores the data for computers it knows about, another site stores the data for its own set of computers,
+and the sites cooperate and share data when one site needs to look up the other's data.
+From an administrative point of view, the DNS servers you have configured for your domain answer queries from
+the outside world about names in your domain; they also query other domains' servers on behalf of your users.
 
 
+\subsection{Queries and responses}
+\label{sec:queries-and-responses}
 
-\hypertarget{part0024_split_002.htmlux5cux23_idContainer1069}{}
-\hypertarget{part0024_split_002.htmlux5cux23calibre_pb_1}{%
-\subsection[Queries and
-responses]{\texorpdfstring{\protect\hypertarget{part0024_split_002.htmlux5cux23_idTextAnchor842}{}{}Queries
-and
-responses}{Queries and responses}}\label{part0024_split_002.htmlux5cux23calibre_pb_1}}
-
-\protect\hypertarget{part0024_split_002.htmlux5cux23_idIndexMarker1969}{}{}\protect\hypertarget{part0024_split_002.htmlux5cux23_idIndexMarker1970}{}{}A
-DNS query consists of a name and a record type. The answer returned is a
-set of
-\protect\hypertarget{part0024_split_002.htmlux5cux23_idIndexMarker1971}{}{}``resource
-records'' (RRs) that are responsive to the query (or alternatively, a
-response indicating that the name and record type you asked for do not
-exist).
+A DNS query consists of a name and a record type.
+The answer returned is a set of ``resource records'' (RRs) that are responsive to the query (or alternatively,
+a response indicating that the name and record type you asked for do not exist).
 
 ``Responsive'' doesn't necessarily mean ``dispositive.'' DNS servers are
 arranged into a hierarchy, and it might be necessary to contact servers
-at several layers to answer a particular query (see
-\protect\hyperlink{part0024_split_015.htmlux5cux23_idTextAnchor859}{this
-page}). Servers that don't know the answer to a query return resource
-records that help the client locate a server that does.
+at several layers to answer a particular query (see this page).
+Servers that don't know the answer to a query return resource records that help the client locate a server that does.
 
-The most common query is for an A record, which returns the IP address
-associated with a name.
-\protect\hyperlink{part0024_split_002.htmlux5cux23_idTextAnchor843}{Exhibit
-A} illustrates a typical scenario.
+The most common query is for an A record, which returns the IP address associated with a name.
+Exhibit A illustrates a typical scenario.
 
 \paragraph[{Exhibit A: }A simple name lookup]{\texorpdfstring{{Exhibit
 A:
@@ -90,81 +71,48 @@ record and sends it to a name server, which returns the A record in its
 response. Finally, the browser opens a TCP connection to the target host
 through the IP address returned by the name server.
 
-\protect\hypertarget{part0024_split_003.html}{}{}
 
-\hypertarget{part0024_split_003.htmlux5cux23_idContainer1069}{}
-\hypertarget{part0024_split_003.htmlux5cux23calibre_pb_2}{%
-\subsection[DNS service
-providers]{\texorpdfstring{\protect\hypertarget{part0024_split_003.htmlux5cux23_idTextAnchor844}{}{}DNS
-service
-providers}{DNS service providers}}\label{part0024_split_003.htmlux5cux23calibre_pb_2}}
+\subsection{DNS service providers}
 
-\protect\hypertarget{part0024_split_003.htmlux5cux23_idIndexMarker1972}{}{}\protect\hypertarget{part0024_split_003.htmlux5cux23_idIndexMarker1973}{}{}Years
-ago, one of the core tasks of every system administrator was to set up
-and maintain a DNS server for their organization. Today, the landscape
-has changed. If an organization maintains a DNS server at all, it is
-frequently for internal use only.
+Years ago, one of the core tasks of every system administrator was to set up and maintain a DNS server for their organization.
+Today, the landscape has changed.
+If an organization maintains a DNS server at all, it is frequently for internal use only.
 
-Microsoft's Active Directory system includes an integrated DNS server
-that meshes nicely with the other Microsoft-flavored services found in
-corporate environments. However, Active Directory is suitable only for
-internal use. It should never be used as an external (Internet-facing)
-DNS server because of potential security concerns.
+Microsoft's Active Directory system includes an integrated DNS server that meshes nicely with the other Microsoft-flavored services found in corporate environments.
+However, Active Directory is suitable only for internal use.
+It should never be used as an external (Internet-facing) DNS server because of potential security concerns.
 
-\protect\hypertarget{part0024_split_003.htmlux5cux23_idTextAnchor845}{}{}Every
-organization still needs an external-facing DNS server, but it's now
-common to use one of the many commercial ``managed'' DNS providers for
-this function. These services offer a GUI management interface and
-highly available, secure DNS infrastructure for only pennies (or
-dollars) a day. Amazon Route 53, CloudFlare, GoDaddy, DNS Made Easy, and
-Rackspace are just a few of the major providers.
+Every organization still needs an external-facing DNS server, but it's now common to use one of the many commercial ``managed'' DNS providers for this function.
+These services offer a GUI management interface and highly available, secure DNS infrastructure for only pennies (or dollars) a day.
+Amazon Route 53, CloudFlare, GoDaddy, DNS Made Easy, and Rackspace are just a few of the major providers.
 
 Of course, you can still set up and maintain your own DNS server
 (internal or external) if you wish. You have dozens of DNS
-implementations to choose from, but the Berkeley Internet Name Domain
-(BIND) system still dominates the Internet.
-\protect\hypertarget{part0024_split_003.htmlux5cux23_idIndexMarker1974}{}{}Over
-75\% of DNS servers run some form of it, according to the July, 2015 ISC
-Internet Domain Survey.
+implementations to choose from, but the Berkeley Internet Name Domain (BIND) system still dominates the Internet.
+Over 75 percent of DNS servers run some form of it, according to the July, 2015 ISC Internet Domain Survey.
 
-Regardless of which path you choose, as a system administrator you need
-to understand the basic concepts and architecture of DNS. The first few
-sections of this chapter focus on that important foundational knowledge.
-Starting on
-\protect\hyperlink{part0024_split_047.htmlux5cux23_idTextAnchor922}{this
-page}, we show some specific configurations for BIND.
+Regardless of which path you choose, as a system administrator you need to understand the basic concepts and architecture of DNS.
+The first few sections of this chapter focus on that important foundational knowledge.
+Starting on this page, we show some specific configurations for BIND.
 
 
 \section{DNS for lookups}
 
-\protect\hypertarget{part0024_split_004.htmlux5cux23_idIndexMarker1975}{}{}Regardless
-of whether you run your own name server, use a managed DNS service, or
-have someone else providing DNS service for you, you'll certainly want
+Regardless of whether you run your own name server, use a managed DNS service, or have someone else providing DNS service for you, you'll certainly want
 to configure all of your systems to look up names in DNS.
 
 Two steps are needed to make this happen. First, you configure your
 systems as DNS clients. Second, you tell the systems when to use DNS as
 opposed to other name lookup methods such as a static {/etc/hosts} file.
 
-\protect\hypertarget{part0024_split_005.html}{}{}
 
-\hypertarget{part0024_split_005.htmlux5cux23_idContainer1069}{}
-\hypertarget{part0024_split_005.htmlux5cux23calibre_pb_4}{%
-\subsection[: client resolver
-configuration]{\texorpdfstring{{\protect\hypertarget{part0024_split_005.htmlux5cux23_idTextAnchor847}{}{}resolv.conf}:
-client resolver
-configuration}{resolv.conf: client resolver configuration}}\label{part0024_split_005.htmlux5cux23calibre_pb_4}}
+\subsection{resolv.conf: client resolver configuration}
 
-\protect\hypertarget{part0024_split_005.htmlux5cux23_idIndexMarker1976}{}{}Each
-host on the network should be a DNS client. You configure the
-client-side resolver in the file
-\protect\hypertarget{part0024_split_005.htmlux5cux23_idIndexMarker1977}{}{}\protect\hypertarget{part0024_split_005.htmlux5cux23_idIndexMarker1978}{}{}{/etc/resolv.conf}.
+Each host on the network should be a DNS client.
+You configure the client-side resolver in the file /etc/resolv.conf.
 This file lists the name servers to which the host can send queries.
 
-\leavevmode\hypertarget{part0024_split_005.htmlux5cux23_idContainer907}{}%
-See
-\protect\hyperlink{part0021_split_027.htmlux5cux23_idTextAnchor674}{this
-page} for more information about DHCP.
+See \cref{chap:dhcp} for more information about DHCP.
 
 If your host gets its IP address and network parameters from a DHCP
 server, the {/etc/resolv.conf} file is normally set up for you
