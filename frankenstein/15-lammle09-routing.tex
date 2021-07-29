@@ -43,7 +43,7 @@ successfully throughout it.
 
 The term \emph{routing} refers to taking a packet from one device and
 sending it through the network to another device on a different network.
-Routers don't really care about hosts---they only care about networks
+Routers don't really care about hosts -- they only care about networks
 and the best path to each one of them. The logical network address of
 the destination host is key to getting packets through a routed network.
 It's the hardware address of the host that's used to deliver the packet
@@ -102,11 +102,11 @@ Let's take a look at \cref{fig:simple-routing-example} to get a picture of this 
 
 
 \Cref{fig:simple-routing-example} shows a simple network.
-Lab\_A has four interfaces.
+Lab~A has four interfaces.
 Can you see which interface will be used to forward an IP datagram to a host with a destination IP address of 10.10.10.30?
 
 By using the command \texttt{show\ ip\ route} on a router, we can see
-the routing table (map of the internetwork) that Lab\_A has used to make
+the routing table (map of the internetwork) that Lab~A has used to make
 its forwarding decisions:
 
 \begin{cli}
@@ -127,8 +127,8 @@ The \texttt{C} in the routing table output means that the networks
 listed are ``directly connected,'' and until we add a routing protocol
 like RIPv2, OSPF, etc. to the routers in our internetwork, or enter
 static routes, only directly connected networks will show up in our
-routing table. But wait---what about that \texttt{L} in the routing
-table---that's new, isn't it? Yes it is, because in the new Cisco IOS 15
+routing table. But wait -- what about that \texttt{L} in the routing
+table -- that's new, isn't it? Yes it is, because in the new Cisco IOS 15
 code, Cisco defines a different route, called a local host route. Each
 local route has a /32 prefix, defining a route just for the one address.
 So in this example, the router has relied upon these routes that list
@@ -139,7 +139,7 @@ router itself.
 the original question: By looking at the figure and the output of the
 routing table, can you determine what IP will do with a received packet
 that has a destination IP address of 10.10.10.30? The answer is that the
-router will packet-switch the packet to interface FastEthernet 0/1,
+router will packet-switch the packet to interface FastEthernet0/1,
 which will frame the packet and then send it out on the network segment.
 This is referred to as frame rewrite. Based upon the longest match rule,
 IP would look for 10.10.10.30, and if that isn't found in the table,
@@ -166,7 +166,7 @@ L      10.10.10.1/32 is directly connected, Serial0/0
 
 To figure this out, look closely at the output until you see that the
 network is subnetted and each interface has a different mask. And I have
-to tell you---you just can't answer this question if you can't subnet!
+to tell you -- you just can't answer this question if you can't subnet!
 10.10.10.14 would be a host in the 10.10.10.8/29 subnet that's connected
 to the FastEthernet0/1 interface. Don't freak if you're struggling and
 don't get this! Instead, just go back and reread \cref{chap:kozierok-ch19} until it becomes clear to you.
@@ -198,7 +198,7 @@ Routing doesn't get any simpler than this, but it still involves a lot of steps,
   IP destination address, and a Protocol field with 01h. Don't forget
   that Cisco likes to use \emph{0x} in front of hex characters, so this
   could also look like 0x01. This tells the receiving host to whom it
-  should hand the payload when the destination is reached---in this
+  should hand the payload when the destination is reached -- in this
   example, ICMP.
 \item
   Once the packet is created, IP determines whether the destination IP
@@ -210,7 +210,7 @@ Routing doesn't get any simpler than this, but it still involves a lot of steps,
   default gateway.
 \item
    The default gateway of Host~A is configured to 172.16.10.1.
-   For this packet to be sent to the default gateway, the hardware address of the router's interface Ethernet 0, which is configured with the IP address of 172.16.10.1, must be known.
+   For this packet to be sent to the default gateway, the hardware address of the router's interface Ethernet0, which is configured with the IP address of 172.16.10.1, must be known.
    Why? So the packet can be handed down to the Data Link layer, framed, and sent to the router's interface
    that's connected to the 172.16.10.0 network.
    Because hosts communicate only via hardware addresses on the local LAN, it's important to
@@ -235,7 +235,7 @@ Interface: 172.16.10.2 --- 0x3
 \end{cli}
 
   If the hardware address isn't already in the ARP cache of the host, an ARP broadcast will be sent out onto the local network to search for the 172.16.10.1 hardware address.
-  The router then responds to the request and provides the hardware address of Ethernet 0, and the host caches this address.
+  The router then responds to the request and provides the hardware address of Ethernet0, and the host caches this address.
 \item
    Once the packet and destination hardware address are handed to the
    Data Link layer, the LAN driver is used to provide media access via
@@ -249,7 +249,7 @@ Interface: 172.16.10.2 --- 0x3
    result of the cyclic redundancy check (CRC). The frame would look
    something like what I've detailed in \cref{fig:host-a-frame}.
    It contains Host A's hardware (MAC) address and the destination hardware address of the default gateway.
-   It does not include the remote host's MAC address---remember that!
+   It does not include the remote host's MAC address -- remember that!
 
    \begin{figure}
       \centering
@@ -270,7 +270,7 @@ Interface: 172.16.10.2 --- 0x3
   \item
     If the CRC matches, then the hardware destination address is checked
     to see if it matches (which, in this example, is the router's
-    interface Ethernet 0).
+    interface Ethernet0).
   \item
     If it's a match, then the Ether-Type field is checked to find the
     protocol used at the Network layer.
@@ -278,7 +278,7 @@ Interface: 172.16.10.2 --- 0x3
 \item
   The packet is pulled from the frame, and what is left of the frame is
   discarded. The packet is handed to the protocol listed in the
-  Ether-Type field---it's given to IP.
+  Ether-Type field -- it's given to IP.
 \item
   IP receives the packet and checks the IP destination address. Since
   the packet's destination address doesn't match any of the addresses
@@ -309,29 +309,29 @@ L       172.16.20.1/32 is directly connected, Ethernet1
 
   \begin{enumerate}
   \item
-    If the hardware address of Host\_B has already been resolved and is
+    If the hardware address of Host~B has already been resolved and is
     in the router's ARP cache, then the packet and the hardware address
     will be handed down to the Data Link layer to be framed. Let's take
-    a look at the ARP cache on the Lab\_A router by using the
+    a look at the ARP cache on the Lab~A router by using the
     \texttt{show\ ip\ arp} command:
 
-\begin{verbatim}
+\begin{cli}
 Lab_A#show ip arp
 Protocol  Address     Age(min) Hardware Addr  Type   Interface
 Internet  172.16.20.1   -     00d0.58ad.05f4  ARPA   Ethernet1
 Internet  172.16.20.2   3     0030.9492.a5dd  ARPA   Ethernet1
 Internet  172.16.10.1   -     00d0.58ad.06aa  ARPA   Ethernet0
 Internet  172.16.10.2  12     0030.9492.a4ac  ARPA   Ethernet0
-\end{verbatim}
+\end{cli}
 
     The dash (-) signifies that this is the physical interface on the
     router. This output shows us that the router knows the 172.16.10.2
-    (Host\_A) and 172.16.20.2 (Host\_B) hardware addresses. Cisco
+    (Host~A) and 172.16.20.2 (Host~B) hardware addresses. Cisco
     routers will keep an entry in the ARP table for 4 hours.
   \item
     Now if the hardware address hasn't already been resolved, the router
     will send an ARP request out E1 looking for the 172.16.20.2 hardware
-    address. Host\_B responds with its hardware address, and the packet
+    address. Host~B responds with its hardware address, and the packet
     and destination hardware addresses are then both sent to the Data
     Link layer for framing.
   \end{enumerate}
@@ -341,11 +341,11 @@ Internet  172.16.10.2  12     0030.9492.a4ac  ARPA   Ethernet0
   frame is then handed to the Physical layer to be sent out on the
   physical medium one bit at a time.
 \item
-  Host\_B receives the frame and immediately runs a CRC. If the result
+  Host~B receives the frame and immediately runs a CRC. If the result
   matches the information in the FCS field, the hardware destination
   address will then be checked next. If the host finds a match, the
   Ether-Type field is then checked to determine the protocol that the
-  packet should be handed to at the Network layer---IP in this example.
+  packet should be handed to at the Network layer -- IP in this example.
 \item
   At the Network layer, IP receives the packet and runs a CRC on the IP
   header. If that passes, IP then checks the destination address. Since
@@ -358,7 +358,7 @@ Internet  172.16.10.2  12     0030.9492.a4ac  ARPA   Ethernet0
 \item
   A packet is then created including the source and destination
   addresses, Protocol field, and payload. The destination device is now
-  Host\_A.
+  Host~A.
 \item
   IP then checks to see whether the destination IP address is a device
   on the local LAN or on a remote network. Since the destination device
@@ -390,7 +390,7 @@ Internet  172.16.10.2  12     0030.9492.a4ac  ARPA   Ethernet0
   The frame is now handed down to the Physical layer to be sent out over
   the network medium one bit at a time.
 \item
-  The router's Ethernet 1 interface receives the bits and builds a
+  The router's Ethernet1 interface receives the bits and builds a
   frame. The CRC is run, and the FCS field is checked to make sure the
   answers match.
 \item
@@ -399,54 +399,36 @@ Internet  172.16.10.2  12     0030.9492.a4ac  ARPA   Ethernet0
   from the frame and the Ether-Type field is checked to determine which
   protocol the packet should be delivered to at the Network layer.
 \item
-  The protocol is determined to be IP, so it gets the packet. IP runs a
-  CRC check on the IP header first and then checks the destination IP
-  address.
+   The protocol is determined to be IP, so it gets the packet.
+   IP runs a CRC check on the IP header first and then checks the destination IP address.%
+      \footnote{IP does not run a complete CRC as the Data Link layer does -- it only checks the header for errors.}
+   Since the IP destination address doesn't match any of the router's
+   interfaces, the routing table is checked to see whether it has a route
+   to 172.16.10.0. If it doesn't have a route over to the destination
+   network, the packet will be discarded immediately. I want to take a
+   minute to point out that this is exactly where the source of confusion
+   begins for a lot of administrators because when a ping fails, most
+   people think the packet never reached the destination host. But as we
+   see here, that's not \emph{always} the case. All it takes for this to
+   happen is for even just one of the remote routers to lack a route back
+   to the originating host's network and --  \emph{poof!} -- the packet is
+   dropped on the \emph{return trip}, not on its way to the host!
 
-  \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-  %\includegraphics{images/note.png}
-  IP does not run a complete CRC as
-  the Data Link layer does---it only checks the header for errors.
-
-  \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-  Since the IP destination address doesn't match any of the router's
-  interfaces, the routing table is checked to see whether it has a route
-  to 172.16.10.0. If it doesn't have a route over to the destination
-  network, the packet will be discarded immediately. I want to take a
-  minute to point out that this is exactly where the source of confusion
-  begins for a lot of administrators because when a ping fails, most
-  people think the packet never reached the destination host. But as we
-  see here, that's not \emph{always} the case. All it takes for this to
-  happen is for even just one of the remote routers to lack a route back
-  to the originating host's network and--- \emph{poof!}---the packet is
-  dropped on the \emph{return trip}, not on its way to the host!
-
-  \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-  %\includegraphics{images/tip.png}
-  Just a quick note to mention that
-  when (and if) the packet is lost on the way back to the originating
-  host, you will typically see a request timed-out message because it is
-  an unknown error. If the error occurs because of a known issue, such
-  as if a route is not in the routing table on the way to the
-  destination device, you will see a destination unreachable message.
-  This should help you determine if the problem occurred on the way to
-  the destination or on the way back.
-
-  \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+   \begin{note}
+   Just a quick note to mention that when (and if) the packet is lost on the way back to the originating host,
+   you will typically see a request timed-out message because it is an unknown error.
+   If the error occurs because of a known issue, such as if a route is not in the routing table on the way to the destination device,
+   you will see a destination unreachable message.
+   This should help you determine if the problem occurred on the way to the destination or on the way back.
+   \end{note}
 \item
-  \protect\hypertarget{c09.xhtmlux5cux23Page_366}{}{}In this case, the
-  router happens to know how to get to network 172.16.10.0---the exit
-  interface is Ethernet 0---so the packet is switched to interface
-  Ethernet 0.
+   In this case, the router happens to know how to get to network 172.16.10.0 -- the exit interface is Ethernet0 -- so the packet is switched to interface Ethernet0.
 \item
   The router then checks the ARP cache to determine whether the hardware
   address for 172.16.10.2 has already been resolved.
 \item
   Since the hardware address to 172.16.10.2 is already cached from the
-  originating trip to Host\_B, the hardware address and packet are then
+  originating trip to Host~B, the hardware address and packet are then
   handed to the Data Link layer.
 \item
   The Data Link layer builds a frame with the destination hardware
@@ -477,52 +459,45 @@ the process would be the \emph{same}. It's just that the larger the
 internetwork, the more hops the packet goes through before it finds the
 destination host.
 
-It's super-important to remember that when Host\_A sends a packet to
-Host\_B, the destination hardware address used is the default gateway's
+It's super-important to remember that when Host~A sends a packet to
+Host~B, the destination hardware address used is the default gateway's
 Ethernet interface. Why? Because frames can't be placed on remote
-networks---only local networks. So packets destined for remote networks
+networks -- only local networks. So packets destined for remote networks
 must go through the default gateway.
 
-Let's take a look at Host\_A's ARP cache now:
+Let's take a look at Host~A's ARP cache now:
 
-\begin{verbatim}
+\begin{cli}
 C:\ >arp -a
 Interface: 172.16.10.2 --- 0x3
   Internet Address      Physical Address      Type
   172.16.10.1           00-15-05-06-31-b0     dynamic
   172.16.20.1           00-15-05-06-31-b0     dynamic
-\end{verbatim}
+\end{cli}
 
-Did you notice that the hardware (MAC) address that Host\_A uses to get
-to Host\_B is the Lab\_A E0 interface? Hardware addresses are
+Did you notice that the hardware (MAC) address that Host~A uses to get
+to Host~B is the Lab~A E0 interface? Hardware addresses are
 \emph{always} local, and they never pass through a router's interface.
 Understanding this process is as important as air to you, so carve this
 into your memory!
 
-\subsubsection[The Cisco Router Internal
-Process]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-3}{}{}The
-Cisco Router Internal Process}{The Cisco Router Internal Process}}
+\subsection{The Cisco router internal process}
 
-One more thing before we get to testing your understanding of my 36
-steps of IP routing. I think it's important to explain how a router
-forwards packets internally. For IP to look up a
-\protect\hypertarget{c09.xhtmlux5cux23Page_367}{}{}destination address
-in a routing table on a router, processing in the router must take
-place, and if there are tens of thousands of routes in that table, the
-amount of CPU time would be enormous. It results in a potentially
-overwhelming amount of overhead---think about a router at your ISP that
-has to calculate millions of packets per second and even subnet to find
-the correct exit interface! Even with the little network I'm using in
-this book, lots of processing would need to be done if there were actual
-hosts connected and sending data.
+One more thing before we get to testing your understanding of my 36 steps of IP routing.
+I think it's important to explain how a router forwards packets internally.
+For IP to look up a destination address in a routing table on a router, processing in the router must take place,
+and if there are tens of thousands of routes in that table, the amount of CPU time would be enormous.
+It results in a potentially overwhelming amount of overhead --
+think about a router at your ISP that has to calculate millions of packets per second and even subnet to find the correct exit interface!
+Even with the little network I'm using in this book, lots of processing would need to be done if there were actual hosts connected and sending data.
 
 Cisco uses three types of packet-forwarding techniques.
-
-\textbf{Process switching} This is actually how many people see routers
-to this day, because it's true that routers actually did perform this
+\begin{description}
+\item[Process switching]
+   This is actually how many people see routers to this day, because it's true that routers actually did perform this
 type of bare-bones packet switching back in 1990 when Cisco released
 their very first router. But those days when traffic demands were
-unimaginably light are long gone---not in today's networks! This process
+unimaginably light are long gone -- not in today's networks! This process
 is now extremely complex and involves looking up every destination in
 the routing table and finding the exit interface for every packet. This
 is pretty much how I just explained the process in my 36 steps. But even
@@ -532,33 +507,26 @@ millions of packets per second that must now be processed. So Cisco came
 up with some other technologies to help with the ``big process
 problem.''
 
-\textbf{Fast switching} This solution was created to make the slow
-performance of process switching faster and more efficient. Fast
+\item[Fast switching]
+   This solution was created to make the slow performance of process switching faster and more efficient. Fast
 switching uses a cache to store the most recently used destinations so
 that lookups are not required for every packet. By caching the exit
 interface of the destination device, as well as the layer 2 header,
 performance was dramatically improved, but as our networks evolved with
 the need for even more speed, Cisco created yet another technology!
 
-\textbf{Cisco Express Forwarding (CEF)} This is Cisco's newer creation,
-and it's the default packet-forwarding method used on all the latest
+\item[Cisco express forwarding (CEF)]
+   This is Cisco's newer creation, and it's the default packet-forwarding method used on all the latest
 Cisco routers. CEF makes many different cache tables to help improve
 performance and is change triggered, not packet triggered. Translated,
 this means that when the network topology changes, the cache changes
 along with it.
+\end{description}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-%\includegraphics{images/tip.png}
-To see which packet switching method
-your router interface is using, use the command
-\texttt{show\ ip\ interface}.
+To see which packet switching method your router interface is using, use the command \texttt{show\ ip\ interface}.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\subsubsection[Testing Your IP Routing
-Understanding]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-4}{}{}Testing
-Your IP Routing Understanding}{Testing Your IP Routing Understanding}}
+\subsection{Testing your IP routing understanding}
 
 Since understanding IP routing is super-important, it's time for that
 little test I talked about earlier on how well you've got the IP routing
@@ -566,36 +534,28 @@ process down so far. I'm going to do that by having you look at a couple
 of figures and answer some very basic IP routing questions based upon
 them.
 
-\protect\hyperlink{c09.xhtmlux5cux23figure9-4}{Figure 9.4} shows a LAN
-connected to RouterA that's connected via a WAN link to RouterB. RouterB
-has a LAN connected with an HTTP server attached.
-
-\protect\hypertarget{c09.xhtmlux5cux23Page_368}{}{}
+\Cref{fig:ip-routing-ex-1} shows a LAN connected to RouterA that's connected via a WAN link to RouterB.
+RouterB has a LAN connected with an HTTP server attached.
 
 \begin{figure}
-\centering
-%\includegraphics{images/c09f004.jpg}
-\caption{{\protect\hyperlink{c09.xhtmlux5cux23figureanchor9-4}{\textbf{FIGURE
-9.4}} IP routing example 1}}
+   \centering
+   \includegraphics{images/c09f004.jpg}
+   \caption{IP routing example 1}
+   \label{fig:ip-routing-ex-1}
 \end{figure}
 
-The critical information you want to obtain by looking at this figure is
-exactly how IP routing will occur in this example. Let's determine the
-characteristics of a frame as it leaves HostA. Okay---we'll cheat a bit.
-I'll give you the answer, but then you should go back over the figure
-and see if you can answer example 2 without looking at my three-step
-answer!
+The critical information you want to obtain by looking at this figure is exactly how IP routing will occur in this example.
+Let's determine the characteristics of a frame as it leaves HostA.
+Okay -- we'll cheat a bit.
+I'll give you the answer, but then you should go back over the figure and see if you can answer example 2 without looking at my three-step answer!
 
 \begin{enumerate}
-\tightlist
 \item
-  The destination address of a frame from HostA would be the MAC address
-  of Router A's Fa0/0 interface.
+The destination address of a frame from HostA would be the MAC address of Router A's Fa0/0 interface.
 \item
-  The destination address of a packet would be the IP address of the
-  HTTP server's network interface card (NIC).
+The destination address of a packet would be the IP address of the HTTP server's network interface card (NIC).
 \item
-  The destination port number in the segment header would be 80.
+The destination port number in the segment header would be 80.
 \end{enumerate}
 
 That was a pretty simple, straightforward scenario. One thing to
@@ -606,47 +566,41 @@ data separated at the Transport layer.
 
 Let's complicate matters by adding another device into the network and
 then see if you can find the answers.
-\protect\hyperlink{c09.xhtmlux5cux23figure9-5}{Figure 9.5} shows a
-network with only one router but two switches.
+\Cref{fig:ip-routing-ex-2} shows a network with only one router but two switches.
+
 
 \begin{figure}
-\centering
-%\includegraphics{images/c09f005.jpg}
-\caption{{\protect\hyperlink{c09.xhtmlux5cux23figureanchor9-5}{\textbf{FIGURE
-9.5}} IP routing example 2}}
+   \centering
+   \includegraphics{images/c09f005.jpg}
+   \caption{IP routing example 2}
+   \label{fig:ip-routing-ex-2}
 \end{figure}
 
-\protect\hypertarget{c09.xhtmlux5cux23Page_369}{}{}The key thing to
-understand about the IP routing process in this scenario is what happens
-when HostA sends data to the HTTPS server? Here's your answer:
+
+The key thing to understand about the IP routing process in this scenario is what happens when HostA sends data to the HTTPS server? Here's your answer:
 
 \begin{enumerate}
-\tightlist
 \item
-  The destination address of a frame from HostA would be the MAC address
-  of RouterA's Fa0/0 interface.
+   The destination address of a frame from HostA would be the MAC address of RouterA's Fa0/0 interface.
 \item
-  The destination address of a packet is the IP address of the HTTPS
-  server's network interface card (NIC).
+   The destination address of a packet is the IP address of the HTTPS server's network interface card (NIC).
 \item
-  The destination port number in the segment header will have a value of
-  443.
+   The destination port number in the segment header will have a value of~443.
 \end{enumerate}
 
 Did you notice that the switches weren't used as either a default
 gateway or any other destination? That's because switches have nothing
 to do with routing. I wonder how many of you chose the switch as the
 default gateway (destination) MAC address for HostA? If you did, don't
-feel bad---just take another look to see where you went wrong and why.
+feel bad -- just take another look to see where you went wrong and why.
 It's very important to remember that the destination MAC address will
-always be the router's interface---if your packets are destined for
+always be the router's interface -- if your packets are destined for
 outside the LAN, as they were in these last two examples!
 
-Before moving on into some of the more advanced aspects of IP routing,
-let's look at another issue. Take a look at the output of this router's
-routing table:
+Before moving on into some of the more advanced aspects of IP routing, let's look at another issue.
+Take a look at the output of this router's routing table:
 
-\begin{verbatim}
+\begin{cli}
 Corp#sh ip route
 [output cut]
 R    192.168.215.0 [120/2] via 192.168.20.2, 00:00:23, Serial0/0
@@ -656,55 +610,47 @@ C    192.168.20.0 is directly connected, Serial0/0
 L    192.168.20.1/32 is directly connected, Serial0/0
 C    192.168.214.0 is directly connected, FastEthernet0/0
 L    192.168.214.1/32 is directly connected, FastEthernet0/0
-\end{verbatim}
+\end{cli}
 
 What do we see here? If I were to tell you that the corporate router
 received an IP packet with a source IP address of 192.168.214.20 and a
 destination address of 192.168.22.3, what do you think the Corp router
 will do with this packet?
 
-If you said, ``The packet came in on the FastEthernet 0/0 interface, but
+If you said, ``The packet came in on the FastEthernet0/0 interface, but
 because the routing table doesn't show a route to network 192.168.22.0
 (or a default route), the router will discard the packet and send an
 ICMP destination unreachable message back out to interface FastEthernet
-0/0,'' you're a genius! The reason that's the correct answer is because
-that's the source LAN where the packet originated from.
+0/0,'' you're a genius!
+The reason that's the correct answer is because that's the source LAN where the packet originated from.
 
 Now, let's check out the next figure and talk about the frames and
 packets in detail. We're not really going over anything new here; I'm
-just making sure you totally, completely, thoroughly, fully understand
-basic IP routing! It is the crux of this book, and the topic the exam
-objectives are geared toward. It's all about IP routing, which means you
-need to be all over this stuff! We'll use
-\protect\hyperlink{c09.xhtmlux5cux23figure9-6}{Figure 9.6} for the next
-few scenarios.
-
-\protect\hypertarget{c09.xhtmlux5cux23Page_370}{}{}
+just making sure you totally, completely, thoroughly, fully understand basic IP routing!
+It is the crux of this book, and the topic the exam objectives are geared toward.
+It's all about IP routing, which means you need to be all over this stuff!
+We'll use \cref{fig:basic-ip-routing} for the next few scenarios.
 
 \begin{figure}
-\centering
-%\includegraphics{images/c09f006.jpg}
-\caption{{\protect\hyperlink{c09.xhtmlux5cux23figureanchor9-6}{\textbf{FIGURE
-9.6}} Basic IP routing using MAC and IP addresses}}
+   \centering
+   \includegraphics{images/c09f006.jpg}
+   \caption{Basic IP routing using MAC and IP addresses}
+   \label{fig:basic-ip-routing}
 \end{figure}
 
-Referring to \protect\hyperlink{c09.xhtmlux5cux23figure9-6}{Figure 9.6},
-here's a list of all the answers to questions you need inscribed in your
-brain:
+Referring to \cref{fig:basic-ip-routing}, here's a list of all the answers to questions you need inscribed in your brain:
 
 \begin{enumerate}
-\tightlist
 \item
-  In order to begin communicating with the Sales server, Host 4 sends
-  out an ARP request. How will the devices exhibited in the topology
-  respond to this request?
+   In order to begin communicating with the Sales server, Host 4 sends out an ARP request.
+   How will the devices exhibited in the topology respond to this request?
 \item
   Host 4 has received an ARP reply. Host 4 will now build a packet, then
   place this packet in the frame. What information will be placed in the
   header of the packet that leaves Host 4 if Host 4 is going to
   communicate to the Sales server?
 \item
-  The Lab\_A router has received the packet and will send it out Fa0/0
+  The Lab~A router has received the packet and will send it out Fa0/0
   onto the LAN toward the server. What will the frame have in the header
   as the source and destination addresses?
 \item
@@ -720,13 +666,12 @@ this down, here are your answers in the same order that the scenarios
 were just presented:
 
 \begin{enumerate}
-\tightlist
 \item
   In order to begin communicating with the server, Host 4 sends out an
   ARP request. How will the devices exhibited in the topology respond to
   this request? Since MAC addresses must stay on the local network, the
-  Lab\_B router will respond with the MAC address of the Fa0/0 interface
-  and Host 4 will send all frames to the MAC address of the Lab\_B Fa0/0
+  Lab~B router will respond with the MAC address of the Fa0/0 interface
+  and Host 4 will send all frames to the MAC address of the Lab~B Fa0/0
   interface when sending packets to the Sales server.
 \item
   Host 4 has received an ARP reply. Host 4 will now build a packet, then
@@ -737,10 +682,10 @@ were just presented:
   4 and the destination address will be the IP address of the Sales
   server.
 \item
-  Finally, the Lab\_A router has received the packet and will send it
+  Finally, the Lab~A router has received the packet and will send it
   out Fa0/0 onto the LAN toward the server. What will the frame have in
   the header as the source and ­destination addresses? The source MAC
-  address will be the Lab\_A router's Fa0/0 interface, and the
+  address will be the Lab~A router's Fa0/0 interface, and the
   \protect\hypertarget{c09.xhtmlux5cux23Page_371}{}{}destination MAC
   address will be the Sales server's MAC address because all MAC
   addresses must be local on the LAN.
@@ -753,46 +698,45 @@ were just presented:
 
 Great! But we're not quite done yet. I've got a few more questions for
 you before you actually get to configure routing in a real network.
-Ready? \protect\hyperlink{c09.xhtmlux5cux23figure9-7}{Figure 9.7} shows
-a basic network, and Host 4 needs to get email. Which address will be
-placed in the destination address field of the frame when it leaves Host
-4?
+Ready?
+\Cref{fig:basic-routing-test} shows a basic network, and Host 4 needs to get email.
+Which address will be placed in the destination address field of the frame when it leaves Host~4?
 
 \begin{figure}
-\centering
-%\includegraphics{images/c09f007.jpg}
-\caption{{\protect\hyperlink{c09.xhtmlux5cux23figureanchor9-7}{\textbf{FIGURE
-9.7}} Testing basic routing knowledge}}
+   \centering
+   \includegraphics{images/c09f007.jpg}
+   \caption{Testing basic routing knowledge}
+   \label{fig:basic-routing-test}
 \end{figure}
 
 The answer is that Host 4 will use the destination MAC address of the
-Fa0/0 interface on the Lab\_B router---you knew that, right? Look at
-\protect\hyperlink{c09.xhtmlux5cux23figure9-7}{Figure 9.7} again: What
-if Host 4 needs to communicate with Host 1---not the server, but with
+Fa0/0 interface on the Lab~B router -- you knew that, right? Look at
+\cref{fig:basic-routing-test} again: What
+if Host 4 needs to communicate with Host 1 -- not the server, but with
 Host 1. Which OSI layer 3 source address will be found in the packet
 header when it reaches Host 1?
 
 Hopefully you've got this: At layer 3, the source IP address will be
 Host 4 and the destination address in the packet will be the IP address
 of Host 1. Of course, the destination MAC address from Host 4 will
-always be the Fa0/0 address of the Lab\_B router, right? And since we
+always be the Fa0/0 address of the Lab~B router, right? And since we
 have more than one router, we'll need a routing protocol that
 communicates between both of them so that traffic can be forwarded in
 the right direction to reach the network that Host 1 is connected to.
 
-Okay---one more scenario and you're on your way to being an IP routing
+Okay -- one more scenario and you're on your way to being an IP routing
 machine! Again, using
-\protect\hyperlink{c09.xhtmlux5cux23figure9-7}{Figure 9.7}, Host 4 is
-transferring a file to the email server connected to the Lab\_A router.
+\cref{fig:basic-routing-test}, Host 4 is
+transferring a file to the email server connected to the Lab~A router.
 What would be the layer 2 destination address leaving Host 4? Yes, I've
 asked this question more than once. But not this one: What will be the
 source MAC address when the frame is received at the email server?
 
-\protect\hypertarget{c09.xhtmlux5cux23Page_372}{}{}Hopefully, you
+Hopefully, you
 answered that the layer 2 destination address leaving Host 4 is the MAC
-address of the Fa0/0 interface on the Lab\_B router and that the source
+address of the Fa0/0 interface on the Lab~B router and that the source
 layer 2 address that the email server will receive is the Fa0/0
-interface of the Lab\_A router.
+interface of the Lab~A router.
 
 If you did, you're ready to discover how IP routing is handled in a
 larger network environment!
@@ -800,10 +744,10 @@ larger network environment!
 
 
 
-\section{Configuring IP Routing}
+\section{Configuring IP routing}
 
 It's time to get serious and configure a real network.
-\protect\hyperlink{c09.xhtmlux5cux23figure9-8}{Figure 9.8} shows three
+\Cref{fig:config-ip-routing} shows three
 routers: Corp, SF, and LA. Remember that, by default, these routers only
 know about networks that are directly connected to them. I'll continue
 to use this figure and network throughout the rest of the chapters in
@@ -811,10 +755,10 @@ this book. As I progress through this book, I'll add more routers and
 switches as needed.
 
 \begin{figure}
-\centering
-%\includegraphics{images/c09f008.jpg}
-\caption{{\protect\hyperlink{c09.xhtmlux5cux23figureanchor9-8}{\textbf{FIGURE
-9.8}} Configuring IP routing}}
+   \centering
+   \includegraphics{images/c09f008.jpg}
+   \caption{Configuring IP routing}
+   \label{fig:config-ip-routing}
 \end{figure}
 
 As you might guess, I've got quite a nice collection of routers for us
@@ -823,17 +767,14 @@ most, if not all, of the commands we'll use in this book. You can get by
 nicely with pretty much any router or even with a good router simulator.
 
 Getting back to business, the Corp router has two serial interfaces,
-which will provide a WAN connection to the SF and LA router and two Fast
-Ethernet interfaces as well. The two remote routers have two serial
-interfaces and two Fast Ethernet interfaces.
+which will provide a WAN connection to the SF and LA router and two FastEthernet interfaces as well.
+The two remote routers have two serial interfaces and two Fast Ethernet interfaces.
 
-The first step for this project is to correctly configure each router
-with an IP address on each interface. The following list shows the IP
-address scheme I'm going to use to configure the network. After we go
-over how the network is configured, I'll cover how to configure
-\protect\hypertarget{c09.xhtmlux5cux23Page_373}{}{}IP routing. Pay
-attention to the subnet masks---they're important! The LANs all use a
-/24 mask, but the WANs are using a /30.
+The first step for this project is to correctly configure each router with an IP address on each interface.
+The following list shows the IP address scheme I'm going to use to configure the network.
+After we go over how the network is configured, I'll cover how to configure IP routing.
+Pay attention to the subnet masks -- they're important!
+The LANs all use a /24 mask, but the WANs are using a /30.
 
 Corp
 
@@ -873,9 +814,7 @@ perform a \texttt{no\ shutdown} on those same interfaces. It gets a tad
 more complex later on, but for right now, let's configure the IP
 addresses in the network.
 
-\subsubsection[Corp
-Configuration]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-6}{}{}Corp
-Configuration}{Corp Configuration}}
+\subsection{Corp configuration}
 
 We need to configure three interfaces to configure the Corp router. And
 configuring the hostnames of each router will make identification much
@@ -891,7 +830,7 @@ this same way.
 
 Here's how what I just did looks:
 
-\begin{verbatim}
+\begin{cli}
          --- System Configuration Dialog ---
 Would you like to enter the initial configuration dialog? [yes/no]: n
  
@@ -932,7 +871,7 @@ Destination filename [startup-config]?
 Building configuration...
 [OK]
 Corp# [OK]
-\end{verbatim}
+\end{cli}
 
 Let's talk about the configuration of the Corp router. First, I set the
 hostname and enable secret, but what is that
@@ -946,20 +885,10 @@ The logging synchronous command stops console messages from writing over
 what you are typing in, meaning it's a sanity-saving command that you'll
 come to love! Last, I set my banner and then saved my configs.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+To view the IP routing tables created on a Cisco router, use the command \texttt{show\ ip\ route}.
+Here's the command's output:
 
-%\includegraphics{images/note.png}
-If you're having a hard time
-understanding this configuration process, refer back to Chapter 6,
-``Cisco's Internetworking Operating System (IOS).''
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\protect\hypertarget{c09.xhtmlux5cux23Page_375}{}{}To view the IP
-routing tables created on a Cisco router, use the command
-\texttt{show\ ip\ route}. Here's the command's output:
-
-\begin{verbatim}
+\begin{cli}
 Corp#sh ip route
 Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
    D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
@@ -975,12 +904,12 @@ Gateway of last resort is not set
 C       10.10.10.0 is directly connected, FastEthernet0/0
 L       10.10.10.1/32 is directly connected, FastEthernet0/0
 Corp#
-\end{verbatim}
+\end{cli}
 
 It's important to remember that only configured, directly connected
 networks are going to show up in the routing table. So why is it that
-only the FastEthernet 0/0 interface shows up in the table? No
-worries---that's just because you won't see the serial interfaces come
+only the FastEthernet0/0 interface shows up in the table? No
+worries -- that's just because you won't see the serial interfaces come
 up until the other side of the links are operational. As soon as we
 configure our SF and LA routers, those interfaces should pop right up!
 
@@ -990,21 +919,11 @@ directly connected. The codes for each type of connection are listed at
 the top of the \texttt{show\ ip\ route} command, along with their
 descriptions.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\subsection{SF configuration}
 
-%\includegraphics{images/note.png}
-For brevity, the codes at the top of
-the output will be cut in the rest of this chapter.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\subsubsection[SF
-Configuration]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-7}{}{}SF
-Configuration}{SF Configuration}}
-
-Now we're ready to configure the next router---SF. To make that happen
+Now we're ready to configure the next router -- SF. To make that happen
 correctly, keep in mind that we have two interfaces to deal with: Serial
-0/0/0 and FastEthernet 0/0. So let's make sure we don't forget to add
+0/0/0 and FastEthernet0/0. So let's make sure we don't forget to add
 the hostname, passwords, interface descriptions, and banners to the
 router configuration. As I did with the Corp router, I erased the
 configuration and reloaded since this router had already been configured
@@ -1012,7 +931,7 @@ before.
 
 Here's the configuration I used:
 
-\begin{verbatim}
+\begin{cli}
 R1#erase start
 % Incomplete command.
 R1#erase startup-config
@@ -1029,20 +948,20 @@ Proceed with reload? [confirm][enter]
          --- System Configuration Dialog ---
  
 Would you like to enter the initial configuration dialog? [yes/no]: n
-\end{verbatim}
+\end{cli}
 
 Before we move on, let's talk about this output for a second. First,
 notice that beginning with IOS 12.4, ISR routers will no longer take the
 command \texttt{erase\ start}. The router has only one command after
 \texttt{erase} that starts with \emph{s}, as shown here:
 
-\begin{verbatim}
+\begin{cli}
 Router#erase s?
 startup-config
-\end{verbatim}
+\end{cli}
 
 I know, you'd think that the IOS would continue to accept the command,
-but nope---sorry! The second thing I want to point out is that the
+but nope -- sorry! The second thing I want to point out is that the
 output tells us the router is looking for a TFTP host to see if it can
 download a configuration. When that fails, it goes straight into setup
 mode. This gives you a great picture of the Cisco router default boot
@@ -1192,16 +1111,16 @@ Since the serial links are showing up, we can now see both networks in
 the Corp routing table. And once we configure LA, we'll see one more
 network in the routing table of the Corp router. The Corp router can't
 see the 192.168.10.0 network because we don't have any routing
-configured yet---routers see only directly connected networks by
+configured yet -- routers see only directly connected networks by
 default.
 
-\subsubsection[LA
+\subsection[LA
 Configuration]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-8}{}{}LA
 Configuration}{LA Configuration}}
 
 To configure LA, we're going to do pretty much the same thing we did
 with the other two routers. There are two interfaces to deal with,
-Serial 0/0/1 and FastEthernet 0/0, and again, we'll be sure to add the
+Serial 0/0/1 and FastEthernet0/0, and again, we'll be sure to add the
 hostname, passwords, interface descriptions, and a banner to the router
 configuration:
 
@@ -1238,7 +1157,7 @@ Building configuration...
 [OK]
 \end{verbatim}
 
-Nice---everything was pretty straightforward. The following output,
+Nice -- everything was pretty straightforward. The following output,
 which I gained via the \texttt{show\ ip\ route} command, displays the
 directly connected networks of 192.168.20.0 and 172.16.10.0:
 
@@ -1253,7 +1172,7 @@ L    192.168.20.1/32 is directly connected, FastEthernet0/0
 
 So now that we've configured all three routers with IP addresses and
 administrative functions, we can move on to deal with routing. But I
-want to do one more thing on the SF and LA routers---since this is a
+want to do one more thing on the SF and LA routers -- since this is a
 very small network, let's build a DHCP server on the Corp router for
 each LAN.
 
@@ -1362,7 +1281,7 @@ our network, because if you can implement static routing \emph{and} make
 it work, you've demonstrated that you definitely have a solid
 understanding of the internetwork. So let's get started.
 
-\subsubsection[Static
+\subsection[Static
 Routing]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-10}{}{}Static
 Routing}{Static Routing}}
 
@@ -1405,7 +1324,7 @@ And here are the cons:
 \end{enumerate}
 
 But that list of cons doesn't mean you get to skip learning all about it
-mainly because of that first disadvantage I listed---the fact that you
+mainly because of that first disadvantage I listed -- the fact that you
 must have such a solid understanding of a network to configure it
 properly and that your administrative knowledge has to practically
 \protect\hypertarget{c09.xhtmlux5cux23Page_383}{}{}verge on the
@@ -1427,7 +1346,7 @@ table.
 
 \texttt{mask} The subnet mask being used on the network.
 
-\texttt{next-hop\_address} This is the IP address of the next-hop router
+\texttt{next-hop~address} This is the IP address of the next-hop router
 that will receive packets and forward them to the remote network, which
 must signify a router interface that's on a directly connected network.
 You must be able to successfully ping the router interface before you
@@ -1585,7 +1504,7 @@ The \texttt{S} in the first routing table entry means that the route is
 a static entry. The \texttt{{[}150/0{]}} stands for the administrative
 distance and metric to the remote network, respectively.
 
-Okay---we're good. The Corp router now has all the information it needs
+Okay -- we're good. The Corp router now has all the information it needs
 to communicate with the other remote networks. Still, keep in mind that
 if the SF and LA routers aren't configured with all the same
 information, the packets will be discarded. We can fix this by
@@ -1701,7 +1620,7 @@ LA now shows all five networks in the internetwork, so it too can now
 communicate with all routers and networks. But before we test our little
 network, as well as our DHCP server, let's cover one more topic.
 
-\subsubsection[Default
+\subsection[Default
 Routing]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-11}{}{}Default
 Routing}{Default Routing}}
 
@@ -1732,7 +1651,7 @@ L    192.168.20.0/32 is directly connected, FastEthernet0/0
 S*   0.0.0.0/0 [1/0] via 172.16.10.5
 \end{verbatim}
 
-Okay---I've removed all the initial static routes I had configured, and
+Okay -- I've removed all the initial static routes I had configured, and
 adding a default route is a lot easier than typing a bunch of static
 routes! Can you see the default route listed last in the routing table?
 The \texttt{S*} shows that as a candidate for the default route. And I
@@ -1742,17 +1661,17 @@ routing table will be forwarded to 172.16.10.5. You need to be careful
 where you place default routes because you can easily create a network
 loop!
 
-So we're there---we've configured all our routing tables! All the
+So we're there -- we've configured all our routing tables! All the
 routers have the correct routing table, so all routers and hosts should
-be able to communicate without a hitch---for now. But if you add even
+be able to communicate without a hitch -- for now. But if you add even
 one more network or another router to the internetwork, you'll have to
-update each and every router's routing tables by hand---ugh! Not really
+update each and every router's routing tables by hand -- ugh! Not really
 a problem at all if you've got a small network like we do, but it would
 be a time-consuming monster if you're dealing with a large internetwork!
 
 \paragraph{Verifying Your Configuration}
 
-But we're not done yet---once all the routers' routing tables are
+But we're not done yet -- once all the routers' routing tables are
 configured, they must be verified. The best way to do this, besides
 using the \texttt{show\ ip\ route} command, is via Ping. I'll start by
 pinging from the Corp router to the SF router.
@@ -1861,7 +1780,7 @@ server.
 
 Okay, since we can communicate from end to end and to each host without
 a problem while receiving DHCP addresses from our server, I'd say our
-static and default route configurations have been a success---cheers!
+static and default route configurations have been a success -- cheers!
 
 
 
@@ -1891,7 +1810,7 @@ Since routing protocols are so essential to dynamic routing, I'm going
 to give you the basic information you need to know about them next.
 Later on in this chapter, we'll focus on configuration.
 
-\subsubsection[Routing Protocol
+\subsection[Routing Protocol
 Basics]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-13}{}{}Routing
 Protocol Basics}{Routing Protocol Basics}}
 
@@ -1959,9 +1878,9 @@ protocol experiences some kind of failure.
 
 \protect\hypertarget{c09.xhtmlux5cux23Page_392}{}{}If you have a static
 route, an RIP-advertised route, and an EIGRP-advertised route listing
-the same network, which route will the router go with? That's right---by
+the same network, which route will the router go with? That's right -- by
 default, the router will always use the static route unless you change
-its AD---which we did!
+its AD -- which we did!
 
 \paragraph{Routing Protocols}
 
@@ -2029,7 +1948,7 @@ send subnet mask information with its route updates. This is called
 So, with that let's configure our current network with RIPv2, before we
 move onto the next chapter.
 
-\subsubsection[Configuring RIP
+\subsection[Configuring RIP
 Routing]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-15}{}{}Configuring
 RIP Routing}{Configuring RIP Routing}}
 
@@ -2039,7 +1958,7 @@ networks to advertise. Remember that with static routing, we always
 configured remote networks and never typed a route to our directly
 connected networks? Well, dynamic routing is carried out the complete
 opposite way. You would never type a \emph{remote} network under your
-routing protocol---only enter your directly connected networks! Let's
+routing protocol -- only enter your directly connected networks! Let's
 configure our three-router internetwork, revisited in
 \protect\hyperlink{c09.xhtmlux5cux23figure9-9}{Figure 9.9}, with RIP
 routing.
@@ -2061,7 +1980,7 @@ configured with the \texttt{network} command under the RIP routing
 process.
 
 Look at the Corp router configuration to see how easy this is. Oh
-wait---first, I want to verify my directly connected networks so I know
+wait -- first, I want to verify my directly connected networks so I know
 what to configure RIP with:
 
 \begin{verbatim}
@@ -2079,7 +1998,7 @@ Corp(config-router)#version 2
 Corp(config-router)#no auto-summary
 \end{verbatim}
 
-\protect\hypertarget{c09.xhtmlux5cux23Page_394}{}{}That's it---really!
+\protect\hypertarget{c09.xhtmlux5cux23Page_394}{}{}That's it -- really!
 Typically just two or three commands and you're done, which sure makes
 your job a lot easier than dealing with static routes, doesn't it? Be
 sure to keep in mind the extra router CPU process and bandwidth that
@@ -2182,7 +2101,7 @@ The routing table is sprouting new \texttt{R}'s as we add RIP buddies!
 We can still see that all routes are in the routing table.
 
 This output shows us basically the same routing table and the same
-entries that it had when we were using static routes---except for those
+entries that it had when we were using static routes -- except for those
 \texttt{R}'s. An \texttt{R} indicates that the networks were added
 dynamically using the RIP routing protocol. The \texttt{{[}120/1{]}} is
 the administrative distance of the route (120) along with the metric,
@@ -2240,7 +2159,7 @@ routing table, the update will be ignored.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\subsubsection[Holding Down RIP
+\subsection[Holding Down RIP
 Propagations]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-16}{}{}Holding
 Down RIP Propagations}{Holding Down RIP Propagations}}
 
@@ -2281,7 +2200,7 @@ protocol except RIP. I guess this means you just have to run RIP on the
 entire network. If you were balding before, your head now shines like
 chrome.
 
-No need for hairs abandoning ship though---you can run RIP on a router
+No need for hairs abandoning ship though -- you can run RIP on a router
 connecting that old network, but you certainly don't need to run RIP
 throughout the whole internetwork!
 
@@ -2361,7 +2280,7 @@ but it's also a default route, so our
 that the gateway of last resort is now set as well.
 
 If all of what you've learned is clear and understood,
-congratulations---you're ready to move on to the next chapter right
+congratulations -- you're ready to move on to the next chapter right
 after you go through the written and hands-on labs, and while you're at
 it, don't forget the review questions!
 
@@ -2433,7 +2352,7 @@ and uses more overhead on the router and network links.
 
 \textbf{Configure static routes at the CLI.} The command syntax to add a
 route is
-\texttt{ip\ route\ {[}destination\_network{]}\ {[}mask{]}\ {[}next-hop\_address\ or\ exitinterface{]}\ {[}administrative\_distance{]}\ {[}permanent{]}}.
+\texttt{ip\ route\ {[}destination\_network{]}\ {[}mask{]}\ {[}next-hop~address\ or\ exitinterface{]}\ {[}administrative\_distance{]}\ {[}permanent{]}}.
 
 \textbf{Create a default route.} To add a default route, use the command
 syntax \texttt{ip\ route\ 0.0.0.0\ 0.0.0.0} \texttt{ip-address} or
@@ -2552,22 +2471,22 @@ Our IP addresses}
 Router & Interface & IP Address\tabularnewline
 \midrule
 \endhead
-Lab\_A & Fa0/0 & 172.16.10.1\tabularnewline
-Lab\_A & S0/0 & 172.16.20.1\tabularnewline
-Lab\_B & S0/0 & 172.16.20.2\tabularnewline
-Lab\_B & S0/1 & 172.16.30.1\tabularnewline
-Lab\_C & S0/0 & 172.16.30.2\tabularnewline
-Lab\_C & Fa0/0 & 172.16.40.1\tabularnewline
+Lab~A & Fa0/0 & 172.16.10.1\tabularnewline
+Lab~A & S0/0 & 172.16.20.1\tabularnewline
+Lab~B & S0/0 & 172.16.20.2\tabularnewline
+Lab~B & S0/1 & 172.16.30.1\tabularnewline
+Lab~C & S0/0 & 172.16.30.2\tabularnewline
+Lab~C & Fa0/0 & 172.16.40.1\tabularnewline
 \bottomrule
 \end{longtable}
 
 \protect\hypertarget{c09.xhtmlux5cux23Page_402}{}{}These labs were
-written without using the LAN interface on the Lab\_B router. You can
+written without using the LAN interface on the Lab~B router. You can
 choose to add that LAN into the labs if necessary. Also, if you have
 enough LAN interfaces, then you don't need to add the serial interfaces
 into this lab. Using all LAN interfaces is fine.
 
-\subsubsection[Hands-on Lab 9.1: Creating Static
+\subsection[Hands-on Lab 9.1: Creating Static
 Routes]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-21}{}{}Hands-on
 Lab 9.1: Creating Static
 Routes}{Hands-on Lab 9.1: Creating Static Routes}}
@@ -2578,7 +2497,7 @@ complete.
 
 \begin{enumerate}
 \item
-  The Lab\_A router is connected to two networks, 172.16.10.0 and
+  The Lab~A router is connected to two networks, 172.16.10.0 and
   172.16.20.0. You need to add routes to networks 172.16.30.0 and
   172.16.40.0. Use the following commands to add the static routes:
 
@@ -2590,10 +2509,10 @@ Lab_A(config)#ip route 172.16.40.0 255.255.255.0
   172.16.20.2
 \end{verbatim}
 \item
-  Save the current configuration for the Lab\_A router by going to
+  Save the current configuration for the Lab~A router by going to
   privileged mode, typing \texttt{copy\ run\ start}, and pressing Enter.
 \item
-  On the Lab\_B router, you have direct connections to networks
+  On the Lab~B router, you have direct connections to networks
   172.16.20.0 and 172.16.30.0. You need to add routes to networks
   172.16.10.0 and 172.16.40.0. Use the following commands to add the
   static routes:
@@ -2606,12 +2525,12 @@ Lab_B(config)#ip route 172.16.40.0 255.255.255.0
   172.16.30.2
 \end{verbatim}
 \item
-  Save the current configuration for router Lab\_B by going to the
+  Save the current configuration for router Lab~B by going to the
   enabled mode, typing \texttt{copy\ run\ start}, and pressing Enter.
 \item
-  On router Lab\_C, create a static route to networks 172.16.10.0 and
+  On router Lab~C, create a static route to networks 172.16.10.0 and
   172.16.20.0, which are not directly connected. Create static routes so
-  that router Lab\_C can see all networks, using the commands shown
+  that router Lab~C can see all networks, using the commands shown
   here:
 
 \begin{verbatim}
@@ -2622,7 +2541,7 @@ Lab_C(config)#ip route 172.16.20.0 255.255.255.0
   172.16.30.1
 \end{verbatim}
 \item
-  Save the current configuration for router Lab\_C by going to the
+  Save the current configuration for router Lab~C by going to the
   enable mode, typing \texttt{copy\ run\ start}, and pressing Enter.
 \item
   \protect\hypertarget{c09.xhtmlux5cux23Page_403}{}{}Check your routing
@@ -2633,7 +2552,7 @@ Lab_C(config)#ip route 172.16.20.0 255.255.255.0
   router. If it is set up correctly, it will work.
 \end{enumerate}
 
-\subsubsection[Hands-on Lab 9.2: Configuring RIP
+\subsection[Hands-on Lab 9.2: Configuring RIP
 Routing]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-22}{}{}Hands-on
 Lab 9.2: Configuring RIP
 Routing}{Hands-on Lab 9.2: Configuring RIP Routing}}
@@ -2645,7 +2564,7 @@ static routing.
 \item
   Remove any static routes or default routes configured on your routers
   by using the \texttt{no\ ip\ route} command. For example, here is how
-  you would remove the static routes on the Lab\_A router:
+  you would remove the static routes on the Lab~A router:
 
 \begin{verbatim}
 Lab_A#config t
@@ -2655,11 +2574,11 @@ Lab_A(config)#no ip route 172.16.40.0 255.255.255.0
   172.16.20.2
 \end{verbatim}
 
-  Do the same thing for routers Lab\_B and Lab\_C. Verify that only your
+  Do the same thing for routers Lab~B and Lab~C. Verify that only your
   directly connected networks are in the routing tables.
 \item
   After your static and default routes are clear, go into configuration
-  mode on router Lab\_A by typing \texttt{config\ t}.
+  mode on router Lab~A by typing \texttt{config\ t}.
 \item
   Tell your router to use RIP routing by typing \texttt{router\ rip} and
   pressing Enter, as shown here:
@@ -2670,7 +2589,7 @@ router rip
 \end{verbatim}
 \item
   Add the network number for the networks you want to advertise. Since
-  router Lab\_A has two interfaces that are in two different networks,
+  router Lab~A has two interfaces that are in two different networks,
   you must enter a network statement using the network ID of the network
   in which each interface resides. Alternately, you could use a
   summarization of these networks and use a single statement, minimizing
@@ -2681,7 +2600,7 @@ router rip
 \item
   Press Ctrl+Z to get out of configuration mode.
 \item
-  The interfaces on Lab\_B and Lab\_C are in the 172.16.20.0/24 and
+  The interfaces on Lab~B and Lab~C are in the 172.16.20.0/24 and
   172.16.30.0/24 networks; therefore, the same summarized network
   statement will work there as well. Type the same commands, as shown
   here:
