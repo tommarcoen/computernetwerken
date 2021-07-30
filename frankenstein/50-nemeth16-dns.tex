@@ -289,7 +289,6 @@ more accurately, within your own organization). Specifically, the steps
 are as follows:
 
 \begin{itemize}
-\tightlist
 \item
   Choose a name that is unique in the local context.
 \item
@@ -332,7 +331,6 @@ servers}{Name servers}}\label{part0024_split_011.htmlux5cux23calibre_pb_10}}
 name server performs several chores:
 
 \begin{itemize}
-\tightlist
 \item
   It answers queries about your site's hostnames and IP addresses.
 \item
@@ -621,7 +619,6 @@ that query until the negative caching TTL value has expired. Negative
 caching can potentially save answers of the following types:
 
 \begin{itemize}
-\tightlist
 \item
   No host or domain matches the name queried.
 \item
@@ -949,7 +946,6 @@ in common use; IPv6 adds a few more. We divide the resource records into
 four groups:
 
 \begin{itemize}
-\tightlist
 \item
   Zone infrastructure records, which identify domains and their name
   servers
@@ -1072,7 +1068,6 @@ only if the master's serial number is larger than theirs.
 You can fix this problem in two ways:
 
 \begin{itemize}
-\tightlist
 \item
   One fix is to exploit the properties of the sequence space in which
   the serial numbers live. This procedure involves adding a large value
@@ -1405,7 +1400,6 @@ desirable, and 65,535 is as bad as it gets.
 MX records are useful in many situations:
 
 \begin{itemize}
-\tightlist
 \item
   When you have a central mail hub or service provider for incoming mail
 \item
@@ -1677,7 +1671,6 @@ BIND}{Components of BIND}}\label{part0024_split_034.htmlux5cux23calibre_pb_33}}
 The BIND distribution has four major components:
 
 \begin{itemize}
-\tightlist
 \item
   A name server daemon called {named} that answers queries
 \item
@@ -1752,7 +1745,6 @@ many of the statements, the address match list. An address match list is
 a generalization of an IP address that can include the following items:
 
 \begin{itemize}
-\tightlist
 \item
   An IP address, either IPv4 or IPv6 (e.g., 199.165.145.4 or
   fe80::202:b3ff:fe1e:8329)
@@ -2135,7 +2127,6 @@ options turned on.
 has various implications:
 
 \begin{itemize}
-\tightlist
 \item
   An authoritative server of a signed zone answering a query with the
   {DNSSEC}-aware bit turned on answers with the requested resource
@@ -2210,7 +2201,6 @@ that {named.conf} is read in a single pass, so access control lists must
 be defined before they are used. Four lists are predefined:
 
 \begin{itemize}
-\tightlist
 \item
   {any} -- all hosts
 \item
@@ -2731,7 +2721,6 @@ that we have explored the wonders of {named.conf}, let's look at two
 complete configuration examples:
 
 \begin{itemize}
-\tightlist
 \item
   The localhost zone
 \item
@@ -3487,7 +3476,6 @@ Before you begin deployment of DNSSEC, you should nail down (or at least
 think about) a few policies and procedures. For example:
 
 \begin{itemize}
-\tightlist
 \item
   What size keys will you use? Longer keys are more secure, but they
   make for larger packets.
@@ -3566,7 +3554,6 @@ version of the zone file.
 An RRSIG record contains a wealth of information:
 
 \begin{itemize}
-\tightlist
 \item
   The type of record set being signed
 \item
@@ -3992,7 +3979,6 @@ be found with the commands. The top-level {README} file gives very brief
 installation instructions.
 
 \begin{itemize}
-\tightlist
 \item
   {ldns-chaos} shows the name server ID info stored in the CHAOS class.
 \item
@@ -4040,7 +4026,6 @@ DNSSec-tools builds on the BIND tools and includes the following
 commands:
 
 \begin{itemize}
-\tightlist
 \item
   {dnspktflow} traces the flow of DNS packets during a query/response
   sequence captured by {tcpdump} and produces a cool diagram.
@@ -4300,7 +4285,6 @@ particular query is logged along with the query.
 Some common log messages are listed below:
 
 \begin{itemize}
-\tightlist
 \item
   \protect\hypertarget{part0024_split_070.htmlux5cux23_idIndexMarker2288}{}{}\protect\hypertarget{part0024_split_070.htmlux5cux23_idIndexMarker2289}{}{}{Lame
   server resolving xxx.} If you get this message about one of your own
@@ -4360,7 +4344,6 @@ Some common log messages are listed below:
 %\includegraphics{images/00750.gif}
 
 \begin{itemize}
-\tightlist
 \item
   { \ldots updating zone xxx: update unsuccessful. }A dynamic update for
   a zone was attempted but refused, most likely because of the

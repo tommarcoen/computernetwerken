@@ -908,7 +908,7 @@ certain VLANs from traversing a trunked link. I'll show you how you'd do
 that, but first let me again demonstrate that all VLANs are allowed
 across the trunk link by default:
 
-\begin{verbatim}
+\begin{cli}
 S1# show interfaces trunk
 [output cut]
 Port        Vlans allowed on trunk
@@ -925,7 +925,7 @@ Fa0/15      4,6,12,15
 Fa0/16      1-4094
 Fa0/17      1-4094
 Fa0/18      1-4094
-\end{verbatim}
+\end{cli}
 
 The preceding command affected the trunk link configured on S1 port
 F0/15, causing it to permit all traffic sent and received for VLANs 4,
@@ -935,16 +935,16 @@ point?
 
 To remove a range of VLANs, just use the hyphen:
 
-\begin{verbatim}
+\begin{cli}
 S1(config-if)#switchport trunk allowed vlan remove 4-8
-\end{verbatim}
+\end{cli}
 
 If by chance someone has removed some VLANs from a trunk link and you
 want to set the trunk back to default, just use this command:
 
-\begin{verbatim}
+\begin{cli}
 S1(config-if)#switchport trunk allowed vlan all
-\end{verbatim}
+\end{cli}
 
 Next, I want to show you how to configure a native VLAN for a trunk
 before we start routing between VLANs.
@@ -958,27 +958,27 @@ You can change the trunk port native VLAN from VLAN 1, which many people
 do for security reasons. To change the native VLAN, use the following
 command:
 
-\begin{verbatim}
+\begin{cli}
 S1(config)#int f0/15
 S1(config-if)#switchport trunk native vlan ?
   <1-4094>  VLAN ID of the native VLAN when this port is in trunking mode
-\end{verbatim}
+\end{cli}
 
-\begin{verbatim}
+\begin{cli}
 S1(config-if)#switchport trunk native vlan 4
 1w6d: %CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch discovered on FastEthernet0/15 (4), with S3 FastEthernet0/1 (1).
-\end{verbatim}
+\end{cli}
 
 So we've changed our native VLAN on our trunk link to 4, and by using
 the\texttt{show\ running-config} command, I can see the configuration
 under the trunk link:
 
-\begin{verbatim}
+\begin{cli}
 S1#sh run int f0/15
 Building configuration...
-\end{verbatim}
+\end{cli}
 
-\begin{verbatim}
+\begin{cli}
 Current configuration : 202 bytes
 !
 interface FastEthernet0/15
@@ -988,11 +988,11 @@ interface FastEthernet0/15
  switchport trunk allowed vlan 4,6,12,15
  switchport mode trunk
 end
-\end{verbatim}
+\end{cli}
 
-\begin{verbatim}
+\begin{cli}
 S1#!
-\end{verbatim}
+\end{cli}
 
 Oops -- wait a minute! You didn't think it would be this easy and would
 just start working, did you? Of course not! Here's the rub: If all
@@ -1000,20 +1000,20 @@ switches don't have the same native VLAN configured on the given trunk
 links, then we'll start to receive this error, which happened
 immediately after I entered the command:
 
-\begin{verbatim}
+\begin{cli}
 1w6d: %CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch discovered
 on FastEthernet0/15 (4), with S3 FastEthernet0/1 (1).
-\end{verbatim}
+\end{cli}
 
 Actually, this is a good, noncryptic error, so either we can go to the
 other end of our trunk link(s) and change the native VLAN or we set the
 native VLAN back to the default to fix it. Here's how we'd do that:
 
-\begin{verbatim}
+\begin{cli}
 S1(config-if)#no switchport trunk native vlan
 1w6d: %SPANTREE-2-UNBLOCK_CONSIST_PORT: Unblocking FastEthernet0/15
 on VLAN0004. Port consistency restored.
-\end{verbatim}
+\end{cli}
 
 Now our trunk link is
 using the default VLAN 1 as the native VLAN. Just remember that all
@@ -1038,14 +1038,14 @@ are called \emph{subinterfaces}. From a FastEthernet or Gigabit
 interface, you can set the interface to trunk with the
 \texttt{encapsulation} command:
 
-\begin{verbatim}
+\begin{cli}
 ISR#config t
 ISR(config)#int f0/0.1
 ISR(config-subif)#encapsulation ?
   dot1Q  IEEE 802.1Q Virtual LAN
 ISR(config-subif)#encapsulation dot1Q ?
   <1-4094>  IEEE 802.1Q VLAN ID
-\end{verbatim}
+\end{cli}
 
 Notice that my 2811 router (named ISR) only supports 802.1q. We'd need
 an older-model router to run the ISL encapsulation, but why bother?
@@ -1106,7 +1106,6 @@ switch.
 Here's what the hosts' IP addresses should be:
 
 \begin{enumerate}
-\tightlist
 \item
   \textbf{Host A:} 192.168.1.66, 255.255.255.192, default gateway
   192.168.1.65
@@ -1131,11 +1130,11 @@ you're dealing with.
 
 For a 2960 switch, use the following:
 
-\begin{verbatim}
+\begin{cli}
 2960#config t
 2960(config)#interface fa0/1
 2960(config-if)#switchport mode trunk
-\end{verbatim}
+\end{cli}
 
 That's it! As you
 already know, the 2960 switch can only run the 802.1q encapsulation, so
@@ -1158,7 +1157,6 @@ F0/6.
 When looking at this diagram, keep in mind that these three factors are what Cisco expects you to know:
 
 \begin{enumerate}
-\tightlist
 \item
   The router is connected to the switch using subinterfaces.
 \item
@@ -1177,7 +1175,7 @@ When looking at this diagram, keep in mind that these three factors are what Cis
 
 The configuration of the switch would look something like this:
 
-\begin{verbatim}
+\begin{cli}
 2960#config t
 2960(config)#int f0/1
 2960(config-if)#switchport mode trunk
@@ -1191,12 +1189,11 @@ The configuration of the switch would look something like this:
 2960(config-if)#switchport access vlan 3
 2960(config-if)#int f0/6
 2960(config-if)#switchport access vlan 4
-\end{verbatim}
+\end{cli}
 
 Before we configure the router, we need to design our logical network:
 
 \begin{enumerate}
-\tightlist
 \item
   \textbf{VLAN 1:} 192.168.10.0/28
 \item
@@ -1209,7 +1206,7 @@ Before we configure the router, we need to design our logical network:
 
 The configuration of the router would then look like this:
 
-\begin{verbatim}
+\begin{cli}
 ISR#config t
 ISR(config)#int fa0/0
 ISR(config-if)#ip address 192.168.10.1 255.255.255.240
@@ -1223,7 +1220,7 @@ ISR(config-subif)#ip address 192.168.10.33 255.255.255.240
 ISR(config-subif)#int f0/0.4
 ISR(config-subif)#encapsulation dot1q 4
 ISR(config-subif)#ip address 192.168.10.49 255.255.255.240
-\end{verbatim}
+\end{cli}
 
 Notice I didn't tag VLAN 1. Even though I could have created a
 subinterface and tagged VLAN 1, it's not necessary with 802.1q because
@@ -1263,7 +1260,7 @@ be fooled by this one!
 
 Here is the switch configuration:
 
-\begin{verbatim}
+\begin{cli}
 2960#config t
 2960(config)#int f0/1
 2960(config-if)#switchport mode trunk
@@ -1271,11 +1268,11 @@ Here is the switch configuration:
 2960(config-if)#switchport access vlan 2
 2960(config-if)#int f0/3
 2960(config-if)#switchport access vlan 3
-\end{verbatim}
+\end{cli}
 
 Here is the router configuration:
 
-\begin{verbatim}
+\begin{cli}
 ISR#config t
 ISR(config) # int f0/0
 ISR(config-if)#ip address 192.168.10.1 255.255.255.0
@@ -1286,7 +1283,7 @@ ISR(config-subif)#ip address 172.16.10.1 255.255.255.128
 ISR(config-subif)#int f0/0.3
 ISR(config-subif)#encapsulation dot1q 3
 ISR(config-subif)#ip address 172.16.10.254 255.255.255.128
-\end{verbatim}
+\end{cli}
 
 I used the first address in the host range for VLAN 2 and the last
 address in the range for VLAN 3, but any address in the range would
@@ -1300,14 +1297,14 @@ administrative VLAN, we'll use an IP address from out of that pool of
 addresses. Here's how to set the IP address of the switch (not nagging,
 but you really should already know this!):
 
-\begin{verbatim}
+\begin{cli}
 2960#config t
 2960(config)#int vlan 1
 2960(config-if)#ip address 192.168.10.2 255.255.255.0
 2960(config-if)#no shutdown
 2960(config-if)#exit
 2960(config)#ip default-gateway 192.168.10.1
-\end{verbatim}
+\end{cli}
 
 Yes, you have to execute a \texttt{no\ shutdown} on the VLAN interface
 and set the \texttt{ip\ default-gateway} address to the router.
@@ -1328,7 +1325,6 @@ This is a block size of 16. The router's address for VLAN 2 is in subnet
 and the valid host range is 129--142. So the host address would be this:
 
 \begin{enumerate}
-\tightlist
 \item
   \textbf{IP address:} 192.168.10.142
 \item
@@ -1372,13 +1368,13 @@ default gateway address using the first address in the range. Now I just
 need to configure the routing on the switch, which is pretty simple
 actually:
 
-\begin{verbatim}
+\begin{cli}
 S1(config)#ip routing
 S1(config)#int vlan 10
 S1(config-if)#ip address 192.168.10.1 255.255.255.0
 S1(config-if)#int vlan 20
 S1(config-if)#ip address 192.168.20.1 255.255.255.0
-\end{verbatim}
+\end{cli}
 
 And that's it! Enable IP routing and create one logical interface for
 each VLAN using the \texttt{interface\ vlan\ number} command and voilà!
@@ -1455,7 +1451,6 @@ Labs.''
 Write the answers to the following questions:
 
 \begin{enumerate}
-\tightlist
 \item
   True/False: To provide IVR with a layer~3 switch, you place an IP
   address on each interface of the switch.
@@ -1492,7 +1487,6 @@ In these labs, you will use three switches and a router.
 To perform the last lab, you'll need a layer~3 switch.
 
 \begin{enumerate}
-\tightlist
 \item
   Lab 11.1: Configuring and Verifying VLANs
 \item
@@ -1521,29 +1515,29 @@ and then verify the VLANs.
 \item
   Configure two VLANs on each switch, VLAN 10 and VLAN 20.
 
-\begin{verbatim}
+\begin{cli}
 S1(config)#vlan 10
 S1(config-vlan)#vlan 20
-\end{verbatim}
+\end{cli}
 
-\begin{verbatim}
+\begin{cli}
 S2(config)#vlan 10
 S2(config-vlan)#vlan 20
-\end{verbatim}
+\end{cli}
 
-\begin{verbatim}
+\begin{cli}
 S3(config)#vlan 10
 S3(config-vlan)#vlan 20
-\end{verbatim}
+\end{cli}
 \item
   Use the \texttt{show\ vlan} and \texttt{show\ vlan\ brief} commands to
   verify your VLANs. Notice that all interfaces are in VLAN 1 by
   default.
 
-\begin{verbatim}
+\begin{cli}
 S1#sh vlan
 S1#sh vlan brief
-\end{verbatim}
+\end{cli}
 \end{enumerate}
 
 \subsection{Configuring and verifying trunk links}
@@ -1557,19 +1551,19 @@ This lab will have you configure trunk links and then verify them.
   switch that supports both 802.1q and ISL frame tagging, then use the
   encapsulation command; if not, then skip that command.
 
-\begin{verbatim}
+\begin{cli}
 S1#config t
 S1(config)#interface fa0/15
 S1(config-if)#switchport trunk encapsulation ?
   dot1q  Interface uses only 802.1q trunking encapsulation when trunking
   isl    Interface uses only ISL trunking encapsulation when trunking
   negotiate   Device will negotiate trunking encapsulation with peer on interface
-\end{verbatim}
+\end{cli}
 
   Again, if you typed the previous and received an error, then your
   switch does not support both encapsulation methods:
 
-\begin{verbatim}
+\begin{cli}
 S1 (config-if)#switchport trunk encapsulation dot1q
 S1 (config-if)#switchport mode trunk
 S1 (config-if)#interface fa0/16
@@ -1581,22 +1575,22 @@ S1 (config-if)#switchport mode trunk
 S1 (config-f)#interface fa0/18
 S1 (config-if)#switchport trunk encapsulation dot1q
 S1 (config-if)#switchport mode trunk
-\end{verbatim}
+\end{cli}
 \item
   Configure the trunk links on your other switches.
 \item
   On each switch, verify your trunk ports with the
   \texttt{show\ interface\ trunk} command:
 
-\begin{verbatim}
+\begin{cli}
 S1#show interface trunk
-\end{verbatim}
+\end{cli}
 \item
   Verify the switchport configuration with the following:
 
-\begin{verbatim}
+\begin{cli}
 S1#show interface interface switchport
-\end{verbatim}
+\end{cli}
 \end{enumerate}
 
 The second \texttt{interface}in the command is a variable, such as
@@ -1614,7 +1608,7 @@ to configure a router-on-a-stick.
   your management VLAN, 10.10.10.0/24 for VLAN 10, and 20.20.20.0/24 for
   VLAN 20.
 
-\begin{verbatim}
+\begin{cli}
 Router#config t
 Router (config)#int f0/0
 Router (config-if)#ip address 172.16.10.1 255.255.255.0
@@ -1624,7 +1618,7 @@ Router (config-subif)#ip address 10.10.10.1 255.255.255.0
 Router (config-subif)#interface f0/0.20
 Router (config-subif)#encapsulation dot1q 20
 Router (config-subif)#ip address 20.20.20.1 255.255.255.0
-\end{verbatim}
+\end{cli}
 \item
   Verify the configuration with the \texttt{show\ running-config}
   command.
@@ -1657,24 +1651,24 @@ provide inter-VLAN routing by creating SVI's.
 \item
   Enable IP routing on the S1 switch.
 
-\begin{verbatim}
+\begin{cli}
 S1(config)#ip routing
-\end{verbatim}
+\end{cli}
 \item
   Create two new interfaces on the S1 switch to provide IVR.
 
-\begin{verbatim}
+\begin{cli}
 S1(config)#interface vlan 10
 S1(config-if)#ip address 10.10.10.1 255.255.255.0
 S1(config-if)#interface vlan 20
 S1(config-if)#ip address 20.20.20.1 255.255.255.0
-\end{verbatim}
+\end{cli}
 \item
   Clear the ARP cache on the switch and hosts.
 
-\begin{verbatim}
+\begin{cli}
 S1#clear arp
-\end{verbatim}
+\end{cli}
 \item
   Ping from your PC to the router's subinterface configured for your
   VLAN.
@@ -1695,8 +1689,7 @@ You can find the answers to these questions in Appendix B, ``Answers to Review Q
   Which of the following statements is true with regard to VLANs?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     VLANs greatly reduce network security.
   \item
     VLANs increase the number of collision domains while decreasing
@@ -1713,12 +1706,12 @@ You can find the answers to these questions in Appendix B, ``Answers to Review Q
   provide inter-VLAN routing between the two VLANs created with these
   commands:
 
-\begin{verbatim}
+\begin{cli}
 S1(config)#int vlan 10
 S1(config-if)#ip address 192.168.10.1 255.255.255.0
 S1(config-if)#int vlan 20
 S1(config-if)#ip address 192.168.20.1 255.255.255.0
-\end{verbatim}
+\end{cli}
 \item
   In the following diagram, how must the port on each end of the line be
   configured to carry traffic between the four hosts?
@@ -1730,8 +1723,7 @@ S1(config-if)#ip address 192.168.20.1 255.255.255.0
   \end{figure}
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
      Access port
   \item
     10 GB
@@ -1745,8 +1737,7 @@ S1(config-if)#ip address 192.168.20.1 255.255.255.0
   can be a member?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Secondary
   \item
     Voice
@@ -1759,17 +1750,16 @@ S1(config-if)#ip address 192.168.20.1 255.255.255.0
   In the following configuration, what command is missing in the
   creation of the VLAN interface?
 
-\begin{verbatim}
+\begin{cli}
 2960#config t
 2960(config)#int vlan 1
 2960(config-if)#ip address 192.168.10.2 255.255.255.0
 2960(config-if)#exit
 2960(config)#ip default-gateway 192.168.10.1
-\end{verbatim}
+\end{cli}
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{no\ shutdown} under int vlan 1
   \item
     \texttt{encapsulation\ dot1q\ 1} under int vlan 1
@@ -1783,8 +1773,7 @@ S1(config-if)#ip address 192.168.20.1 255.255.255.0
   802.1q?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     802.1q encapsulates the frame with control information; ISL inserts
     an ISL field along with tag control information.
   \item
@@ -1805,8 +1794,7 @@ S1(config-if)#ip address 192.168.20.1 255.255.255.0
   \end{figure}
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
      Multiprotocol
     routing
   \item
@@ -1822,7 +1810,7 @@ S1(config-if)#ip address 192.168.20.1 255.255.255.0
 \item
   Write the command that generated the following output:
 
-\begin{verbatim}
+\begin{cli}
 VLAN Name                       Status    Ports
 ---- ------------------------- --------- ------------------------
 1    default                    active   Fa0/1, Fa0/2, Fa0/3, Fa0/4
@@ -1835,7 +1823,7 @@ VLAN Name                       Status    Ports
 3    Marketing                  active
 4    Accounting                 active
 [output cut]
-\end{verbatim}
+\end{cli}
 \item
   In the configuration and diagram shown, what command is missing to
   enable inter-VLAN routing between VLAN 2 and VLAN 3?
@@ -1847,8 +1835,7 @@ VLAN Name                       Status    Ports
   \end{figure}
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{encapsulation\ dot1q\ 3} under int f0/0.2
   \item
     \texttt{encapsulation\ dot1q\ 2} under int f0/0.2
@@ -1861,17 +1848,16 @@ VLAN Name                       Status    Ports
    Based on the
   configuration shown here, what statement is true?
 
-\begin{verbatim}
+\begin{cli}
 S1(config)#ip routing
 S1(config)#int vlan 10
 S1(config-if)#ip address 192.168.10.1 255.255.255.0
 S1(config-if)#int vlan 20
 S1(config-if)#ip address 192.168.20.1 255.255.255.0
-\end{verbatim}
+\end{cli}
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     This is a multilayer switch.
   \item
     The two VLANs are in the same subnet.
@@ -1883,7 +1869,7 @@ S1(config-if)#ip address 192.168.20.1 255.255.255.0
 \item
   What is true of the output shown here?
 
-\begin{verbatim}
+\begin{cli}
 S1#sh vlan
 VLAN Name                    Status    Ports
 ---- ---------------------- --------- -------------------------------
@@ -1896,11 +1882,10 @@ VLAN Name                    Status    Ports
 3    Marketing               active    Fa0/21
 4    Accounting              active
 [output cut]
-\end{verbatim}
+\end{cli}
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Interface F0/15 is a trunk port.
   \item
     Interface F0/17 is an access port.
@@ -1913,8 +1898,7 @@ VLAN Name                    Status    Ports
   802.1q untagged frames are members of the \_\_\_\_\_\_\_\_\_\_ VLAN.
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Auxiliary
   \item
     Voice
@@ -1928,7 +1912,7 @@ VLAN Name                    Status    Ports
   that generated the following output. Write only the command and not
   the prompt:
 
-\begin{verbatim}
+\begin{cli}
 Name: Fa0/15
 Switchport: Enabled
 Administrative Mode: dynamic desirable
@@ -1941,14 +1925,13 @@ Trunking Native Mode VLAN: 1 (default)
 Administrative Native VLAN tagging: enabled
 Voice VLAN: none
 [output cut]
-\end{verbatim}
+\end{cli}
 \item
   In the switch output of question 12, how many broadcast domains are
   shown?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     1
   \item
     2
@@ -1967,8 +1950,7 @@ Voice VLAN: none
   \end{figure}
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     192.168.10.1
   \item
     192.168.1.65
@@ -1982,8 +1964,7 @@ Voice VLAN: none
   purpose of frame tagging in virtual LAN (VLAN) configurations?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Inter-VLAN routing
   \item
     Encryption of network packets
@@ -1999,8 +1980,7 @@ Voice VLAN: none
   Which statement is true regarding 802.1q frame tagging?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     802.1q adds a 26-byte trailer and 4-byte header.
   \item
     802.1q uses a native VLAN.

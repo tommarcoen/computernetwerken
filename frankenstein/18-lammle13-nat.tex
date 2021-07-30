@@ -224,7 +224,7 @@ hosts with only one real IP address!
 Let's take a look at a simple example of a basic static NAT
 configuration:
 
-\begin{verbatim}
+\begin{cli}
 ip nat inside source static 10.1.1.1 170.46.2.2
 !
 interface Ethernet0
@@ -235,7 +235,7 @@ interface Serial0
  ip address 170.46.2.1 255.255.255.0
  ip nat outside
 !
-\end{verbatim}
+\end{cli}
 
 In the preceding router output, the \texttt{ip\ nat\ inside\ source}
 command identifies which IP addresses will be translated. In this
@@ -269,7 +269,7 @@ simultaneously.
 
 Here is a sample output of a dynamic NAT configuration:
 
-\begin{verbatim}
+\begin{cli}
 ip nat pool todd 170.168.2.3 170.168.2.254
 netmask 255.255.255.0
 ip nat inside source list 1 pool todd
@@ -284,7 +284,7 @@ interface Serial0
 !
 access-list 1 permit 10.1.1.0 0.0.0.255
 !
-\end{verbatim}
+\end{cli}
 
 The \texttt{ip\ nat\ inside\ source\ list\ 1\ pool\ todd} command tells
 the router to translate IP addresses that match \texttt{access-list\ 1}
@@ -318,7 +318,7 @@ something like statically mapping a server, for example.
 
 Here is a sample output of a PAT configuration:
 
-\begin{verbatim}
+\begin{cli}
 ip nat pool globalnet 170.168.2.1 170.168.2.1 netmask 255.255.255.0
 ip nat inside source list 1 pool globalnet overload
 !
@@ -331,14 +331,13 @@ interface Serial0/0
  ip nat outside
 !
 access-list 1 permit 10.1.1.0 0.0.0.255
-\end{verbatim}
+\end{cli}
 
 The nice thing about
 PAT is that these are only a few differences between this configuration
 and the previous dynamic NAT configuration:
 
 \begin{enumerate}
-\tightlist
 \item
   Our pool of addresses has shrunk to only one IP address.
 \item
@@ -369,9 +368,9 @@ configuration.
 To see basic IP address translation information, use the following
 command:
 
-\begin{verbatim}
+\begin{cli}
 Router#show ip nat translations
-\end{verbatim}
+\end{cli}
 
 When looking at the IP NAT translations, you may see many translations
 from the same host to the corresponding host at the destination.
@@ -383,9 +382,9 @@ You can also verify your NAT configuration via the
 address, the translation, and the destination address on each debug
 line:
 
-\begin{verbatim}
+\begin{cli}
 Router#debug ip nat
-\end{verbatim}
+\end{cli}
 
 But wait -- how do you clear your NAT entries from the translation table?
 Just use the \texttt{clear\ ip\ nat\ translation} command, and if you
@@ -403,7 +402,6 @@ out some of the more common culprits by running through this list of
 potential causes:
 
 \begin{enumerate}
-\tightlist
 \item
   Check the dynamic pools. Are they composed of the right scope of
   addresses?
@@ -432,12 +430,12 @@ to do with the new address after the translation!
 The first command you should typically use is the
 \texttt{show\ ip\ nat\ translations} command:
 
-\begin{verbatim}
+\begin{cli}
 Router#show ip nat trans
 Pro   Inside global   Inside local   Outside local   Outside global
 ---   192.2.2.1       10.1.1.1       ---             ---
 ---   192.2.2.2       10.1.1.2       ---             ---
-\end{verbatim}
+\end{cli}
 
 After checking out this output, can you tell me if the configuration on
 the router is static or dynamic NAT? The answer is yes, either static or
@@ -449,12 +447,12 @@ numbers.
 
 Let's take a look at another output:
 
-\begin{verbatim}
+\begin{cli}
 Router#sh ip nat trans
 Pro Inside global      Inside local       Outside local      Outside global
 tcp 170.168.2.1:11003  10.1.1.1:11003     172.40.2.2:23      172.40.2.2:23
 tcp 170.168.2.1:1067   10.1.1.1:1067      172.40.2.3:23      172.40.2.3:23
-\end{verbatim}
+\end{cli}
 
 Okay, you can easily see that the previous output is using NAT Overload
 (PAT). The protocol in this output is TCP, and the inside global address
@@ -484,7 +482,7 @@ after statistics.
 Here is an example of
 the basic NAT debugging command:
 
-\begin{verbatim}
+\begin{cli}
 Router#debug ip nat
 NAT: s=10.1.1.1->192.168.2.1, d=172.16.2.2 [0]
 NAT: s=172.16.2.2, d=192.168.2.1->10.1.1.1 [0]
@@ -492,7 +490,7 @@ NAT: s=10.1.1.1->192.168.2.1, d=172.16.2.2 [1]
 NAT: s=10.1.1.1->192.168.2.1, d=172.16.2.2 [2]
 NAT: s=10.1.1.1->192.168.2.1, d=172.16.2.2 [3]
 NAT*: s=172.16.2.2, d=192.168.2.1->10.1.1.1 [1]
-\end{verbatim}
+\end{cli}
 
 Notice the last line in the output and how the \texttt{NAT} at the
 beginning of the line has an asterisk (\texttt{*}). This means the
@@ -562,10 +560,10 @@ configuration would be placed on the corporate router, just as I
 demonstrated with \cref{fig:where-configure-nat}, and the configuration would be dynamic NAT with overload (PAT).
 In this next NAT example, what type of NAT is being used?
 
-\begin{verbatim}
+\begin{cli}
 ip nat pool todd-nat 170.168.10.10 170.168.10.20 netmask 255.255.255.0
 ip nat inside source list 1 pool todd-nat
-\end{verbatim}
+\end{cli}
 
 The preceding command uses dynamic NAT without PAT. The \texttt{pool} in
 the command gives the answer away as dynamic, plus there's more than one
@@ -595,11 +593,11 @@ router?
 Actually, two different answers would both work here, but the following
 would be my first choice based on the exam objectives:
 
-\begin{verbatim}
+\begin{cli}
 ip nat pool Todd 192.1.2.109 192.1.2.109 netmask 255.255.255.248
 access-list 1 permit 192.168.10.64 0.0.0.63
 ip nat inside source list 1 pool Todd overload
-\end{verbatim}
+\end{cli}
 
 The command
 \texttt{ip\ nat\ pool\ Todd\ 192.1.2.109\ 192.1.2.109\ netmask\ 255.255.255.248}
@@ -664,7 +662,6 @@ addresses to configure NAT on the Corp router to allow all hosts to
 reach the Internet:
 
 \begin{enumerate}
-\tightlist
 \item
   Inside globals: 198.18.41.129 through 198.18.41.134
 \item
@@ -687,11 +684,11 @@ it's critical not to stumble on this foundational information!
 
 So we can configure NAT now that we have our block sizes:
 
-\begin{verbatim}
+\begin{cli}
 ip nat pool Corp 198.18.41.129 198.18.41.134 netmask 255.255.255.248
 ip nat inside source list 1 pool Corp overload
 access-list 1 permit 192.168.76.64 0.0.0.31
-\end{verbatim}
+\end{cli}
 
 Since we had a block of only 8 for our pool, we had to use the
 \texttt{overload} command to make sure all 26 hosts can get to the
@@ -701,9 +698,9 @@ There is one other simple way to configure NAT, and I use this command
 at my home office to connect to my ISP. One command line and it's done!
 Here it is:
 
-\begin{verbatim}
+\begin{cli}
 ip nat inside source list 1 int s0/0/0 overload
-\end{verbatim}
+\end{cli}
 
 I can't say enough how much I love efficiency, and being able to achieve
 something cool using one measly line always makes me happy! My one
@@ -800,9 +797,9 @@ write the answers to the following questions:
 \item
   In the following output, what type of NAT is being used?
 
-\begin{verbatim}
+\begin{cli}
 ip nat pool todd-nat 170.168.10.10 170.168.10.20 netmask 255.255.255.0
-\end{verbatim}
+\end{cli}
 \item
   Instead of the \texttt{netmask} command, you can use the
   \_\_\_\_\_\_\_\_\_\_\_\_\_ statement.
@@ -820,7 +817,6 @@ to run through all the labs in this (and every) chapter in this book.
 Here is a list of the labs in this chapter:
 
 \begin{enumerate}
-\tightlist
 \item
   Lab 13.1: Preparing for NAT
 \item
@@ -909,7 +905,7 @@ routing.
   On Lab\_A, configure RIP routing, set a passive interface, and
   configure the default network.
 
-\begin{verbatim}
+\begin{cli}
 Lab_A#config t
 Lab_A(config)#router rip
 Lab_A(config-router)#network 192.168.20.0
@@ -917,7 +913,7 @@ Lab_A(config-router)#network 171.16.0.0
 Lab_A(config-router)#passive-interface s0/2
 Lab_A(config-router)#exit
 Lab_A(config)#ip default-network 171.16.10.1
-\end{verbatim}
+\end{cli}
 
   The \texttt{passive-interface} command stops RIP updates from being
   sent to the ISP and the \texttt{ip\ default-network} command
@@ -926,36 +922,36 @@ Lab_A(config)#ip default-network 171.16.10.1
 \item
   On Lab\_B, configure RIP routing:
 
-\begin{verbatim}
+\begin{cli}
 Lab_B#config t
 Lab_B(config)#router rip
 Lab_B(config-router)#network 192.168.30.0
 Lab_B(config-router)#network 192.168.20.0
-\end{verbatim}
+\end{cli}
 \item
   On Lab\_C, configure RIP routing:
 
-\begin{verbatim}
+\begin{cli}
 Lab_C#config t
 Lab_C(config)#router rip
 Lab_C(config-router)#network 192.168.30.0
-\end{verbatim}
+\end{cli}
 \item
   On the ISP router, configure a default route to the corporate network:
 
-\begin{verbatim}
+\begin{cli}
 ISP#config t
 ISP(config)#ip route 0.0.0.0 0.0.0.0 s0
-\end{verbatim}
+\end{cli}
 \item
   Configure the ISP router so you can telnet into the router without
   being prompted for a password:
 
-\begin{verbatim}
+\begin{cli}
 ISP#config t
 ISP(config)#line vty 0 4
 ISP(config-line)#no login
-\end{verbatim}
+\end{cli}
 \item
   Verify that you can ping from the ISP router to the Lab\_C router and
   from the Lab\_C router to the ISP router. If you cannot, troubleshoot
@@ -975,60 +971,60 @@ In this lab, you'll configure dynamic NAT on the Lab\_A router.
   pool should contain a range of addresses of 171.16.10.50 through
   171.16.10.55.
 
-\begin{verbatim}
+\begin{cli}
 Lab_A(config)#ip nat pool GlobalNet 171.16.10.50 171.16.10.55
 net 255.255.255.0
-\end{verbatim}
+\end{cli}
 \item
   Create access list
   1. This list permits traffic from the 192.168.20.0 and 192.168.30.0
   network to be translated.
 
-\begin{verbatim}
+\begin{cli}
 Lab_A(config)#access-list 1 permit 192.168.20.0 0.0.0.255
 Lab_A(config)#access-list 1 permit 192.168.30.0 0.0.0.255
-\end{verbatim}
+\end{cli}
 \item
   Map the access list to the pool that was created.
 
-\begin{verbatim}
+\begin{cli}
 Lab_A(config)#ip nat inside source list 1 pool GlobalNet
-\end{verbatim}
+\end{cli}
 \item
   Configure serial 0/0 as an inside NAT interface.
 
-\begin{verbatim}
+\begin{cli}
 Lab_A(config)#int s0/0
 Lab_A(config-if)#ip nat inside
-\end{verbatim}
+\end{cli}
 \item
   Configure serial 0/2 as an outside NAT interface.
 
-\begin{verbatim}
+\begin{cli}
 Lab_A(config-if)#int s0/2
 Lab_A(config-if)#ip nat outside
-\end{verbatim}
+\end{cli}
 \item
   Move the console connection to the Lab\_C router. Log in to the Lab\_C
   router. Telnet from the Lab\_C router to the ISP router.
 
-\begin{verbatim}
+\begin{cli}
 Lab_C#telnet 171.16.10.1
-\end{verbatim}
+\end{cli}
 \item
   Move the console connection to the Lab\_B router. Log in to the Lab\_B
   router. Telnet from the Lab\_B router to the ISP router.
 
-\begin{verbatim}
+\begin{cli}
 Lab_B#telnet 171.16.10.1
-\end{verbatim}
+\end{cli}
 \item
   Execute the command \texttt{show\ users} from the ISP router. (This
   shows who is accessing the VTY lines.)
 
-\begin{verbatim}
+\begin{cli}
 ISP#show users
-\end{verbatim}
+\end{cli}
 
   \begin{enumerate}
   \item
@@ -1040,7 +1036,7 @@ ISP#show users
 
     The \texttt{show\ users} output should look something like this:
 
-\begin{verbatim}
+\begin{cli}
 ISP>sh users
     Line       User       Host(s)              Idle       Location
    0 con 0                idle                 00:03:32
@@ -1048,7 +1044,7 @@ ISP>sh users
 *  3 vty 1                idle                 00:00:09 171.16.10.51
   Interface  User      Mode                     Idle Peer Address
 ISP>
-\end{verbatim}
+\end{cli}
 
    \begin{note}
     Notice that there is a one-to-one translation.
@@ -1063,22 +1059,22 @@ ISP>
   entering the \texttt{show\ ip\ nat\ translations} command. You should
   see something like this:
 
-\begin{verbatim}
+\begin{cli}
 Lab_A#sh ip nat translations
 Pro Inside global      Inside local       Outside local      Outside global
 --- 171.16.10.50       192.168.30.2       ---                ---
 --- 171.16.10.51       192.168.20.2       ---                ---
 Lab_A#
-\end{verbatim}
+\end{cli}
 \item
   If you turn on \texttt{debug\ ip\ nat} on the Lab\_A router and then
   ping through the router, you will see the actual NAT process take
   place, which will look something like this:
 
-\begin{verbatim}
+\begin{cli}
 00:32:47: NAT*: s=192.168.30.2->171.16.10.50, d=171.16.10.1 [5]
 00:32:47: NAT*: s=171.16.10.1, d=171.16.10.50->192.168.30.2
-\end{verbatim}
+\end{cli}
 \end{enumerate}
 
 
@@ -1095,38 +1091,38 @@ address for every user on the network.
   On the Lab\_A router, delete the translation table and remove the
   dynamic NAT pool.
 
-\begin{verbatim}
+\begin{cli}
 Lab_A#clear ip nat translations *
 Lab_A#config t
 Lab_A(config)#no ip nat pool GlobalNet 171.16.10.50
 171.16.10.55 netmask 255.255.255.0
 Lab_A(config)#no ip nat inside source list 1 pool GlobalNet
-\end{verbatim}
+\end{cli}
 \item
   On the Lab\_A router, create a NAT pool with one address called
   Lammle. The pool should contain a single address, 171.16.10.100. Enter
   the following command:
 
-\begin{verbatim}
+\begin{cli}
 Lab_A#config t
 Lab_A(config)#ip nat pool Lammle 171.16.10.100 171.16.10.100
 net 255.255.255.0
-\end{verbatim}
+\end{cli}
 \item
   Create access list 2. It should permit networks 192.168.20.0 and
   192.168.30.0 to be translated.
 
-\begin{verbatim}
+\begin{cli}
 Lab_A(config)#access-list 2 permit 192.168.20.0 0.0.0.255
 Lab_A(config)#access-list 2 permit 192.168.30.0 0.0.0.255
-\end{verbatim}
+\end{cli}
 \item
   Map access list 2 to the new pool, allowing PAT to occur by using the
   \texttt{overload} command.
 
-\begin{verbatim}
+\begin{cli}
 Lab_A(config)#ip nat inside source list 2 pool Lammle overload
-\end{verbatim}
+\end{cli}
 \item
   Log in to the Lab\_C router and telnet to the ISP router; also, log in
   to the Lab\_B router and telnet to the ISP router.
@@ -1134,7 +1130,7 @@ Lab_A(config)#ip nat inside source list 2 pool Lammle overload
   From the ISP router, use the \texttt{show\ users} command. The output
   should look like this:
 
-\begin{verbatim}
+\begin{cli}
 ISP>sh users
     Line       User       Host(s)              Idle       Location
 *  0 con 0                idle                 00:00:00
@@ -1144,25 +1140,25 @@ ISP>sh users
   Interface  User      Mode               Idle Peer Address
  
 ISP>
-\end{verbatim}
+\end{cli}
 \item
   From the Lab\_A router, use the \texttt{show\ ip\ nat\ translations}
   command.
 
-\begin{verbatim}
+\begin{cli}
 Lab_A#sh ip nat translations
 Pro Inside global  Inside local  Outside local Outside global
 tcp 171.16.10.100:11001 192.168.20.2:11001 171.16.10.1:23    
 171.16.10.1:23
 tcp 171.16.10.100:11002 192.168.30.2:11002 171.16.10.1:23    
 171.16.10.1:23
-\end{verbatim}
+\end{cli}
 \item
   Also make sure the \texttt{debug\ ip\ nat} command is on for the
   Lab\_A router. If you ping from the Lab\_C router to the ISP router,
   the output will look like this:
 
-\begin{verbatim}
+\begin{cli}
 01:12:36: NAT: s=192.168.30.2->171.16.10.100, d=171.16.10.1 [35]
 01:12:36: NAT*: s=171.16.10.1, d=171.16.10.100->192.168.30.2 [35]
 01:12:36: NAT*: s=192.168.30.2->171.16.10.100, d=171.16.10.1 [36]
@@ -1173,7 +1169,7 @@ tcp 171.16.10.100:11002 192.168.30.2:11002 171.16.10.1:23
 01:12:36: NAT*: s=171.16.10.1, d=171.16.10.100->192.168.30.2 [38]
 01:12:37: NAT*: s=192.168.30.2->171.16.10.100, d=171.16.10.1 [39]
 01:12:37: NAT*: s=171.16.10.1, d=171.16.10.100->192.168.30.2 [39]
-\end{verbatim}
+\end{cli}
 \end{enumerate}
 
 
@@ -1188,8 +1184,7 @@ Review Questions.''
   Which of the following are disadvantages of using NAT? (Choose three.)
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Translation introduces switching path delays.
   \item
     NAT conserves legally registered addresses.
@@ -1206,8 +1201,7 @@ Review Questions.''
   Which of the following are advantages of using NAT? (Choose three.)
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Translation introduces switching path delays.
   \item
     NAT conserves legally registered addresses.
@@ -1225,8 +1219,7 @@ Review Questions.''
   router?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{show\ ip\ nat\ translations}
   \item
     \texttt{show\ ip\ nat\ statistics}
@@ -1240,8 +1233,7 @@ Review Questions.''
   router?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{show\ ip\ nat\ translations}
   \item
     \texttt{show\ ip\ nat\ statistics}
@@ -1254,8 +1246,7 @@ Review Questions.''
   Which command will clear all the translations active on your router?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{show\ ip\ nat\ translations}
   \item
     \texttt{show\ ip\ nat\ statistics}
@@ -1268,8 +1259,7 @@ Review Questions.''
   Which command will show you the summary of the NAT configuration?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{show\ ip\ nat\ translations}
   \item
     \texttt{show\ ip\ nat\ statistics}
@@ -1283,8 +1273,7 @@ Review Questions.''
   you with 30 global addresses?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{ip\ nat\ pool\ Todd\ 171.16.10.65\ 171.16.10.94\ net\ 255.255.255.240}
   \item
     \texttt{ip\ nat\ pool\ Todd\ 171.16.10.65\ 171.16.10.94\ net\ 255.255.255.224}
@@ -1297,8 +1286,7 @@ Review Questions.''
   Which of the following are methods of NAT? (Choose three.)
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Static
   \item
     IP NAT pool
@@ -1314,8 +1302,7 @@ Review Questions.''
   be used instead of the \texttt{netmask} command?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{/} (slash notation)
   \item
     \texttt{prefix-length}
@@ -1329,8 +1316,7 @@ Review Questions.''
   troubleshooting if your router is not translating?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Reboot.
   \item
     Call Cisco.
@@ -1344,8 +1330,7 @@ Review Questions.''
   three.)
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     You need to connect to the Internet and your hosts don't have
     globally unique IP addresses.
   \item
@@ -1361,8 +1346,7 @@ Review Questions.''
   translation?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Inside local
   \item
     Outside local
@@ -1376,8 +1360,7 @@ Review Questions.''
   before translation?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Inside local
   \item
     Outside local
@@ -1390,7 +1373,7 @@ Review Questions.''
   By looking at the following output, determine which of the following
   commands would allow dynamic translations?
 
-\begin{verbatim}
+\begin{cli}
 Router#show ip nat trans
 Pro   Inside global   Inside local   Outside local Outside global
 ---   1.1.128.1       10.1.1.1       ---           ---
@@ -1399,11 +1382,10 @@ Pro   Inside global   Inside local   Outside local Outside global
 ---   1.1.130.101     10.1.1.89      ---           ---
 ---   1.1.134.169     10.1.1.100     ---           ---
 ---   1.1.135.174     10.1.1.200      ---           ---
-\end{verbatim}
+\end{cli}
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{ip\ nat\ inside\ source\ pool\ todd\ 1.1.128.1\ 1.1.135.254\ prefix-length\ 19}
   \item
     \texttt{ip\ nat\ pool\ todd\ 1.1.128.1\ 1.1.135.254\ prefix-length\ 19}
@@ -1417,14 +1399,13 @@ Pro   Inside global   Inside local   Outside local Outside global
   addresses. Which of the following commands will show you if your
   inside globals are allowed to use the NAT pool?
 
-\begin{verbatim}
+\begin{cli}
 ip nat pool Corp 198.18.41.129 198.18.41.134 netmask 255.255.255.248
 ip nat inside source list 100 int s0/0 Corp overload
-\end{verbatim}
+\end{cli}
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{debug\ ip\ nat}
   \item
     \texttt{show\ access-list}
@@ -1438,8 +1419,7 @@ ip nat inside source list 100 int s0/0 Corp overload
   you place on the interface of a private network?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{ip\ nat\ inside}
   \item
     \texttt{ip\ nat\ outside}
@@ -1453,8 +1433,7 @@ ip nat inside source list 100 int s0/0 Corp overload
   Internet?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{ip\ nat\ inside}
   \item
     \texttt{ip\ nat\ outside}
@@ -1467,8 +1446,7 @@ ip nat inside source list 100 int s0/0 Corp overload
   Port Address Translation is also called what?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     NAT Fast
   \item
     NAT Static
@@ -1480,13 +1458,12 @@ ip nat inside source list 100 int s0/0 Corp overload
 \item
   What does the asterisk (*) represent in the following output?
 
-\begin{verbatim}
+\begin{cli}
 NAT*: s=172.16.2.2, d=192.168.2.1->10.1.1.1 [1]
-\end{verbatim}
+\end{cli}
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     The packet was destined for a local interface on the router.
   \item
     The packet was translated and fast-switched to the destination.
@@ -1500,14 +1477,13 @@ NAT*: s=172.16.2.2, d=192.168.2.1->10.1.1.1 [1]
   Which of the following needs to be added to the configuration to
   enable PAT?
 
-\begin{verbatim}
+\begin{cli}
 ip nat pool Corp 198.18.41.129 198.18.41.134 netmask 255.255.255.248
 access-list 1 permit 192.168.76.64 0.0.0.31
-\end{verbatim}
+\end{cli}
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{ip\ nat\ pool\ inside\ overload}
   \item
     \texttt{ip\ nat\ inside\ source\ list\ 1\ pool\ Corp\ overload}

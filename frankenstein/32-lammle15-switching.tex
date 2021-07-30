@@ -147,7 +147,7 @@ Another helpful command, which is also part of the Cisco exam
 objectives, is the \texttt{show\ interfaces}
 \texttt{interface}\texttt{\ switchport} command:
 
-\begin{verbatim}
+\begin{cli}
 S1#sh interfaces fastEthernet 0/15 switchport
 Name: Fa0/15
 Switchport: Enabled
@@ -161,7 +161,7 @@ Trunking Native Mode VLAN: 1 (default)
 Administrative Native VLAN tagging: enabled
 Voice VLAN: none
 [output cut]
-\end{verbatim}
+\end{cli}
 
 The highlighted output shows us the administrative mode of
 \texttt{dynamic\ desirable}, that the port is a trunk port, and that DTP
@@ -186,7 +186,7 @@ configure multiple ports at the same time with the
 In the next example, I'll configure interface Fa0/3 to VLAN 3. This is
 the connection from the S3 switch to the host device:
 
-\begin{verbatim}
+\begin{cli}
 S3#config t
 S3(config)#int fa0/3
 S3(config-if)#switchport ?
@@ -204,7 +204,7 @@ S3(config-if)#switchport ?
   protected      Configure an interface to be a protected port
   trunk          Set trunking characteristics of the interface
   voice          Voice appliance attributes  voice
-\end{verbatim}
+\end{cli}
 
 Well now, what do we have here? There's some new stuff showing up in our
 output now. We can see various commands -- some that I've already
@@ -214,7 +214,7 @@ soon. Let's start with setting an access port on S1, which is probably
 the most widely used type of port you'll find on production switches
 that have VLANs configured:
 
-\begin{verbatim}
+\begin{cli}
 S3(config-if)#switchport mode ?
     access        Set trunking mode to ACCESS unconditionally
   dot1q-tunnel  set trunking mode to TUNNEL unconditionally
@@ -224,7 +224,7 @@ S3(config-if)#switchport mode ?
  
 S3(config-if)#switchport mode access
 S3(config-if)#switchport access vlan 3
-\end{verbatim}
+\end{cli}
 
 By starting with the \texttt{switchport\ mode\ access} command, you're
 telling the switch that this is a nontrunking layer~2 port. You can then
@@ -234,7 +234,7 @@ Remember, you can choose many ports to configure simultaneously with the
 
 Let's take a look at our VLANs now:
 
-\begin{verbatim}
+\begin{cli}
 S3#show vlan
 VLAN Name                       Status    Ports
 ---- ------------------------ --------- -------------------------------
@@ -246,7 +246,7 @@ VLAN Name                       Status    Ports
  
 2    Sales                     active
 3    Marketing                 active    Fa0/3
-\end{verbatim}
+\end{cli}
 
 Notice that port Fa0/3 is now a member of VLAN 3. But, can you tell me where ports 1 and
 2 are? And why aren't they showing up in the output of
@@ -255,7 +255,7 @@ Notice that port Fa0/3 is now a member of VLAN 3. But, can you tell me where por
 We can also see this with the
 \texttt{show\ interfaces\ interface\ switchport} command:
 
-\begin{verbatim}
+\begin{cli}
 S3#sh int fa0/3 switchport
 Name: Fa0/3
 Switchport: Enabled
@@ -264,7 +264,7 @@ Operational Mode: static access
 Administrative Trunking Encapsulation: negotiate
 Negotiation of Trunking: Off
 Access Mode VLAN: 3 (Marketing)
-\end{verbatim}
+\end{cli}
 
 The highlighted output shows that Fa0/3 is an access port and a member
 of VLAN 3 (Marketing).
@@ -281,12 +281,12 @@ All you need to do is add another VLAN to the same switch port like so
 to fix this issue and separate the data at the switch port into two
 VLANs:
 
-\begin{verbatim}
+\begin{cli}
 S1(config)#vlan 10
 S1(config-vlan)#name Voice
 S1(config-vlan)#int g0/1
 S1(config-if)#switchport voice vlan 10
-\end{verbatim}
+\end{cli}
 
 That's it. Well, sort of. If you plugged devices into each VLAN port,
 they can only talk to other devices in the same VLAN. But as soon as you
@@ -303,17 +303,17 @@ switch.
 The following switch output shows the trunk configuration on interfaces
 Fa0/15--18 as set to \texttt{trunk}:
 
-\begin{verbatim}
+\begin{cli}
 S1(config)#int range f0/15-18
 S1(config-if-range)#switchport trunk encapsulation dot1q
 S1(config-if-range)#switchport mode trunk
-\end{verbatim}
+\end{cli}
 
 If you have a switch that only runs the 802.1q encapsulation method, then you wouldn't use
 the encapsulation command as I did in the preceding output. Let's check
 out our trunk ports now:
 
-\begin{verbatim}
+\begin{cli}
 S1(config-if-range)#do sh int f0/15 switchport
 Name: Fa0/15
 Switchport: Enabled
@@ -326,12 +326,12 @@ Access Mode VLAN: 1 (default)
 Trunking Native Mode VLAN: 1 (default)
 Administrative Native VLAN tagging: enabled
 Voice VLAN: none
-\end{verbatim}
+\end{cli}
 
 Notice that port Fa0/15 is a trunk and running 802.1q.
 Let's take another look:
 
-\begin{verbatim}
+\begin{cli}
 S1(config-if-range)#do sh int trunk
 Port        Mode             Encapsulation  Status        Native vlan
 Fa0/15      on               802.1q         trunking      1
@@ -343,7 +343,7 @@ Fa0/15      1-4094
 Fa0/16      1-4094
 Fa0/17      1-4094
 Fa0/18      1-4094
-\end{verbatim}
+\end{cli}
 
 Take note of the fact that ports 15--18 are now in the trunk mode of on
 and the encapsulation is now 802.1q instead of the negotiated ISL.
@@ -403,7 +403,7 @@ certain VLANs from traversing a trunked link. I'll show you how you'd do
 that, but first let me again demonstrate that all VLANs are allowed
 across the trunk link by default:
 
-\begin{verbatim}
+\begin{cli}
 S1# show interfaces trunk
 [output cut]
 Port        Vlans allowed on trunk
@@ -420,7 +420,7 @@ Fa0/15      4,6,12,15
 Fa0/16      1-4094
 Fa0/17      1-4094
 Fa0/18      1-4094
-\end{verbatim}
+\end{cli}
 
 The preceding command
 affected the trunk link configured on S1 port Fa0/15, causing it to
@@ -430,16 +430,16 @@ management data like CDP, DTP, and VTP, so what's the point?
 
 To remove a range of VLANs, just use the hyphen:
 
-\begin{verbatim}
+\begin{cli}
 S1(config-if)#switchport trunk allowed vlan remove 4-8
-\end{verbatim}
+\end{cli}
 
 If by chance someone has removed some VLANs from a trunk link and you
 want to set the trunk back to default, just use this command:
 
-\begin{verbatim}
+\begin{cli}
 S1(config-if)#switchport trunk allowed vlan all
-\end{verbatim}
+\end{cli}
 
 Next, I want to show you how to configure a native VLAN for a trunk
 before we start routing between VLANs.
@@ -450,22 +450,22 @@ You can change the trunk port native VLAN from VLAN 1, which many people
 do for security reasons. To change the native VLAN, use the following
 command:
 
-\begin{verbatim}
+\begin{cli}
 S1(config)#int f0/15
 S1(config-if)#switchport trunk native vlan ?
   <1-4094>  VLAN ID of the native VLAN when this port is in trunking mode
-\end{verbatim}
+\end{cli}
 
-\begin{verbatim}
+\begin{cli}
 S1(config-if)#switchport trunk native vlan 4
 1w6d: %CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch discovered on FastEthernet0/15 (4), with S3 FastEthernet0/1 (1).
-\end{verbatim}
+\end{cli}
 
 So we've changed our native VLAN on our trunk link to 4, and by using
 the \texttt{show\ running-config} command, I can see the configuration
 under the trunk link:
 
-\begin{verbatim}
+\begin{cli}
 S1#sh run int f0/15
 Building configuration...
  
@@ -480,7 +480,7 @@ interface FastEthernet0/15
 end
  
 S1#!
-\end{verbatim}
+\end{cli}
 
 Oops -- wait a minute!
 You didn't think it would be this easy and would just start working, did
@@ -489,20 +489,20 @@ native VLAN configured on the given trunk links, then we'll start to
 receive this error, which happened immediately after I entered the
 command:
 
-\begin{verbatim}
+\begin{cli}
 1w6d: %CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch discovered
 on FastEthernet0/15 (4), with S3 FastEthernet0/1 (1).
-\end{verbatim}
+\end{cli}
 
 Actually, this is a good, noncryptic error, so either we can go to the
 other end of our trunk link(s) and change the native VLAN or we set the
 native VLAN back to the default to fix it. Here's how we'd do that:
 
-\begin{verbatim}
+\begin{cli}
 S1(config-if)#no switchport trunk native vlan
 1w6d: %SPANTREE-2-UNBLOCK_CONSIST_PORT: Unblocking FastEthernet0/15
 on VLAN0004. Port consistency restored.
-\end{verbatim}
+\end{cli}
 
 Now our trunk link is using the default VLAN 1 as the native VLAN.
 Just remember that all switches on a given trunk must use the same native VLAN or you'll have some serious management problems.
@@ -523,7 +523,6 @@ propagated to all other switches in the VTP domain.
 Here's a list of some of the cool features VTP has to offer:
 
 \begin{enumerate}
-\tightlist
 \item
   Consistent VLAN configuration across all switches in the network
 \item
@@ -573,7 +572,6 @@ You should know these four requirements for VTP to communicate VLAN
 information between switches:
 
 \begin{enumerate}
-\tightlist
 \item
   The VTP version must be set the same
 \item
@@ -702,7 +700,7 @@ VLAN. VTP pruning is supported with both VTP version 1 and version 2.
 By using the \texttt{show\ interface\ trunk} command, we can see that
 all VLANs are allowed across a trunked link by default:
 
-\begin{verbatim}
+\begin{cli}
 S1# show interfaces trunk
 
 Port        Mode         Encapsulation  Status        Native vlan
@@ -721,14 +719,14 @@ Port        Vlans in spanning tree forwarding state and not pruned
 Fa0/1       1
 Fa0/2       none
 S1#
-\end{verbatim}
+\end{cli}
 
 Looking at the preceding output, you can see that VTP pruning is
 disabled by default. I'm going to go ahead and enable pruning. It only
 takes one command and it is enabled on your entire switched network for
 the listed VLANs. Let's see what happens:
 
-\begin{verbatim}
+\begin{cli}
 S1#config t
 S1(config)#int f0/1
 S1(config-if)#switchport trunk ?
@@ -742,7 +740,7 @@ S1(config-if)#switchport trunk pruning ?
   vlan  Set VLANs enabled for pruning when interface is in
   trunking mode
 S1(config-if)#switchport trunk pruning vlan 3-4
-\end{verbatim}
+\end{cli}
 
 The valid VLANs that can be pruned are 2 to 1001. Extended-range VLANs
 (VLAN IDs 1006 to 4094) can't be pruned, and these pruning-ineligible
@@ -762,7 +760,7 @@ configuration mode command to set all this information. In the following
 example, I'll set the S1 switch to \texttt{vtp\ server}, the VTP domain
 to \texttt{Lammle}, and the VTP password to \texttt{todd}:
 
-\begin{verbatim}
+\begin{cli}
 S1#config t
 S1#(config)#vtp mode server
 Device mode already VTP SERVER.
@@ -785,7 +783,7 @@ VTP Traps Generation            : Disabled
 MD5 digest                      : 0x15 0x54 0x88 0xF2 0x50 0xD9 0x03 0x07
 Configuration last modified by 192.168.24.6 at 3-14-93 15:47:32
 Local updater ID is 192.168.24.6 on interface Vl1 (lowest numbered VLAN interface found)
-\end{verbatim}
+\end{cli}
 
 Please make sure you remember that all switches are set to VTP server
 mode by default, and if you want to change and distribute any VLAN
@@ -815,7 +813,7 @@ But here there be monsters: If VTP is not configured correctly, it
 troubleshooting VTP. Let's take a look at a couple of configurations and
 solve the problems. Study the output from the two following switches:
 
-\begin{verbatim}
+\begin{cli}
 SwitchA#sh vtp status
 VTP Version                     : 2
 Configuration Revision          : 0
@@ -837,7 +835,7 @@ VTP Domain Name                 : GlobalNet
 VTP Pruning Mode                : Disabled
 VTP V2 Mode                     : Disabled
 VTP Traps Generation            : Disabled
-\end{verbatim}
+\end{cli}
 
 So what's happening with these two switches? Why won't they share VLAN
 information? At first glance, it seems that both servers are in VTP
@@ -850,7 +848,7 @@ because the VTP domain names are configured differently.
 Now that you know how to look for common VTP domain configuration errors
 in your switches, let's take a look at another switch configuration:
 
-\begin{verbatim}
+\begin{cli}
 SwitchC#sh vtp status
 VTP Version                     : 2
 Configuration Revision          : 1
@@ -861,14 +859,14 @@ VTP Domain Name                 : Todd
 VTP Pruning Mode                : Disabled
 VTP V2 Mode                     : Disabled
 VTP Traps Generation            : Disabled
-\end{verbatim}
+\end{cli}
 
 Here's what will happen when you have the preceding VTP configuration:
 
-\begin{verbatim}
+\begin{cli}
 SwitchC(config)#vlan 50
 VTP VLAN configuration not allowed when device is in CLIENT mode.
-\end{verbatim}
+\end{cli}
 
 There you are just
 trying to create a new VLAN on SwitchC and what do you get for your
@@ -882,18 +880,18 @@ the switch a VTP server first.
 
 So to fix this problem, here's what you need to do:
 
-\begin{verbatim}
+\begin{cli}
 SwitchC(config)#vtp mode server
 Setting device to VTP SERVER mode
 SwitchC(config)#vlan 50
 SwitchC(config-vlan)#
-\end{verbatim}
+\end{cli}
 
 Wait, we're not done. Now take a look at the output from these two
 switches and determine why SwitchB is not receiving VLAN information
 from SwitchA:
 
-\begin{verbatim}
+\begin{cli}
 SwitchA#sh vtp status
 VTP Version                     : 2
 Configuration Revision          : 4
@@ -915,7 +913,7 @@ VTP Domain Name                 : GlobalNet
 VTP Pruning Mode                : Disabled
 VTP V2 Mode                     : Disabled
 VTP Traps Generation            : Disabled
-\end{verbatim}
+\end{cli}
 
 You may be tempted to say it's because they're both VTP servers, but
 that is not the problem. All your switches can be servers and they can
@@ -939,7 +937,7 @@ just said it's another way to fix it!
 Let's look at one more. Why is SwitchB not receiving VLAN information
 from SwitchA?
 
-\begin{verbatim}
+\begin{cli}
 SwitchA#sh vtp status
 VTP Version                     : 1
 Configuration Revision          : 4
@@ -961,7 +959,7 @@ VTP Domain Name                 :
 VTP Pruning Mode                : Disabled
 VTP V2 Mode                     : Disabled
 VTP Traps Generation            : Disabled
-\end{verbatim}
+\end{cli}
 
 I know your first instinct is to notice that SwitchB doesn't have a
 domain name set and consider that the issue. That's not the problem!
@@ -978,7 +976,6 @@ operates in version 1. You can configure VTP version 2 if you want
 support for these features, which are not supported in version 1:
 
 \begin{enumerate}
-\tightlist
 \item
   Token Ring support -- Hmmm\ldots doesn't seem like much of a reason to
   go to version 2 today. Let's look at some other reasons.
@@ -1555,7 +1552,6 @@ separate instance of 802.1w for each VLAN. Here's a list to clarify how
 this all breaks down:
 
 \begin{enumerate}
-\tightlist
 \item
   RSTP speeds the recalculation of the spanning tree when the layer~2
   network topology changes.
@@ -1798,7 +1794,7 @@ network we'll work with in this section.
 
 Let's start by taking a look at the output from S1:
 
-\begin{verbatim}
+\begin{cli}
 S1#sh spanning-tree vlan 1
 VLAN0001
   Spanning tree enabled protocol ieee
@@ -1816,7 +1812,7 @@ Interface        Role Sts Cost      Prio.Nbr Type
 ---------------- ---- --- --------- -------- --------------------------------
 Gi1/1            Desg FWD 4         128.25   P2p
 Gi1/2            Desg FWD 4         128.26   P2p
-\end{verbatim}
+\end{cli}
 
 First, we can see that we're running the IEEE 802.1d STP version by
 default, and don't forget that this is really 802.1d PVST+! Looking at
@@ -1832,7 +1828,7 @@ Ethernet interfaces are designated forwarding ports. You will not see a
 blocked/discarding port on a root bridge. Now let's take a look at S3's
 output:
 
-\begin{verbatim}
+\begin{cli}
 S3#sh spanning-tree
 VLAN0001
   Spanning tree enabled protocol ieee
@@ -1851,7 +1847,7 @@ Interface        Role Sts Cost      Prio.Nbr Type
 ---------------- ---- --- --------- -------- --------------------------------
 Gi1/1            Desg FWD 4         128.25   P2p
 Gi1/2            Root FWD 4         128.26   P2p
-\end{verbatim}
+\end{cli}
 
 Looking at the Root ID, it's easy to see that S3 isn't the root bridge,
 but the output tells us it's a cost of 4 to get to the root bridge and
@@ -1861,21 +1857,21 @@ which we already know
 is S1, but we can confirm this with the\texttt{show\ cdp\ neighbors}
 command:
 
-\begin{verbatim}
+\begin{cli}
 Switch#sh cdp nei
 Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
                   S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone
 Device ID    Local Intrfce   Holdtme    Capability   Platform    Port ID
 S3           Gig 1/1          135            S       2960        Gig 1/1
 S1           Gig 1/2          135            S       2960        Gig 1/1
-\end{verbatim}
+\end{cli}
 
 That's how simple it is to find your root bridge if you don't have the
 nice figure as we do. Use the \texttt{show\ spanning-tree} command, find
 your root port, and then use the \texttt{show\ cdp\ neighbors} command.
 Let's see what S2's output has to tell us now:
 
-\begin{verbatim}
+\begin{cli}
 S2#sh spanning-tree
 VLAN0001
   Spanning tree enabled protocol ieee
@@ -1894,7 +1890,7 @@ Interface        Role Sts Cost      Prio.Nbr Type
 ---------------- ---- --- --------- -------- --------------------------------
 Gi1/1            Altn BLK 4         128.25   P2p
 Gi1/2            Root FWD 4         128.26   P2p
-\end{verbatim}
+\end{cli}
 
 We're certainly not looking at a root bridge since we're seeing a
 blocked port, which is S2's connection to S3!
@@ -1902,7 +1898,7 @@ blocked port, which is S2's connection to S3!
 Let's have some fun by making S2 the root bridge for VLAN 2 and for VLAN
 3. Here's how easy that is to do:
 
-\begin{verbatim}
+\begin{cli}
 S2#sh spanning-tree vlan 2
 VLAN0002
   Spanning tree enabled protocol ieee
@@ -1921,7 +1917,7 @@ Interface        Role Sts Cost      Prio.Nbr Type
 ---------------- ---- --- --------- -------- --------------------------------
 Gi1/1            Altn BLK 4         128.25   P2p
 Gi1/2            Root FWD 4         128.26   P2p
-\end{verbatim}
+\end{cli}
 
 We can see that the root bridge cost is 4, meaning that the root bridge
 is one gigabit link away. One more key factor I want to talk about
@@ -1932,7 +1928,7 @@ priority, which in this case is 32768 + 2, which makes the priority
 32770. Now that you understand what that output is telling us, let's
 make S2 the root bridge:
 
-\begin{verbatim}
+\begin{cli}
 S2(config)#spanning-tree vlan 2 ?
   priority  Set the bridge priority for the spanning tree
   root      Configure switch as root
@@ -1940,7 +1936,7 @@ S2(config)#spanning-tree vlan 2 ?
 S2(config)#spanning-tree vlan 2 priority ?
   <0-61440>  bridge priority in increments of 4096
 S2(config)#spanning-tree vlan 2 priority 16384
-\end{verbatim}
+\end{cli}
 
 You can set the priority to any value from 0 through 61440 in increments
 of 4096. Setting it to zero (0) means that the switch will always be a
@@ -1954,13 +1950,13 @@ of 0!
 Furthermore, you don't actually need to change priorities because there
 is yet another way to configure the root bridge. Take a look:
 
-\begin{verbatim}
+\begin{cli}
 S2(config)#spanning-tree vlan 3 root ?
   primary    Configure this switch as primary root for this spanning tree
   secondary  Configure switch as secondary root
 S2(config)#spanning-tree vlan 3 root primary
 S3(config)#spanning-tree vlan 3 root secondary
-\end{verbatim}
+\end{cli}
 
 Notice that you can
 set a bridge to either primary or secondary -- very cool! If both the
@@ -1970,7 +1966,7 @@ will take over as root.
 Let's check to see if S2 is actually the root bridge for VLANs 2 and 3
 now:
 
-\begin{verbatim}
+\begin{cli}
 S2#sh spanning-tree vlan 2
 VLAN0002
   Spanning tree enabled protocol ieee
@@ -1988,13 +1984,13 @@ Interface        Role Sts Cost      Prio.Nbr Type
 ---------------- ---- --- --------- -------- --------------------------------
 Gi1/1            Desg FWD 4         128.25   P2p
 Gi1/2            Desg FWD 4         128.26   P2p
-\end{verbatim}
+\end{cli}
 
 Nice -- S2 is the root bridge for VLAN 2, with a priority of 16386 (16384
 + 2). Let's take a look to see the root bridge for VLAN 3. I'll use a
 different command for that this time. Check it out:
 
-\begin{verbatim}
+\begin{cli}
 S2#sh spanning-tree summary
 Switch is in pvst mode
 Root bridge for: VLAN0002 VLAN0003
@@ -2016,7 +2012,7 @@ VLAN0003                     0         0        0          2          2
  
 ---------------------- -------- --------- -------- ---------- ----------
 3 vlans                      1         0        0          5          6
-\end{verbatim}
+\end{cli}
 
 The preceding output tells us that S2 is the root for the two VLANs, but
 we can see we have a blocked port for VLAN 1 on S2, so it's not the root
@@ -2027,14 +2023,14 @@ One last burning question: How do you enable RSTP on a Cisco switch?
 Well, doing that is actually the easiest part of this chapter! Take a
 look:
 
-\begin{verbatim}
+\begin{cli}
 S2(config)#spanning-tree mode rapid-pvst
-\end{verbatim}
+\end{cli}
 
 Is that really all there is to it? Yes, because it's a global command,
 not per VLAN. Let's verify we're running RSTP now:
 
-\begin{verbatim}
+\begin{cli}
 S2#sh spanning-tree
 VLAN0001
   Spanning tree enabled protocol rstp
@@ -2047,7 +2043,7 @@ VLAN0001
 S2#sh spanning-tree summary
 Switch is in rapid-pvst mode
 Root bridge for: VLAN0002 VLAN0003
-\end{verbatim}
+\end{cli}
 
 Looks like we're set! We're running RSTP, S1 is our root bridge for VLAN
 1, and S2 is the root bridge for VLANs 2 and 3. I know this doesn't seem
@@ -2114,7 +2110,6 @@ production network -- and of course, you must know them to meet the exam
 objectives:
 
 \begin{enumerate}
-\tightlist
 \item
   The load on all links begins increasing and more and more frames enter
   the loop. Remember, this loop affects all the other links in the
@@ -2197,30 +2192,30 @@ STP forwarding state immediately upon connecting to the switch.
 Here are the commands, first from global config mode -- they're pretty
 simple:
 
-\begin{verbatim}
+\begin{cli}
 S1(config)#spanning-tree portfast ?
   bpdufilter  Enable portfast bdpu filter on this switch
   bpduguard   Enable portfast bpdu guard on this switch
   default     Enable portfast by default on all access ports
-\end{verbatim}
+\end{cli}
 
 If you were to type \texttt{spanning-tree\ portfast\ default}, you would
 enable all nontrunking ports with PortFast. From interface mode, you can
 be more specific, which is the better way to go:
 
-\begin{verbatim}
+\begin{cli}
 S1(config-if)#spanning-tree portfast ?
   disable  Disable portfast for this interface
   trunk    Enable portfast on the interface even in trunk mode
   <cr>
-\end{verbatim}
+\end{cli}
 
 From interface mode you can actually configure PortFast on a trunk port,
 but you would do that only if the port connects to a server or router,
 not to another switch, so we won't use that here. So let's take a look
 at the message I get when I turn on PortFast on interface Gi0/1:
 
-\begin{verbatim}
+\begin{cli}
 S1#config t
 S1#config)#int range gi0/1 - 2
 S1(config-if)#spanning-tree portfast
@@ -2228,13 +2223,13 @@ S1(config-if)#spanning-tree portfast
  host. Connecting hubs, concentrators, switches, bridges, etc... to this
  interface  when portfast is enabled, can cause temporary bridging loops.
  Use with CAUTION
-\end{verbatim}
+\end{cli}
 
-\begin{verbatim}
+\begin{cli}
  
 %Portfast has been configured on GigabitEthernet0/1 but will only
  have effect when the interface is in a non-trunking mode.
-\end{verbatim}
+\end{cli}
 
 PortFast is enabled on port Gi0/1 and Gi0/2, but notice that you get a
 pretty long message that's essentially telling you to be careful. This
@@ -2270,15 +2265,15 @@ easy!
 
 Here's how to set it globally:
 
-\begin{verbatim}
+\begin{cli}
 S1(config)# spanning-tree portfast bpduguard default
-\end{verbatim}
+\end{cli}
 
 And specifically on an interface:
 
-\begin{verbatim}
+\begin{cli}
 S1(config-if)#spanning-tree bpduguard enable
-\end{verbatim}
+\end{cli}
 
 It's important to know that you would only configure this command on
 your access layer switches -- switches where users are directly
@@ -2467,17 +2462,17 @@ Remember, all parameters and configurations of the ports must be the
 same, so I'll start by trunking the interfaces before I configure
 EtherChannel, like this:
 
-\begin{verbatim}
+\begin{cli}
 S1(config)#int range g0/1 - 2
 S1(config-if-range)#switchport trunk encapsulation dot1q
 S1(config-if-range)#switchport mode trunk
-\end{verbatim}
+\end{cli}
 
 All ports in your bundles must be configured the same, so I'll configure
 both sides with the same trunking configuration. Now I can assign these
 ports to a bundle:
 
-\begin{verbatim}
+\begin{cli}
 S1(config-if-range)#channel-group 1 mode ?
   active     Enable LACP unconditionally
   auto       Enable PAgP only if a PAgP device is detected
@@ -2486,7 +2481,7 @@ S1(config-if-range)#channel-group 1 mode ?
   passive    Enable LACP only if a LACP device is detected
 S1(config-if-range)#channel-group 1 mode active
 S1(config-if-range)#exit
-\end{verbatim}
+\end{cli}
 
 To configure the IEEE nonproprietary LACP, I'll use the \texttt{active}
 or \texttt{passive} command; if I wanted to use Cisco's PAgP, I'd use
@@ -2502,12 +2497,12 @@ with LACP because, again, all parameters must be the same on both ends
 of the link. Let's configure our port channel interface, which was
 created when we used the channel-group command:
 
-\begin{verbatim}
+\begin{cli}
 S1(config)#int port-channel 1
 S1(config-if)#switchport trunk encapsulation dot1q
 S1(config-if)#switchport mode trunk
 S1(config-if)#switchport trunk allowed vlan 1,2,3
-\end{verbatim}
+\end{cli}
 
 Notice that I set the same trunking method under the port channel
 interface as I did the physical interfaces, as well as VLAN information
@@ -2517,7 +2512,7 @@ port-channel with all parameters.
 
 Time to configure the interfaces, channel groups, and port channel interface on the S2 switch:
 
-\begin{verbatim}
+\begin{cli}
 S2(config)#int range g0/13 - 14
 S2(config-if-range)#switchport trunk encapsulation dot1q
 S2(config-if-range)#switchport mode trunk
@@ -2527,7 +2522,7 @@ S2(config)#int port-channel 1
 S2(config-if)#switchport trunk encapsulation dot1q
 S2(config-if)#switchport mode trunk
 S2(config-if)#switchport trunk allowed vlan 1,2,3
-\end{verbatim}
+\end{cli}
 
 On each switch, I configured the ports I wanted to bundle with the same
 configuration, then created the port channel. After that, I added the
@@ -2542,7 +2537,7 @@ Let's verify our EtherChannel with a few commands. We'll start with the
 \texttt{show\ etherchannel\ port-channel} command to see information
 about a specific port channel interface:
 
-\begin{verbatim}
+\begin{cli}
 S2#sh etherchannel port-channel
                Channel-group listing:
                 ----------------------
@@ -2570,7 +2565,7 @@ Index   Load   Port     EC state        No of bits
   0     00     Gig0/1   Active             0
 Time since last port bundled:    00d:00h:46m:47s    Gig0/1
 S2#
-\end{verbatim}
+\end{cli}
 
 Notice that we have one group and that we're running the IEEE LACP
 version of port channeling. We're in \texttt{Active} mode, and that
@@ -2582,7 +2577,7 @@ the flow of traffic.
 The \texttt{show\ etherchannel\ summary} command displays one line of
 information per port channel:
 
-\begin{verbatim}
+\begin{cli}
 S2#sh etherchannel summary
 Flags:  D - down        P - in port-channel
         I - stand-alone s - suspended
@@ -2600,7 +2595,7 @@ Group  Port-channel  Protocol    Ports
 ------+-------------+-----------+----------------------------------------------
  
 1      Po1(SU)           LACP   Gig0/1(P) Gig0/2(P)
-\end{verbatim}
+\end{cli}
 
 This command shows that we have one group, that we're running LACP, and
 Gig0/1 and Gig0/2 or (P), which means these ports are
@@ -2620,25 +2615,25 @@ under the logical port-channel interface.
 Here is an example on how to create the logical port channel 1 and
 assign 20.2.2.2 as its IP address:
 
-\begin{verbatim}
+\begin{cli}
 Router#config t
 Router(config)#int port-channel 1
 Router(config-if)#ip address 20.2.2.2 255.255.255.0
-\end{verbatim}
+\end{cli}
 
 Now we need to add the physical ports into port channel 1:
 
-\begin{verbatim}
+\begin{cli}
 Router(config-if)#int range g0/0-1
 Router(config-if-range)#channel-group 1
 GigabitEthernet0/0 added as member-1 to port-channel1
 GigabitEthernet0/1 added as member-2 to port-channel1
-\end{verbatim}
+\end{cli}
 
 Now let's take a look at the running-config. Notice there are no IP
 addresses under the physical interface of the router:
 
-\begin{verbatim}
+\begin{cli}
 !
 interface Port-channel1
  ip address 20.2.2.2 255.255.255.0
@@ -2657,7 +2652,7 @@ interface Port-channel1
  duplex auto
  speed auto
  channel-group 1
-\end{verbatim}
+\end{cli}
 
 \section{Summary}
 
@@ -2717,7 +2712,6 @@ Labs.''
 Write the answers to the following questions:
 
 \begin{enumerate}
-\tightlist
 \item
   Which of the following is Cisco proprietary: LACP or PAgP?
 \item
@@ -2762,7 +2756,6 @@ labs.
 The labs in this chapter are as follows:
 
 \begin{enumerate}
-\tightlist
 \item
   Lab 15.1: Verifying STP and Finding Your Root Bridge
 \item
@@ -2794,7 +2787,7 @@ switches and all of your links are trunked.
   From one of your switches, use the
   \texttt{show\ spanning-tree\ vlan\ 2} command. Verify the output.
 
-\begin{verbatim}
+\begin{cli}
 S3#sh spanning-tree vlan 2
 VLAN0002
   Spanning tree enabled protocol ieee
@@ -2808,16 +2801,16 @@ VLAN0002
              Address     0004.9A04.ED97
              Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
              Aging Time  20
-\end{verbatim}
+\end{cli}
 
-\begin{verbatim}
+\begin{cli}
 Interface        Role Sts Cost      Prio.Nbr Type
 ---------------- ---- --- --------- -------- --------------------------------
 Fa0/1            Root FWD 19        128.1    P2p
 Fa0/2            Desg FWD 19        128.2    P2p
 Gi1/1            Altn BLK 4         128.25   P2p
 Gi1/2            Altn BLK 4         128.26   P2p
-\end{verbatim}
+\end{cli}
 
   Notice that S3 is not the root bridge, so to find your root bridge,
   just follow the root port and see what bridge is connected to that
@@ -2828,7 +2821,7 @@ Gi1/2            Altn BLK 4         128.26   P2p
 \item
   Find the bridge that is off of Fa0/1, which will be our root.
 
-\begin{verbatim}
+\begin{cli}
 S3#sh cdp neighbors
 Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
                   S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone
@@ -2837,7 +2830,7 @@ S1           Fas 0/1          158            S       2960        Fas 0/1
 S2           Gig 1/1          151            S       2960        Gig 1/1
 S2           Gig 1/2          151            S       2960        Gig 1/2
 S3#
-\end{verbatim}
+\end{cli}
 
   Notice that S1 is connected to the local interface Fa0/1, so let's go
   to S1 and verify our root bridge.
@@ -2845,7 +2838,7 @@ S3#
   Verify the root bridge for each of the three VLANs. From S1, use the
   \texttt{show\ spanning-tree\ summary} command.
 
-\begin{verbatim}
+\begin{cli}
 S1#sh spanning-tree summary
 Switch is in pvst mode
 Root bridge for: default VLAN0002 VLAN0003
@@ -2869,7 +2862,7 @@ VLAN0003                     0         0        0          2          2
 3 vlans                      0         0        0          6          6
  
 S1#
-\end{verbatim}
+\end{cli}
 
   Notice that S1 is the root bridge for all three VLANs.
 \item
@@ -2891,7 +2884,7 @@ bridge is for each VLAN.
   non-root bridges and verify the bridge ID with the
   \texttt{show\ spanning-tree\ vlan} command.
 
-\begin{verbatim}
+\begin{cli}
 S3#sh spanning-tree vlan 1
 VLAN0001
   Spanning tree enabled protocol ieee
@@ -2912,7 +2905,7 @@ Fa0/1            Root FWD 19        128.1    P2p
 Fa0/2            Desg FWD 19        128.2    P2p
 Gi1/1            Altn BLK 4         128.25   P2p
 Gi1/2            Altn BLK 4         128.26   P2p
-\end{verbatim}
+\end{cli}
 
   Notice that this bridge is not the root bridge for VLAN 1 and the root
   port is Fa0/1 with a cost of 19, which means the root bridge is
@@ -2921,15 +2914,15 @@ Gi1/2            Altn BLK 4         128.26   P2p
   Make one of your non-root bridges the root bridge for VLAN 1. Use
   priority 16,384, which is lower than the 32,768 of the current root.
 
-\begin{verbatim}
+\begin{cli}
 S3(config)#spanning-tree vlan 1 priority ?
   <0-61440>  bridge priority in increments of 4096
 S3(config)#spanning-tree vlan 1 priority 16384
-\end{verbatim}
+\end{cli}
 \item
   Verify the root bridge for VLAN 1.
 
-\begin{verbatim}
+\begin{cli}
 S3#sh spanning-tree vlan 1
 VLAN0001
   Spanning tree enabled protocol ieee
@@ -2949,7 +2942,7 @@ Fa0/1            Desg FWD 19        128.1    P2p
 Fa0/2            Desg FWD 19        128.2    P2p
 Gi1/1            Desg FWD 4         128.25   P2p
 Gi1/2            Desg FWD 4         128.26   P2p
-\end{verbatim}
+\end{cli}
 \end{enumerate}
 
 Notice that this bridge is indeed the root and all ports are in Desg FWD
@@ -2969,7 +2962,7 @@ connect into the port.
   Connect to your switch that has a host connected and enable PortFast
   for the interface.
 
-\begin{verbatim}
+\begin{cli}
 S3#config t
 S3(config)#int fa0/2
 S3(config-if)#spanning-tree portfast
@@ -2977,32 +2970,32 @@ S3(config-if)#spanning-tree portfast
 host. Connecting hubs, concentrators, switches, bridges, etc... to this
 interface  when portfast is enabled, can cause temporary bridging loops.
 Use with CAUTION
-\end{verbatim}
+\end{cli}
 
-\begin{verbatim}
+\begin{cli}
  
 %Portfast has been configured on FastEthernet0/2 but will only
 have effect when the interface is in a non-trunking mode.
-\end{verbatim}
+\end{cli}
 \item
   Verify that the switch port will be shut down if another switch
   Ethernet cable plugs into this port.
 
-\begin{verbatim}
+\begin{cli}
 S3(config-if)#spanning-tree bpduguard enable
-\end{verbatim}
+\end{cli}
 \item
   Verify your configuration with the \texttt{show\ running-config}
   command.
 
-\begin{verbatim}
+\begin{cli}
 !
 interface FastEthernet0/2
  switchport mode trunk
  spanning-tree portfast
  spanning-tree bpduguard enable
 !
-\end{verbatim}
+\end{cli}
 \end{enumerate}
 
 \subsubsection[Hands-on Lab 15.4: Configuring and Verifying
@@ -3020,15 +3013,15 @@ the Gigabit Ethernet ports between switches S3 and S2.
   Configure the S3 switch with EtherChannel by creating a port channel
   interface.
 
-\begin{verbatim}
+\begin{cli}
 S3#config t
 S3(config)#inter port-channel 1
-\end{verbatim}
+\end{cli}
 \item
   Configure the ports to be in the bundle with the
   \texttt{channel-group} command.
 
-\begin{verbatim}
+\begin{cli}
 S3(config-if)#int range g1/1 - 2
 S3(config-if-range)#channel-group 1 mode ?
   active     Enable LACP unconditionally
@@ -3037,30 +3030,30 @@ S3(config-if-range)#channel-group 1 mode ?
   on         Enable Etherchannel only
   passive    Enable LACP only if a LACP device is detected
 S3(config-if-range)#channel-group 1 mode desirable
-\end{verbatim}
+\end{cli}
 
   I chose the PAgP desirable mode for the S3 switch.
 \item
   Configure the S2 switch with EtherChannel, using the same parameters
   as S3.
 
-\begin{verbatim}
+\begin{cli}
 S2#config t
 S2(config)#interface port-channel 1
 S2(config-if)#int rang g1/1 - 2
 S2(config-if-range)#channel-group 1 mode desirable
 %LINK-5-CHANGED: Interface Port-channel 1, changed state to up
-\end{verbatim}
+\end{cli}
 
-\begin{verbatim}
+\begin{cli}
  %LINEPROTO-5-UPDOWN: Line protocol on Interface Port-channel 1, changed state to up
-\end{verbatim}
+\end{cli}
 
   Pretty simple, really. Just a couple of commands.
 \item
   Verify with the \texttt{show\ etherchannel\ port-channel} command.
 
-\begin{verbatim}
+\begin{cli}
 S3#sh etherchannel port-channel
                 Channel-group listing:
                 ----------------------
@@ -3087,11 +3080,11 @@ Index   Load   Port     EC state        No of bits
   0     00     Gig1/1   Desirable-Sl       0
   0     00     Gig1/2   Desirable-Sl       0
 Time since last port bundled:    00d:00h:01m:30s    Gig1/2
-\end{verbatim}
+\end{cli}
 \item
   Verify with the \texttt{show\ etherchannel\ summary} command.
 
-\begin{verbatim}
+\begin{cli}
 S3#sh etherchannel summary
 Flags:  D - down        P - in port-channel
         I - stand-alone s - suspended
@@ -3110,7 +3103,7 @@ Group  Port-channel  Protocol    Ports
  
 1      Po1(SU)           PAgP   Gig1/1(P) Gig1/2(P)
 S3#
-\end{verbatim}
+\end{cli}
 \end{enumerate}
 
 \section{Review questions}
@@ -3121,7 +3114,7 @@ You can find the answers to these questions in Appendix B, ``Answers to Review Q
 \item
   You receive the following output from a switch:
 
-\begin{verbatim}
+\begin{cli}
 S2#sh spanning-tree
 VLAN0001
   Spanning tree enabled protocol rstp
@@ -3131,13 +3124,12 @@ VLAN0001
              Port        26(GigabitEthernet1/2)
              Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
 [output cut]
-\end{verbatim}
+\end{cli}
 
   Which are true regarding this switch? (Choose two.)
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     The switch is a root bridge.
   \item
     The switch is a non-root bridge.
@@ -3155,8 +3147,7 @@ VLAN0001
   following tertiary switch will take over if both switches fail?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     A switch with priority 4096
   \item
     A switch with priority 8192
@@ -3170,8 +3161,7 @@ VLAN0001
   switch is the root bridge? (Choose two.)
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{show\ spanning-tree}
   \item
     \texttt{show\ root\ all}
@@ -3186,8 +3176,7 @@ VLAN0001
   protocol?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{Switch(config)\#spanning-tree\ mode\ rapid-pvst}
   \item
     \texttt{Switch\#spanning-tree\ mode\ rapid-pvst}
@@ -3201,8 +3190,7 @@ VLAN0001
   loop-free network?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     VTP
   \item
     STP
@@ -3215,8 +3203,7 @@ VLAN0001
   Which statement describes a spanning-tree network that has converged?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     All switch and bridge ports are in the forwarding state.
   \item
     All switch and bridge ports are assigned as either root or
@@ -3231,8 +3218,7 @@ VLAN0001
   Which of the following modes enable LACP EtherChannel? (Choose two.)
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     On
   \item
     Prevent
@@ -3249,8 +3235,7 @@ VLAN0001
   Which of the following are true regarding RSTP? (Choose three.)
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     RSTP speeds the recalculation of the spanning tree when the layer~2
     network topology changes.
   \item
@@ -3271,8 +3256,7 @@ VLAN0001
   What does BPDU Guard perform?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Makes sure the port is receiving BPDUs from the correct upstream
     switch.
   \item
@@ -3289,8 +3273,7 @@ VLAN0001
   How many bits is the \texttt{sys-id-ext} field in a BPDU?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     4
   \item
     8
@@ -3307,8 +3290,7 @@ VLAN0001
   default configuration is already providing?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Set PortFast and BPDU Guard, which provides faster convergence.
   \item
     Configure unequal cost load balancing with RSTP PVST+.
@@ -3322,8 +3304,7 @@ VLAN0001
   likely to be transmitted in a switched LAN?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     During high-traffic periods
   \item
     After broken links are reestablished
@@ -3338,8 +3319,7 @@ VLAN0001
   (Choose three.)
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Virtual MAC address
   \item
     Port speeds
@@ -3354,8 +3334,7 @@ VLAN0001
   Which of the following modes enable PAgP EtherChannel? (Choose two.)
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     On
   \item
     Prevent
@@ -3382,8 +3361,7 @@ VLAN0001
   What is the new cost for SB to make a single path to the root bridge?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     4
   \item
     8
@@ -3397,8 +3375,7 @@ VLAN0001
   port number 1, using LACP? (Choose two.)
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{Switch(config)\#interface\ port-channel\ 1}
   \item
     \texttt{Switch(config)\#channel-group\ 1\ mode\ active}
@@ -3412,8 +3389,7 @@ VLAN0001
   for VLAN 30? (Choose two.)
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{spanning-tree\ vlan\ 30\ priority\ 0}
   \item
     \texttt{spanning-tree\ vlan\ 30\ priority\ 16384}
@@ -3427,8 +3403,7 @@ VLAN0001
   RSTP?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Root bridge placement enables faster convergence as well as optimal
     path determination.
   \item
@@ -3444,8 +3419,7 @@ VLAN0001
   Which are states in 802.1d? (Choose all that apply.)
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Blocking
   \item
     Discarding
@@ -3462,8 +3436,7 @@ VLAN0001
   Which of the following are roles in STP? (Choose all that apply.)
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Blocking
   \item
     Discarding
