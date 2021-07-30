@@ -417,17 +417,10 @@ Most 2960 model switches only support the IEEE 802.1q trunking protocol,
 but the 3560 will support both the ISL and IEEE methods, which you'll
 see later in this chapter.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-%\includegraphics{images/note.png}
-The basic purpose of ISL and 802.1q
-frame-tagging methods is to provide inter-switch VLAN communication.
-Remember that any ISL or 802.1q frame tagging is removed if a frame is
-forwarded out an access link -- tagging is used internally and across
-trunk links only!
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
+\begin{note}
+The basic purpose of ISL and 802.1q frame-tagging methods is to provide inter-switch VLAN communication.
+Remember that any ISL or 802.1q frame tagging is removed if a frame is forwarded out an access link -- tagging is used internally and across trunk links only!
+\end{note}
 
 
 \section{Routing between VLANs}
@@ -605,14 +598,9 @@ default, all ports on the switch are in VLAN 1. To change the VLAN
 associated with a port, you need to go to each interface and
 specifically tell it which VLAN to be a part of.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-%\includegraphics{images/note.png}
-Remember that a created VLAN is unused
-until it is assigned to a switch port or ports and that all ports are
-always assigned in VLAN 1 unless set otherwise.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\begin{note}
+Remember that a created VLAN is unused until it is assigned to a switch port or ports and that all ports are always assigned in VLAN 1 unless set otherwise.
+\end{note}
 
 Once the VLANs are created, verify your configuration with the
 \texttt{show\ vlan} command (\texttt{sh\ vlan} for short):
@@ -898,19 +886,12 @@ DTP frames. You can use this command only when the interface switchport
 mode is access or trunk. You must manually configure the neighboring
 interface as a trunk interface to establish a trunk link.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\begin{note}
+Dynamic Trunking Protocol (DTP) is used for negotiating trunking on a link between two devices as well as negotiating the encapsulation type of either 802.1q or ISL.
+I use the \texttt{nonegotiate} command when I want dedicated trunk ports; no questions asked.
+\end{note}
 
-%\includegraphics{images/note.png}
-Dynamic Trunking Protocol (DTP) is used
-for negotiating trunking on a link between two devices as well as
-negotiating the encapsulation type of either 802.1q or ISL. I use the
-\texttt{nonegotiate} command when I want dedicated trunk ports; no
-questions asked.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-To disable trunking on an interface, use the \texttt{switchport\ mode\ access} command,
-which sets the port back to a dedicated layer~2 access switch port.
+To disable trunking on an interface, use the \texttt{switchport\ mode\ access} command, which sets the port back to a dedicated layer~2 access switch port.
 
 
 
@@ -1162,13 +1143,9 @@ there's no need to specify it. You can't anyway. For a 3560, it's
 basically the same, but because it can run ISL and 802.1q, you have to
 specify the trunking encapsulation protocol you're going to use.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-%\includegraphics{images/note.png}
-Remember that when you create a trunked
-link, all VLANs are allowed to pass data by default.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\begin{note}
+Remember that when you create a trunked link, all VLANs are allowed to pass data by default.
+\end{note}
 
 Let's take a look at
 \protect\hyperlink{c11.xhtmlux5cux23figure11-13}{Figure 11.13} and see
@@ -1178,8 +1155,7 @@ each of them. The router in
 connected to the Fa0/1 switch port, and VLAN 4 is configured on port
 F0/6.
 
-When looking at this diagram, keep in mind that these three factors are
-what Cisco expects you to know:
+When looking at this diagram, keep in mind that these three factors are what Cisco expects you to know:
 
 \begin{enumerate}
 \tightlist

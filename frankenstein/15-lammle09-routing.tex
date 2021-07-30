@@ -296,7 +296,7 @@ Interface: 172.16.10.2 --- 0x3
    No routing protocols are needed in this network since all networks (all two of them) are directly connected.
 
 \begin{cli}
-Lab_A>sh ip route
+Lab_A>show ip route
 C       172.16.10.0 is directly connected,    Ethernet0
 L       172.16.10.1/32 is directly connected, Ethernet0
 C       172.16.20.0 is directly connected,    Ethernet1
@@ -378,8 +378,7 @@ Internet  172.16.10.2  12     0030.9492.a4ac  ARPA   Ethernet0
   following in the header:
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     The destination and source hardware addresses
   \item
     The Ether-Type field with 0x0800 (IP) in it
@@ -779,7 +778,6 @@ The LANs all use a /24 mask, but the WANs are using a /30.
 Corp
 
 \begin{enumerate}
-\tightlist
 \item
   Serial 0/0: 172.16.10.1/30
 \item
@@ -791,7 +789,6 @@ Corp
 SF
 
 \begin{enumerate}
-\tightlist
 \item
   S0/0/0: 172.16.10.2/30
 \item
@@ -801,7 +798,6 @@ SF
 LA
 
 \begin{enumerate}
-\tightlist
 \item
   S0/0/0: 172.16.10.6/30
 \item
@@ -840,16 +836,16 @@ Router#config t
 Router(config)#hostname Corp
 Corp(config)#enable secret GlobalNet
 Corp(config)#no ip domain-lookup
-Corp(config)#int f0/0
-Corp(config-if)#desc Connection to LAN BackBone
+Corp(config)#interface f0/0
+Corp(config-if)#description Connection to LAN BackBone
 Corp(config-if)#ip address 10.10.10.1 255.255.255.0
 Corp(config-if)#no shutdown
-Corp(config-if)#int s0/0
-Corp(config-if)#desc WAN connection to SF
+Corp(config-if)#interface s0/0
+Corp(config-if)#description WAN connection to SF
 Corp(config-if)#ip address 172.16.10.1 255.255.255.252
 Corp(config-if)#no shutdown
-Corp(config-if)#int s0/1
-Corp(config-if)#desc WAN connection to LA
+Corp(config-if)#interface s0/1
+Corp(config-if)#description WAN connection to LA
 Corp(config-if)#ip address 172.16.10.5 255.255.255.252
 Corp(config-if)#no shutdown
 Corp(config-if)#line con 0
@@ -976,13 +972,13 @@ Router#config t
 Router(config)#hostname SF
 SF(config)#enable secret GlobalNet
 SF(config)#no ip domain-lookup
-SF(config)#int s0/0/0
-SF(config-if)#desc WAN Connection to Corp
+SF(config)#interface s0/0/0
+SF(config-if)#description WAN Connection to Corp
 SF(config-if)#ip address 172.16.10.2 255.255.255.252
 SF(config-if)#no shutdown
 SF(config-if)#clock rate 1000000
-SF(config-if)#int f0/0
-SF(config-if)#desc SF LAN
+SF(config-if)#interface f0/0
+SF(config-if)#description SF LAN
 SF(config-if)#ip address 192.168.10.1 255.255.255.0
 SF(config-if)#no shutdown
 SF(config-if)#line con 0
@@ -1026,12 +1022,12 @@ interface Serial0/0/0
  ip address 172.16.10.2 255.255.255.252
  clock rate 1000000
 !
-SF#show ip int brief
-Interface             IP-Address      OK? Method Status                Protocol
-FastEthernet0/0       192.168.10.1    YES manual up                    up
-FastEthernet0/1       unassigned      YES unset  administratively down down
-Serial0/0/0           172.16.10.2     YES manual up                    up
-Serial0/0/1           unassigned      YES unset  administratively down down
+SF#show ip interface brief
+Interface        IP-Address    OK? Method Status                Protocol
+FastEthernet0/0  192.168.10.1  YES manual up                    up
+FastEthernet0/1  unassigned    YES unset  administratively down down
+Serial0/0/0      172.16.10.2   YES manual up                    up
+Serial0/0/1      unassigned    YES unset  administratively down down
 SF#
 \end{cli}
 
@@ -1071,7 +1067,7 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/3/4 ms
 Now let's head back to the Corp router and check out the routing table:
 
 \begin{cli}
-Corp>sh ip route
+Corp>show ip route
      172.16.0.0/30 is subnetted, 1 subnets
 C       172.16.10.0 is directly connected, Serial0/0
 L       172.16.10.1/32 is directly connected, Serial0/0
@@ -1095,7 +1091,7 @@ Interface Serial0/0/0
 Hardware is GT96K
 DCE V.35, clock rate 1000000
 
-Corp>sh controllers s0/0
+Corp>show controllers s0/0
 Interface Serial0/0
 Hardware is PowerQUICC MPC860
 DTE V.35 TX and RX clocks detected.
@@ -1128,12 +1124,12 @@ configuration:
 Router(config)#hostname LA
 LA(config)#enable secret GlobalNet
 LA(config)#no ip domain-lookup
-LA(config)#int s0/0/1
+LA(config)#interface s0/0/1
 LA(config-if)#ip address 172.16.10.6 255.255.255.252
 LA(config-if)#no shutdown
 LA(config-if)#clock rate 1000000
 LA(config-if)#description WAN To Corporate
-LA(config-if)#int f0/0
+LA(config-if)#interface f0/0
 LA(config-if)#ip address 192.168.20.1 255.255.255.0
 LA(config-if)#no shutdown
 LA(config-if)#description LA LAN
@@ -1176,7 +1172,7 @@ want to do one more thing on the SF and LA routers -- since this is a
 very small network, let's build a DHCP server on the Corp router for
 each LAN.
 
-\paragraph{Configuring DHCP on Our Corp Router}
+\subsubsection{Configuring DHCP on Our Corp Router}
 
 While it's true that I could approach this task by going to each remote
 router and creating a pool, why bother with all that when I can easily
@@ -1230,11 +1226,11 @@ Here's how we'd go about doing that:
 
 \begin{cli}
 LA#config t
-LA(config)#int f0/0
+LA(config)#interface f0/0
 LA(config-if)#ip helper-address 172.16.10.5
 
 SF#config t
-SF(config)#int f0/0
+SF(config)#interface f0/0
 SF(config-if)#ip helper-address 172.16.10.1
 \end{cli}
 
@@ -1243,17 +1239,13 @@ some type of routing configured and working. So let's get to that next!
 
 
 
-\section{Configuring IP Routing in Our Network}
+\section{Configuring IP routing in our network}
 
 So is our network really good to go? After all, I've configured it with
 IP addressing, administrative functions, and even clocking that will
 automatically occur with the ISR routers. But how will our routers send
-packets to remote networks when they get their destination
-\protect\hypertarget{c09.xhtmlux5cux23Page_382}{}{}information by
-looking into their tables that only include directions about directly
-connected networks? And you know routers promptly discard packets they
-receive with addresses for networks that aren't listed in their routing
-table!
+packets to remote networks when they get their destination information by looking into their tables that only include directions about directly
+connected networks? And you know routers promptly discard packets they receive with addresses for networks that aren't listed in their routing table!
 
 So we're not exactly ready to rock after all. But we will be soon
 because there are several ways to configure the routing tables to
@@ -1267,7 +1259,6 @@ environment and business requirements.
 These are the three routing methods I'm going to cover with you:
 
 \begin{enumerate}
-\tightlist
 \item
   Static routing
 \item
@@ -1281,9 +1272,7 @@ our network, because if you can implement static routing \emph{and} make
 it work, you've demonstrated that you definitely have a solid
 understanding of the internetwork. So let's get started.
 
-\subsection[Static
-Routing]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-10}{}{}Static
-Routing}{Static Routing}}
+\subsection{Static routing}
 
 Static routing is the process that ensues when you manually add routes
 in each router's routing table. Predictably, there are pros and cons to
@@ -1292,7 +1281,6 @@ static routing, but that's true for all routing approaches.
 Here are the pros:
 
 \begin{enumerate}
-\tightlist
 \item
   There is no overhead on the router CPU, which means you could probably
   make do with a cheaper router than you would need for dynamic routing.
@@ -1308,7 +1296,6 @@ Here are the pros:
 And here are the cons:
 
 \begin{enumerate}
-\tightlist
 \item
   Whoever the administrator is must have a vault-tight knowledge of the
   internetwork and how each router is connected in order to configure
@@ -1333,20 +1320,20 @@ beginning, here's the command syntax you use to add a static route to a
 routing table from global config:
 
 \begin{cli}
-ip route [destination_network] [mask] [next-hop_address or
-  exitinterface] [administrative_distance] [permanent]
+ip route [<destination network>] [<mask>] [<next-hop address or
+  exit interface>] [<administrative distance>] [permanent]
 \end{cli}
 
 This list describes each command in the string:
-
-\texttt{ip\ route} The command used to create the static route.
-
-\texttt{destination\_network} The network you're placing in the routing
-table.
-
-\texttt{mask} The subnet mask being used on the network.
-
-\texttt{next-hop~address} This is the IP address of the next-hop router
+\begin{description}
+\item[ip route]
+   The command used to create the static route.
+\item[\textlangle{}destination network\textrangle]
+   The network you're placing in the routing table.
+\item[\textlangle{}mask\textrangle]
+   The subnet mask being used on the network.
+\item[\textlangle{}next-hop~address\textrangle]
+This is the IP address of the next-hop router
 that will receive packets and forward them to the remote network, which
 must signify a router interface that's on a directly connected network.
 You must be able to successfully ping the router interface before you
@@ -1355,22 +1342,22 @@ wrong next-hop address or the interface to the correct router is down,
 the static route will show up in the router's configuration but not in
 the routing table.
 
-\texttt{exitinterface} Used in place of the next-hop address if you
+\item[\textlangle{}exit interface\textrangle]
+Used in place of the next-hop address if you
 want, and shows up as a directly connected route.
 
-\texttt{administrative\_distance} By default, static routes have an
+\item[\textlangle{}administrative distance\textrangle]
+By default, static routes have an
 administrative distance of 1 or 0 if you use an exit interface instead
 of a next-hop address. You can change the default value by adding an
 administrative weight at the end of the command. I'll talk a lot more
 about this later in the chapter when we get to the section on dynamic
 routing.
 
-\texttt{permanent} If the interface is shut down or the router can't
-communicate to the next-hop router, the route will automatically be
-discarded from the routing table by default. Choosing the
-\texttt{permanent} option keeps the entry in the routing table no matter
-what happens.
-
+\item[permanent]
+   If the interface is shut down or the router can't communicate to the next-hop router, the route will automatically be discarded from the routing table by default.
+   Choosing the \texttt{permanent} option keeps the entry in the routing table no matter what happens.
+\end{description}
 Before I guide you through configuring static routes, let's take a look
 at a sample static route to see what we can find out about it:
 
@@ -1379,7 +1366,6 @@ Router(config)#ip route 172.16.3.0 255.255.255.0 192.168.2.4
 \end{cli}
 
 \begin{enumerate}
-\tightlist
 \item
   The \texttt{ip\ route} command tells us simply that it's a static
   route.
@@ -1402,8 +1388,7 @@ That 150 at the end changes the default administrative distance (AD) of
 dynamic routing, but for now, just remember that the AD is the
 trustworthiness of a route, where 0 is best and 255 is worst.
 
-\protect\hypertarget{c09.xhtmlux5cux23Page_384}{}{}One more example,
-then we'll start configuring:
+One more example, then we'll start configuring:
 
 \begin{cli}
 Router(config)#ip route 172.16.3.0 255.255.255.0 s0/0/0
@@ -1414,20 +1399,18 @@ will make the route show up as a directly connected network.
 Functionally, the next hop and exit interface work exactly the same.
 
 To help you understand how static routes work, I'll demonstrate the
-configuration on the internetwork shown previously in
-\protect\hyperlink{c09.xhtmlux5cux23figure9-8}{Figure 9.8}. Here it is
-again in \protect\hyperlink{c09.xhtmlux5cux23figure9-9}{Figure 9.9} to
-save you the trouble of having to go back and forth to view the same
-figure.
+configuration on the internetwork shown previously in \vref{fig:config-ip-routing}.
+Here it is again in \cref{fig:out-internetwork} to save you the trouble of having to go back and forth to view the same figure.
 
 \begin{figure}
-\centering
-%\includegraphics{images/c09f009.jpg}
-\caption{{\protect\hyperlink{c09.xhtmlux5cux23figureanchor9-9}{\textbf{FIGURE
-9.9}} Our internetwork}}
+   \centering
+   \includegraphics{images/c09f008.jpg}
+   \caption{Our internetwork}
+   \label{fig:out-internetwork}
 \end{figure}
 
-\paragraph{Corp}
+
+\subsubsection{Corp}
 
 Each routing table automatically includes directly connected networks.
 To be able to route to all indirectly connected networks within the
@@ -1439,7 +1422,6 @@ be able to route to all networks, the following networks have to be
 configured into its routing table:
 
 \begin{enumerate}
-\tightlist
 \item
   192.168.10.0
 \item
@@ -1462,7 +1444,7 @@ found with the routing protocols go down. Here's the output:
 Corp#config t
 Corp(config)#ip route 192.168.10.0 255.255.255.0 172.16.10.2 150
 Corp(config)#ip route 192.168.20.0 255.255.255.0 s0/1 150
-Corp(config)#do show run | begin ip route
+Corp(config)#do show running-config | section ip route
 ip route 192.168.10.0 255.255.255.0 172.16.10.2 150
 ip route 192.168.20.0 255.255.255.0 Serial0/1 150
 \end{cli}
@@ -1510,24 +1492,16 @@ if the SF and LA routers aren't configured with all the same
 information, the packets will be discarded. We can fix this by
 configuring static routes.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\begin{note}
+Don't stress about the 150 at the end of the static route configuration at all, because I promise to get to it really soon in \emph{this} chapter, not a later one!
+You really don't need to worry about it at this point.
+\end{note}
 
-%\includegraphics{images/note.png}
-Don't stress about the 150 at the end
-of the static route configuration at all, because I promise to get to it
-really soon in \emph{this} chapter, not a later one! You really don't
-need to worry about it at this point.
+\subsubsection{SF}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\paragraph[SF]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23Page_386}{}{}SF}{SF}}
-
-The SF router is directly connected to networks 172.16.10.0/30 and
-192.168.10.0/24, which means I've got to configure the following static
-routes on the SF router:
+The SF router is directly connected to networks 172.16.10.0/30 and 192.168.10.0/24, which means I've got to configure the following static routes on the SF router:
 
 \begin{enumerate}
-\tightlist
 \item
   10.10.10.0/24
 \item
@@ -1572,13 +1546,12 @@ And we now can rest assured that the SF router has a complete routing
 table as well. As soon as the LA router has all the networks in its
 routing table, SF will be able to communicate with all remote networks!
 
-\paragraph{LA}
+\subsubsection{LA}
 
 The LA router is directly connected to 192.168.20.0/24 and
 172.16.10.4/30, so these are the routes that must be added:
 
 \begin{enumerate}
-\tightlist
 \item
   10.10.10.0/24
 \item
@@ -1620,9 +1593,7 @@ LA now shows all five networks in the internetwork, so it too can now
 communicate with all routers and networks. But before we test our little
 network, as well as our DHCP server, let's cover one more topic.
 
-\subsection[Default
-Routing]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-11}{}{}Default
-Routing}{Default Routing}}
+\subsection{Default routing}
 
 The SF and LA routers that I've connected to the Corp router are
 considered stub routers. A \emph{stub} indicates that the networks in
@@ -1669,7 +1640,7 @@ update each and every router's routing tables by hand -- ugh! Not really
 a problem at all if you've got a small network like we do, but it would
 be a time-consuming monster if you're dealing with a large internetwork!
 
-\paragraph{Verifying Your Configuration}
+\subsubsection{Verifying your configuration}
 
 But we're not done yet -- once all the routers' routing tables are
 configured, they must be verified. The best way to do this, besides
@@ -1701,12 +1672,10 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/2/4 ms
 Corp#
 \end{cli}
 
-\protect\hypertarget{c09.xhtmlux5cux23Page_389}{}{}And why not test my
-configuration of the DHCP server on the Corp router while we're at it?
-I'm going to go to each host on the SF and LA routers and make them DHCP
-clients. By the way, I'm using an old router to represent ``hosts,''
-which just happens to work great for studying purposes. Here's how I did
-that:
+And why not test my configuration of the DHCP server on the Corp router while we're at it?
+I'm going to go to each host on the SF and LA routers and make them DHCP clients.
+By the way, I'm using an old router to represent ``hosts,'' which just happens to work great for studying purposes.
+Here's how I did that:
 
 \begin{cli}
 SF_PC(config)#interface e0
@@ -1741,8 +1710,8 @@ IP address          Client-ID/              Lease expiration        Type
                     30
 \end{cli}
 
-We can see from earlier that our little DHCP server is working! Let's
-try another couple of commands:
+We can see from earlier that our little DHCP server is working!
+Let's try another couple of commands:
 
 \begin{cli}
 Corp#show ip dhcp pool SF_LAN
@@ -1765,7 +1734,6 @@ address, so it's good news because there are no conflicts reported! Two
 detection methods are used to confirm this:
 
 \begin{enumerate}
-\tightlist
 \item
   A ping from the DHCP server to make sure no other host responds before
   handing out an address
@@ -1923,7 +1891,7 @@ Well, dynamic routing is carried out the complete opposite way.
 You would never type a \emph{remote} network under your routing protocol -- only enter your directly connected networks!
 Let's configure our three-router internetwork, revisited in \protect\hyperlink{c09.xhtmlux5cux23figure9-9}{Figure 9.9}, with RIP.
 
-\paragraph{Corp}
+\subsubsection{Corp}
 
 RIP has an administrative distance of 120. Static routes have an
 administrative distance of 1 by default, and since we currently have
@@ -1943,7 +1911,7 @@ wait -- first, I want to verify my directly connected networks so I know
 what to configure RIP with:
 
 \begin{cli}
-Corp#show ip int brief
+Corp#show ip interface brief
 Interface        IP-Address      OK? Method Status                Protocol
 FastEthernet0/0  10.10.10.1      YES manual up                    up
 Serial0/0        172.16.10.1     YES manual up                    up
@@ -1975,28 +1943,24 @@ the routing protocol to find the subnets and populate the routing
 tables. And since we have no router buddies running RIP, we won't see
 any RIP routes in the routing table yet.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-%\includegraphics{images/note.png}
-Remember that RIP uses the classful
-address when configuring the network address. To clarify this, refer to
+\begin{note}
+Remember that RIP uses the classful address when configuring the network address. To clarify this, refer to
 the example in our network with an address of 172.16.0.0/24 using
 subnets 172.16.10.0 and 172.16.20.0. You would only type in the classful
 network address of 172.16.0.0 and let RIP find the subnets and place
 them in the routing table. This doesn't mean you are running a classful
 routing protocol; this is just the way that both RIP and EIGRP are
 configured.
+\end{note}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\paragraph{SF}
+\subsubsection{SF}
 
 Let's configure our SF router now, which is connected to two networks.
 We need to configure both directly connected classful networks, not
 subnets:
 
 \begin{cli}
-SF#show ip int brief
+SF#show ip interface brief
 Interface         IP-Address      OK? Method Status             Protocol
 FastEthernet0/0   192.168.10.1    YES manual up                    up
 FastEthernet0/1   unassigned      YES unset  administratively down down
@@ -2027,7 +1991,7 @@ All the other routes still show up as static and local. RIP also found
 both connections through the Corp router to networks 10.10.10.0 and
 172.16.10.4. But we're not done yet!
 
-\paragraph{LA}
+\subsubsection{LA}
 
 Let's configure our LA router with RIP, only I'm going to remove the
 default route first, even though I don't have to. You'll see why soon:
@@ -2105,14 +2069,9 @@ because the next router that receives the table from this router will
 just discard the route to network 10.1.3.0 since the hop count would
 rise to 16, which is invalid!
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-%\includegraphics{images/note.png}
-If a router receives a routing update
-that contains a higher-cost path to a network that's already in its
-routing table, the update will be ignored.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\begin{note}
+If a router receives a routing update that contains a higher-cost path to a network that's already in its routing table, the update will be ignored.
+\end{note}
 
 \subsection[Holding Down RIP
 Propagations]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-16}{}{}Holding
@@ -2169,7 +2128,7 @@ gobbling up all that precious bandwidth!
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\paragraph{Advertising a Default Route Using RIP}
+\subsubsection{Advertising a Default Route Using RIP}
 
 Now I'm going to guide you through how to advertise a way out of your
 autonomous system to other routers, and you'll see this is completed the
@@ -2352,7 +2311,6 @@ Labs.''
 Write the answers to the following questions:
 
 \begin{enumerate}
-\tightlist
 \item
   At the appropriate command prompt, create a static route to network
   172.16.10.0/24 with a next-hop gateway of 172.16.20.1 and an
@@ -2399,7 +2357,6 @@ Tracer program to run these labs.
 This chapter includes the following labs:
 
 \begin{enumerate}
-\tightlist
 \item
   Lab 9.1: Creating Static Routes
 \item
@@ -2601,18 +2558,7 @@ show running-config or show run
 
 \section{Review questions}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-%\includegraphics{images/note.png}
-The following questions are designed
-to test your understanding of this chapter's material. For more
-information on how to get additional questions, please see
-\texttt{www.lammle.com/ccna}.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-You can find the answers to these questions in Appendix B, ``Answers to
-Review Questions.''
+You can find the answers to these questions in Appendix B, ``Answers to Review Questions.''
 
 \begin{enumerate}
 \item
@@ -2635,7 +2581,6 @@ S*      0.0.0.0/0 is directly connected, FastEthernet0/0
   What legend code would you expect to see next to this route?
 
   \begin{enumerate}
-  \tightlist
   \item
     C
   \item
@@ -2651,7 +2596,6 @@ S*      0.0.0.0/0 is directly connected, FastEthernet0/0
   two.)
 
   \begin{enumerate}
-  \tightlist
   \item
     The command is used to establish a static route.
   \item
@@ -2699,7 +2643,6 @@ Interface: 172.16.10.2 --- 0x3
 \end{cli}
 
   \begin{enumerate}
-  \tightlist
   \item
     ICMP
   \item
@@ -2714,7 +2657,6 @@ Interface: 172.16.10.2 --- 0x3
   protocol?
 
   \begin{enumerate}
-  \tightlist
   \item
     OSPF
   \item
@@ -2730,7 +2672,6 @@ Interface: 172.16.10.2 --- 0x3
   hop while the\_\_\_\_\_\_\_\_\_\_ does not.
 
   \begin{enumerate}
-  \tightlist
   \item
     MAC address, IP address
   \item
@@ -2745,7 +2686,6 @@ Interface: 172.16.10.2 --- 0x3
   are true regarding classless routing protocols? (Choose two.)
 
   \begin{enumerate}
-  \tightlist
   \item
     The use of discontiguous networks is not allowed.
   \item
@@ -2762,8 +2702,7 @@ Interface: 172.16.10.2 --- 0x3
   link-state routing protocols? (Choose two.)
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Link state sends its complete routing table out of all active
     interfaces at periodic time intervals.
   \item
@@ -2781,8 +2720,7 @@ Interface: 172.16.10.2 --- 0x3
   single packet, it is called\_\_\_\_\_\_\_\_\_\_\_\_\_.
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     dynamic switching
   \item
     fast switching
@@ -2799,8 +2737,7 @@ S*   0.0.0.0/0 [1/0] via 172.16.10.5
 \end{cli}
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Default
   \item
     Subnetted
@@ -2816,8 +2753,7 @@ S*   0.0.0.0/0 [1/0] via 172.16.10.5
   Why is the RIP route to this network not used in the routing table?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     EIGRP has a faster update timer.
   \item
     EIGRP has a lower administrative distance.
@@ -2829,12 +2765,10 @@ S*   0.0.0.0/0 [1/0] via 172.16.10.5
     The RIP path has a routing loop.
   \end{enumerate}
 \item
-  \protect\hypertarget{c09.xhtmlux5cux23Page_408}{}{}Which of the
-  following is \emph{not} an advantage of static routing?
+  Which of the following is \emph{not} an advantage of static routing?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Less overhead on the router CPU
   \item
     No bandwidth usage between routers
@@ -2847,8 +2781,7 @@ S*   0.0.0.0/0 [1/0] via 172.16.10.5
   What metric does RIPv2 use to find the best path to a remote network?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Hop count
   \item
     MTU
@@ -2876,8 +2809,7 @@ C    192.168.214.0 is directly connected, FastEthernet0/0
 \end{cli}
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     The packet will be discarded.
   \item
     The packet will be routed out of the S0/0 interface.
@@ -2891,8 +2823,7 @@ C    192.168.214.0 is directly connected, FastEthernet0/0
   same network, which route will be used to route packets by default?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Any available route
   \item
     RIP route
@@ -2907,8 +2838,7 @@ C    192.168.214.0 is directly connected, FastEthernet0/0
   Which of the following is an EGP?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     RIPv2
   \item
     EIGRP
@@ -2922,8 +2852,7 @@ C    192.168.214.0 is directly connected, FastEthernet0/0
   following is an advantage of static routing?
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Less overhead on the router CPU
   \item
     No bandwidth usage between routers
@@ -2944,8 +2873,7 @@ Serial0/0/1       unassigned      YES unset  administratively down down
 \end{cli}
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     \texttt{show\ ip\ route}
   \item
     \texttt{show\ interfaces}
@@ -2962,8 +2890,7 @@ Router(config)#ip route 172.16.3.0 255.255.255.0 192.168.2.4 150
 \end{cli}
 
   \begin{enumerate}
-  \tightlist
-  \item
+    \item
     Metric
   \item
     Administrative distance

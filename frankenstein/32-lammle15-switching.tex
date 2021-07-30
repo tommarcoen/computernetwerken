@@ -77,17 +77,11 @@ After you create the VLANs that you want, you can use the
 But notice that, by default, all ports on the switch are in VLAN 1.
 To change the VLAN associated with a port, you need to go to each interface and specifically tell it which VLAN to be a part of.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\begin{note}
+Remember that a created VLAN is unused until it is assigned to a switch port or ports and that all ports are always assigned in VLAN 1 unless set otherwise.
+\end{note}
 
-%\includegraphics{images/note.png}
-Remember that a created VLAN is unused
-until it is assigned to a switch port or ports and that all ports are
-always assigned in VLAN 1 unless set otherwise.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-Once the VLANs are created, verify your configuration with the
-\texttt{show\ vlan} command (\texttt{sh\ vlan} for short):
+Once the VLANs are created, verify your configuration with the \texttt{show\ vlan} command (\texttt{sh\ vlan} for short):
 
 \begin{cli}
 S1#sh vlan
@@ -388,22 +382,16 @@ DTP frames. You can use this command only when the interface switchport
 mode is access or trunk. You must manually configure the neighboring
 interface as a trunk interface to establish a trunk link.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-%\includegraphics{images/note.png}
-Dynamic Trunking Protocol (DTP) is used
-for negotiating trunking on a link between two devices as well as
-negotiating the encapsulation type of either 802.1q or ISL. I use the
-\texttt{nonegotiate} command when I want dedicated trunk ports; no
-questions asked.
+\begin{note}
+Dynamic Trunking Protocol (DTP) is used for negotiating trunking on a link between two devices as well as negotiating the encapsulation type of either 802.1q or ISL.
+I use the \texttt{nonegotiate} command when I want dedicated trunk ports; no questions asked.
+\end{note}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-To disable trunking on an interface, use the
-\texttt{switchport\ mode\ access} command, which sets the port back to a
-dedicated layer~2 access switch port.
+To disable trunking on an interface, use the \texttt{switchport\ mode\ access} command, which sets the port back to a dedicated layer~2 access switch port.
 
-\paragraph{Defining the Allowed VLANs on a Trunk}
+\paragraph{Defining the allowed VLANs on a trunk}
 
 As I've mentioned, trunk ports send and receive information from all
 VLANs by default, and if a frame is untagged, it's sent to the
@@ -1203,13 +1191,9 @@ This port sends and receives all data frames on the bridged port. If the
 port is still a designated or root port at the end of the learning
 state, it will enter the forwarding state.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-%\includegraphics{images/note.png}
-Switches populate the MAC address table
-in learning and forwarding modes only.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\begin{note}
+Switches populate the MAC address tabl in learning and forwarding modes only.
+\end{note}
 
 Switch ports are most often in either the blocking or forwarding state.
 A forwarding port is typically the one that's been determined to have
@@ -1552,13 +1536,11 @@ issues, it also demands the most CPU and memory of all solutions. And
 it's also good news that Cisco's newest switches don't have a problem
 with this protocol running on them.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-%\includegraphics{images/note.png}Keep in mind that Cisco documentation
-may say STP 802.1d and RSTP 802.1w, but it is referring to the PVST+
-enhancement of each version.
+\begin{note}
+Keep in mind that Cisco documentation may say STP 802.1d and RSTP 802.1w, but it is referring to the PVST+ enhancement of each version.
+\end{note}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 Understand that RSTP wasn't meant to be something completely new and
 different. The protocol is more of an evolution than an innovation of
@@ -3133,18 +3115,7 @@ S3#
 
 \section{Review questions}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-%\includegraphics{images/note.png}
-The following questions are designed to
-test your understanding of this chapter's material. For more information
-on how to get additional questions, please see
-\texttt{www.lammle.com/ccna}.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-You can find the answers to these questions in Appendix B, ``Answers to
-Review Questions.''
+You can find the answers to these questions in Appendix B, ``Answers to Review Questions.''
 
 \begin{enumerate}
 \item

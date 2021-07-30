@@ -238,13 +238,9 @@ been received for an area. The router uses the information from the
 topology database as input into the Dijkstra algorithm that computes the
 shortest path to every network.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-%\includegraphics{images/note.png}
-LSA packets are used to update and
-maintain the topological database.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\begin{note}
+LSA packets are used to update and maintain the topological database.
+\end{note}
 
 \textbf{Link State Advertisement} A \emph{Link State Advertisement
 (LSA)} is an OSPF data packet containing link-state and routing
@@ -424,17 +420,12 @@ value to a number within the range of 1 to 65,535. Because the cost is
 assigned to each link, the value must be changed on the specific
 interface you want to change the cost on.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-%\includegraphics{images/note.png}
+\begin{note}
 Cisco bases link cost on bandwidth.
 Other vendors may use other metrics to calculate a given link's cost.
-When connecting links between routers from different vendors, you'll
-probably have to adjust the cost to match another vendor's router
-because both routers must assign the same cost to the link for OSPF to
-work properly.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+When connecting links between routers from different vendors, you'll probably have to adjust the cost to match another vendor's router
+because both routers must assign the same cost to the link for OSPF to work properly.
+\end{note}
 
 
 
@@ -449,9 +440,7 @@ I'll show you how to configure single-area OSPF.
 The two factors that are foundational to OSPF configuration are enabling
 OSPF and configuring OSPF areas.
 
-\subsubsection[Enabling
-OSPF]{\texorpdfstring{\protect\hypertarget{c18.xhtmlux5cux23c18-sec-6}{}{}Enabling
-OSPF}{Enabling OSPF}}
+\subsubsection{Enabling OSPF}
 
 The easiest and also least scalable way to configure OSPF is to just use
 a single area. Doing this requires a minimum of two commands.
@@ -480,18 +469,13 @@ it when you want OSPF to connect multiple ASs together. Also, because
 the Cisco exam objectives only cover single-area OSPF with each router
 running a single OSPF process, that's what we'll focus on in this book.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-%\includegraphics{images/note.png}
-The OSPF process ID is needed to
-identify a unique instance of an OSPF database and is locally
-significant.
+\begin{note}
+The OSPF process ID is needed to identify a unique instance of an OSPF database and is locally significant.
+\end{note}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\subsubsection[Configuring OSPF
-Areas]{\texorpdfstring{\protect\hypertarget{c18.xhtmlux5cux23c18-sec-7}{}{}Configuring
-OSPF Areas}{Configuring OSPF Areas}}
+\subsubsection{Configuring OSPF areas}
 
 After identifying the OSPF process, you need to identify the interfaces
 that you want to activate OSPF communications on as well as the area in
@@ -510,14 +494,10 @@ Router(config-router)#network 10.0.0.0 0.255.255.255 area ?
 Router(config-router)#network 10.0.0.0 0.255.255.255 area 0
 \end{verbatim}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-%\includegraphics{images/note.png}
-The areas can be any number from 0 to
-4.2 billion. Don't get these numbers confused with the process ID, which
-ranges from 1 to 65,535.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\begin{note}
+The areas can be any number from 0 to 4.2 billion.
+Don't get these numbers confused with the process ID, which ranges from 1 to 65,535.
+\end{note}
 
 Remember, the OSPF process ID number is irrelevant. It can be the same
 on every router on the network, or it can be different---doesn't matter.
@@ -932,24 +912,17 @@ the designated router (DR) and the backup designated router (BDR). These
 designated routers create adjacencies when a new router comes up and
 exchanges LSAs to build topological databases.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\begin{note}
+By default, OSPF uses the highest IP address on any active interface at the moment OSPF starts up to determine the RID of the router.
+But this behavior can be overridden via a logical interface.
+Remember -- the highest IP address of any logical interface will always become a router's RID!
+\end{note}
 
-%\includegraphics{images/note.png}
-By default, OSPF uses the highest IP
-address on any active interface at the moment OSPF starts up to
-determine the RID of the router. But this behavior can be overridden via
-a logical interface. Remember---the highest IP address of any logical
-interface will always become a router's RID!
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+Now it's time to show you how to configure these logical loopback interfaces and how to verify them, as well as verify RIDs.
 
-\protect\hypertarget{c18.xhtmlux5cux23Page_763}{}{}Now it's time to show
-you how to configure these logical loopback interfaces and how to verify
-them, as well as verify RIDs.
 
-\subsubsection[Configuring Loopback
-Interfaces]{\texorpdfstring{\protect\hypertarget{c18.xhtmlux5cux23c18-sec-10}{}{}Configuring
-Loopback Interfaces}{Configuring Loopback Interfaces}}
+\subsubsection{Configuring loopback interfaces}
 
 Configuring loopback interfaces rocks mostly because it's the easiest
 part of OSPF configuration, and we all need a break about now---right?
@@ -1706,16 +1679,6 @@ Lab_A#sho ip ospf int f0/0
 
 
 \section{Review questions}
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-%\includegraphics{images/note.png}
-The following questions are designed to
-test your understanding of this chapter's material. For more information
-on how to get additional questions, please see
-\href{http://www.lammle.com/ccna}{www.lammle.com/ccna}.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 You can find the answers to these questions in Appendix B, ``Answers to
 Review Questions.''
