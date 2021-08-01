@@ -55,19 +55,20 @@ at several layers to answer a particular query (see this page).
 Servers that don't know the answer to a query return resource records that help the client locate a server that does.
 
 The most common query is for an A record, which returns the IP address associated with a name.
-Exhibit A illustrates a typical scenario.
+\Cref{fig:simple-name-lookup} illustrates a typical scenario.
 
-\paragraph[{Exhibit A: }A simple name lookup]{\texorpdfstring{{Exhibit
-A:
-}\protect\hypertarget{part0024_split_002.htmlux5cux23_idTextAnchor843}{}{}A
-simple name lookup}{Exhibit A: A simple name lookup}}
 
-%\includegraphics{images/00621.gif}
+\begin{figure}
+   \centering
+   \includegraphics[width=.7\textwidth]{images/00621.png}
+   \caption{A simple name lookup}
+   \label{fig:simple-name-lookup}
+\end{figure}
 
-First, a human types the name of a desired site into a web browser. The
-browser then calls the DNS ``resolver'' library to look up the
-corresponding address. The resolver library constructs a query for an A
-record and sends it to a name server, which returns the A record in its
+
+First, a human types the name of a desired site into a web browser.
+The browser then calls the DNS ``resolver'' library to look up the corresponding address.
+The resolver library constructs a query for an A record and sends it to a name server, which returns the A record in its
 response. Finally, the browser opens a TCP connection to the target host
 through the IP address returned by the name server.
 
@@ -103,37 +104,40 @@ to configure all of your systems to look up names in DNS.
 
 Two steps are needed to make this happen. First, you configure your
 systems as DNS clients. Second, you tell the systems when to use DNS as
-opposed to other name lookup methods such as a static {/etc/hosts} file.
+opposed to other name lookup methods such as a static \filename{/etc/hosts} file.
 
 
+%\subsection{\filename{resolv.conf}: client resolver configuration}
 \subsection{resolv.conf: client resolver configuration}
 
 Each host on the network should be a DNS client.
-You configure the client-side resolver in the file /etc/resolv.conf.
+You configure the client-side resolver in the file \filename{/etc/resolv.conf}.
 This file lists the name servers to which the host can send queries.
 
-See \cref{chap:dhcp} for more information about DHCP.
+If your host gets its IP address and network parameters from a DHCP server, the {/etc/resolv.conf} file is normally set up for you automatically.%
+   \footnote{See \cref{chap:dhcp} for more information about DHCP.}
+Otherwise, you must edit the file by hand.
+The format is
+\begin{config}
+search <domain name> ...
+nameserver <ip address>
+\end{config}
+Up to three name servers can be listed. Here's a complete example:
+\begin{config}
+search atrust.com booklab.atrust.com
+nameserver 63.173.189.1      ; ns1
+nameserver 174.129.219.225   ; ns2
+\end{config}
 
-If your host gets its IP address and network parameters from a DHCP
-server, the {/etc/resolv.conf} file is normally set up for you
-automatically. Otherwise, you must edit the file by hand. The format is
-
-%\includegraphics{images/00622.gif}
-
-Up to three name servers can be listed. Here's a complete
-example:\protect\hypertarget{part0024_split_005.htmlux5cux23_idIndexMarker1979}{}{}\protect\hypertarget{part0024_split_005.htmlux5cux23_idIndexMarker1980}{}{}
-
-%\includegraphics{images/00623.gif}
-
-The {search} line lists the domains to query if a hostname is not fully
-qualified. For example, if a user issues the command {ssh} {coraline},
+The \texttt{search} line lists the domains to query if a hostname is not fully
+qualified. For example, if a user issues the command \texttt{ssh coraline},
 the resolver completes the name with the first domain in the search list
 and looks for coraline.atrust.com. If no such name exists, the resolver
 also tries coraline.booklab.atrust.com. The number of domains that can
 be specified in a {search} directive is resolver-specific; most allow
 between six and eight, with a limit of 256 characters.
 
-The name servers listed in {resolv.conf} must be configured to allow
+The name servers listed in \filename{resolv.conf} must be configured to allow
 your host to submit queries. They must also be recursive; that is, they
 must answer queries to the best of their ability and not try to refer
 you to other name servers; see
@@ -147,48 +151,34 @@ server is tried in turn, up to four times. The timeout interval
 increases with each failure. The default timeout interval is five
 seconds, which seems like forever to impatient users.
 
-\protect\hypertarget{part0024_split_006.html}{}{}
 
-\hypertarget{part0024_split_006.htmlux5cux23_idContainer1069}{}
-\hypertarget{part0024_split_006.htmlux5cux23calibre_pb_5}{%
-\subsection[: who do I ask for a
-name?]{\texorpdfstring{{\protect\hypertarget{part0024_split_006.htmlux5cux23_idTextAnchor848}{}{}nsswitch.conf}:
-who do I ask for a
-name?}{nsswitch.conf: who do I ask for a name?}}\label{part0024_split_006.htmlux5cux23calibre_pb_5}}
+\subsection{nsswitch.conf: who do I ask for a name?}
 
-\protect\hypertarget{part0024_split_006.htmlux5cux23_idIndexMarker1981}{}{}Both
-FreeBSD and Linux use a switch file,
-\protect\hypertarget{part0024_split_006.htmlux5cux23_idIndexMarker1982}{}{}\protect\hypertarget{part0024_split_006.htmlux5cux23_idIndexMarker1983}{}{}{/etc/nsswitch.conf,}
-to specify how hostname-to-IP-address mappings should be performed and
-whether DNS should be tried first, last, or not at all. If no switch
-file is present, the default behavior is
+Both FreeBSD and Linux use a switch file, \filename{/etc/nsswitch.conf}, to specify how hostname-to-IP-address mappings should be performed and
+whether DNS should be tried first, last, or not at all.
+If no switch file is present, the default behavior is
+\begin{config}
+hosts: dns [!UNAVAIL=return] files
+\end{config}
+The \texttt{!UNAVAIL} clause means that if DNS is available but a name is not found there, the lookup attempt should fail rather than continuing to
+the next entry (in this case, the \filename{/etc/hosts} file).
+If no name server is running (as might be the case during boot), the lookup process does consult the \filename{hosts} file.
 
-%\includegraphics{images/00624.gif}
+Our example distributions all provide the following default \filename{nsswitch.conf} entry:
+\begin{config}
+hosts: files dns
+\end{config}
 
-The {!UNAVAIL} clause means that if DNS is available but a name is not
-found there, the lookup attempt should fail rather than continuing to
-the next entry (in this case, the {/etc/hosts} file). If no name server
-is running (as might be the case during boot), the lookup process does
-consult the {hosts} file.
+This configuration gives precedence to the \filename{/etc/hosts} file, which is always checked.
+DNS is consulted only for names that are unresolvable through \filename{/etc/hosts}.
 
-Our example distributions all provide the following default
-{nsswitch.conf} entry:
+There is really no best way to configure lookups -- it depends on how your site is managed.
+In general, we prefer to keep as much host
+information as possible in DNS but always preserve the ability to fall back to the static \filename{hosts} file during the boot process if necessary.
 
-%\includegraphics{images/00625.gif}
-
-This configuration gives precedence to the {/etc/hosts} file, which is
-always checked. DNS is consulted only for names that are unresolvable
-through {/etc/hosts}.
-
-There is really no best way to configure lookups---it depends on how
-your site is managed. In general, we prefer to keep as much host
-information as possible in DNS but always preserve the ability to fall
-back to the static {hosts} file during the boot process if necessary.
-
-If name service is provided for you by an outside organization, you
-might be done with DNS configuration after setting up {resolv.conf} and
-{nsswitch.conf}. If so, you can skip the rest of this chapter, or read
-on to learn more.
+If name service is provided for you by an outside organization,
+you might be done with DNS configuration after setting up \filename{resolv.conf} and \filename{nsswitch.conf}.
+If so, you can skip the rest of this chapter, or read on to learn more.
 
 
 
@@ -205,88 +195,54 @@ records), and reverse mappings map IP addresses to hostnames. Every
 complete hostname (e.g., nubark.atrust.com) is a node in the forward
 branch of the tree, and (in theory) every IP address is a node in the
 reverse branch.
-\protect\hyperlink{part0024_split_007.htmlux5cux23_idTextAnchor850}{Exhibit
-B} shows the general layout of the naming tree.
+\Cref{fig:dns-zone-tree} shows the general layout of the naming tree.
 
-\paragraph[{Exhibit B: }DNS zone tree]{\texorpdfstring{{Exhibit B:
-}\protect\hypertarget{part0024_split_007.htmlux5cux23_idTextAnchor850}{}{}DNS
-zone tree}{Exhibit B: DNS zone tree}}
 
-%\includegraphics{images/00626.gif}
+\begin{figure}
+   \centering
+   \includegraphics[width=\textwidth]{images/00626.png}
+   \caption{DNS zone tree}
+   \label{fig:dns-zone-tree}
+\end{figure}
 
-\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker1987}{}{}\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker1988}{}{}\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker1989}{}{}\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker1990}{}{}\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker1991}{}{}To
-allow the same DNS system to manage both names (which have the most
-significant information on the right), and IP addresses (which have the
+
+To allow the same DNS system to manage both names (which have the most significant information on the right), and IP addresses (which have the
 most significant part on the left), the IP branch of the namespace is
 inverted by listing the octets of the IP address backwards. For example,
 if host nubark.atrust.com has IP address 63.173.189.1, the corresponding
 node of the forward branch of the naming tree is ``nubark.atrust.com.''
-and the node of the
-\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker1992}{}{}reverse
-branch is
-``1.189.173.63.\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker1993}{}{}\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker1994}{}{}in-addr.arpa.''.
+and the node of the reverse branch is ``1.189.173.63.in-addr.arpa.''.
 The in-addr.arpa portion of the name is a fixed suffix.
 
-\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker1995}{}{}\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker1996}{}{}\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker1997}{}{}Both
-of these names end with a dot, just as the full pathnames of files
-always start with a slash. That makes them ``fully qualified domain
-names'' or FQDNs for short. Outside the context of DNS, names like
-nubark.atrust.com (without the final dot) are sometimes referred to as
-``fully qualified hostnames,'' but this is a {colloquialism}. Within the
-DNS system itself, the presence or absence of the trailing dot is of
-crucial importance.
+Both of these names end with a dot, just as the full pathnames of files
+always start with a slash. That makes them ``fully-qualified domain names'' or FQDNs for short.%
+   \index{FQDN}%
+   \index{fully-qualified domain name}
+Outside the context of DNS, names like nubark.atrust.com (without the final dot) are sometimes referred to as ``fully qualified hostnames,'' but this is a \emph{colloquialism}.
+Within the DNS system itself, the presence or absence of the trailing dot is of crucial importance.
 
-\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker1998}{}{}Two
-types of top-level domains exist:
-\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker1999}{}{}\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker2000}{}{}country
-code domains (ccTLDs) and
-\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker2001}{}{}\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker2002}{}{}generic
-top-level domains (gTLDs).
-\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker2003}{}{}ICANN,
-the
-\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker2004}{}{}Internet
-Corporation for Assigned Names and Numbers, accredits various agencies
-to be part of its shared registry project for registering names in the
-gTLDs such as com, net, and org. To register for a ccTLD name, check the
-\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker2005}{}{}IANA
-(\protect\hypertarget{part0024_split_007.htmlux5cux23_idIndexMarker2006}{}{}Internet
-Assigned Numbers Authority) web page
-{\href{http://iana.org/cctld}{iana.org/cctld}} to find the registry in
-charge of a particular country's registration.
+Two types of top-level domains exist:
+country code domains (ccTLDs)\index{ccTLD} and generic top-level domains (gTLDs)\index{gTLD}.
+ICANN,\index{ICANN} the Internet Corporation for Assigned Names and Numbers,
+accredits various agencies to be part of its shared registry project for registering names in the gTLDs such as com, net, and org.
+To register for a ccTLD name, check the IANA\index{IANA}
+(Internet Assigned Numbers Authority) web page
+{\href{http://iana.org/cctld}{iana.org/cctld}} to find the registry in charge of a particular country's registration.
 
-\protect\hypertarget{part0024_split_008.html}{}{}
+\subsection{Registering a domain name}
 
-\hypertarget{part0024_split_008.htmlux5cux23_idContainer1069}{}
-\hypertarget{part0024_split_008.htmlux5cux23calibre_pb_7}{%
-\subsection[Registering a domain
-name]{\texorpdfstring{\protect\hypertarget{part0024_split_008.htmlux5cux23_idTextAnchor851}{}{}Registering
-a domain
-name}{Registering a domain name}}\label{part0024_split_008.htmlux5cux23calibre_pb_7}}
-
-\protect\hypertarget{part0024_split_008.htmlux5cux23_idIndexMarker2007}{}{}To
-obtain a
-\protect\hypertarget{part0024_split_008.htmlux5cux23_idIndexMarker2008}{}{}\protect\hypertarget{part0024_split_008.htmlux5cux23_idIndexMarker2009}{}{}second-level
-domain name (such as blazedgoat.com), you must apply to a registrar for
-the appropriate top-level domain. To complete the domain registration
-forms, you must choose a name that is not already taken and identify a
+To obtain a second-level domain name (such as blazedgoat.com), you must apply to a registrar for
+the appropriate top-level domain.
+To complete the domain registration forms, you must choose a name that is not already taken and identify a
 technical contact person, an administrative contact person, and at least
 two hosts that will be name servers for your domain. Fees vary among
 registrars, but these days they are all generally quite inexpensive.
 
-\protect\hypertarget{part0024_split_009.html}{}{}
 
-\hypertarget{part0024_split_009.htmlux5cux23_idContainer1069}{}
-\hypertarget{part0024_split_009.htmlux5cux23calibre_pb_8}{%
-\subsection[Creating your own
-subdomains]{\texorpdfstring{\protect\hypertarget{part0024_split_009.htmlux5cux23_idTextAnchor852}{}{}Creating
-your own
-subdomains}{Creating your own subdomains}}\label{part0024_split_009.htmlux5cux23calibre_pb_8}}
+\subsection{Creating your own subdomains}
 
-\protect\hypertarget{part0024_split_009.htmlux5cux23_idIndexMarker2010}{}{}\protect\hypertarget{part0024_split_009.htmlux5cux23_idIndexMarker2011}{}{}The
-procedure for creating a subdomain is similar to that for creating a
-second-level domain, except that the central authority is now local (or
-more accurately, within your own organization). Specifically, the steps
-are as follows:
+The procedure for creating a subdomain is similar to that for creating a second-level domain, except that the central authority is now local (or
+more accurately, within your own organization). Specifically, the steps are as follows:
 
 \begin{itemize}
 \item
@@ -305,8 +261,7 @@ Parent domains should check to be sure that a child domain's name
 servers are up and running before performing the delegation. If the
 servers are not working, a ``lame delegation'' results, and you might
 receive nasty email asking you to clean up your DNS act. Lame
-delegations are covered in more detail
-\protect\hyperlink{part0024_split_072.htmlux5cux23_idTextAnchor966}{here}.
+delegations are covered in more detail on page~\pageref{sec:lame-delegations}.
 
 
 
@@ -319,105 +274,87 @@ administrator is closest to the {query} target. Understanding the roles
 and relationships of name servers is important both for day-to-day
 operations and for debugging.
 
-\protect\hypertarget{part0024_split_011.html}{}{}
+\subsection{Name servers}
 
-\hypertarget{part0024_split_011.htmlux5cux23_idContainer1069}{}
-\hypertarget{part0024_split_011.htmlux5cux23calibre_pb_10}{%
-\subsection[Name
-servers]{\texorpdfstring{\protect\hypertarget{part0024_split_011.htmlux5cux23_idTextAnchor854}{}{}Name
-servers}{Name servers}}\label{part0024_split_011.htmlux5cux23calibre_pb_10}}
-
-\protect\hypertarget{part0024_split_011.htmlux5cux23_idIndexMarker2012}{}{}A
-name server performs several chores:
+A name server performs several chores:
 
 \begin{itemize}
-\item
-  It answers queries about your site's hostnames and IP addresses.
-\item
-  It asks about both local and remote hosts on behalf of your users.
-\item
-  It caches the answers to queries so that it can answer faster next
-  time.
-\item
-  It communicates with other local name servers to keep DNS data
-  synchronized.
+\item it answers queries about your site's hostnames and IP addresses;
+\item it asks about both local and remote hosts on behalf of your users;
+\item it caches the answers to queries so that it can answer faster next time;
+\item it communicates with other local name servers to keep DNS data synchronized.
 \end{itemize}
 
-Name servers deal with ``zones,'' where a zone is essentially a domain
-minus its subdomains. You will often see the term ``domain'' used where
-a zone is what's actually meant, even in this book.
+Name servers deal with ``zones,'' where a zone is essentially a domain minus its subdomains.\index{zone (DNS)}
+You will often see the term ``domain'' used where a zone is what's actually meant, even in this book.
 
 Name servers can operate in several different modes. The distinctions
 among them fall along several axes, so the final categorization is often
 not tidy. To make things even more confusing, a single server can play
 different roles with respect to different zones.
-\protect\hyperlink{part0024_split_011.htmlux5cux23_idTextAnchor855}{Table
-16.1} lists some of the adjectives used to describe name servers.
+\Cref{tab:ns-taxonomy} lists some of the adjectives used to describe name servers.
 
-\paragraph[{Table 16.1: }Name server taxonomy]{\texorpdfstring{{Table
-16.1:
-}\protect\hypertarget{part0024_split_011.htmlux5cux23_idIndexMarker2013}{}{}\protect\hypertarget{part0024_split_011.htmlux5cux23_idTextAnchor855}{}{}Name
-server
-taxonomy\protect\hypertarget{part0024_split_011.htmlux5cux23_idIndexMarker2014}{}{}\protect\hypertarget{part0024_split_011.htmlux5cux23_idIndexMarker2015}{}{}\protect\hypertarget{part0024_split_011.htmlux5cux23_idIndexMarker2016}{}{}\protect\hypertarget{part0024_split_011.htmlux5cux23_idIndexMarker2017}{}{}\protect\hypertarget{part0024_split_011.htmlux5cux23_idIndexMarker2018}{}{}\protect\hypertarget{part0024_split_011.htmlux5cux23_idIndexMarker2019}{}{}\protect\hypertarget{part0024_split_011.htmlux5cux23_idIndexMarker2020}{}{}\protect\hypertarget{part0024_split_011.htmlux5cux23_idIndexMarker2021}{}{}\protect\hypertarget{part0024_split_011.htmlux5cux23_idIndexMarker2022}{}{}\protect\hypertarget{part0024_split_011.htmlux5cux23_idIndexMarker2023}{}{}\protect\hypertarget{part0024_split_011.htmlux5cux23_idIndexMarker2024}{}{}\protect\hypertarget{part0024_split_011.htmlux5cux23_idIndexMarker2025}{}{}}{Table 16.1: Name server taxonomy}}
 
-%\includegraphics{images/00627.gif}
+\begin{table}
+   \centering
+   \begin{tabular}{rp{.6\textwidth}}
+   type of server             & description\\[1ex]
+   \textit{authoritative}     & officially represents a zone\\
+   \textit{caching}           & caches data from previous queries; usually has no local zones\\
+   \textit{distribution}      & a server advertised only within a domain (a.k.a.~``stealth server'')\\
+   \textit{forwarder}         & performs queries on behalf of many clients; builds a large cache\\
+   \textit{master}            & master server for a zone; gets its data from a disk file\\
+   \textit{nonauthoritative}  & answers a query from cache; doesn't know whether the data is still valid\\
+   \textit{nonrecursive}      & refers you to another server if it can't answer a query\\
+   \textit{primary}           & another name for the master server\\
+   \textit{recursive}         & queries on your behalf until it returns either an answer or an error\\
+   \textit{secondary}         & see \emph{slave} server\\
+   \textit{slave}             & copies its data from the master server\\
+   \textit{stub}              & like a slave, but copies only name server data (not host data)\\
+   \end{tabular}
+   \caption{Name server taxonomy}
+   % \footnote{Strictly speaking, ``nonauthoritative'' is an attribute of a DNS query response, not a server.}
+   \label{tab:ns-taxonomy}
+\end{table}
+
 
 These categorizations vary according to the name server's source of data
 (authoritative, caching, master, slave), the type of data saved (stub),
 the query path (forwarder), the completeness of answers handed out
 (recursive, nonrecursive), and finally, the visibility of the server
 (distribution). The next few sections provide additional details on the
-most important of these distinctions; the others are described elsewhere
-in this chapter.
+most important of these distinctions; the others are described elsewhere in this chapter.
 
-\protect\hypertarget{part0024_split_012.html}{}{}
 
-\hypertarget{part0024_split_012.htmlux5cux23_idContainer1069}{}
-\hypertarget{part0024_split_012.htmlux5cux23calibre_pb_11}{%
-\subsection[Authoritative and caching-only
-servers]{\texorpdfstring{\protect\hypertarget{part0024_split_012.htmlux5cux23_idTextAnchor856}{}{}Authoritative
-and caching-only
-servers}{Authoritative and caching-only servers}}\label{part0024_split_012.htmlux5cux23calibre_pb_11}}
+\subsection{Authoritative and caching-only servers}
 
-\protect\hypertarget{part0024_split_012.htmlux5cux23_idIndexMarker2026}{}{}\protect\hypertarget{part0024_split_012.htmlux5cux23_idIndexMarker2027}{}{}Master,
-slave, and caching-only servers are distinguished by two
-characteristics: where the data comes from, and whether the server is
-authoritative for the domain. Each zone typically has one master name
-server. The master server keeps the official copy of the zone's data on
-disk. The system administrator changes the zone's data by editing the
-master server's data files.
+Master, slave, and caching-only servers are distinguished by two characteristics: where the data comes from, and whether the server is authoritative for the domain.
+Each zone typically has one master name server.
+The \emph{master} server\index{name server!master}
+keeps the official copy of the zone's data on disk.
+The system administrator changes the zone's data by editing the master server's data files.
 
-Some sites use multiple masters or even no masters. However, these are
-unusual configurations. We describe only the single-master case.
+Some sites use multiple masters or even no masters.
+However, these are unusual configurations.
+We describe only the single-master case.
 
-\leavevmode\hypertarget{part0024_split_012.htmlux5cux23_idContainer914}{}%
-See
-\protect\hyperlink{part0024_split_051.htmlux5cux23_idTextAnchor927}{this
-page} for more information about zone transfers.
+A \emph{slave} server\index{name server!slave}
+gets its data from the master server through a ``zone transfer'' operation.%
+   \index{zone transfer}%
+   \footnote{See page~\pageref{sec:zone-transfers} for more information about zone transfers.}
+A zone can have several slave name servers and \emph{must} have at least one.
+A stub server is a special kind of slave that loads only the NS (name server) records from the master.
+It's fine for the same machine to be both a master server for some zones and a slave server for other zones.
 
-A slave server gets its data from the master server through a ``zone
-transfer'' operation. A zone can have several slave name servers and
-{must} have at least one. A stub server is a special kind of slave that
-loads only the NS (name server) records from the master. It's fine for
-the same machine to be both a master server for some zones and a slave
-server for other zones.
+A \emph{caching-only}\index{name server!caching-only}
+name server loads the addresses of the servers for the root domain from a startup file and accumulates the rest of its data by caching answers to the queries it resolves.
+A caching-only name server has no data of its own and is not authoritative for any zone (except perhaps the localhost zone).
 
-A
-\protect\hypertarget{part0024_split_012.htmlux5cux23_idIndexMarker2028}{}{}caching-only
-name server loads the addresses of the servers for the root domain from
-a startup file and accumulates the rest of its data by caching answers
-to the queries it resolves.~A caching-only name server has no data of
-its own and is not authoritative for any zone (except perhaps the
-localhost zone).
-
-An authoritative answer from a name server is ``guaranteed'' to be
-accurate; a nonauthoritative answer might be out of date. However, a
-very high percentage of nonauthoritative answers are perfectly correct.
-Master and slave servers are authoritative for their own zones, but not
-for information they may have cached about other domains. Truth be told,
-even authoritative answers can be inaccurate if a sysadmin changes the
-master server's data but forgets to propagate the changes (e.g., doesn't
-change the zone's serial number).
+An authoritative answer from a name server is ``guaranteed'' to be accurate; a nonauthoritative answer might be out of date.
+However, a very high percentage of nonauthoritative answers are perfectly correct.
+Master and slave servers are authoritative for their own zones, but not for information they may have cached about other domains.
+Truth be told, even authoritative answers can be inaccurate if a sysadmin changes the master server's data but forgets to propagate the changes
+(e.g., doesn't change the zone's serial number).
 
 At least one slave server is required for each zone. Ideally, there
 should be at least two slaves, one of which is in a location that does
@@ -425,17 +362,10 @@ not share common infrastructure with the master. On-site slaves should
 live on different networks and different power circuits. When name
 service stops, all normal network access stops, too.
 
-\protect\hypertarget{part0024_split_013.html}{}{}
 
-\hypertarget{part0024_split_013.htmlux5cux23_idContainer1069}{}
-\hypertarget{part0024_split_013.htmlux5cux23calibre_pb_12}{%
-\subsection[Recursive and nonrecursive
-servers]{\texorpdfstring{\protect\hypertarget{part0024_split_013.htmlux5cux23_idTextAnchor857}{}{}Recursive
-and nonrecursive
-servers}{Recursive and nonrecursive servers}}\label{part0024_split_013.htmlux5cux23calibre_pb_12}}
+\subsection{Recursive and nonrecursive servers}
 
-\protect\hypertarget{part0024_split_013.htmlux5cux23_idIndexMarker2029}{}{}\protect\hypertarget{part0024_split_013.htmlux5cux23_idIndexMarker2030}{}{}Name
-servers are either recursive or nonrecursive. If a nonrecursive server
+Name servers are either recursive or nonrecursive. If a nonrecursive server
 has the answer to a query cached from a previous transaction or is
 authoritative for the domain to which the query pertains, it provides an
 appropriate response. Otherwise, instead of returning a real answer, it
@@ -1195,9 +1125,7 @@ with those in the zone itself, if possible. Nonexistent servers listed
 in the parent zone can delay name service, although clients will
 eventually stumble onto one of the functioning name servers. If none of
 the name servers listed in the parent exist in the child, a so-called
-lame delegation results; see
-\protect\hyperlink{part0024_split_072.htmlux5cux23_idTextAnchor966}{this
-page}.
+lame delegation results; see page~\pageref{sec:lame-delegations}.
 
 Extra servers in the child are OK as long as at least one of the child's
 servers still has an NS record in the parent. Check your delegations
@@ -1298,7 +1226,7 @@ zone that corresponds to ns1's A record above is
 %\includegraphics{images/00651.gif}
 
 The name 1 does not end in a dot and therefore is relative. But relative
-to what? Not atrust.com---for this sample record to be accurate, the
+to what? Not atrust.com -- for this sample record to be accurate, the
 default zone has to be ``189.173.63.in-addr.arpa.''.
 
 \protect\hypertarget{part0024_split_026.htmlux5cux23_idIndexMarker2087}{}{}You
@@ -1581,7 +1509,7 @@ The format of a TXT record is
 %\includegraphics{images/00664.gif}
 
 All {info} items must be quoted. Be sure the quotes are
-balanced---missing quotes wreak havoc with your DNS data because all the
+balanced -- missing quotes wreak havoc with your DNS data because all the
 records between the missing quote and the next occurrence of a quote
 mysteriously disappear.
 
@@ -1708,13 +1636,13 @@ DNS database}}.
 The {named.conf} file specifies the roles of this host (master, slave,
 stub, or caching-only) and the manner in which it should obtain its copy
 of the data for each zone it serves. It's also the place where options
-are specified---both global options related to the overall operation of
+are specified -- both global options related to the overall operation of
 {named} and server- or zone-specific options that apply to only a
 portion of the DNS traffic.
 
 The config file consists of a series of statements whose syntax we
 describe as they are introduced in subsequent sections. The format is
-unfortunately quite fragile---a missing semicolon or unbalanced quote
+unfortunately quite fragile -- a missing semicolon or unbalanced quote
 can wreak havoc.
 
 Comments can appear anywhere that whitespace is appropriate. C, C++, and
@@ -1832,7 +1760,7 @@ be overridden for particular zones or servers. The general format is
 If no {options} statement is present in {named.conf}, default values are
 used.
 
-BIND has a lot of options---too many, in fact. The 9.9 release has more
+BIND has a lot of options -- too many, in fact. The 9.9 release has more
 than 170, which is a lot for sysadmins to wrap their heads around.
 Unfortunately, as soon as the BIND folks think about removing some of
 the options that were a bad idea or that are no longer necessary, they
@@ -2039,7 +1967,7 @@ server can look in its cache and in the records for which it is
 authoritative. If it doesn't find the answer it's looking for, it can
 then send the query on to a forwarder host. That way, the forwarders
 build up caches that benefit the entire site. The designation is
-implicit---nothing in the configuration file of the forwarder explicitly
+implicit -- nothing in the configuration file of the forwarder explicitly
 says ``Hey, you're a forwarder.''
 
 The {forwarders} option lists the IP addresses of the servers you want
@@ -2557,7 +2485,7 @@ query without specifying a particular server:
 
 The output will be similar; however, you will be obtaining the list of
 root servers from the cache of a local name server, not from an
-authoritative source. That should be just fine---even if you have not
+authoritative source. That should be just fine -- even if you have not
 rebooted or restarted your name server for a year or two, it has been
 refreshing its root server records periodically as their TTLs expire.
 
@@ -2628,7 +2556,7 @@ seem draconian, but consider: even if {rndc} worked only from 127.0.0.1
 and this address was blocked from the outside world at your firewall,
 you would still be trusting all local users not to tamper with your name
 server. Any user could {telnet} to the control port and type
-``stop''---quite an effective denial-of-service attack.
+``stop'' -- quite an effective denial-of-service attack.
 
 Here is an example of the output (to standard out) from {rndc-confgen}
 when a 256-bit key is requested. We chose 256 bits because it fits on
@@ -2882,13 +2810,9 @@ Do not edit data files on slave servers. These files are maintained by
 the name server, and sysadmins should not meddle with them. It's fine to
 look at the BIND data files as long as you don't make changes.
 
-\protect\hypertarget{part0024_split_051.html}{}{}
 
-\hypertarget{part0024_split_051.htmlux5cux23_idContainer1069}{}
-\hypertarget{part0024_split_051.htmlux5cux23calibre_pb_50}{%
-\subsection[Zone
-transfers]{\texorpdfstring{\protect\hypertarget{part0024_split_051.htmlux5cux23_idTextAnchor927}{}{}Zone
-transfers}{Zone transfers}}\label{part0024_split_051.htmlux5cux23calibre_pb_50}}
+\subsection{Zone transfers}
+\label{sec:zone-transfers}
 
 \protect\hypertarget{part0024_split_051.htmlux5cux23_idIndexMarker2219}{}{}\protect\hypertarget{part0024_split_051.htmlux5cux23_idIndexMarker2220}{}{}\protect\hypertarget{part0024_split_051.htmlux5cux23_idIndexMarker2221}{}{}\protect\hypertarget{part0024_split_051.htmlux5cux23_idIndexMarker2222}{}{}\protect\hypertarget{part0024_split_051.htmlux5cux23_idIndexMarker2223}{}{}DNS
 servers are synchronized through a mechanism called a zone transfer. A
@@ -2985,7 +2909,7 @@ freeze }{zone}{ }or{ rndc freeze }{zone class view}{ }will do the trick.
 These commands sync the journal file to the master zone file on disk and
 then delete the journal. You can then edit the zone file by hand.
 Unfortunately, the original formatting of the zone file will have been
-destroyed by {named}'s monkeying---the file will look like those
+destroyed by {named}'s monkeying -- the file will look like those
 maintained by {named} for slave servers.
 
 Dynamic update attempts are refused while a zone is frozen. To reload
@@ -3013,7 +2937,7 @@ part of the command script.
 
 Dynamic updates to DNS are scary. They can potentially provide
 uncontrolled write access to your important system data. Don't try to
-use IP addresses for access control---they are too easily forged. TSIG
+use IP addresses for access control -- they are too easily forged. TSIG
 authentication with a shared-secret key is better; it's available and is
 easy to configure. BIND 9 supports both:
 
@@ -3080,7 +3004,7 @@ environment.
 
 \protect\hypertarget{part0024_split_053.htmlux5cux23_idIndexMarker2232}{}{}DNS
 started out as an inherently open system, but it has steadily grown more
-and more secure---or at least, securable. By default, anyone on the
+and more secure -- or at least, securable. By default, anyone on the
 Internet can investigate your domain with individual queries from tools
 such as {dig}, {host}, {nslookup}, and {drill}.{ }In some cases, they
 can dump your entire DNS database.
@@ -3183,7 +3107,7 @@ to route and process the network traffic. Multiply by a bunch of open
 resolvers and it's real trouble for the victim.
 
 Statistics show that between 70\% and 75\% of caching name servers are
-currently open resolvers---yikes! The site
+currently open resolvers -- yikes! The site
 \href{http://dns.measurement-factory.com/tools}{dns.measurement-factory.com/tools}
 can help you test your site. Go there, select the ``open resolver
 test,'' and type in the IP addresses of your name servers.
@@ -3309,7 +3233,7 @@ domain names and must therefore end in a dot. There should probably be
 two tools, one that generates shared-secret keys and one that generates
 public-key key pairs.
 
-You don't actually need the {.key} file---it's an artifact of
+You don't actually need the {.key} file -- it's an artifact of
 {dnssec-keygen}'s being used for two different jobs. Just delete it. The
 512 in the KEY record is not the key length but rather a flag bit that
 identifies the record as a DNS host key.
@@ -3428,7 +3352,7 @@ allow one entity to sign the public key of another, thereby vouching for
 the legitimacy of the key; hence the term ``chain of trust.''
 
 The data in a DNS zone is too voluminous to be encrypted with public key
-cryptography---the encryption would be too slow. Instead, since the data
+cryptography -- the encryption would be too slow. Instead, since the data
 is not secret, a secure hash is run on the data and the results of the
 hash are signed (encrypted) by the zone's private key. The results of
 the hash are like a fingerprint of the data and are called a digital
@@ -3659,7 +3583,7 @@ of UDP packet size limits suggests that it's best to use short
 zone-signing keys and to change them often. You can use longer
 key-signing keys to help recover some security.
 
-It can take a while---minutes---to generate these keys. The limiting
+It can take a while -- minutes -- to generate these keys. The limiting
 factor is typically not CPU power but the entropy available for
 randomization. On Linux, you can install the {haveged} daemon to harvest
 entropy from additional sources and thereby speed up key generation.
@@ -4137,8 +4061,7 @@ signatures.
 provides three basic debugging tools: logging, described below; a
 control program, described starting
 \protect\hyperlink{part0024_split_071.htmlux5cux23_idTextAnchor964}{here};
-and a command-line query tool, described
-\protect\hyperlink{part0024_split_072.htmlux5cux23_idTextAnchor966}{here}.
+and a command-line query tool, described on page~\pageref{sec:lame-delegations}.
 
 \protect\hypertarget{part0024_split_070.html}{}{}
 
@@ -4222,7 +4145,7 @@ The various {print} options add or suppress message prefixes. Syslog
 prepends the time and reporting host to each message logged, but not the
 severity or the category. The source filename (module) that generated
 the message is also available as a {print} option. It makes sense to
-enable {print-time} only for file channels---syslog adds its own time
+enable {print-time} only for file channels -- syslog adds its own time
 stamps, so there's no need to duplicate them.
 
 The four channels listed in
@@ -4453,14 +4376,9 @@ message about a protocol version mismatch. They're normally installed
 together on individual machines, but version skew can be an issue when
 you are trying to control a {named} on another computer.
 
-\protect\hypertarget{part0024_split_072.html}{}{}
 
-\hypertarget{part0024_split_072.htmlux5cux23_idContainer1069}{}
-\hypertarget{part0024_split_072.htmlux5cux23calibre_pb_71}{%
-\subsection[Command-line querying for lame
-delegations]{\texorpdfstring{\protect\hypertarget{part0024_split_072.htmlux5cux23_idTextAnchor966}{}{}Command-line
-querying for lame
-delegations}{Command-line querying for lame delegations}}\label{part0024_split_072.htmlux5cux23calibre_pb_71}}
+\subsection{Command-line querying for lame delegations}
+\label{sec:lame-delegations}
 
 \protect\hypertarget{part0024_split_072.htmlux5cux23_idIndexMarker2295}{}{}\protect\hypertarget{part0024_split_072.htmlux5cux23_idIndexMarker2296}{}{}When
 you apply for a domain name, you are asking for a part of the DNS naming

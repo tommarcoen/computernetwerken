@@ -28,17 +28,18 @@ when two companies that have duplicate internal addressing schemes merge. NAT is
 Internet service provider (ISP) but the networking manager needs to avoid the hassle of changing the internal address scheme.
 
 Here's a list of situations when NAT can be especially helpful:
-
 \begin{enumerate}
-   \item When you need to connect to the Internet and your hosts don't have   globally unique IP addresses
-   \item When you've changed   to a new ISP that requires you to renumber your network
-   \item When you need to merge two intranets with duplicate addresses
+   \item When you need to connect to the Internet and your hosts don't have   globally unique IP addresses.
+   \item When you've changed   to a new ISP that requires you to renumber your network.
+   \item When you need to merge two intranets with duplicate addresses.
 \end{enumerate}
 
 You typically use NAT on a border router.
 For example, in \vref{fig:where-configure-nat}, NAT is used on the corporate router connecting to the Internet.
 
 \begin{figure}
+   \centering
+   \includegraphics{images/c13f001.jpg}
    \caption{Where to configure NAT}
    \label{fig:where-configure-nat}
 \end{figure}
@@ -49,29 +50,25 @@ Don't get me wrong -- it can truly be a lifesaver sometimes, but NAT has a bit o
 
 \paragraph{Advantages of NAT}
 \begin{itemize}
-   \item Conserves legally registered addresses.
-   \item Remedies address overlap events.
-   \item Increases flexibility when connecting to the Internet.
-   \item Eliminates address renumbering as a network evolves.
+   \item Conserves legally registered addresses;
+   \item remedies address overlap events;
+   \item increases flexibility when connecting to the Internet;
+   \item eliminates address renumbering as a network evolves.
 \end{itemize}
 
 \paragraph{Disadvantages of NAT}
 \begin{itemize}
-   \item Translation results in switching path delays.
-   \item Causes loss of end-to-end IP traceability.
-   \item Certain applications will not function with NAT enabled.
-   \item Complicates tunneling protocols such as IPsec because NAT modifies the values in the header.
+   \item Translation results in switching path delays;
+   \item causes loss of end-to-end IP traceability;
+   \item certain applications will not function with NAT enabled;
+   \item complicates tunneling protocols such as IPsec because NAT modifies the values in the header.
 \end{itemize}
 
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
+\begin{note}
 The most obvious advantage associated with NAT is that it allows you to conserve your legally registered address scheme.
 But a version of it known as PAT is also why we've only just recently run out of IPv4 addresses.
 Without NAT/PAT, we'd have run out of IPv4 addresses more than a decade ago!
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
+\end{note}
 
 
 \section{Types of network address translation}
@@ -96,78 +93,55 @@ In this section, I'm going to go over the three types of NATs with you:
       Really -- I'm not joking!
 \end{description}
 
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
 I'll show you how to configure all three types of NAT throughout this chapter and at the end of this chapter with the hands-on labs.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
 
 
 \section{NAT names}
 
-The names we use to describe the addresses used with NAT are fairly
-straightforward. Addresses used after NAT translations are called
-\emph{global addresses}. These are usually the public addresses used on
-the Internet, which you don't need if you aren't going on the Internet.
+The names we use to describe the addresses used with NAT are fairly straightforward.
+Addresses used after NAT translations are called \emph{global addresses}.\index{global address}
+These are usually the public addresses used on the Internet, which you don't need if you aren't going on the Internet.
 
-\emph{Local addresses} are the ones we use before NAT translation. This
-means that the inside local address is actually the private address of
-the sending host that's attempting to get to the Internet. The outside
-local address would typically be the router interface connected to your
-ISP and is also usually a public address used as the packet begins its
-journey.
+\emph{Local addresses}\index{local address} are the ones we use before NAT translation.
+This means that the inside local address is actually the private address of the sending host that's attempting to get to the Internet.
+The outside local address would typically be the router interface connected to your ISP and is also usually a public address used as the packet begins its journey.
 
 After translation,
 the inside local address is then called the \emph{inside global address}
-and the outside global address then becomes the address of the
-destination host. Check out
-\protect\hyperlink{c13.xhtmlux5cux23table13-2}{Table 13.2}, which lists
-all this terminology and offers a clear picture of the various names
+and the outside global address then becomes the address of the destination host.
+Check out the following definitions, which lists all this terminology and offers a clear picture of the various names
 used with NAT. Keep in mind that these terms and their definitions can
-vary somewhat based on implementation. The table shows how they're used
-according to the Cisco exam objectives.
+vary somewhat based on implementation. The table shows how they're used according to the Cisco exam objectives.
 
-{\protect\hyperlink{c13.xhtmlux5cux23tableanchor13-2}{\textbf{TABLE
-13.2}} NAT terms}
-
-\begin{longtable}[]{@{}ll@{}}
-\toprule
-Names & Meaning\tabularnewline
-\midrule
-\endhead
-Inside local & Source host inside address before translation -- typically
-an RFC 1918 address.\tabularnewline
-Outside local & Address of an outside host as it appears to the inside
-network. This is usually the address of the router interface connected
-to ISP -- the actual Internet address.\tabularnewline
-Inside global & Source host address used after translation to get onto
-the Internet. This is also the actual Internet address.\tabularnewline
-Outside global & Address of outside destination host and, again, the
-real Internet address.\tabularnewline
-\bottomrule
-\end{longtable}
-
+\begin{description}
+   \item[Inside local]
+      Source host inside address before translation -- typically an RFC 1918 address.
+   \item[Outside local]
+      Address of an outside host as it appears to the inside network.
+      This is usually the address of the router interface connected to ISP -- the actual Internet address.
+   \item[Inside global]
+      Source host address used after translation to get onto the Internet.
+      This is also the actual Internet address.
+   \item[Outside global]
+      Address of outside destination host and, again, the real Internet address.
+\end{description}
 
 
 
 \section{How NAT works}
 
-Okay, it's time to look at how this whole NAT thing works. I'm going to
-start by using \protect\hyperlink{c13.xhtmlux5cux23figure13-2}{Figure
-13.2} to describe basic NAT translation.
+Okay, it's time to look at how this whole NAT thing works.
+I'm going to start by using \vref{fig:basic-nat-translation} to describe basic NAT translation.
 
 \begin{figure}
-\centering
-
-\caption{{\protect\hyperlink{c13.xhtmlux5cux23figureanchor13-2}{\textbf{FIGURE
-13.2}} Basic NAT translation}}
+   \includegraphics[width=.7\textwidth]{images/c13f002.jpg}
+   \centering
+   \caption{Basic NAT translation}
+   \label{fig:basic-nat-translation}
 \end{figure}
 
-In this figure, we
-can see host 10.1.1.1 sending an Internet-bound packet to the border
-router configured with NAT. The router identifies the source IP address
+In this figure, we can see host 10.1.1.1 sending an Internet-bound packet to the border router configured with NAT.
+The router identifies the source IP address
 as an inside local IP address destined for an outside network,
 translates the source IP address in the packet, and documents the
 translation in the NAT table.
@@ -175,30 +149,26 @@ translation in the NAT table.
 The packet is sent to the outside interface with the new translated
 source address. The external host returns the packet to the destination
 host and the NAT router translates the inside global IP address back to
-the inside local IP address using the NAT table. This is as simple as it
-gets!
+the inside local IP address using the NAT table. This is as simple as it gets!
 
-Let's take a look at a more complex configuration using overloading,
-also referred to as PAT. I'll use
-\protect\hyperlink{c13.xhtmlux5cux23figure13-3}{Figure 13.3} to
-demonstrate how PAT works by having an inside host HTTP to a server on
-the Internet.
+Let's take a look at a more complex configuration using overloading, also referred to as PAT.
+I'll use \cref{fig:pat-example} to demonstrate how PAT works by having an inside host HTTP to a server on the Internet.
+
 
 \begin{figure}
-\centering
-
-\caption{{\protect\hyperlink{c13.xhtmlux5cux23figureanchor13-3}{\textbf{FIGURE
-13.3}} NAT overloading example (PAT)}}
+   \centering
+   \includegraphics[width=.7\textwidth]{images/c13f003.jpg}
+   \caption{NAT overloading example (PAT)}
+   \label{fig:pat-example}
 \end{figure}
 
-With PAT, all inside hosts get translated to one single IP address,
-hence the term \emph{overloading}. Again, the reason we've just run out
-of available global IP addresses on the Internet is because of
-overloading (PAT).
 
-Take a look at the NAT table
-in\protect\hyperlink{c13.xhtmlux5cux23figure13-3}{Figure 13.3} again. In
-addition to the inside local IP address and inside global IP address, we
+With PAT, all inside hosts get translated to one single IP address,
+hence the term \emph{overloading}.
+Again, the reason we've just run out of available global IP addresses on the Internet is because of overloading (PAT).
+
+Take a look at the NAT table in \cref{fig:pat-example} again.
+In addition to the inside local IP address and inside global IP address, we
 now have port numbers. These port numbers help the router identify which
 host should receive the return traffic. The router uses the source port
 number from each host to differentiate the traffic from each of them.
@@ -212,8 +182,7 @@ address.
 Port numbers are used at the Transport layer to identify the local host
 in this example. If we had to use real global IP addresses to identify
 the source hosts, that's called \emph{static NAT}
-and we would run out
-of addresses. PAT allows us to use the Transport layer to identify the
+and we would run out of addresses. PAT allows us to use the Transport layer to identify the
 hosts, which in turn allows us to theoretically use up to about 65,000
 hosts with only one real IP address!
 
@@ -221,8 +190,7 @@ hosts with only one real IP address!
 
 \subsection{Static NAT configuration}
 
-Let's take a look at a simple example of a basic static NAT
-configuration:
+Let's take a look at a simple example of a basic static NAT configuration:
 
 \begin{cli}
 ip nat inside source static 10.1.1.1 170.46.2.2
@@ -539,24 +507,22 @@ dynamically assigned address will then be returned to the pool. Cisco's
 default translation timeout is 86,400 seconds (24hours), but you can
 change that with the \texttt{ip\ nat\ translation\ timeout} command.
 
-Before we move on to the configuration section and actually use the
-commands I just talked about, let's go through a couple of NAT examples
-and see if you can figure out the best configuration to go with. To
-start, look at \protect\hyperlink{c13.xhtmlux5cux23figure13-4}{Figure
-13.4} and ask yourself two things: Where would you implement NAT in this
-design? What type of NAT would you configure?
-
+Before we move on to the configuration section and actually use the commands I just talked about,
+let's go through a couple of NAT examples and see if you can figure out the best configuration to go with.
+To start, look at \cref{fig:nat-example} and ask yourself two things:
+Where would you implement NAT in this design?
+What type of NAT would you configure?
 
 
 \begin{figure}
-\centering
-
-\caption{{\protect\hyperlink{c13.xhtmlux5cux23figureanchor13-4}{\textbf{FIGURE
-13.4}} NAT example}}
+   \centering
+   \includegraphics{images/c13f004.jpg}
+   \caption{NAT example}
+   \label{fig:nat-example}
 \end{figure}
 
-In \protect\hyperlink{c13.xhtmlux5cux23figure13-4}{Figure 13.4}, the NAT
-configuration would be placed on the corporate router, just as I
+
+In \cref{fig:nat-example}, the NAT configuration would be placed on the corporate router, just as I
 demonstrated with \cref{fig:where-configure-nat}, and the configuration would be dynamic NAT with overload (PAT).
 In this next NAT example, what type of NAT is being used?
 
@@ -571,27 +537,24 @@ address in the pool and there is no \texttt{overload} command at the end
 of our \texttt{ip\ nat\ inside\ source} command. This means we are not
 using PAT!
 
-In the next NAT example, refer to
-\protect\hyperlink{c13.xhtmlux5cux23figure13-5}{Figure 13.5} and see if
-you can come up with the configuration needed.
+In the next NAT example, refer to \cref{fig:another-nat-example} and see if you can come up with the configuration needed.
 
 \begin{figure}
 \centering
-
+   \includegraphics{images/c13f005.jpg}
 \caption{{\protect\hyperlink{c13.xhtmlux5cux23figureanchor13-5}{\textbf{FIGURE
 13.5}} Another NAT example}}
+   \label{fig:another-nat-example}
 \end{figure}
 
-\protect\hyperlink{c13.xhtmlux5cux23figure13-5}{Figure
-13.5} shows a border router that needs to be configured with NAT and
+\Cref{fig:another-nat-example} shows a border router that needs to be configured with NAT and
 allow the use of six public IP addresses to the inside locals,
 192.1.2.109 through 192.1.2.114. However, on the inside network, you
 have 62 hosts that use the private addresses of 192.168.10.65 through
 192.168.10.126. What would your NAT configuration be on the border
 router?
 
-Actually, two different answers would both work here, but the following
-would be my first choice based on the exam objectives:
+Actually, two different answers would both work here, but the following would be my first choice based on the exam objectives:
 
 \begin{cli}
 ip nat pool Todd 192.1.2.109 192.1.2.109 netmask 255.255.255.248

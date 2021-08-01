@@ -81,11 +81,8 @@ distance-vector protocols like RIPv2 and RIPv1.
 \end{table}
 
 
-I want you know that OSPF has many features beyond the few I've listed
-in \protect\hyperlink{c18.xhtmlux5cux23table18-1}{Table 18.1}, and all
-of them combine to produce a fast, scalable, robust protocol that's also
-flexible enough to be actively deployed in a vast array of production
-networks!
+I want you know that OSPF has many features beyond the few I've listed in \cref{tab:compare-ospf-rip},
+and all of them combine to produce a fast, scalable, robust protocol that's also flexible enough to be actively deployed in a vast array of production networks!
 
 One of OSPF's most useful traits is that its design is intended to be
 hierarchical in use, meaning that it allows us to subdivide the larger
@@ -110,83 +107,72 @@ Because free lunches are invariably hard to come by, all this wonderful
 functionality predictably comes at a price and doesn't exactly make
 configuring OSPF any easier. But no worries -- we'll crush it!
 
-Let's start by checking out
-\protect\hyperlink{c18.xhtmlux5cux23figure18-1}{Figure 18.1}, which
-shows a very typical, yet simple OSPF design. I really want to point out
-the fact that some routers connect to the backbone -- called area 0 -- the
+Let's start by checking out \cref{fig:ospf-design-example}, which shows a very typical, yet simple OSPF design.
+I really want to point out the fact that some routers connect to the backbone -- called area 0 -- the
 backbone area. OSPF absolutely must have an area 0, and all other areas
 should connect to it except for those connected via virtual links, which
 are beyond the scope of this book. A router that connects other areas to
-the backbone area within an AS is called an \emph{area border router
-(ABR)}, and even these must have at least one of their interfaces
+the backbone area within an AS is called an \emph{area border router}
+(ABR), and even these must have at least one of their interfaces
 connected to area 0.
 
 \begin{figure}
-\centering
-%\includegraphics{images/c18f001.jpg}
-\caption{{\protect\hyperlink{c18.xhtmlux5cux23figureanchor18-1}{\textbf{FIGURE
-18.1}} OSPF design example. An OSPF hierarchical design minimizes
-routing table entries and keeps the impact of any topology changes
-contained within a specific area.}}
+   \centering
+   \includegraphics[width=.6\textwidth]{images/c18f001.jpg}
+   \caption
+      [OSPF design example]
+      {OSPF design example -- An OSPF hierarchical design minimizes routing table entries and keeps the impact of any topology changes contained within a specific area.}
+   \label{fig:ospf-design-example}
 \end{figure}
 
 OSPF runs great inside an autonomous system, but it can also connect
 multiple autonomous systems together. The router that connects these ASs
-is called an \emph{autonomous system boundary router (ASBR)}. Ideally,
+is called an \emph{autonomous system boundary router} (ASBR). Ideally,
 your aim is to create other areas of networks to help keep route updates
 to a minimum, especially in larger networks. Doing this also keeps
 problems from propagating throughout the network, effectively isolating
 them to a single area.
 
-But let's pause here to cover some key OSPF terms that are really
-essential for you to nail down before we move on any further.
+But let's pause here to cover some key OSPF terms that are really essential for you to nail down before we move on any further.
 
-\subsubsection[OSPF
-Terminology]{\texorpdfstring{\protect\hypertarget{c18.xhtmlux5cux23c18-sec-2}{}{}\protect\hypertarget{c18.xhtmlux5cux23Page_749}{}{}OSPF
-Terminology}{OSPF Terminology}}
+
+
+\subsection{OSPF terminology}
 
 Imagine being given a map and compass with no prior concept of east,
 west, north or south -- not even what rivers, mountains, lakes, or
 deserts are. I'm guessing that without any ability to orient yourself in
 a basic way, your cool, new tools wouldn't help you get anywhere but
 completely lost, right? This is exactly why we're going to begin
-exploring OSPF by getting you solidly acquainted with a fairly long list
-of terms before setting out from base camp into the great unknown! Here
-are those vital terms to commit to memory now:
+exploring OSPF by getting you solidly acquainted with a fairly long list of terms before setting out from base camp into the great unknown!
+Here are those vital terms to commit to memory now:
 
-\textbf{Link} A \emph{link} is a network or router interface assigned to
-any given network. When an interface is added to the OSPF process, it's
-considered to be a link. This link, or interface, will have up or down
-state information associated with it as well as one or more IP
-addresses.
+\begin{description}
+\item[Link]
+   A \emph{link} is a network or router interface assigned to any given network.
+   When an interface is added to the OSPF process, it's considered to be a link.
+   This link, or interface, will have up or down state information associated with it as well as one or more IP addresses.
 
-\textbf{Router ID} The \emph{router ID (RID)} is an IP address used to
-identify the router. Cisco chooses the router ID by using the highest IP
-address of all configured loopback interfaces. If no loopback interfaces
-are configured with addresses, OSPF will choose the highest IP address
-out of all active physical interfaces. To OSPF, this is basically the
-``name'' of each router.
+\item[Router ID]
+   The \emph{router ID} (RID) is an IP address used to identify the router.%
+      \footnote{This is not correct. The router ID is \emph{not} an IP address but simply a 32-bit identifier that \emph{looks like} an IP address and by default is generated by using one of the IP addresses of the router.}
+   Cisco chooses the router ID by using the highest IP address of all configured loopback interfaces.
+   If no loopback interfaces are configured with addresses, OSPF will choose the highest IP address out of all active physical interfaces.
+   To OSPF, this is basically the ``name'' of each router.
 
-\textbf{Neighbor} \emph{Neighbors} are two or more routers that have an
-interface on a common network, such as two routers connected on a
-point-to-point serial link. OSPF neighbors must have a number of common
-configuration options to be able to successfully establish a neighbor
-relationship, and all of these options must be configured exactly the
-same way:
+\item[Neighbor]
+   \emph{Neighbors} are two or more routers that have an interface on a common network, such as two routers connected on a point-to-point serial link.
+   OSPF neighbors must have a number of common configuration options to be able to successfully establish a neighbor relationship,
+   and all of these options must be configured exactly the same way:
+   \begin{enumerate}
+   \item area ID
+   \item stub area flag
+   \item authentication password (if using one)
+   \item hello and dead intervals
+   \end{enumerate}
 
-\begin{enumerate}
-\item
-  Area ID
-\item
-  Stub area flag
-\item
-  Authentication password (if using one)
-\item
-  Hello and Dead intervals
-\end{enumerate}
-
-\textbf{Adjacency} An \emph{adjacency} is a relationship between two
-OSPF routers that permits the direct exchange of route updates. Unlike
+\item[Adjacency]
+   An \emph{adjacency} is a relationship between two OSPF routers that permits the direct exchange of route updates. Unlike
 EIGRP, which directly shares routes with all of its neighbors, OSPF is
 really picky about sharing routing information and will directly share
 routes only with neighbors that have also established adjacencies. And
@@ -196,8 +182,8 @@ networks, routers form adjacencies with designated and backup designated
 routers. In point-to-point and point-to-multipoint networks, routers
 form adjacencies with the router on the opposite side of the connection.
 
-\textbf{Designated router} A \emph{designated router (DR)} is elected
-whenever OSPF routers are connected to the same broadcast network to
+\item[Designated router]
+   A \emph{designated router} (DR) is elected whenever OSPF routers are connected to the same broadcast network to
 minimize the number of adjacencies formed and to publicize received
 routing information to and from the remaining routers on the broadcast
 network or link. Elections are won based upon a router's priority level,
@@ -206,40 +192,34 @@ a tie, the router ID will be used to break it. All routers on the shared
 network will establish adjacencies with the DR and the BDR, which
 ensures that all routers' topology tables are synchronized.
 
-\protect\hypertarget{c18.xhtmlux5cux23Page_750}{}{}\textbf{Backup
-designated router} A \emph{backup designated router (BDR)} is a hot
-standby for the DR on broadcast, or multi-access, links. The BDR
+\item[Backup designated router]
+   A \emph{backup designated router} (BDR) is a hot standby for the DR on broadcast, or multi-access, links. The BDR
 receives all routing updates from OSPF adjacent routers but does not
 disperse LSA updates.
 
-\textbf{Hello protocol} The OSPF Hello protocol provides dynamic
-neighbor discovery and maintains neighbor relationships. Hello packets
-and Link State Advertisements (LSAs) build and maintain the topological
-database. Hello packets are addressed to multicast address 224.0.0.5.
+\item[Hello protocol]
+   The OSPF Hello protocol provides dynamic neighbor discovery and maintains neighbor relationships.
+   Hello packets and Link State Advertisements (LSAs) build and maintain the topological database.
+   Hello packets are addressed to multicast address 224.0.0.5.
 
-\textbf{Neighborship database} The \emph{neighborship database} is a
-list of all OSPF routers for which Hello packets have been seen. A
-variety of details, including the router ID and state, are maintained on
-each router in the neighborship database.
+\item[Neighborship database]
+   The \emph{neighborship database} is a list of all OSPF routers for which Hello packets have been seen.
+   A variety of details, including the router ID and state, are maintained on each router in the neighborship database.
 
-\textbf{Topological database} The \emph{topological database} contains
-information from all of the Link State Advertisement packets that have
-been received for an area. The router uses the information from the
-topology database as input into the Dijkstra algorithm that computes the
-shortest path to every network.
+\item[Topological database]
+   The \emph{topological database} contains information from all of the Link State Advertisement packets that have been received for an area.
+   The router uses the information from the topology database as input into the Dijkstra algorithm that computes the shortest path to every network.
 
-\begin{note}
-LSA packets are used to update and maintain the topological database.
-\end{note}
+   \begin{note}
+   LSA packets are used to update and maintain the topological database.
+   \end{note}
 
-\textbf{Link State Advertisement} A \emph{Link State Advertisement
-(LSA)} is an OSPF data packet containing link-state and routing
-information that's shared among OSPF routers. An OSPF router will
-exchange LSA packets only with routers to which it has established
-adjacencies.
+\item[Link State Advertisement]
+   A \emph{Link State Advertisement} (LSA) is an OSPF data packet containing link-state and routing information that's shared among OSPF routers.
+   An OSPF router will exchange LSA packets only with routers to which it has established adjacencies.
 
-\textbf{OSPF areas} An \emph{OSPF area} is a grouping of contiguous
-networks and routers. All routers in the same area share a common area
+\item[OSPF areas]
+   An \emph{OSPF area} is a grouping of contiguous networks and routers. All routers in the same area share a common area
 ID. Because a router can be a member of more than one area at a time,
 the area ID is associated with specific interfaces on the router. This
 would allow some interfaces to belong to area 1 while the remaining
@@ -250,20 +230,19 @@ typically considered the backbone area. Areas also play a role in
 establishing a hierarchical network organization -- something that really
 enhances the scalability of OSPF!
 
-\textbf{Broadcast (multi-access)} \emph{Broadcast (multi-access)
-networks} such as Ethernet allow multiple devices to connect to or
+\item[Broadcast (multi-access)]
+   \emph{Broadcast (multi-access) networks} such as Ethernet allow multiple devices to connect to or
 access the same network, enabling a \emph{broadcast} ability in which a
 single packet is delivered to all nodes on the network. In OSPF, a DR
 and BDR must be elected for each broadcast multi-access network.
 
-\textbf{Nonbroadcast multi-access} \emph{Nonbroadcast multi-access
-(NBMA)} networks are networks such as Frame Relay, X.25, and
-Asynchronous Transfer Mode (ATM). These types of networks allow for
-multi-access without broadcast ability like Ethernet. NBMA networks
-require special OSPF configuration to function properly.
+\item[Nonbroadcast multi-access]
+   \emph{Nonbroadcast multi-access} (NBMA) networks are networks such as Frame Relay, X.25, and Asynchronous Transfer Mode (ATM).
+   These types of networks allow for multi-access without broadcast ability like Ethernet.
+   NBMA networks require special OSPF configuration to function properly.
 
-\protect\hypertarget{c18.xhtmlux5cux23Page_751}{}{}\textbf{Point-to-point}
-\emph{Point-to-point} refers to a type of network topology made up of a
+\item[Point-to-point]
+   \emph{Point-to-point} refers to a type of network topology made up of a
 direct connection between two routers that provides a single
 communication path. The point-to-point connection can be physical -- for
 example, a serial cable that directly connects two routers -- or logical,
@@ -271,13 +250,15 @@ where two routers thousands of miles apart are connected by a circuit in
 a Frame Relay network. Either way, point-to-point configurations
 eliminate the need for DRs or BDRs.
 
-\textbf{Point-to-multipoint} \emph{Point-to-multipoint} refers to a type
+\item[Point-to-multipoint]
+\emph{Point-to-multipoint} refers to a type
 of network topology made up of a series of connections between a single
 interface on one router and multiple destination routers. All interfaces
 on all routers share the point-to-multipoint connection and belong to
 the same network. Point-to-multipoint networks can be further classified
 according to whether they support broadcasts or not. This is important
 because it defines the kind of OSPF configurations you can deploy.
+\end{description}
 
 All of these terms play a critical role when you're trying to understand
 how OSPF actually works, so again, make sure you're familiar with each
@@ -285,9 +266,9 @@ of them. Having these terms down will enable you to confidently place
 them in their proper context as we progress on our journey through the
 rest of this chapter!
 
-\subsubsection[OSPF
-Operation]{\texorpdfstring{\protect\hypertarget{c18.xhtmlux5cux23c18-sec-3}{}{}OSPF
-Operation}{OSPF Operation}}
+
+
+\subsection{OSPF operation}
 
 Fully equipped with your newly acquired knowledge of the terms and
 technologies we just covered, it's now time to delve into how OSPF
@@ -298,12 +279,9 @@ internally really well.
 OSPF operation is basically divided into these three categories:
 
 \begin{enumerate}
-\item
-  Neighbor and adjacency initialization
-\item
-  LSA flooding
-\item
-  SPF tree calculation
+\item Neighbor and adjacency initialization
+\item LSA flooding
+\item SPF tree calculation
 \end{enumerate}
 
 The beginning neighbor/adjacency formation stage is a very big part of
@@ -311,14 +289,14 @@ OSPF operation. When OSPF is initialized on a router, the router
 allocates memory for it, as well as for the maintenance of both neighbor
 and topology tables. Once the router determines which interfaces have
 been configured for OSPF, it will then check to see if they're active
-and begin sending Hello packets as shown in
-\protect\hyperlink{c18.xhtmlux5cux23figure18-2}{Figure 18.2}.
+and begin sending Hello packets as shown in \cref{fig:hello-protocol}.
+
 
 \begin{figure}
-\centering
-%\includegraphics{images/c18f002.jpg}
-\caption{{\protect\hyperlink{c18.xhtmlux5cux23figureanchor18-2}{\textbf{FIGURE
-18.2}} The Hello protocol}}
+   \centering
+   \includegraphics[width=.4\textwidth]{images/c18f002.jpg}
+   \caption{The Hello protocol}
+   \label{fig:hello-protocol}
 \end{figure}
 
 The Hello protocol is used to discover neighbors, establish adjacencies,
@@ -326,14 +304,12 @@ and maintain relationships with other OSPF routers. Hello packets are
 periodically sent out of each enabled OSPF interface and in environments
 that support multicast.
 
-\protect\hypertarget{c18.xhtmlux5cux23Page_752}{}{}The address used for
-this is 224.0.0.5, and the frequency with which Hello packets are sent
+The address used for this is 224.0.0.5, and the frequency with which Hello packets are sent
 out depends upon the network type and topology. Broadcast and
 point-to-point networks send Hellos every 10 seconds, whereas
-non-broadcast and point-to-multipoint networks send them every 30
-seconds.
+non-broadcast and point-to-multipoint networks send them every 30 seconds.
 
-\paragraph{LSA Flooding}
+\subsubsection{LSA Flooding}
 
 \emph{LSA flooding} is the method OSPF uses to share routing
 information. Via Link State Updates (LSU's) packets, LSA information
@@ -369,7 +345,7 @@ Once the LSA updates have been flooded throughout the network, each
 recipient must acknowledge that the flooded update has been received.
 It's also important for recipients to validate the LSA update.
 
-\paragraph{SPF Tree Calculation}
+\subsubsection{SPF Tree Calculation}
 
 Within an area, each router calculates the best/shortest path to every
 network in that same area. This calculation is based upon the
@@ -429,7 +405,7 @@ I'll show you how to configure single-area OSPF.
 The two factors that are foundational to OSPF configuration are enabling
 OSPF and configuring OSPF areas.
 
-\subsubsection{Enabling OSPF}
+\subsection{Enabling OSPF}
 
 The easiest and also least scalable way to configure OSPF is to just use
 a single area. Doing this requires a minimum of two commands.
@@ -464,7 +440,7 @@ The OSPF process ID is needed to identify a unique instance of an OSPF database 
 \end{note}
 
 
-\subsubsection{Configuring OSPF areas}
+\subsection{Configuring OSPF areas}
 
 After identifying the OSPF process, you need to identify the interfaces
 that you want to activate OSPF communications on as well as the area in
@@ -529,7 +505,7 @@ range 0 to 4,294,967,295 or a value represented in standard
 dotted-decimal notation. For example, area 0.0.0.0 is a legitimate area
 and is identical to area 0.
 
-\paragraph{Wildcard Example}
+\subsubsection{Wildcard Example}
 
 Before getting down to configuring our network, let's take a quick peek
 at a more complex OSPF network configuration to find out what our OSPF
@@ -597,10 +573,9 @@ make sure you have a solid grip on this. The figure shows a three-router
 network with the IP addresses of each interface.
 
 \begin{figure}
-\centering
-%\includegraphics{images/c18f003.jpg}
-\caption{{\protect\hyperlink{c18.xhtmlux5cux23figureanchor18-3}{\textbf{FIGURE
-18.3}} Sample OSPF wildcard configuration}}
+   \centering
+   \includegraphics[width=.8\textwidth]{images/c18f003.jpg}
+   \caption{{\protect\hyperlink{c18.xhtmlux5cux23figureanchor18-3}{\textbf{FIGURE 18.3}} Sample OSPF wildcard configuration}}
 \end{figure}
 
 The very first thing you need to be able to do is to look at each
@@ -610,8 +585,7 @@ of the interface with the 0.0.0.0 wildcard?'' Well, you can, but we're
 paying attention to Cisco exam objectives here, not just what's easiest,
 remember?
 
-\protect\hypertarget{c18.xhtmlux5cux23Page_757}{}{}The IP addresses for
-each interface are shown in the figure. The Lab\_A router has two
+The IP addresses for each interface are shown in the figure. The Lab\_A router has two
 directly connected subnets: 192.168.10.64/29 and 10.255.255.80/30.
 Here's the OSPF configuration using wildcards:
 
@@ -650,9 +624,7 @@ address and mask of an interface. If you can't do that, you won't be
 able to configure OSPF using wildcards as I just demonstrated. So go
 over this until you're really comfortable with it!
 
-\subsubsection[Configuring Our Network with
-OSPF]{\texorpdfstring{\protect\hypertarget{c18.xhtmlux5cux23c18-sec-8}{}{}Configuring
-Our Network with OSPF}{Configuring Our Network with OSPF}}
+\subsection{Configuring our network with OSPF}
 
 Now we get to have some fun! Let's configure our internetwork with OSPF
 using just area 0. OSPF has an administrative distance of 110, but let's
@@ -664,20 +636,21 @@ simplest and easiest is to use the wildcard mask 0.0.0.0. But I want to
 demonstrate that we can configure each router differently with OSPF and
 still come up with the exact same result. This is one reason why OSPF is
 more fun and challenging than other routing protocols -- it gives us all
-a lot more ways to screw things up, which automatically provides
-\protect\hypertarget{c18.xhtmlux5cux23Page_758}{}{}a troubleshooting
+a lot more ways to screw things up, which automatically provides a troubleshooting
 opportunity! We'll use our network as shown in
-\protect\hyperlink{c18.xhtmlux5cux23figure18-4}{Figure 18.4} to
+\cref{fig:ospf-new-network-layout} to
 configure OSPF, and by the way, notice I added a new router!
 
+
 \begin{figure}
-\centering
-%\includegraphics{images/c18f004.jpg}
-\caption{{\protect\hyperlink{c18.xhtmlux5cux23figureanchor18-4}{\textbf{FIGURE
-18.4}} Our new network layout}}
+   \centering
+   \includegraphics[width=.6\textwidth]{images/c18f004.jpg}
+   \caption{Our new network layout}
+   \label{fig:ospf-new-network-layout}
 \end{figure}
 
-\paragraph{Corp}
+
+\subsubsection{Corp}
 
 Here's the Corp router's configuration:
 
@@ -722,14 +695,14 @@ matter which way you configure the network statement. Now, let's move on
 to SF. To simplify things, we're going to use our same sample
 configuration.
 
-\paragraph{SF}
+\subsubsection{SF}
 
 The SF router has two directly connected networks. I'll use the IP
 addresses on each interface to configure this router.
 
 \begin{cli}
-SF#sh ip int brief
-Interface    IP-Address      OK? Method Status                Protocol
+SF#show ip interface brief
+Interface        IP-Address      OK? Method Status                Protocol
 FastEthernet0/0  192.168.10.1    YES manual up                    up
 FastEthernet0/1  unassigned      YES unset  administratively down down
 Serial0/0/0      172.16.10.2     YES manual up                    up
@@ -739,21 +712,22 @@ SF(config)#no router rip
 SF(config)#router ospf 300
 SF(config-router)#network 192.168.10.1 0.0.0.0 area 0
 SF(config-router)#network 172.16.10.2 0.0.0.0 area 0
-*Apr 30 00:25:43.810: %OSPF-5-ADJCHG: Process 300, Nbr 172.16.10.5 on Serial0/0/0 from LOADING to FULL, Loading Done
+*Apr 30 00:25:43.810: %OSPF-5-ADJCHG: Process 300, Nbr 172.16.10.5 on
+Serial0/0/0 from LOADING to FULL, Loading Done
 \end{cli}
 
 Here, all I did was to first disable RIP, turn on OSPF routing process
 300, and then I added my two directly connected networks. Now let's move
 on to LA!
 
-\paragraph{LA}
+\subsubsection{LA}
 
 We're going to give some attention to the LA router that's directly
 connected to two networks:
 
 \begin{cli}
-LA#sh ip int brief
-Interface    IP-Address      OK? Method Status                Protocol
+LA#show ip interface brief
+Interface       IP-Address      OK? Method Status                Protocol
 FastEthernet0/0 192.168.20.1    YES manual up                    up
 FastEthernet0/1 unassigned      YES unset  administratively down down
 Serial0/0/0     unassigned      YES unset  administratively down down
@@ -762,12 +736,11 @@ LA#config t
 LA(config)#router ospf 100
 LA(config-router)#network 192.168.20.0 0.0.0.255 area 0
 LA(config-router)#network 172.16.0.0 0.0.255.255 area 0
-*Apr 30 00:56:37.090: %OSPF-5-ADJCHG: Process 100, Nbr 172.16.10.5 on Serial0/0/1 from LOADING to FULL, Loading Done
+*Apr 30 00:56:37.090: %OSPF-5-ADJCHG: Process 100, Nbr 172.16.10.5 on
+Serial0/0/1 from LOADING to FULL, Loading Done
 \end{cli}
 
-Remember that when you're configuring dynamic routing, using the
-\texttt{show\ ip\ int\ brief} command first will make it all so much
-easier!
+Remember that when you're configuring dynamic routing, using the \texttt{show\ ip\ interface\ brief} command first will make it all so much easier!
 
 And don't forget, I can use any process ID I want, as long as it's a
 value from 1 to 65,535, because it doesn't matter if all routers use the
@@ -777,13 +750,13 @@ example. Doing this works really well too.
 Okay, I want you to think about something for a second before we move
 onto more advanced OSPF topics: What if the Fa0/1 interface of the LA
 router was connected to a link that we didn't need OSPF running on, as
-shown in \protect\hyperlink{c18.xhtmlux5cux23figure18-5}{Figure 18.5}?
+shown in \cref{fig:ospf-add-non-ospf-network}?
 
 \begin{figure}
-\centering
-%\includegraphics{images/c18f005.jpg}
-\caption{{\protect\hyperlink{c18.xhtmlux5cux23figureanchor18-5}{\textbf{FIGURE
-18.5}} Adding a non-OSPF network to the LA router}}
+   \centering
+   \includegraphics[width=.5\textwidth]{images/c18f005.jpg}
+   \caption{Adding a non-OSPF network to the LA router}
+   \label{fig:ospf-add-non-ospf-network}
 \end{figure}
 
 You've seen this before because I demonstrated this already back in the
@@ -801,15 +774,13 @@ as an example on interface Fa0/1, which happens to be an interface we're
 not using in this network because I want OSPF to work on my other
 router's interfaces.
 
-\protect\hypertarget{c18.xhtmlux5cux23Page_761}{}{}Now it's time to
-configure our Corp router to advertise a default route to the SF and LA
+Now it's time to configure our Corp router to advertise a default route to the SF and LA
 routers because doing so will make our lives a lot easier. Instead of
 having to configure all our routers with a default route, we'll only
 configure one router and then advertise that this router is the one that
 holds the default route -- elegant!
 
-In \protect\hyperlink{c18.xhtmlux5cux23figure18-4}{Figure 18.4}, keep in
-mind that, for now, the corporate router is connected to the Internet
+In \cref{fig:ospf-new-network-layout}, keep in mind that, for now, the corporate router is connected to the Internet
 off of Fa0/0. We'll create a default route toward this imaginary
 Internet and then tell the other routers that this is the route they'll
 use to get to the Internet. Here is the configuration:
@@ -856,8 +827,7 @@ Boulder(config-router)#network 10.0.0.0 0.255.255.255 area 0
 
 This is all good, but I need to make sure that you don't follow my
 example to a tee because here, I just quickly brought a router up
-without setting my passwords first. I can
-\protect\hypertarget{c18.xhtmlux5cux23Page_762}{}{}get away with this
+without setting my passwords first. I can get away with this
 only because I am in a nonproduction network, so don't do this in the
 real world where security is key!
 
@@ -868,7 +838,7 @@ OSPF.
 
 
 
-\section{OSPF and Loopback Interfaces}
+\section{OSPF and loopback interfaces}
 
 It's really vital to configure loopback interfaces when using OSPF. In
 fact, Cisco suggests using them whenever you configure OSPF on a router
@@ -884,14 +854,13 @@ Loopback interfaces also come in very handy for diagnostic purposes as
 well as for OSPF configuration. Understand that if you don't configure a
 loopback interface on a router, the highest active IP address on a
 router will become that router's RID during bootup!
-\protect\hyperlink{c18.xhtmlux5cux23figure18-6}{Figure 18.6} illustrates
-how routers know each other by their router ID.
+\Cref{fig:ospf-router-id} illustrates how routers know each other by their router ID.
 
 \begin{figure}
 \centering
-%\includegraphics{images/c18f006.jpg}
-\caption{{\protect\hyperlink{c18.xhtmlux5cux23figureanchor18-6}{\textbf{FIGURE
-18.6}} OSPF router ID (RID)}}
+   \includegraphics[width=.6\textwidth]{images/c18f006.jpg}
+   \caption{OSPF router ID (RID)}
+   \label{fig:ospf-router-id}
 \end{figure}
 
 The RID is not only used to advertise routes, it's also used to elect
@@ -909,7 +878,7 @@ Remember -- the highest IP address of any logical interface will always become a
 Now it's time to show you how to configure these logical loopback interfaces and how to verify them, as well as verify RIDs.
 
 
-\subsubsection{Configuring loopback interfaces}
+\subsection{Configuring loopback interfaces}
 
 Configuring loopback interfaces rocks mostly because it's the easiest
 part of OSPF configuration, and we all need a break about now -- right?
@@ -919,8 +888,8 @@ First, let's see what the RID is on the Corp router with the
 \texttt{show\ ip\ ospf} command:
 
 \begin{cli}
-Corp#sh ip ospf
- Routing Process "ospf 1" with ID 172.16.10.5
+Corp#show ip ospf
+Routing Process "ospf 1" with ID 172.16.10.5
 [output cut]
 \end{cli}
 
@@ -929,9 +898,9 @@ of the router. So let's configure a loopback interface using a
 completely different IP addressing scheme:
 
 \begin{cli}
-Corp(config)#int loopback 0
+Corp(config)#interface loopback 0
 *Mar 22 01:23:14.206: %LINEPROTO-5-UPDOWN: Line protocol on Interface
-   Loopback0, changed state to up
+Loopback0, changed state to up
 Corp(config-if)#ip address 172.31.1.1 255.255.255.255
 \end{cli}
 
@@ -942,20 +911,20 @@ we want as long as the addresses are never the same on any two routers.
 Let's configure the other routers now:
 
 \begin{cli}
-SF#config t
-SF(config)#int loopback 0
+SF#configure terminal
+SF(config)#interface loopback 0
 *Mar 22 01:25:11.206: %LINEPROTO-5-UPDOWN: Line protocol on Interface
-   Loopback0, changed state to up
+Loopback0, changed state to up
 SF(config-if)#ip address 172.31.1.2 255.255.255.255
 \end{cli}
 
 Here's the configuration of the loopback interface on LA:
 
 \begin{cli}
-LA#config t
-LA(config)#int loopback 0
+LA#configure terminal
+LA(config)#interface loopback 0
 *Mar 22 02:21:59.686: %LINEPROTO-5-UPDOWN: Line protocol on Interface
-   Loopback0, changed state to up
+Loopback0, changed state to up
 LA(config-if)#ip address 172.31.1.3 255.255.255.255
 \end{cli}
 
@@ -967,14 +936,13 @@ save subnets. Notice how I was able to use 172.31.1.1, .2, .3, and .4?
 If I didn't use the /32, I'd have to use a separate subnet for each and
 every router -- not good!
 
-\protect\hypertarget{c18.xhtmlux5cux23Page_764}{}{}One important
-question to answer before we move on is did we actually change the RIDs
+One important question to answer before we move on is did we actually change the RIDs
 of our router by setting the loopback interfaces? Let's find out by
 taking a look at the Corp's RID:
 
 \begin{cli}
-Corp#sh ip ospf
- Routing Process "ospf 1" with ID 172.16.10.5
+Corp#show ip ospf
+Routing Process "ospf 1" with ID 172.16.10.5
 \end{cli}
 
 What happened here? You would think that because we set logical
@@ -992,8 +960,8 @@ it's the easier of the two options I have right now.
 Now let's look and see what our RID is:
 
 \begin{cli}
-Corp#sh ip ospf
- Routing Process "ospf 1" with ID 172.31.1.1
+Corp#show ip ospf
+Routing Process "ospf 1" with ID 172.31.1.1
 \end{cli}
 
 That did the trick! The Corp router now has a new RID, so I guess I'll
@@ -1107,9 +1075,7 @@ keep your eyes on the details!
 It's time to show you all the OSPF verification commands that you need
 in your toolbox for now.
 
-\subsubsection[The \emph{show ip ospf}
-Command]{\texorpdfstring{\protect\hypertarget{c18.xhtmlux5cux23c18-sec-12}{}{}The
-\emph{show ip ospf} Command}{The show ip ospf Command}}
+\subsection{The \texttt{show ip ospf} command}
 
 The \texttt{show\ ip\ ospf} command is what you'll need to display OSPF
 information for one or all OSPF processes running on the router.
@@ -1163,10 +1129,7 @@ address configured on the router. Hopefully, you also noticed that I set
 the RID of the corporate router to the highest IP address available with
 IPv4.
 
-\subsubsection[The \emph{show ip ospf database}
-Command]{\texorpdfstring{\protect\hypertarget{c18.xhtmlux5cux23c18-sec-13}{}{}The
-\emph{show ip ospf database}
-Command}{The show ip ospf database Command}}
+\subsection{The \texttt{show ip ospf database} command}
 
 Using the \texttt{show\ ip\ ospf\ database} command will give you
 information about the number of routers in the internetwork (AS) plus
@@ -1197,8 +1160,7 @@ Link ID         ADV Router      Age         Seq#       Checksum
 10.10.10.1      223.255.255.254 884         0x80000002 0x008CFE
 \end{cli}
 
-\protect\hypertarget{c18.xhtmlux5cux23Page_768}{}{}You can see all the
-routers and the RID of each router -- the highest IP address on each of
+You can see all the routers and the RID of each router -- the highest IP address on each of
 them. For example, the link ID and ADV router of my new Boulder router
 shows up twice: once with the directly connected IP address (10.10.10.2)
 and as the RID that I set under the OSPF process (172.31.1.4).
@@ -1207,10 +1169,7 @@ The router output shows the link ID -- remember that an interface is also
 a link -- and the RID of the router on that link under the ADV router, or
 advertising router.
 
-\subsubsection[The \emph{show ip ospf interface}
-Command]{\texorpdfstring{\protect\hypertarget{c18.xhtmlux5cux23c18-sec-14}{}{}The
-\emph{show ip ospf interface}
-Command}{The show ip ospf interface Command}}
+\subsection{The \texttt{show ip ospf interface} command}
 
 The \texttt{show\ ip\ ospf\ interface} command reveals all
 interface-related OSPF information. Data is displayed about OSPF
@@ -1240,7 +1199,6 @@ FastEthernet0/0 is up, line protocol is up
 \end{cli}
 
 So this command has given us the following information:
-
 \begin{enumerate}
 \item
   Interface IP address
@@ -1285,10 +1243,7 @@ interface. When this happens, you need to check your network statements
 because it means that the interface you're trying to verify is not in
 your OSPF process!
 
-\subsubsection[The \emph{show ip ospf neighbor}
-Command]{\texorpdfstring{\protect\hypertarget{c18.xhtmlux5cux23c18-sec-15}{}{}The
-\emph{show ip ospf neighbor}
-Command}{The show ip ospf neighbor Command}}
+\subsection{The \texttt{show ip ospf neighbor} command}
 
 The \texttt{show\ ip\ ospf\ neighbor} command is super-useful because it
 summarizes the pertinent OSPF information regarding neighbors and the
@@ -1306,13 +1261,8 @@ Neighbor ID     Pri   State      Dead Time   Address         Interface
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\subsubsection[\hfill\break
-An Admin Connects Two Disparate Routers Together with OSPF and the Link
-between them Never Comes
-Up]{\texorpdfstring{%\protect\includegraphics{images/c18inline02.png}\\
-An Admin Connects Two Disparate Routers Together with OSPF and the Link
-between them Never Comes
-Up}{ An Admin Connects Two Disparate Routers Together with OSPF and the Link between them Never Comes Up}}
+
+\subsection{An admin connects two disparate routers together with OSPF and the link between them never comes up}
 
 Quite a few years ago, an admin called me in a panic because he couldn't
 get OSPF working between two routers, one of which was an older router
@@ -1321,9 +1271,8 @@ be shipped to them.
 
 OSPF can be used in a multi-vendor network, so he was confused as to why
 this wasn't working. He turned on RIP and it worked, so he was super
-confused with why OSPF was
-\protect\hypertarget{c18.xhtmlux5cux23Page_770}{}{}not creating
-adjacencies. I had him use the \texttt{show\ ip\ ospf\ interface}
+confused with why OSPF was not creating adjacencies.
+I had him use the \texttt{show\ ip\ ospf\ interface}
 command to look at the link between the two routers and sure enough, the
 hello and dead timers didn't match. I had him configure the mismatched
 parameters so they would match, but it still wouldn't create an
@@ -1359,7 +1308,7 @@ point-to-point links and they show \texttt{FULL/\ -} . But we can still
 determine that the Corp router is fully adjacent to all three routers
 from its output.
 
-\subsubsection[The \emph{show ip protocols}
+\subsection[The \emph{show ip protocols}
 Command]{\texorpdfstring{\protect\hypertarget{c18.xhtmlux5cux23c18-sec-16}{}{}The
 \emph{show ip protocols} Command}{The show ip protocols Command}}
 
@@ -1441,7 +1390,7 @@ useful to be completely familiar with the output of each:
 
 
 
-\section{Written Lab}
+\section{Written lab}
 
 You can find the answers to this lab in Appendix A, ``Answers to Written
 Labs.''
@@ -1483,7 +1432,7 @@ routing.
 
 \begin{figure}
 \centering
-%\includegraphics{images/c18f007.jpg}
+   \includegraphics{images/c18f007.jpg}
 \caption{}
 \end{figure}
 
@@ -1525,7 +1474,7 @@ Lab\_C & Fa0/0 & 172.16.40.1\tabularnewline
 \bottomrule
 \end{longtable}
 
-\subsubsection[Hands-on Lab 18.1: Enabling the OSPF
+\subsection[Hands-on Lab 18.1: Enabling the OSPF
 Process]{\texorpdfstring{\protect\hypertarget{c18.xhtmlux5cux23c18-sec-21}{}{}Hands-on
 Lab 18.1: Enabling the OSPF
 Process}{Hands-on Lab 18.1: Enabling the OSPF Process}}
@@ -1565,7 +1514,7 @@ Lab_C (config-router)#^Z
 \end{cli}
 \end{enumerate}
 
-\subsubsection[Hands-on Lab 18.2: Configuring OSPF
+\subsection[Hands-on Lab 18.2: Configuring OSPF
 Interfaces]{\texorpdfstring{\protect\hypertarget{c18.xhtmlux5cux23c18-sec-22}{}{}Hands-on
 Lab 18.2: Configuring OSPF
 Interfaces}{Hands-on Lab 18.2: Configuring OSPF Interfaces}}
@@ -1615,7 +1564,7 @@ Lab_C#
 \end{cli}
 \end{enumerate}
 
-\subsubsection[Hands-on Lab 18.3: Verifying OSPF
+\subsection[Hands-on Lab 18.3: Verifying OSPF
 Operation]{\texorpdfstring{\protect\hypertarget{c18.xhtmlux5cux23c18-sec-23}{}{}Hands-on
 Lab 18.3: Verifying OSPF
 Operation}{Hands-on Lab 18.3: Verifying OSPF Operation}}
@@ -1691,7 +1640,7 @@ Review Questions.''
 
   \begin{figure}
   \centering
-  %\includegraphics{images/c18f008.jpg}
+      \includegraphics{images/c18f008.jpg}
   \caption{}
   \end{figure}
 
@@ -1750,7 +1699,7 @@ Review Questions.''
 
   \begin{figure}
   \centering
-  %\includegraphics{images/c18f009.jpg}
+      \includegraphics{images/c18f009.jpg}
   \caption{}
   \end{figure}
 
@@ -1920,7 +1869,7 @@ Ethernet0/0 is up, line protocol is up
 
   \begin{figure}
   \centering
-  %\includegraphics{images/c18f010.jpg}
+      \includegraphics{images/c18f010.jpg}
   \caption{}
   \end{figure}
 \item
