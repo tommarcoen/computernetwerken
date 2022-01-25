@@ -2,25 +2,15 @@
 \chapter[IP subnetting: examples]{IP subnetting: practical subnet design and address determination example}
 \label{chap:kozierok-ch19}
 
-When educators ask students what they consider to be the most confusing
-aspect in learning about networking, many say that it is IP address
-subnetting. While subnetting isn't all that difficult in concept, it can
-be a bit mind-boggling, in part due to the manipulations of binary
-numbers required. Many people understand the ideas behind subnetting but
-find it hard to follow the actual steps required to subnet a network.
+When educators ask students what they consider to be the most confusing aspect in learning about networking, many say that it is IP address subnetting.
+While subnetting isn't all that difficult in concept, it can be a bit mind-boggling, in part due to the manipulations of binary numbers required.
+Many people understand the ideas behind subnetting but find it hard to follow the actual steps required to subnet a network.
 
-For this reason, even though I explained the concepts behind subnetting
-in detail in the previous chapter, I felt it would be valuable to have
-another that provides a step-by-step look at how to perform custom
-subnetting. This chapter divides subnetting into five relatively
-straightforward stages that cover determining requirements; deciding how
-many bits to use for the subnet ID and host ID; and then determining
-important numbers such as the subnet mask, subnet addresses, and host
-addresses.
+For this reason, even though I explained the concepts behind subnetting in detail in the previous chapter, I felt it would be valuable to have another that provides a step-by-step look at how to perform custom subnetting.
+This chapter divides subnetting into five relatively straightforward stages that cover determining requirements; deciding how many bits to use for the subnet ID and host ID; and then determining important numbers such as the subnet mask, subnet addresses, and host addresses.
 
 My focus here is on showing the practical ``how'' of subnetting.
-The topics work through two examples using a class B and a class C sample network to show you how subnetting is
-done, and I am explicit in showing how everything is calculated.
+The topics work through two examples using a class B and a class C sample network to show you how subnetting is done, and I am explicit in showing how everything is calculated.
 This means the chapter is a bit number heavy.
 Also, I try not to duplicate conceptual issues covered in the previous chapter, though a certain amount of overlap does occur.
 Overall, if you are not familiar with how subnetting works at all, you will want to read the previous chapter first.
@@ -187,9 +177,8 @@ As \cref{fig:subnetting-class-c-options} shows, if you choose four bits for the 
 
 In some cases, especially with larger networks, you may have multiple choices.
 Consider, as a more interesting example, the larger class B network 166.113.0.0, where you have a total of 15 subnets and the largest has 450 hosts.
-%Examining the subnet summary table for class B (Table~18-4 in Chapter~18) suggests four acceptable options, as shown in Figure~19-3.
+Examining the subnet summary table for class B (Table~18-4 in Chapter~18) suggests four acceptable options, as shown in Figure~19-3.
 Using trial and error or a subnetting lookup table, one can determine four acceptable options, as shown in \cref{fig:subnetting-class-b-options}.
-
 
 \begin{figure}
    \centering
@@ -210,10 +199,8 @@ Usually, you want to pick something in the middle.
 If you use four bits for the subnet ID, this gives you a maximum of only 16 subnets, which limits growth in the number of subnets, since you already have 15.
 The same applies to the choice of seven bits for the subnet ID, since you already have 450 hosts in one subnet now, and that limits you to 510.
 Thus, you probably want either five or six bits here.
-If you expect more growth in the number of hosts in the largest subnet, you
-should choose five bits; if you expect more growth in the number of
-subnets, you should choose six bits. If you're unsure, it's probably
-best to assume more growth in the number of hosts per subnet, so here you would choose five bits.
+If you expect more growth in the number of hosts in the largest subnet, you should choose five bits; if you expect more growth in the number of subnets, you should choose six bits.
+If you're unsure, it's probably best to assume more growth in the number of hosts per subnet, so here you would choose five bits.
 
 The converse problem may also occur: You may be in a position where
 there don't appear to be any options -- no rows in the summary table
@@ -809,3 +796,4 @@ In closing, remember the following quick summary when working with IP addresses 
    \item
       Subnetting is fun! (Okay, okay, sorry\ldots)
 \end{itemize}
+

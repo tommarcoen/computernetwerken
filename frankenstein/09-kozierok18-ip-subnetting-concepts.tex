@@ -4,15 +4,14 @@
 
 In the previous chapter, we looked at the original classful IP
 addressing scheme, which conceptually divides a large internetwork into
-a simple two-level hierarchy that includes many {\emph{networks}} of
-different sizes, each of which contains a number of {\emph{hosts}}. The
-system works well for smaller organizations that may connect all their
+a simple two-level hierarchy that includes many \emph{networks} of
+different sizes, each of which contains a number of \emph{hosts}.
+The system works well for smaller organizations that may connect all their
 machines in a single network. However, it lacks flexibility for large
 organizations that often have many subnetworks, or {\emph{subnets}}. To
 better meet the administrative and technical requirements of larger
 organizations, the classful IP addressing system was enhanced through a
-technique known as {\emph{subnet addressing}}, or more simply,
-{\emph{subnetting}}.
+technique known as {\emph{subnet addressing}}, or more simply, \emph{subnetting}.
 
 In this chapter, I describe the concepts and general techniques
 associated with IP subnet addressing. I begin with an overview of
@@ -116,9 +115,8 @@ ID and host ID, you now also have a {\emph{subnet ID}} to be concerned
 with. The size of the subnet ID can vary for each network, so an
 additional piece of information is needed to supplement the IP address
 to indicate what part of the address is the subnet ID and what part is
-the host ID. This is a 32-bit number commonly called a {\emph{subnet
-mask}}. The mask is used both for calculating subnet and host addresses,
-and by routers for determining how to move IP datagrams around a
+the host ID. This is a 32-bit number commonly called a \emph{subnet mask}.
+The mask is used both for calculating subnet and host addresses, and by routers for determining how to move IP datagrams around a
 subnetted network.
 
 Routing changes because of the additional level of hierarchy. In regular
@@ -126,10 +124,8 @@ classful addressing, when a router receives an IP datagram, it only
 needs to decide if the destination is on the same network or a different
 network. Under subnetting, it must also look at the subnet ID of the
 destination and make one of three choices: same subnet, different subnet
-on the same network, or different network. Changes are also required to
-routing protocols, such as the Routing Information Protocol (RIP; see
-\protect\hyperlink{ch38.html}{Chapter~38}), to deal with subnets and
-subnet masks.
+on the same network, or different network.
+Changes are also required to routing protocols, such as the Routing Information Protocol (RIP; see \vref{sec:rip}), to deal with subnets and subnet masks.
 
 
 \begin{keyconcept}
@@ -244,10 +240,9 @@ many bits belong to each simply by looking at the IP address.
 In a subnetting environment, the additional information about which bits
 are for the subnet ID and which are for the host ID must be communicated
 to devices that interpret IP addresses. This information is given in the
-form of a 32-bit binary number called a {\emph{subnet mask}}. The term
-{\emph{mask}} comes from the binary mathematics concept called
-{\emph{bit
-masking}}. This is a technique where a special pattern of ones and zeros
+form of a 32-bit binary number called a {\emph{subnet mask}}.
+The term \emph{mask} comes from the binary mathematics concept called \emph{bit masking}.
+This is a technique where a special pattern of ones and zeros
 can be used in combination with boolean functions such as AND and OR to
 select or clear certain bits in a number. (I explain bit masking in the
 background section on binary numbers and mathematics, in \vref{chap:binary}.)
@@ -452,8 +447,7 @@ A, B, or C network has ones for each bit that is used for the network ID
 or subnet ID and zeros for the host ID bits. Of course, I just said you
 aren't subnetting, so there {\emph{are}} no subnet ID bits! Thus, the
 subnet mask for this default case has ones for the network ID portion
-and zeros for the host ID portion. This is called the {\emph{default
-subnet mask}} for each of the IP address classes.
+and zeros for the host ID portion. This is called the \emph{default subnet mask} for each of the IP address classes.
 
 Since class A, B, and C divide the network ID from the host ID on octet
 boundaries, the subnet mask will always have all ones or all zeros in an
@@ -536,12 +530,9 @@ host ID represents a fundamental trade-off in subnet addressing:
 
 \begin{itemize}
 \item
-  Each bit taken from the host ID for the subnet ID doubles the number
-  of subnets that are possible in the network.
+   Each bit taken from the host ID for the subnet ID doubles the number of subnets that are possible in the network.
 \item
-  Each bit taken from the host ID for the subnet ID (approximately)
-  halves the number of hosts that are possible within each subnet on the
-  network.
+   Each bit taken from the host ID for the subnet ID (approximately) halves the number of hosts that are possible within each subnet on the network.
 \end{itemize}
 
 For example, say you start with a class B network with the network
@@ -570,9 +561,8 @@ host ID bits is the key design decision in subnetting. You make your
 choice based on the number of subnets in the network, and also on the
 maximum number of hosts that need to be assigned to each subnet in the
 network. For example, if you have 10 total subnets for your class B
-network, you need 4 bits to represent this, because 2\textsuperscript{4}
-is 16 while 2\textsuperscript{3} is only 8. This leaves 12 bits for the
-host ID, for a maximum of 4,094 hosts per subnet.
+network, you need 4 bits to represent this, because $2^4$ is 16 while $2^3$ is only 8.
+This leaves 12 bits for the host ID, for a maximum of 4,094 hosts per subnet.
 
 However, suppose instead that you have 20 subnets. If so, 4 bits for
 subnet ID won't suffice; you need 5 bits ($2^{5}=32$).
