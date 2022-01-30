@@ -5,8 +5,8 @@ It's time now to turn our focus toward the core topic of the ubiquitous IP routi
 It's integral to networking because it pertains to all routers and configurations that use it, which is easily the lion's share.
 IP routing is basically the process of moving packets from one network to another network using routers.
 %And by routers, I mean Cisco routers, of course!
-However, the terms \emph{router} and \emph{layer 3 device} are interchangeable, and throughout this chapter when I use the term \emph{router},
-I am referring to any layer 3 device.
+However, the terms \emph{router} and \emph{layer~3 device} are interchangeable, and throughout this chapter when I use the term \emph{router},
+I am referring to any layer~3 device.
 
 Before jumping into this chapter, I want to make sure you understand the difference between a \emph{routing protocol} and a \emph{routed protocol}.
 Routers use routing protocols to dynamically find all networks within the greater internetwork and to ensure that all routers have the same routing table.
@@ -151,8 +151,7 @@ which interface will a packet with a destination address of 10.10.10.14
 be forwarded from?
 
 \begin{cli}
-Lab_A#show ip route
-[output cut]
+Lab_A#show ip route | begin Gateway
 Gateway of last resort is not set
 C      10.10.10.16/28 is directly connected, FastEthernet0/0
 L      10.10.10.17/32 is directly connected, FastEthernet0/0
@@ -510,7 +509,7 @@ problem.''
    This solution was created to make the slow performance of process switching faster and more efficient. Fast
 switching uses a cache to store the most recently used destinations so
 that lookups are not required for every packet. By caching the exit
-interface of the destination device, as well as the layer 2 header,
+interface of the destination device, as well as the layer~2 header,
 performance was dramatically improved, but as our networks evolved with
 the need for even more speed, Cisco created yet another technology!
 
@@ -641,19 +640,19 @@ Referring to \cref{fig:basic-ip-routing}, here's a list of all the answers to qu
 
 \begin{enumerate}
 \item
-   In order to begin communicating with the Sales server, Host 4 sends out an ARP request.
+   In order to begin communicating with the Sales server, Host~4 sends out an ARP request.
    How will the devices exhibited in the topology respond to this request?
 \item
-  Host 4 has received an ARP reply. Host 4 will now build a packet, then
+  Host~4 has received an ARP reply. Host~4 will now build a packet, then
   place this packet in the frame. What information will be placed in the
-  header of the packet that leaves Host 4 if Host 4 is going to
+  header of the packet that leaves Host~4 if Host~4 is going to
   communicate to the Sales server?
 \item
   The Lab~A router has received the packet and will send it out Fa0/0
   onto the LAN toward the server. What will the frame have in the header
   as the source and destination addresses?
 \item
-  Host 4 is displaying two web documents from the Sales server in two
+  Host~4 is displaying two web documents from the Sales server in two
   browser windows at the same time. How did the data find its way to the
   correct browser windows?
 \end{enumerate}
@@ -666,16 +665,16 @@ were just presented:
 
 \begin{enumerate}
 \item
-  In order to begin communicating with the server, Host 4 sends out an
+  In order to begin communicating with the server, Host~4 sends out an
   ARP request. How will the devices exhibited in the topology respond to
   this request? Since MAC addresses must stay on the local network, the
   Lab~B router will respond with the MAC address of the Fa0/0 interface
-  and Host 4 will send all frames to the MAC address of the Lab~B Fa0/0
+  and Host~4 will send all frames to the MAC address of the Lab~B Fa0/0
   interface when sending packets to the Sales server.
 \item
-  Host 4 has received an ARP reply. Host 4 will now build a packet, then
+  Host~4 has received an ARP reply. Host~4 will now build a packet, then
   place this packet in the frame. What information will be placed in the
-  header of the packet that leaves Host 4 if Host 4 is going to
+  header of the packet that leaves Host~4 if Host~4 is going to
   communicate to the Sales server? Since we're now talking about
   packets, not frames, the source address will be the IP address of Host
   4 and the destination address will be the IP address of the Sales
@@ -689,7 +688,7 @@ were just presented:
   address will be the Sales server's MAC address because all MAC
   addresses must be local on the LAN.
 \item
-  Host 4 is displaying two web documents from the Sales server in two
+  Host~4 is displaying two web documents from the Sales server in two
   different browser windows at the same time. How did the data find its
   way to the correct browser windows? TCP port numbers are used to
   direct the data to the correct application window.
@@ -698,7 +697,7 @@ were just presented:
 Great! But we're not quite done yet. I've got a few more questions for
 you before you actually get to configure routing in a real network.
 Ready?
-\Cref{fig:basic-routing-test} shows a basic network, and Host 4 needs to get email.
+\Cref{fig:basic-routing-test} shows a basic network, and Host~4 needs to get email.
 Which address will be placed in the destination address field of the frame when it leaves Host~4?
 
 \begin{figure}
@@ -708,33 +707,33 @@ Which address will be placed in the destination address field of the frame when 
    \label{fig:basic-routing-test}
 \end{figure}
 
-The answer is that Host 4 will use the destination MAC address of the
+The answer is that Host~4 will use the destination MAC address of the
 Fa0/0 interface on the Lab~B router -- you knew that, right? Look at
 \cref{fig:basic-routing-test} again: What
-if Host 4 needs to communicate with Host 1 -- not the server, but with
-Host 1. Which OSI layer 3 source address will be found in the packet
-header when it reaches Host 1?
+if Host~4 needs to communicate with Host~1 -- not the server, but with
+Host~1. Which OSI layer~3 source address will be found in the packet
+header when it reaches Host~1?
 
-Hopefully you've got this: At layer 3, the source IP address will be
-Host 4 and the destination address in the packet will be the IP address
-of Host 1. Of course, the destination MAC address from Host 4 will
+Hopefully you've got this: At layer~3, the source IP address will be
+Host~4 and the destination address in the packet will be the IP address
+of Host~1. Of course, the destination MAC address from Host~4 will
 always be the Fa0/0 address of the Lab~B router, right? And since we
 have more than one router, we'll need a routing protocol that
 communicates between both of them so that traffic can be forwarded in
-the right direction to reach the network that Host 1 is connected to.
+the right direction to reach the network that Host~1 is connected to.
 
 Okay -- one more scenario and you're on your way to being an IP routing
 machine! Again, using
-\cref{fig:basic-routing-test}, Host 4 is
+\cref{fig:basic-routing-test}, Host~4 is
 transferring a file to the email server connected to the Lab~A router.
-What would be the layer 2 destination address leaving Host 4? Yes, I've
+What would be the layer~2 destination address leaving Host~4? Yes, I've
 asked this question more than once. But not this one: What will be the
 source MAC address when the frame is received at the email server?
 
 Hopefully, you
-answered that the layer 2 destination address leaving Host 4 is the MAC
+answered that the layer~2 destination address leaving Host~4 is the MAC
 address of the Fa0/0 interface on the Lab~B router and that the source
-layer 2 address that the email server will receive is the Fa0/0
+layer~2 address that the email server will receive is the Fa0/0
 interface of the Lab~A router.
 
 If you did, you're ready to discover how IP routing is handled in a
@@ -1033,10 +1032,10 @@ SF#
 
 Now that both ends of the serial link are configured, the link comes up.
 Remember, the up/up status for the interfaces are Physical/Data Link
-layer status indicators that don't reflect the layer 3 status! I ask
+layer status indicators that don't reflect the layer~3 status! I ask
 students in my classes, ``If the link shows up/up, can you ping the
 directly connected network?'' And they say, ``Yes!'' The correct answer
-is, ``I don't know,'' because we can't see the layer 3 status with this
+is, ``I don't know,'' because we can't see the layer~3 status with this
 command. We only see layers 1 and 2 and verify that the IP addresses
 don't have a typo. This is really important to understand!
 
@@ -1110,9 +1109,7 @@ see the 192.168.10.0 network because we don't have any routing
 configured yet -- routers see only directly connected networks by
 default.
 
-\subsection[LA
-Configuration]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-8}{}{}LA
-Configuration}{LA Configuration}}
+\subsection{LA Configuration}
 
 To configure LA, we're going to do pretty much the same thing we did
 with the other two routers. There are two interfaces to deal with,
@@ -1172,7 +1169,7 @@ want to do one more thing on the SF and LA routers -- since this is a
 very small network, let's build a DHCP server on the Corp router for
 each LAN.
 
-\subsubsection{Configuring DHCP on Our Corp Router}
+\subsubsection{Configuring DHCP on our corp router}
 
 While it's true that I could approach this task by going to each remote
 router and creating a pool, why bother with all that when I can easily
@@ -1697,17 +1694,17 @@ our DHCP server with a few of the commands you learned back in Chapter
 \begin{cli}
 Corp#show ip dhcp binding
 Bindings from all pools not associated with VRF:
-IP address          Client-ID/              Lease expiration        Type
-                    Hardware address/
-                    User name
-192.168.10.8        0063.6973.636f.2d30.    Sept 16 2013 10:34 AM    Automatic
-                    3035.302e.3062.6330.
-                    2e30.3063.632d.4574.
-                    30
-192.168.20.4        0063.6973.636f.2d30.    Sept 16 2013 10:46 AM    Automatic
-                    3030.322e.3137.3632.
-                    2e64.3032.372d.4574.
-                    30
+IP address     Client-ID/             Lease expiration        Type
+               Hardware address/
+               User name
+192.168.10.8   0063.6973.636f.2d30.   Sept 16 2013 10:34 AM   Automatic
+               3035.302e.3062.6330.
+               2e30.3063.632d.4574.
+               30
+192.168.20.4   0063.6973.636f.2d30.   Sept 16 2013 10:46 AM   Automatic
+               3030.322e.3137.3632.
+               2e64.3032.372d.4574.
+               30
 \end{cli}
 
 We can see from earlier that our little DHCP server is working!
@@ -2101,10 +2098,8 @@ Corp(config-router)#passive-interface FastEthernet 0/1
 This command will stop RIP updates from being propagated out of
 FastEthernet interface 0/1, but it can still receive RIP updates.
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-%\includegraphics{images/globe1.png}\\
-\textbf{Should We Really Use RIP in an Internetwork?}
+\begin{backgroundinfo}
+\textbf{Should we really use RIP in an internetwork?}
 
 You have been hired as a consultant to install a couple of Cisco routers
 into a growing network. They have a couple of old Unix routers that they
@@ -2120,14 +2115,13 @@ throughout the whole internetwork!
 You can do what is called \emph{redistribution}, which is basically
 translating from one type of routing protocol to another. This means
 that you can support those old routers using RIP but use something much
-better like Enhanced IGRP on the rest of your network.
+better like EIGRP on the rest of your network.
 
 This will prevent RIP routes from being sent all over the internetwork
 gobbling up all that precious bandwidth!
+\end{backgroundinfo}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\subsubsection{Advertising a Default Route Using RIP}
+\subsubsection{Advertising a default route Using RIP}
 
 Now I'm going to guide you through how to advertise a way out of your
 autonomous system to other routers, and you'll see this is completed the
@@ -2220,19 +2214,20 @@ on an internetwork, which is not very well!
 
 \section{Exam essentials}
 
-\textbf{Describe the basic IP routing process.} You need to remember
-that the frame changes at each hop but that the packet is never changed
+\begin{description}
+\item[Describe the basic IP routing process.]
+You need to remember that the frame changes at each hop but that the packet is never changed
 or manipulated in any way until it reaches the destination device (the
 TTL field in the IP header is decremented for each hop, but that's it!).
 
-\textbf{List the information required by a router to successfully route
-packets.} To be able to route packets, a router must know, at a minimum,
+\item[List the information required by a router to successfully route packets.]
+To be able to route packets, a router must know, at a minimum,
 the destination address, the location of neighboring routers through
 which it can reach remote networks, possible routes to all remote
 networks, the best route to each remote network, and how to maintain and
 verify routing information.
 
-\textbf{Describe how MAC addresses are used during the routing process.}
+\item[Describe how MAC addresses are used during the routing process.]
 A MAC (hardware) address will only be used on a local LAN. It will never
 pass a router's interface. A frame uses MAC (hardware) addresses to send
 a packet on a LAN. The frame will take the packet to either a host on
@@ -2241,58 +2236,57 @@ network). As packets move from one router to another, the MAC addresses
 used will change, but normally the original source and destination IP
 addresses within the packet will not.
 
-\textbf{View and interpret the routing table of a router.} Use the
-\texttt{show\ ip\ route} command to view the routing table. Each route
-will be listed along with the source of the routing information. A
-\texttt{C} to the left of the route will indicate directly connected
+\item[View and interpret the routing table of a router.}
+Use the \texttt{show\ ip\ route} command to view the routing table.
+Each route will be listed along with the source of the routing information.
+A \texttt{C} to the left of the route will indicate directly connected
 routes, and other letters next to the route can also indicate a
 particular routing protocol that provided the information, such as, for
 example, \texttt{R} for RIP.
 
-\textbf{Differentiate the three types of routing.} The three types of
-routing are static (in which routes are manually configured at the CLI),
+\item[Differentiate the three types of routing.]
+The three types of routing are static (in which routes are manually configured at the CLI),
 dynamic (in which the routers share routing information via a routing
 protocol), and default routing (in which a special route is configured
 for all traffic without a more specific destination network found in the
 table).
 
-\protect\hypertarget{c09.xhtmlux5cux23Page_400}{}{}\textbf{Compare and
-contrast static and dynamic routing.} Static routing creates no routing
-update traffic and creates less overhead on the router and network
-links, but it must be configured manually and does not have the ability
-to react to link outages. Dynamic routing creates routing update traffic
-and uses more overhead on the router and network links.
+\item[Compare and contrast static and dynamic routing.]
+Static routing creates no routing update traffic and creates less overhead on the router and network
+links, but it must be configured manually and does not have the ability to react to link outages.
+Dynamic routing creates routing update traffic and uses more overhead on the router and network links.
 
-\textbf{Configure static routes at the CLI.} The command syntax to add a
-route is
+\item[Configure static routes at the CLI.]
+The command syntax to add a route is
 \texttt{ip\ route\ {[}destination\_network{]}\ {[}mask{]}\ {[}next-hop~address\ or\ exitinterface{]}\ {[}administrative\_distance{]}\ {[}permanent{]}}.
 
-\textbf{Create a default route.} To add a default route, use the command
+\item[Create a default route.]
+To add a default route, use the command
 syntax \texttt{ip\ route\ 0.0.0.0\ 0.0.0.0} \texttt{ip-address} or
 \texttt{exit\ interface\ type\ and\ number}.
 
-\textbf{Understand administrative distance and its role in the selection
-of the best route.} Adminis­trative distance (AD) is used to rate the
+\item[Understand administrative distance and its role in the selection of the best route.]
+Adminis­trative distance (AD) is used to rate the
 trustworthiness of routing information received on a router from a
 neighbor router. Administrative distance is an integer from 0 to 255,
 where 0 is the most trusted and 255 means no traffic will be passed via
 this route. All routing protocols are assigned a default AD, but it can
 be changed at the CLI.
 
-\textbf{Differentiate distance-vector, link-state, and hybrid routing
-protocols.} Distance-vector routing protocols make routing decisions
+\item[Differentiate distance-vector, link-state, and hybrid routing protocols.]
+Distance-vector routing protocols make routing decisions
 based on hop count (think RIP), while link-state routing protocols are
 able to consider multiple factors such as bandwidth available and
 building a topology table. Hybrid routing protocols exhibit
 characteristics of both types.
 
-\textbf{Configure RIPv2 routing.} To configure RIP routing, first you
-must be in global configuration mode and then you type the command
+\item[Configure RIPv2 routing.]
+To configure RIP routing, first you must be in global configuration mode and then you type the command
 \texttt{router\ rip}. Then you add all directly connected networks,
 making sure to use the classful address and the \texttt{version\ 2}
 command and to disable auto-summarization with the
 \texttt{no\ auto-summary} command.
-
+\end{description}
 
 
 \section{Written lab}
@@ -2397,10 +2391,7 @@ choose to add that LAN into the labs if necessary. Also, if you have
 enough LAN interfaces, then you don't need to add the serial interfaces
 into this lab. Using all LAN interfaces is fine.
 
-\subsection[Hands-on Lab 9.1: Creating Static
-Routes]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-21}{}{}Hands-on
-Lab 9.1: Creating Static
-Routes}{Hands-on Lab 9.1: Creating Static Routes}}
+\subsection{Hands-on lab 9.1: Creating static routes}
 
 In this lab, you will create a static route in all three routers so that
 the routers see all networks. Verify with the Ping program when
@@ -2463,10 +2454,7 @@ Lab_C(config)#ip route 172.16.20.0 255.255.255.0
   router. If it is set up correctly, it will work.
 \end{enumerate}
 
-\subsection[Hands-on Lab 9.2: Configuring RIP
-Routing]{\texorpdfstring{\protect\hypertarget{c09.xhtmlux5cux23c09-sec-22}{}{}Hands-on
-Lab 9.2: Configuring RIP
-Routing}{Hands-on Lab 9.2: Configuring RIP Routing}}
+\subsection{Hands-on lab 9.2: Configuring RIP routing}
 
 In this lab, we will use the dynamic routing protocol RIP instead of
 static routing.
