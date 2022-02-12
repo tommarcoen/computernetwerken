@@ -1,32 +1,143 @@
-\section*{Inleiding}
+\section{Inleiding}
+
+De term \emph{computernetwerk} bestaat uit twee woorden: ``computer'' en ``netwerk.''
+Wikipedia definiëert een \emph{computer} als een ``apparaat waarmee gegevens volgens formele procedures verwerkt kunnen worden.''
+Dat is echter een nogal vage definitie.
+Gelukkig hebben we allemaal wel een goed idee van wat een computer is: een laptop of desktop computer.
+Maar ook servers, netwerkprinters, tablets en gsm-toestellen zijn volwaardige computers.
+Meer nog, tegenwoordig zit er zelfs een computer in je auto of het mengpaneel van een muziekinstallatie!
+
+Een \emph{netwerk} is, volgens Wikipedia, een ``systeem voor communicatie tussen twee of meer computers.''
+Hier denken we dan misschien meteen aan het wireless netwerk of de ``internetkabel'' op kantoor of bij je thuis;
+maar je kan ook netwerken maken met infrarood (IrDA), bluetooth of 5G.
+Glasvezel, ADSL en coax zijn ook voorbeelden van computernetwerken.
 
 
-\begin{frame}{Communicatie tussen computers}
-\begin{center}
-\includegraphics<presentation>[width=\textwidth]{images/http-request.png}
-\includegraphics<article>[width=.65\textwidth]{images/http-request.png}
-\end{center}
-\end{frame}
 
-\mode<article>{
-We beginnen met het voorbeeld dat een computer, de \emph{client}, een webpagina wilt ophalen bij een webserver.
+\subsection{Netwerkprotocollen}
+
+Een protocol is, om weeral Wikipedia te citeren, een ``gedragsovereenkomst, meestal in de vorm van een aantal uit te voeren stappen.''
+Het vormt dus een set regels waar twee computers zich aan willen houden, als ze met elkaar willen communiceren.
+We kunnen dit vergelijken met enkele gedragsregels uit het dagelijks leven.
+Als je een nieuw persoon ontmoet, schud je elkaar de hand en stel je jezelf kort voor.%
+  \footnote{Covid-19 heeft er voor gezorgd dat er een ander protocol gebruikt wordt in deze (en vele andere) situatie.}
+In de klas zwijgt iedereen zodat de docent zijn uitleg kan doen.
+Als je een vraag wil stellen, steek je de hand omhoog en wacht je tot de docent stopt met praten en jou aanduidt zodat jij aan het woord mag.
+Als je de koning mag ontmoeten, moet je een heel nieuw protocol leren voor de interactie.
+
+Computernetwerken gebruiken ook verschillende protocollen.
+Enkele protocollen die we in deze cursus (kort) zullen behandelen, zijn
+IPv4 en IPv6, TCP en UDP, Ethernet en ARP.
+Enkele protocollen die niet meer gebruikt worden in computernetwerken, zijn IPX, SPX en AppleTalk.
+
+
+
+\subsection{Evolutie in netwerken}
+
+De eerste \emph{mainframes} stammen uit de jaren 50.
+De gegevens werden oorspronkelijk ingevoerd met gegevensdragers als ponskaarten, ponsbanden en magneetbanden.
+In de jaren 70 werden op enige schaal terminals aan mainframes aangesloten, aanvankelijk schrijfmachineterminals en later ook beeldschermen.
+
+In 1971 werd ALOHAnet in gebruik genomen in Hawaï.
+Dit was het eerste draadloos computernetwerk.
+In 1973--74 werd Ethernet ontwikkeld op basis van dit draadloos netwerk.
+Ethernet gebruikte eerst thicknet (1982), daarna thinnet (1983), en vervolgens twisted pair (1984).
+Concurrerende protocollen waren Token Ring (1984) en FDDI (1987).
+Begin jaren 90 kwamen de Ethernetswitches en verdrong Ethernet vrij snel alle andere protocollen.
+
+
+
+\subsection{Netwerktopologieën}
+
+De meet eenvoudige topologie is een point-to-pointverbinding tussen twee computers door beide computers rechtstreeks met elkaar te verbindinen met een kabel.
+Deze topologie schaalt echter niet goed.
+Voorbeelden van kabels zijn een seriële kabel, een coax\-kabel of een UTP-kabel.
+
+Thick- en thinnet gebruikten beide een fysieke busstructuur waarbij alle computers op één lange kabel geprikt werden.
+Beide standaarden gebruikten coax (echter van een andere dikte, vandaar de namen) maar beide gebruikten een andere manier om de computers met het netwerk te verbinden.
+Thicknet gebruikte ``vampire taps'' terwijl thinnet BNC-koppelstukken gebruikte.%
+   \footnote{Er was ook een N-connector beschikbaar voor Thicknet maar deze werd blijkbaar amper gebruikt (\href{http://www.mattmillman.com/projects/10base5/}{bron}).}
+
+Hoewel Token Ring een fysieke stertopologie had -- met een centrale media access unit (MAU) -- vormden de kabels een ringtopologie.
+Hubs en switches vormen ook een fysieke stertopologie.
+Een hub werkt functioneel zoals thinnet en vormt aldus een logische busstructuur terwijl een switch als een reeks logische point-to-pointverbindingen werkt.
+
+Een \emph{full mesh} netwerk is een netwerk waarbij elk toestel met elk ander toestel verbonden is door middel van point-to-pointverbindingen.
+Een \emph{partial mesh} netwerk is een netwerk waarbij een deel van de directe verbindingen van een full mesh ontbreken.
+
+\subsection{Het OSI-model en het TCP/IP-model}
+
+Het OSI-model is een conceptueel model voor netwerkcommunicatie.
+Het werd als theoretisch model ontwikkeld met de bedoeling dat de praktijk zich aan dit model aan zou passen.
+Het TCP/IP-model is een alternatief protocol dat gebaseerd is op de protocollen die al in de praktijk gebruikt werden.
+
+\begin{table}[htp]
+   \centering
+   \begin{tabular}{rll}
+   \toprule
+     & \textit{OSI-model} & \textit{TCP/IP-model} \\
+   \midrule
+   7 & application & \multirow{3}{*}{\textcolor{spot1}{application}} \\
+   6 & presentation & \\
+   5 & session & \\[1ex]
+   4 & \textcolor{spot1}{transport} & transport \\[1ex]
+   3 & \textcolor{spot1}{network} & internet \\[1ex]
+   2 & \textcolor{spot1}{data link} & \multirow{2}{*}{link} \\
+   1 & \textcolor{spot1}{physical} & \\
+   \bottomrule
+   \end{tabular}
+   \caption{De zeven lagen van het OSI-model en de vier lagen van het TCP/IP-model.
+   De vijf lagen van het hybride model zijn in het rood weergegeven.}
+   \label{tab:osi-model}
+\end{table}
+
+Deze modellen hebben weinig praktisch nut maar kunnen wel helpen met het gestructureerd opsporen en oplossen van netwerkproblemen.
+Afhankelijk van het probleem kan je ofwel op laag~7 (de applicatie) beginnen met troubleshooten, ofwel op laag~1 (bekabeling), ofwel in het midden op laag~3 (\cmd{ping} en \cmd{traceroute}).
+Onderstaand vind je voor de vijf lagen van het hybride model enkele zaken die onderzocht kunnen worden.
+
+\begin{description}
+\item[application]
+   Controleer de configuratie van de applicatie zelf.
+   Dit is voor de applicatie- of systeembeheerders en niet meer voor de netwerkbeheerder.
+\item[transport]
+   Controleer firewallconfiguraties en of de service (applicatie) wel gestart is op de server.
+   Je kan met behulp van \cmd{telnet} testen of de applicatie bereikbaar is.
+\item[network]
+   Verifiëer met behulp van \cmd{ping} en \cmd{traceroute} of de twee computers elkaar kunnen bereiken.
+   De output van \cmd{traceroute} geeft een indicatie hoe de pakketjes doorheen het netwerk gaan.
+   Dit kan je best in beide richtingen controleren aangezien \emph{asymetrisch} netwerkverkeer mogelijk is en mogelijk voor problemen kan zorgen.
+\item[data link]
+   Op het lokale netwerk moet je zaken zoals Spanning-tree protocol (STP) en VLAN-configuraties nakijken.
+   Zaken zoals DHCP snooping, dynamic ARP inspection (DAI) en port security kan je hier ook nakijken.
+\item[physical]
+  Controleer bekabeling, connectors, interface errors en, in het geval van wifi, mogelijke storingsbronnen.
+\end{description}
+
+De verschillende lagen vinden we ook terug als we de verschillende stappen doorlopen die computers doorlopen om met elkaar te communiceren.
+
+
+
+\subsection{Communicatie tussen computers}
+
+Nemen we als voorbeeld een computer, de \emph{client}, die een webpagina wil ophalen van een andere computer, de \emph{server} (\vref{fig:client-server}).
+Het protocol dat hier voor gebruikt wordt, heet hypertext transfer protocol (HTTP).
 De client verstuurt een HTTP \emph{request} en de server antwoordt met een HTTP \emph{response}.
-}
 
-
-
-\begin{frame}[fragile]{HTTP: client request}
-\usebeamerfont{verbatim}
-\begin{semiverbatim}
+De request bevat de volgende data.
+\begin{verbatim}
 GET /index.html HTTP/1.1
 Host: www.example.com
-\end{semiverbatim}
-\end{frame}
+\end{verbatim}
 
+\begin{figure}
+   \centering
+   \includegraphics[width=.65\textwidth]{images/http-request.png}
+   \caption{Een client vraagt een webpagina op bij eeen webserver en gebruikt voor deze communicatie HTTP}
+   \label{fig:client-server}
+\end{figure}
 
-
-\begin{frame}[fragile=singleslide]{HTTP: server response}
-\usebeamerfont{verbatim}
+Het antwoord van de server bevat enerzijds de HTTP-data die het protocol vereist, en anderzijds de gevraagd webpagina.
+In dit geval bevat de gevraagde pagina HTML-code.
 \begin{verbatim}
 HTTP/1.1 200 OK
 Content-Type: text/html; charset=UTF-8
@@ -34,30 +145,21 @@ Content-Length: 155
 Server: Apache/1.3.3.7 (Unix) (Red-Hat/Linux)
 
 <html>
-  <head>
-    <title>An Example Page</title>
-  </head>
-  <body>
-    <p>Hello World!</p>
-  </body>
+  <head><title>An Example Page</title></head>
+  <body><p>Hello World!</p></body>
 </html>
 \end{verbatim}
-\end{frame}
 
-
-
-\begin{frame}{Enkele vragen}
-\begin{enumerate}[<+->]
+Dit ogenschijnlijk eenvoudig voorbeeld roept toch meerdere vragen op.
+\begin{enumerate}
 \item Hoe kunnen we de server bereiken?
 \item Voor welke applicatie is de data bestemd?
 \item Hoe versturen we heel veel data?
-\item Wat als er dingen misgaan?
+\item Wat doen we als er iets mis gaat?
 \end{enumerate}
-\end{frame}
 
-\mode<article>{
-Maar wat is er allemaal nodig om deze request van de client tot bij de server te krijgen en het antwoord bij de client?
-}
+
+
 
 
 
@@ -103,7 +205,7 @@ Maar wat is er allemaal nodig om deze request van de client tot bij de server te
 
 
 
-\subsection*{Verschillende lagen en modellen}
+\subsection{Verschillende lagen en modellen}
 
 \begin{frame}{Verschillende lagen}
 \begin{itemize}[<+->]
@@ -124,49 +226,6 @@ De theorie en geschiedenis zijn niet belangrijk, maar een basiskennis van deze p
 }
 
 
-
-\begin{frame}{Verschillende modellen (1/2)}
-\begin{itemize}[<+->]
-\item OSI-model (7 lagen)
-\item TCP/IP-model of het DoD-model (4 lagen)
-\item Hybride model (5 lagen)
-\end{itemize}
-\end{frame}
-
-\mode<article>{
-Er bestaan twee verschillende modellen, het OSI-model en het TCP/IP-model.
-Dit laatste model wordt ook wel het DoD-model genoemd.
-Zelf verkies ik een hybride model te gebruiken, gebaseerd op beide modellen.
-}
-
-
-
-\begin{frame}{Verschillende modellen (2/2)}
-\begin{table}
-    \centering
-    \small\sffamily
-    \setlength{\tabcolsep}{18pt}
-    \begin{tabular}{rlll}
-      & \textbf{OSI}         & \textbf{TCP/IP}                   & \textbf{hybride}       \\[2ex]
-    \textit{7} & Applicatie  & \multirow{3}{*}{Applicatie}       & \multirow{3}{*}{Applicatie} \\
-    \textit{6} & Presentatie &                                   &                             \\
-    \textit{5} & Sessie      &                                   &                        \\[2ex]
-    \textit{4} & Transport   & Transport                         & Transport              \\[2ex]
-    \textit{3} & Netwerk     & Internet                          & Netwerk                \\[2ex]
-    \textit{2} & Datalink    & \multirow{2}{*}{Netwerkinterface} & Datalink                    \\
-    \textit{1} & Fysiek      &                                   & Fysiek                      \\
-    \end{tabular}
-    \caption{Drie verschillende modellen}
-    \label{tab:models-layers}
-\end{table}
-\end{frame}
-
-\mode<article>{
-Het is voor netwerbeheerders niet interessant wat exact thuishoort in de applicatielaag of in de sessielaag.
-Dit groeperen we allemaal in één applicatilaag, zoals bij het TCP/IP-model.
-Het is daarentegen wel interessant om een onderscheid te maken tussen de datalinklaag waar switches en MAC-adressen thuishoren, en de fysieke laag waar we bijvoorbeeld de \emph{tranceivers} en DWDM-apparaten terugvinden.
-Deze twee lagen houden we dus gescheiden, zoals in het OSI-model.
-}
 
 
 
@@ -202,7 +261,7 @@ Bron: \url{https://microchipdeveloper.com/}
 
 
 
-\subsection*{Netwerktopologieën}
+\subsection{Netwerktopologieën}
 
 \begin{frame}{Netwerktopologieën}
 \begin{itemize}[<+->]
@@ -217,3 +276,7 @@ Bron: \url{https://microchipdeveloper.com/}
 \mode<article>{
 Deze verschillende topologieën komen we tijdens de cursus tegen dus benoemen we deze eerst kort. 
 }
+
+
+\subsection{Evolutie in netwerken}
+

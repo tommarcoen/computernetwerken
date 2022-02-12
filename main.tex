@@ -1,6 +1,6 @@
-\title{Computer networking with TCP/IP}
+\title{Computernetwerken met TCP/IP}
 \author{Tom Marcoen}
-\date{\today}
+\date{2022}
 
 % LaTeX-pakketen
 \input{preamble/language}
@@ -8,22 +8,39 @@
 \usepackage{multirow}
 \usepackage{tikz}
 \usepackage{siunitx}
+\usepackage{multirow}
+\usepackage{booktabs}
+\input{preamble/references}
 \usetikzlibrary[positioning]
-\urlstyle{rm}
 
 \mode<presentation>{\AtBeginSection{\frame{\sectionpage}}}
 \mode<presentation>{\AtBeginSubsection{\frame{\subsectionpage}}}
 
-\begin{document}
-\maketitle
-\mode<article>{\thispagestyle{empty}}
-%    \begin{abstract}
-%        Hier komt een korte inleiding.
-%    \end{abstract}
-%    \pagebreak
-%}
+%\usepackage{xcolor}
+\definecolor{spot1}{cmyk}{.67,0  ,.36,0  }
+\definecolor{spot2}{cmyk}{0  ,.89,.29,0  }
+\definecolor{spot3}{cmyk}{1  ,.94,0  ,.50}
 
-\include{chapters/introduction}
+\newcommand{\cmd}[1]{\textbf{#1}}
+
+
+\begin{document}
+\pagestyle{empty}
+
+\makeatletter
+{\LARGE\@title}
+\makeatother
+\cleardoublepage
+\maketitle
+\vfill
+\begin{center}
+   \includegraphics[width=6cm]{images/logo.pdf}
+\end{center}
+\thispagestyle{empty}
+\cleardoublepage
+
+\pagestyle{plain}
+\include{chapters/inleiding}
 %\frame{\tableofcontents[hideallsubsections]}
 \mode<article>{\tableofcontents}
 
