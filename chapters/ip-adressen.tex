@@ -1,5 +1,62 @@
 \section{IP-adressen}
 
+Een IP-adres is een 32-bit getal en heeft dus een waarde tussen 0 en \num{4294967296}.
+Dit is echt geen handige manier om met IP-adressen om te gaan dus noteren we deze getallen op een andere manier.
+We verdelen de 32~bits in vier groepjes van 8~bits,%
+   \footnote{%
+      Een groep van 8~bits wordt ook wel een \emph{octet} genoemd of een \emph{byte}.
+      Deze laatste term is echter niet helemaal correct want een byte kan ook meer of minder bits bevatten dan acht.
+      Dit is afhankelijk van de computerarchitectuur.
+      Voor een x86-computer bevat een byte inderdaad acht bits, maar voor bijvoorbeeld de iconische PDP-7\footnotemark\ 
+      bevat een byte achttien bits.
+   }%
+   \footnotetext{De PDP-7 is iconisch omdat het de computer is waar Unics op ontwikkeld werd.}
+vertalen deze vier groepjs van binair naar decimaal en plaatsen een punt tussen deze groepjes.
+
+\begin{verbatim}
+1010 1100   0001 1000   0000 1100   1110 0001 = 2.887.257.313
+
+1010 1100 . 0001 1000 . 0000 1100 . 1110 0001
+
+   172    .     24    .     12    .    225
+\end{verbatim}
+
+Het Internet Protocol (IP) wordt gebruikt voor communicatie tussen computers die zich op verschillende netwerken bevinden.
+Een IP-adres bestaat dan ook uit twee delen: een netwerkgedeelte dat voor elk netwerk uniek is, en een hostgedeelte dat binnen een netwerk uniek is voor elk toestel.
+Dit kan je vergelijken met een gewoon adres.
+Deze bevat een gemeente, straatnaam en huisnummer.
+Binnen een gemeente moet elke straatnaam uniek zijn en binnen de straat moet elk huisnummer uniek zijn.
+
+Als we naar bovenstaand IP-adres kijken, is het echter niet duidelijk welk deel het netwerk aanduidt en welk deel de host binnen dat netwerk uniek identificeert.
+Daar hebben we extra informatie voor nodig in de vorm van een \emph{prefix length} of een \emph{subnet mask}.
+Dat was echter niet altijd het geval.
+
+In 1980 geloofde men nog niet dat er veel computernetwerken zouden zijn en hanteerde men de eenvoudige regel dat het eerste octet aangeeft tot welk netwerk het IP-adres behoort, en de laatste drie octets bepalen de computer binnen het netwerk.
+De computers met IP-adres 10.0.7.23 en 10.12.4.18 behoren dus tot hetzelfde netwerk omdat voor beide het eerste octet dezelfde waarde heeft~(10).
+De computers met IP-adres 10.0.7.23 en 23.9.102.123 behoren echter \emph{niet} tot hetzelfde netwerk omdat het eerste octet verschillend is.
+
+Met kwam er al snel achter dat 256%
+   \footnote{De netwerken 0 en 255 werden niet gebruikt omdat de IP-adressen 0.0.0.0 en 255.255.255.255 een specialie betekenis hebben dus het maximum was eigenljk maar 254 netwerken.}
+netwerken toch te weinig is dus al in 1981 werd deze regel aangepast en werden er drie \emph{klasses} gedefiniëerd.
+De IP-adressen die beginnen met 0 t.e.m.~127 behoorden tot klasse \emph{a} en hiervoor geldt de reeds bestaande regel: het netwerk wordt gekenmerkt door het eerste octet.
+
+Voor de IP-adressen die beginnen met 128--191 geldt een nieuwe regel.
+Hier bepalen de eerste twee octetten het netwerkgedeelte en de laatste twee worden gebruikt om elke computer binnen het netwerk uniek te identificeren.
+De IP-adressen 131.12.237.182 en 131.12.1.4 behoren dus tot hetzelfde netwerk maar 131.93.12.3 behoort tot een ander netwerk.
+
+De derde klasse, klasse \emph{c}, bevat de IP-adressen die beginnen met 192--223.
+Voor deze klasse geldt dat de eerste drie octetten het netwerk aanduiden en enkel het laatste octet gebruikt wordt om een computer binnen het netwerk aan te duiden.
+
+Dit resulteert in drie soorten netwerken met elk enorme verschillen qua grootte.
+Netwerken uit klasse a hebben voldoende IP-adressen voor meer dan 16 miljoen computers in één netwerk.
+Netwerken uit klasse b kunnen meer dan \num{65000} computers huisvesten en netwerken uit klasse c ``slechts'' 256 computers.%
+   \footnote{In feite kunnen er maar 254 computers in zo een netwerk geplaatst worden omdat er altijd twee IP-adressen gereserveerd zijn als \emph{netwerkadres} en \emph{broadcastadres}.}
+
+In 1993 werd \emph{subnetting} ingevoerd als manier om deze grote netwerken onder te verdelen in kleinere netwerken zodat er minder verspilling is van IP-adressen.
+Sinds 1995 werd dit subnetting veralgemeend en werden de klasses afschaft.
+Nu kan er voor elk netwerk de juiste grootte bepaald worden.
+
+
 \begin{frame}{Netwerken}
 \begin{center}
 \includegraphics<presentation>[width=.65\textwidth]{images/client-server-2.png}

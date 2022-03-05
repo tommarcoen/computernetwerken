@@ -49,16 +49,16 @@ Begin jaren 90 kwamen de Ethernetswitches en verdrong Ethernet vrij snel alle an
 
 \subsection{Netwerktopologieën}
 
-De meet eenvoudige topologie is een point-to-pointverbinding tussen twee computers door beide computers rechtstreeks met elkaar te verbindinen met een kabel.
+De meest eenvoudige topologie is een point-to-pointverbinding tussen twee computers door beide computers rechtstreeks met elkaar te verbindinen met een kabel.
 Deze topologie schaalt echter niet goed.
-Voorbeelden van kabels zijn een seriële kabel, een coax\-kabel of een UTP-kabel.
+Enkele voorbeelden zijn een seriële kabel, een UTP-kabel, of eeninfraroodverbinding.
 
-Thick- en thinnet gebruikten beide een fysieke busstructuur waarbij alle computers op één lange kabel geprikt werden.
-Beide standaarden gebruikten coax (echter van een andere dikte, vandaar de namen) maar beide gebruikten een andere manier om de computers met het netwerk te verbinden.
-Thicknet gebruikte ``vampire taps'' terwijl thinnet BNC-koppelstukken gebruikte.%
+Thick- en thinnet gebruiken beide een fysieke busstructuur waarbij alle computers op één lange kabel geprikt worden.
+Beide standaarden gebruiken coax (echter van een andere dikte, vandaar de namen) maar beide gebruiken een andere manier om de computers met het netwerk te verbinden.
+Thicknet gebruikt ``vampire taps'' en een \emph{drop cable} terwijl thinnet BNC-koppelstukken gebruikt.%
    \footnote{Er was ook een N-connector beschikbaar voor Thicknet maar deze werd blijkbaar amper gebruikt (\href{http://www.mattmillman.com/projects/10base5/}{bron}).}
 
-Hoewel Token Ring een fysieke stertopologie had -- met een centrale media access unit (MAU) -- vormden de kabels een ringtopologie.
+Hoewel Token Ring een fysieke stertopologie heeft -- met een centrale media access unit (MAU) -- vormen de kabels een logische ringtopologie.
 Hubs en switches vormen ook een fysieke stertopologie.
 Een hub werkt functioneel zoals thinnet en vormt aldus een logische busstructuur terwijl een switch als een reeks logische point-to-pointverbindingen werkt.
 
@@ -87,18 +87,18 @@ Het TCP/IP-model is een alternatief protocol dat gebaseerd is op de protocollen 
    \bottomrule
    \end{tabular}
    \caption{De zeven lagen van het OSI-model en de vier lagen van het TCP/IP-model.
-   De vijf lagen van het hybride model zijn in het rood weergegeven.}
+   De vijf lagen van het hybride model zijn in kleur weergegeven.}
    \label{tab:osi-model}
 \end{table}
 
 Deze modellen hebben weinig praktisch nut maar kunnen wel helpen met het gestructureerd opsporen en oplossen van netwerkproblemen.
-Afhankelijk van het probleem kan je ofwel op laag~7 (de applicatie) beginnen met troubleshooten, ofwel op laag~1 (bekabeling), ofwel in het midden op laag~3 (\cmd{ping} en \cmd{traceroute}).
+Afhankelijk van het probleem kan je ofwel op laag~7 (de applicatie) beginnen met troubleshooten, ofwel op laag~1 (de bekabeling), ofwel in het midden op laag~3 (het netwerk).
 Onderstaand vind je voor de vijf lagen van het hybride model enkele zaken die onderzocht kunnen worden.
 
 \begin{description}
 \item[application]
    Controleer de configuratie van de applicatie zelf.
-   Dit is voor de applicatie- of systeembeheerders en niet meer voor de netwerkbeheerder.
+   Dit is aan de applicatie- of systeembeheerders en niet aan de netwerkbeheerder.
 \item[transport]
    Controleer firewallconfiguraties en of de service (applicatie) wel gestart is op de server.
    Je kan met behulp van \cmd{telnet} testen of de applicatie bereikbaar is.
@@ -119,7 +119,7 @@ De verschillende lagen vinden we ook terug als we de verschillende stappen doorl
 
 \subsection{Communicatie tussen computers}
 
-Nemen we als voorbeeld een computer, de \emph{client}, die een webpagina wil ophalen van een andere computer, de \emph{server} (\vref{fig:client-server}).
+Nemen we als voorbeeld een computer, de \emph{client}, die een webpagina op wil halen van een andere computer, de \emph{server} (\vref{fig:client-server}).
 Het protocol dat hier voor gebruikt wordt, heet hypertext transfer protocol (HTTP).
 De client verstuurt een HTTP \emph{request} en de server antwoordt met een HTTP \emph{response}.
 
@@ -136,7 +136,7 @@ Host: www.example.com
    \label{fig:client-server}
 \end{figure}
 
-Het antwoord van de server bevat enerzijds de HTTP-data die het protocol vereist, en anderzijds de gevraagd webpagina.
+Het antwoord van de server bevat enerzijds de HTTP-data die het protocol vereist en anderzijds de gevraagde webpagina.
 In dit geval bevat de gevraagde pagina HTML-code.
 \begin{verbatim}
 HTTP/1.1 200 OK
@@ -160,123 +160,66 @@ Dit ogenschijnlijk eenvoudig voorbeeld roept toch meerdere vragen op.
 
 
 
+\subsubsection{Hoe kunnen we de server bereiken?}
+In de adresbalk van de browser vullen we de \emph{domeinnaam} van de website in die we willen bereiken, bijvoorbeeld \url{www.example.com}.
+Deze domeinnaam vinden we ook terug in de Host header van de HTTP request.
+Omdat computers met elkaar communiceren door middel van IP-adressen, moet deze domeinnaam eerst omgezet worden in een IP-adres.
+Dit gebeurt met behulp van het Domain Name System (DNS).
 
+\subsubsection{Voor welke applicatie is de data bestemd?}
+Als pakketjes aankomen op een server of client computer, moet het besturingssysteem weten voor welke applicatie ze bestemd zijn.
+Bevatten de pakketjes een email bestemd voor Outlook of een gif van een kat die in de browser getoond moet worden?
+Elk programma dat communiceert op het netwerk krijgt een poortnummer toegewezen.
+Deze poortnummers worden meegestuurd in de pakketjes zodat de computers steeds weten voor welke applicatie de pakketjes bestemd zijn.
+We leren meer over deze poortnummers als we TCP en UDP bespreken.
 
+\subsubsection{Hoe versturen we heel veel data?}
+Als we een groot document door willen sturen, reist de vraag of we dit document als één geheel kunnen sturen, of moeten opsplitsen in kleine stukjes om vervolgens deze kleine stukjes afzonderlijk te versturen.
+We zullen merken dat er technische beperkingen zijn die de maximale grootte van een pakket bepalen op sommige netwerken.
+Het is soms dus noodzakelijk om grote bestanden op te splitsen en als kleine stukjes te versturen.
 
-\begin{frame}{Hoe de server bereiken?}
-\begin{itemize}
-\item<1-> DNS-naam
-    \begin{itemize}
-    \item Adresbalk: \url{http://www.example.com/}
-    \item Hostheader: www.example.com
-    \end{itemize}
-\item<2-> IP-adres
-\end{itemize}
-\end{frame}
+Als we een groot bestand opsplitsen in twintig kleine stukjes en deze afzonderlijk versturen, moet de ontvanger van deze twintig pakketjes er wel in slagen om ze alle twintig terug samen te puzzelen tot één geheel.
+De ontvanger moet ook zeker dat dat hij alle stukjes ontvangen heeft.
+Het is belangrijk dat hij weet dat de verzender twintig pakketjes verstuurd heeft in plaats van eenentwintig.
 
+Deze vraagt hangt ook samen met de volgende vraag.
 
-
-\begin{frame}{Voor welke applicatie is de data bestemd?}
-\begin{itemize}[<+->]
-\item Elke serverapplicatie luistert op een bepaalde ``poort''
-\item Computerstandaarden bepalen poortnummers
-\item De client gebruikt een willekeurige poort
-\end{itemize}
-\end{frame}
-
-
-
-\begin{frame}{Hoe versturen we heel veel data?}
-\begin{itemize}[<+->]
-\item Fragmentatie: opsplitsen in kleine pakketjes
-\item Volgorde van de fragmenten
-\end{itemize}
-\end{frame}
-
-
-
-\begin{frame}{Wat als er dingen mis gaan?}
-\begin{itemize}[<+->]
-\item Pakketjes kunnen verloren gaan
-\item Er kunnen fouten optreden in de data
-\item Pakketjes kunnen in de verkeerde volgorde aankomen
-\end{itemize}
-\end{frame}
-
-
-
-\subsection{Verschillende lagen en modellen}
-
-\begin{frame}{Verschillende lagen}
-\begin{itemize}[<+->]
-\item Structuur brengt orde
-\item Vereenvoudigt troubleshooten
-\item Maakt protocollen vervangbaar
-    \begin{example}
-    bv IPv4 wordt IPv6
-    \end{example}
-\end{itemize}
-\end{frame}
-
-\mode<article>{
-In deze cursus zoeken we het antwoord op deze vragen en ontdekken we hoe computernetwerk opgebouwd zijn en hoe je kan communiceren tussen verschillende netwerken.
-
-De industrie heeft een aantal verschillende maar gelijkaardige modellen in het leven geroepen om stuctuur te brengen in de verschillende protocollen.
-De theorie en geschiedenis zijn niet belangrijk, maar een basiskennis van deze protocollen helpt wel om alles te plaatsen en om netwerkproblemen op te sporen en op te lossen.
-}
+\subsubsection{Wat doen we als er iets mis gaat?}
+Pakketjes kunnen verloren gaan of er kunnen ``beschadigingen'' optreden in een pakketje (een ``1'' kan een ``0'' worden of omgekeerd).
+Pakketjes kunnen in de verkeerde volgorde aankomen.
+Dit zijn uitdagingen die TCP en UDP wel (of bewust niet) oplost.
 
 
 
 
+\subsection{Encapsulatie en decapsulatie}
 
-\begin{frame}{Communicatie gebeurt tussen lagen onderling}
-\begin{center}
-\includegraphics<presentation>[width=\textwidth]{images/tcpip_5_layer_overview.png}
-\includegraphics<article>[width=.65\textwidth]{images/tcpip_5_layer_overview.png}
-\end{center}
-Bron: \url{https://microchipdeveloper.com/}
-\end{frame}
-
+We gaan nu terug naar de computer die een HTTP request stuurt naar de web server.
+De computer heeft een DNS request uitgestuurd voor de domeinnaam www.example.com en kreeg het IP-adres 192.168.1.102.
+De HTTP request wordt nu ``ingepakt'' in een TCP-pakket (\vref{fig:transmit-data}).
+Dit ``inpakken'' (\emph{encapsulation}) is niet meer dan wat extra data toe te voegen, ofwel voor ofwel na de andere data.
+TCP voegt onder andere de nodige poortnummers toe.
 
 
-\begin{frame}{Elke laag voegt een header toe}
-\begin{center}
-\includegraphics<presentation>[width=\textwidth]{images/transmit_data.jpg}
-\includegraphics<article>[width=.65\textwidth]{images/transmit_data.jpg}
-\end{center}
-Bron: \url{https://microchipdeveloper.com/}
-\end{frame}
+\begin{figure}
+   \centering
+   \includegraphics[width=\textwidth]{images/transmit_data.jpg}
+   \caption{Elk protocol voegt een eigen header toe aan het pakket}
+   \label{fig:transmit-data}
+\end{figure}
+
+Vervolgens wordt het pakket doorgegeven aan IP.
+Deze voegt de source en destination IP-adressen toe.
+Vervolgens voegt Ethernet een header toe met source en destination MAC-adressen waarna het pakket door de netwerkkaart het netwerk wordt opgestuurd.
+Dit is de physical layer.
 
 
-
-\begin{frame}{Voorbeeld}
-\begin{itemize}
-\item Applicatielaag: HTTP client request
-\item Transportlaag: TCP-poort 80 voor HTTP
-\item Netwerklaag: IP-adres van client en server
-\item Datalinklaag: MAC-adressen
-\item Fysieke laag: stroom of licht op de kabel
-\end{itemize}
-\end{frame}
-
-
-
-\subsection{Netwerktopologieën}
-
-\begin{frame}{Netwerktopologieën}
-\begin{itemize}[<+->]
-\item point-to-point
-\item daisy chain (linear or ring)
-\item bus
-\item ster
-\item mesh
-\end{itemize}
-\end{frame}
-
-\mode<article>{
-Deze verschillende topologieën komen we tijdens de cursus tegen dus benoemen we deze eerst kort. 
-}
-
-
-\subsection{Evolutie in netwerken}
+%\begin{frame}{Communicatie gebeurt tussen lagen onderling}
+%\begin{center}
+%\includegraphics<presentation>[width=\textwidth]{images/tcpip_5_layer_overview.png}
+%\includegraphics<article>[width=.65\textwidth]{images/tcpip_5_layer_overview.png}
+%\end{center}
+%Bron: \url{https://microchipdeveloper.com/}
+%\end{frame}
+%
 
