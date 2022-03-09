@@ -74,17 +74,17 @@ Het TCP/IP-model is een alternatief protocol dat gebaseerd is op de protocollen 
 \begin{table}[htp]
    \centering
    \begin{tabular}{rll}
-   \toprule
-     & \textit{OSI-model} & \textit{TCP/IP-model} \\
-   \midrule
-   7 & application & \multirow{3}{*}{\textcolor{spot1}{application}} \\
-   6 & presentation & \\
-   5 & session & \\[1ex]
-   4 & \textcolor{spot1}{transport} & transport \\[1ex]
-   3 & \textcolor{spot1}{network} & internet \\[1ex]
-   2 & \textcolor{spot1}{data link} & \multirow{2}{*}{link} \\
-   1 & \textcolor{spot1}{physical} & \\
-   \bottomrule
+   %\toprule
+     & \textit{OSI-model} & \textit{TCP/IP-model} \\[1ex]
+   %\midrule
+   \textit{7} & application & \multirow{3}{*}{\textcolor{spot1}{application}} \\
+   \textit{6} & presentation & \\
+   \textit{5} & session & \\[1ex]
+   \textit{4} & \textcolor{spot1}{transport} & transport \\[1ex]
+   \textit{3} & \textcolor{spot1}{network} & internet \\[1ex]
+   \textit{2} & \textcolor{spot1}{data link} & \multirow{2}{*}{link} \\
+   \textit{1} & \textcolor{spot1}{physical} & \\
+   %\bottomrule
    \end{tabular}
    \caption{De zeven lagen van het OSI-model en de vier lagen van het TCP/IP-model.
    De vijf lagen van het hybride model zijn in kleur weergegeven.}
@@ -114,6 +114,27 @@ Onderstaand vind je voor de vijf lagen van het hybride model enkele zaken die on
 \end{description}
 
 De verschillende lagen vinden we ook terug als we de verschillende stappen doorlopen die computers doorlopen om met elkaar te communiceren.
+
+
+
+
+\subsection{Soorten communicatie}
+
+Op een netwerk bestaan er vier soorten van communicatie.
+We spreken over \emph{unicast} als één computer met één andere computer communiceert over het netwerk, bijvoorbeeld als je met SSH een computer vanop afstand configureert.
+Een tweede soort van communicatie is \emph{broadcast}: een computer communiceert met alle computers binnen een bepaald netwerk.
+Voorbeelden hiervan zijn DHCP (\vref{sec:dhcp}) en ARP (\vref{sec:arp}).
+
+Als een computer met verschillende, maar niet alle, computers wil communiceren, spreken we van \emph{multicast}.
+Denk hierbij bijvoorbeeld aan digitale tv.
+Enkel de tv-toestellen die een bepaalde zender hebben opstaan, willen die beelden ontvangen.
+
+Tot slot is er ook nog \emph{anycast}, hetgeen niet expliciet benoemd worden in IPv4 maar wel benadrukt wordt bij IPv6.
+In weze is dit hetzelfde als unicast maar door slim te routeren binnen het netwerk, communiceer je altijd met de dichtst bijzijnde server.
+Wil je bijvoorbeeld een groot bestand downloaden van het Internet, dan zal dit sneller gaan als je dit kan downloaden van een server in je eigen land dan van een server in een ander continent.
+Anycast is de methode die \emph{content delivery networks} (CDN) zo interessant maken en die gebruikt worden om de DNS root servers over de gehele wereld beschikbaar te maken (\vref{sec:dns}).
+
+In deze cursus gaan we niet dieper in op multicast of anycast.
 
 
 

@@ -12,6 +12,9 @@
 \usepackage{booktabs}
 \input{preamble/references}
 \usetikzlibrary[positioning]
+\usepackage{pgf-pie}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{frankenstein/resources.bib}
 
 \mode<presentation>{\AtBeginSection{\frame{\sectionpage}}}
 \mode<presentation>{\AtBeginSubsection{\frame{\subsectionpage}}}
@@ -54,5 +57,7 @@
 \begin{frame}
     
 \end{frame}
+
+\printbibliography
 
 \end{document}
