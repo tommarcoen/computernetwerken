@@ -313,16 +313,33 @@ Er zijn drie manieren om private IP-adressen te vertalen naar publieke IP-adress
 
 
 
-
-\subsection{Routering}
-\label{sec:routering}
-
-
-\subsubsection{Address resolution protocol (ARP)}
+\subsection{Address resolution protocol (ARP)}
 \label{sec:arp}
 
+Twee computers op hetzelfde lokale netwerk, willen met elkaar communiceren.
+In \vref{fig:transmit-data} hebben we gezien dat elk pakketje behalve poortnummers en IP-adressen, ook MAC-adressen nodig heeft om op laag~2 te kunnen communiceren (zie ook \vref{sec:ethernet}).
+We kunnen de volgende informatie te weten komen:
+\begin{description}
+\item[destination poort]
+   Elke applicatie server luistert op een welgekende, vastgelegde poort.
+   Een webserver luister op poort 80 voor unencrypted verkeer (HTTP) en op poort 443 als het verkeer encrypted is (HTTPS).
+   Een mailserver luistert op poort 25 en een MySQL database op poort 3306.
+\item[source poort]
+   De client kiest een willekeurige poortnummer die uniek moet zijn voor elke communicatiesessie die de client opzet.
+\item[source IP-adres]
+   De computer kent logischerwijs zijn eigen IP-adres dat ofwel statisch (manueel) werd ingegeven of via DHCP werd verkregen.
+\item[destination IP-adres]
+   Als je een dienst wilt gebruiken, moet je ofwel het IP-adres kennen van de server, ofwel gebruik maken van DNS om een domeinnaam om te zetten in een IP-adres.
+\item[source MAC-adres]
+   Dit is het unieke adres van je netwerkkaart en is dus gekend voor de client.
+\end{description}
+De enige informatie die nog ontbreekt, is het destination MAC-adres.
+Om deze informatie te weten te komen, wordt het address resolution protocol (ARP) gebruikt.
+De client stuurt via een broadcast een ARP request op het lokale netwerk met de vraag ``wie heeft dit IP-adres en wat is jouw MAC-adres?''
+De server ontvangt deze broadcast en antwoord met een ARP reply (ook broadcast).
+Dit antwoord bevat zijn IP-adres en zijn MAC-adres.
+Nu heeft de client alle nodige informatie om het pakketje te verzenden.
 
-
-\subsection{Router Information Protocol (RIP)}
-
-
+Omdat deze ARP-pakketjes via broadcast verstuurd worden, kunnen enkel computers op het lokale netwerk deze ontvangen.
+Een router stuurt deze broadcasts niet door naar andere netwerken dus bovenstaande methode is niet geschikt als een computer wil communiceren met een computer op een ander netwerk.
+Dit is een probleem want er moet toch een destination MAC-adres ingevuld worden voor elk pakketje dat je verstuurd.
