@@ -1,0 +1,23 @@
+\documentclass[tikz]{standalone}
+\usepackage{ifthen}
+\usepackage{contour}
+\input{../tex/mdt-colors}
+\input{../pgf/tikz-pgf}
+\input{../pgf/layers}
+\input{../pgf/connections}
+\input{../pgf/nodes}
+\begin{document}
+\begin{tikzpicture}[framed]
+\def\iconset{basic}
+%\showhostnamesinterfaces
+\nodeswitch[bottom]{switch}{3,0}{Cisco 2960}{}
+\nodehost[left]{pc 1}{0,0}{FreeBSD}{0200.aaaa.0001}
+\nodehost{pc 2}{6,0}{FreeBSD}{0200.aaaa.0002}
+\nodehost{pc 3}{3,3}{Linux}{0200.aaaa.0003}
+\connect{switch}{fa0/1}{pc 1}{em0}
+\connect{switch}{fa0/2}{pc 2}{em0}
+\connect{switch}{fa0/3}{pc 3}{eth0}
+
+
+\end{tikzpicture}
+\end{document}

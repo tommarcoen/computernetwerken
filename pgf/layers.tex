@@ -1,0 +1,30 @@
+%
+% layers.tex
+%
+% This document contains code to hide a PGF layer if so desired,
+% e.g. you can hide the layer with all the labels on it.
+%
+
+% Define the layers to be used
+\pgfdeclarelayer{connections}
+\pgfdeclarelayer{interfaces}
+\pgfdeclarelayer{hostnames}
+\pgfdeclarelayer{labels}
+\pgfdeclarelayer{arrows}
+
+% Make the background white so we can hide the labels by swapping the order of the layers
+\tikzset{show background rectangle,background rectangle/.style={rounded corners,fill=white}}
+
+% \showalllayers - Show the nodes, connections, and detailed labels, including interface labels
+% The left most layer is the bottom layer; everything left from the background will be hidden.
+\newcommand\showalllayers{      \pgfsetlayers{hostnames,arrows,background,connections,main,interfaces,labels}}
+\newcommand\showarrows{         \pgfsetlayers{hostnames,background,connections,main,interfaces,labels,arrows}}
+% \hidelabels - Show only the nodes and the connections
+\newcommand\hidelabels{         \pgfsetlayers{hostnames,arrows,interfaces,labels,background,connections,main}}
+% \hideinterfaces - Hide only the interface labels
+\newcommand\hideinterfaces{     \pgfsetlayers{hostnames,arrows,interfaces,background,connections,main,labels}}
+% \showonlyhostnames - Hide everything but show the hostnames only
+\newcommand\showonlyhostnames{  \pgfsetlayers{arrows,interfaces,labels,background,connections,main,hostnames}}
+\newcommand\showhostnamesinterfaces{ \pgfsetlayers{arrows,labels,background,connections,main,hostnames,interfaces}}
+% Default setting is to show all layers
+\showalllayers
