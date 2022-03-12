@@ -16,6 +16,8 @@
 \nodeswitch[bottom]{sw3}{4,0}{}{}
 \nodeswitch[bottom]{sw4}{6,0}{}{}
 \nodeswitch[bottom]{sw5}{8,0}{}{}
+\connect{Internet}{}{firewall}{}
+\connect{firewall}{}{sw1}{}
 \connect{sw1}{}{sw2}{}
 \connect{sw2}{}{sw3}{}
 \connect{sw3}{}{sw4}{}

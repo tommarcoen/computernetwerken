@@ -156,7 +156,18 @@
 % Syntax:
 % \nodelabel[<position>]{<coordinates>}{<hostname>}{<type>}{<IP address>}
 \newcommand{\nodelabel}[5][right]{
-    \def\text{\contour{white}{\textbf{#3}}\\\contour{white}{\emph{#4}}\\\contour{white}{#5}}
+    \def\text{%
+        \ifthenelse{\equal{#4}{}}{
+            \ifthenelse{\equal{#5}{}}{
+                \contour{white}{\textbf{#3}}
+            }{
+                \contour{white}{\textbf{#3}}\\\contour{white}{\emph{#4}}
+            }
+        }{
+            \contour{white}{\textbf{#3}}\\\contour{white}{\emph{#4}}\\\contour{white}{#5}
+        }
+    }
+
     \begin{pgfonlayer}{labels}
     
     % On the right

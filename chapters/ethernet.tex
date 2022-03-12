@@ -106,7 +106,10 @@ De eerste switch leert dan de MAC-adressen van alle computers die verbinden met 
 Als één switch niet meer voldoende is om alle computers en printers met elkaar te verbinden, verbinden we een tweede switch met de eerste switch.
 Als beide switch niet meer voldoende zijn, kunnen we nog een derde switch verbinden met het netwerk, en vervolgens nog een vierde en vijfde switch (zie \vref{fig:daisy-chain}).
 Een dergelijk netwerk kan lang goed functioneren.
-Tot op een dag bijvoorbeeld
+Tot op een dag bijvoorbeeld switch~2 kapot gaat en alle computers die met switches~3 t.e.m.~5 verbonden zijn, geen Internetconnectiviteit meer hebben.
+Dit is echter eenvoudig op te lossen.
+We verbinden switch~1 snel met switch~3 en de connectiviteit is hersteld.
+
 
 \begin{figure}
     \centering
@@ -115,6 +118,12 @@ Tot op een dag bijvoorbeeld
     \label{fig:daisy-chain}
 \end{figure}
 
+
+Dit brengt echter een enorm gevaar met zich mee.
+Zo lang switch~2 defect blijft, is er niets aan de hand.
+Maar zodra switch~2 vervangen wordt door een nieuwe switch, hebben we een lus gecreëerd in het netwerk.
+Switch~1 verbindt met switch~2, zo met switch~3 en dan terug naar switch~1.
+Dit lijkt onschadelijk maar is dat zeker niet.
 
 \subsection{Virtuele switches}
 
