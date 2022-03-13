@@ -1,4 +1,4 @@
-\section{Ethernet}
+\chapter{Ethernet}
 \label{sec:ethernet}
 
 In \vref{sec:arp} hadden we gezien hoe een computer het destination MAC-adres bekomt als hij een frame wilt versturen over het netwerk.
@@ -39,7 +39,7 @@ De ontvanger verwittigt de zender van het frame niet dat het frame niet goed is 
 \end{table}
 
 
-\subsection{Ethernetswitches}
+\section{Ethernetswitches}
 
 Een Ethernetswitch ziet er niet anders uit dan een hub.
 Een hub werkt echter heel anders dan een switch.
@@ -71,7 +71,7 @@ Computers~2 en~3 ontvangen dus dit eerste frame.
 Computer~3 ziet het destination MAC-adres van het frame en, omdat dit niet zijn MAC-adres is, gooit het frame weg.
 Computer~2 herkent wel zijn eigen MAC-adres in het frame en verwerkt de inhoud en stuurt uiteindelijk een antwoord terug.
 
-De switch stuurt niet alleen het frame langs alle interfaces naar buiten, maar maakt ook notitie van het source MAC-adres en noteert dit in de MAC-tabel samen met de interface waarop hij het MAC-adres geleerd heeft.
+De switch stuurt niet alleen het frame aan alle interfaces naar buiten, maar maakt ook notitie van het source MAC-adres en noteert dit in de MAC-tabel samen met de interface waarop hij het MAC-adres geleerd heeft.
 \begin{center}
 \begin{tabular}{cc}
 \textit{MAC-adres} & \textit{interface} \\[1ex]
@@ -100,14 +100,14 @@ Het is ook mogelijk meerdere MAC-adressen te leren op een interface als deze int
 De eerste switch leert dan de MAC-adressen van alle computers die verbinden met de tweede switch via deze interface.
 
 
-\subsection{Lussen in het netwerk}
+\section{Lussen in het netwerk}
 \label{sec:stp}
 
 Als één switch niet meer voldoende is om alle computers en printers met elkaar te verbinden, verbinden we een tweede switch met de eerste switch.
 Als beide switch niet meer voldoende zijn, kunnen we nog een derde switch verbinden met het netwerk, en vervolgens nog een vierde en vijfde switch (zie \vref{fig:daisy-chain}).
 Een dergelijk netwerk kan lang goed functioneren.
-Tot op een dag bijvoorbeeld switch~2 kapot gaat en alle computers die met switches~3 t.e.m.~5 verbonden zijn, geen Internetconnectiviteit meer hebben.
-Dit is echter eenvoudig op te lossen.
+Tot op een dag bijvoorbeeld switch~2 kapot gaat en alle computers die met switches~3 tot en met~5 verbonden zijn, geen Internetconnectiviteit meer hebben.
+Maar dit is eenvoudig op te lossen.
 We verbinden switch~1 snel met switch~3 en de connectiviteit is hersteld.
 
 
@@ -119,15 +119,65 @@ We verbinden switch~1 snel met switch~3 en de connectiviteit is hersteld.
 \end{figure}
 
 
-Dit brengt echter een enorm gevaar met zich mee.
-Zo lang switch~2 defect blijft, is er niets aan de hand.
-Maar zodra switch~2 vervangen wordt door een nieuwe switch, hebben we een lus gecreëerd in het netwerk.
-Switch~1 verbindt met switch~2, zo met switch~3 en dan terug naar switch~1.
+Dit brengt echter een groot gevaar met zich mee.
+Zolang switch~2 defect blijft, is er niets aan de hand.
+Maar zodra switch~2 vervangen wordt door een nieuwe switch, hebben we een lus gemaakt in het netwerk.
+Switch~1 verbindt met switch~2, zo met switch~3 en dan opnieuw naar switch~1.
 Dit lijkt onschadelijk maar is dat zeker niet.
 
-\subsection{Virtuele switches}
+Neem opnieuw een computer verbonden met switch~1.
+Deze wil met een andere computer in het netwerk communiceren.
+De MAC-tabellen van alle drie de switches zijn leeg.
+Als het eerste frame van de computer aankomt op switch~1, kan deze het source MAC-adres invullen zijn MAC-tabel maar omdat hij het destination MAC-adres niet kent, stuurt hij het frame via alle interfaces naar buiten.
+Dit frame komt dus zowel bij switch~2 als bij switch~3 aan.
+Switch~2 heeft ook een lege MAC-tabel dus stuurt het frame ook aan alle interfaces naar buiten, dus ook naar switch~3.
+
+Switch~3 ontvangt het frame dus twee keer, een keer van switch~1 en een keer van switch~2.
+Omdat het destination MAC-adres nog altijd niet bekend is, stuurt de switch beide frames langs alle interfaces naar buiten.
+Switch~3 stuurt het frame dat hij van switch~2 gekregen heeft, door naar switch~1 en stuurt het frame van switch~1 door naar switch~2.
+
+Eén frame heeft zich via deze lus verdubbeld en deze twee frames blijven rondlussen in het netwerk.
+Dit soort fysieke lussen in het netwerk, kunnen een netwerk snel op de knieën brengen.
 
 
-\subsection{Virtuele kabels}
+
+\section{Spanning-tree protocol (STP)}
+Deze fysieke lussen zijn goed.
+Als een switch of kabel kapot gaat, hebben de computers nog steeds netwerkconnectiviteit via de andere route.
+Maar door de manier waarop switches omgaan met BUM-verkeer (broadcast, unknown unicast, multicast -- voor deze drie types heeft een switch nooit het destination MAC-adres in de MAC-tabel) zijn deze fysieke lussen net schadelijk voor je netwerk.
+Het \emph{spanning-tree protocol} (STP) is een protocol dat deze fysieke lussen detecteert en telkens één interface in de lus uitschakelt.
+Op die manier is het gevaar geweken want de frames kunnen niet meer eindelijk rondjes blijven draaien in de lus.
+Als er echter een switch of kabel kapot gaat, wordt dit gedetecteerd door STP en wordt de interface die werd uitgezet, terug aangezet.
+
+Spanning-tree protocol doet dit met behulp van \emph{bridge protocol data units} (BPDU),%
+    \footnote{%
+        De term ``bridge'' is een oude term voor ``switch.''
+        Er waren enkele technische verschillen tussen beide soorten toestellen maar nu kunnen beide termen door elkaar gebruikt worden.%
+        In de technische documentatie rondom STP wordt nog steeds bijna uitsluitend de term ``bridge'' gebruikt.
+    }
+speciale frames die switches naar elkaar sturen om informatie uit te wisselen over de status van het netwerk.
+STP doorloopt vier stappen om een \emph{loop-free network} te bekomen.
+\begin{enumerate}
+\item
+    Beslis samen welke switch de \emph{root bridge} wordt van het netwerk.
+    Deze switch is als het ware de baas en verstuurt de BPDU's waarop de andere switches hun keuzes baseren.
+    We kunnen de root bridge ook zien als de stam van de boom waar alle andere switches en verbindingen van aftakken.
+\item
+    Elke switch bepaalt de kortste route naar de root bridge en markeert deze interface als de \emph{root port}.
+\item
+    Elke link (kabel die twee switches met elkaar verbindt) heeft één \emph{designated port}.
+    Als een van beide uiteindes al een root port is, moet de andere kant de designated port zijn.
+    Als geen van beide uiteindes de root port is, wordt op basis van een selectiecriterium bepaald welk van de twee de designated port wordt.
+\item
+    Elke interface die geen root port of designated port is, wordt uit gezet.
+    Op deze manier worden alle lussen in het netwerk verbroken.
+\end{enumerate}    
+
+
+
+\section{Virtuele switches}
+
+
+\section{Virtuele kabels}
 
 % Ik heb geen idee wat ik bedoelde met virtuele kabels...

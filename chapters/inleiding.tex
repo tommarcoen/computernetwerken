@@ -1,4 +1,4 @@
-\section{Inleiding}
+\chapter{Inleiding}
 
 De term \emph{computernetwerk} bestaat uit twee woorden: ``computer'' en ``netwerk.''
 Wikipedia definiëert een \emph{computer} als een ``apparaat waarmee gegevens volgens formele procedures verwerkt kunnen worden.''
@@ -14,7 +14,7 @@ Glasvezel, ADSL en coax zijn ook voorbeelden van computernetwerken.
 
 
 
-\subsection{Netwerkprotocollen}
+\section{Netwerkprotocollen}
 
 Een protocol is, om weeral Wikipedia te citeren, een ``gedragsovereenkomst, meestal in de vorm van een aantal uit te voeren stappen.''
 Het vormt dus een set regels waar twee computers zich aan willen houden, als ze met elkaar willen communiceren.
@@ -32,7 +32,7 @@ Enkele protocollen die niet meer gebruikt worden in computernetwerken, zijn IPX,
 
 
 
-\subsection{Evolutie in netwerken}
+\section{Evolutie in netwerken}
 
 De eerste \emph{mainframes} stammen uit de jaren 50.
 De gegevens werden oorspronkelijk ingevoerd met gegevensdragers als ponskaarten, ponsbanden en magneetbanden.
@@ -47,7 +47,7 @@ Begin jaren 90 kwamen de Ethernetswitches en verdrong Ethernet vrij snel alle an
 
 
 
-\subsection{Netwerktopologieën}
+\section{Netwerktopologieën}
 
 De meest eenvoudige topologie is een point-to-pointverbinding tussen twee computers door beide computers rechtstreeks met elkaar te verbindinen met een kabel.
 Deze topologie schaalt echter niet goed.
@@ -65,7 +65,7 @@ Een hub werkt functioneel zoals thinnet en vormt aldus een logische busstructuur
 Een \emph{full mesh} netwerk is een netwerk waarbij elk toestel met elk ander toestel verbonden is door middel van point-to-pointverbindingen.
 Een \emph{partial mesh} netwerk is een netwerk waarbij een deel van de directe verbindingen van een full mesh ontbreken.
 
-\subsection{Het OSI-model en het TCP/IP-model}
+\section{Het OSI-model en het TCP/IP-model}
 
 Het OSI-model is een conceptueel model voor netwerkcommunicatie.
 Het werd als theoretisch model ontwikkeld met de bedoeling dat de praktijk zich aan dit model aan zou passen.
@@ -118,7 +118,7 @@ De verschillende lagen vinden we ook terug als we de verschillende stappen doorl
 
 
 
-\subsection{Soorten communicatie}
+\section{Soorten communicatie}
 
 Op een netwerk bestaan er vier soorten van communicatie.
 We spreken over \emph{unicast} als één computer met één andere computer communiceert over het netwerk, bijvoorbeeld als je met SSH een computer vanop afstand configureert.
@@ -138,7 +138,7 @@ In deze cursus gaan we niet dieper in op multicast of anycast.
 
 
 
-\subsection{Communicatie tussen computers}
+\section{Communicatie tussen computers}
 
 Nemen we als voorbeeld een computer, de \emph{client}, die een webpagina op wil halen van een andere computer, de \emph{server} (\vref{fig:client-server}).
 Het protocol dat hier voor gebruikt wordt, heet hypertext transfer protocol (HTTP).
@@ -181,20 +181,20 @@ Dit ogenschijnlijk eenvoudig voorbeeld roept toch meerdere vragen op.
 
 
 
-\subsubsection{Hoe kunnen we de server bereiken?}
+\subsection{Hoe kunnen we de server bereiken?}
 In de adresbalk van de browser vullen we de \emph{domeinnaam} van de website in die we willen bereiken, bijvoorbeeld \url{www.example.com}.
 Deze domeinnaam vinden we ook terug in de Host header van de HTTP request.
 Omdat computers met elkaar communiceren door middel van IP-adressen, moet deze domeinnaam eerst omgezet worden in een IP-adres.
 Dit gebeurt met behulp van het Domain Name System (DNS).
 
-\subsubsection{Voor welke applicatie is de data bestemd?}
+\subsection{Voor welke applicatie is de data bestemd?}
 Als pakketjes aankomen op een server of client computer, moet het besturingssysteem weten voor welke applicatie ze bestemd zijn.
 Bevatten de pakketjes een email bestemd voor Outlook of een gif van een kat die in de browser getoond moet worden?
 Elk programma dat communiceert op het netwerk krijgt een poortnummer toegewezen.
 Deze poortnummers worden meegestuurd in de pakketjes zodat de computers steeds weten voor welke applicatie de pakketjes bestemd zijn.
 We leren meer over deze poortnummers als we TCP en UDP bespreken.
 
-\subsubsection{Hoe versturen we heel veel data?}
+\subsection{Hoe versturen we heel veel data?}
 Als we een groot document door willen sturen, reist de vraag of we dit document als één geheel kunnen sturen, of moeten opsplitsen in kleine stukjes om vervolgens deze kleine stukjes afzonderlijk te versturen.
 We zullen merken dat er technische beperkingen zijn die de maximale grootte van een pakket bepalen op sommige netwerken.
 Het is soms dus noodzakelijk om grote bestanden op te splitsen en als kleine stukjes te versturen.
@@ -205,7 +205,7 @@ Het is belangrijk dat hij weet dat de verzender twintig pakketjes verstuurd heef
 
 Deze vraagt hangt ook samen met de volgende vraag.
 
-\subsubsection{Wat doen we als er iets mis gaat?}
+\subsection{Wat doen we als er iets mis gaat?}
 Pakketjes kunnen verloren gaan of er kunnen ``beschadigingen'' optreden in een pakketje (een ``1'' kan een ``0'' worden of omgekeerd).
 Pakketjes kunnen in de verkeerde volgorde aankomen.
 Dit zijn uitdagingen die TCP en UDP wel (of bewust niet) oplost.
@@ -213,7 +213,7 @@ Dit zijn uitdagingen die TCP en UDP wel (of bewust niet) oplost.
 
 
 
-\subsection{Encapsulatie en decapsulatie}
+\section{Encapsulatie en decapsulatie}
 
 We gaan nu terug naar de computer die een HTTP request stuurt naar de web server.
 De computer heeft een DNS request uitgestuurd voor de domeinnaam www.example.com en kreeg het IP-adres 192.168.1.102.
