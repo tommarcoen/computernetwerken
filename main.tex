@@ -3,14 +3,15 @@
 \date{2022}
 
 % LaTeX-pakketen
-\input{preamble/language}
-\input{preamble/fonts}
+\input{tex/language}
+\input{tex/fonts}
 \usepackage{multirow}
 \usepackage{tikz}
 \usepackage{siunitx}
 \usepackage{multirow}
 \usepackage{booktabs}
-\input{preamble/references}
+\usepackage{standalone}
+\input{tex/references}
 \usetikzlibrary[positioning]
 \usepackage{pgf-pie}
 \usepackage[backend=biber]{biblatex}
@@ -25,6 +26,14 @@
 \definecolor{spot3}{cmyk}{1  ,.94,0  ,.50}
 
 \newcommand{\cmd}[1]{\textbf{#1}}
+
+\usepackage{ifthen}
+\usepackage{contour}
+\input{tex/mdt-colors}
+\input{pgf/tikz-pgf}
+\input{pgf/layers}
+\input{pgf/connections}
+\input{pgf/nodes}
 
 
 \begin{document}
@@ -51,6 +60,8 @@
 \include{chapters/ip-adressen}
 \include{chapters/routering}
 \include{chapters/ethernet}
+\include{chapters/fysiek}
+\include{chapters/wireless}
 \include{chapters/transportlaag}
 \include{chapters/applicaties}
 

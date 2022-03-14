@@ -1,0 +1,214 @@
+%
+%
+%
+
+\def\iconset{3015}
+
+
+%
+% Display only the icons
+%
+% Syntax: \icon<type>{<hostname>}{<coordinates>}
+%
+
+\newcommand{\iconcloud}[2]{
+    \node[network node image] (#1) at (#2) {\includegraphics[width=30mm]{images//cloud.png}};
+    \node at ([yshift=-2mm]#2) {#1};
+}
+\newcommand{\iconfirewall}[2]{
+    \ifthenelse{\equal{\iconset}{basic}}{
+        \node[network node circle,draw=mdtorange] (#1) at (#2) {FW};
+    }{
+        \node[network node image] (#1) at (#2) {\includegraphics[width=10mm]{images/\iconset/firewall.eps}};
+    }
+}
+\newcommand{\iconips}[2]{
+    \ifthenelse{\equal{\iconset}{basic}}{
+        \node[network node square] (#1) at (#2) {IPS};
+    }{
+        \node[network node image] (#1) at (#2) {\includegraphics[width=10mm]{images/\iconset/ips.eps}};
+    }
+}
+\newcommand{\iconrouter}[2]{
+    \ifthenelse{\equal{\iconset}{basic}}{
+        \node[network node circle] (#1) at (#2) {RTR};
+    }{
+        \node[network node image] (#1) at (#2) {\includegraphics[width=10mm]{images/\iconset/router.eps}};
+    }
+    \message{iconrouter: #1^^J}
+}
+\newcommand{\iconswitch}[2]{
+    \ifthenelse{\equal{\iconset}{basic}}{
+        \node[network node square] (#1) at (#2) {SW};
+    }{
+        \node[network node image] (#1) at (#2) {\includegraphics[width=13mm]{images/\iconset/switch.eps}};
+    }
+}
+\newcommand{\icondistswitch}[2]{
+    \ifthenelse{\equal{\iconset}{basic}}{
+        \node[network node square] (#1) at (#2) {SW};
+    }{
+        \node[network node image] (#1) at (#2) {\includegraphics[width=13mm]{images/\iconset/l3switch.eps}};
+    }
+}
+\newcommand{\iconcoreswitch}[2]{
+    \ifthenelse{\equal{\iconset}{basic}}{
+        \node[network node square] (#1) at (#2) {SW};
+    }{
+        \node[network node image] (#1) at (#2) {\includegraphics[width=13mm]{images/\iconset/coreswitch.eps}};
+    }
+}
+\newcommand{\iconhost}[2]{
+   \ifthenelse{\equal{\iconset}{basic}}{
+      \node[network node square] (#1) at (#2) {PC};
+   }{
+      \node[network node square] (#1) at (#2) {PC};
+   }
+}
+
+
+
+%
+% Display the node: icon + labels
+%
+%
+% Syntax: \node<type>[<label position>]{<name>}{<coordinates>}{<type>}{<IP address>}
+%
+% Where:
+%  - <label position> : top, bottom, left, right (default)
+%  - <type> : hardware type, e.g. Catalyst 3850
+%
+
+\newcommand{\nodecloud}[5][right]{
+    \iconcloud{#2}{#3}
+}
+\newcommand{\nodefirewall}[5][right]{
+    \iconfirewall{#2}{#3}
+    \nodelabel[#1]{#3}{#2}{#4}{#5}
+}
+\newcommand{\nodeips}[5][right]{
+    \iconips{#2}{#3}
+    \nodelabel[#1]{#3}{#2}{#4}{#5}
+}
+\newcommand{\noderouter}[5][right]{
+    \iconrouter{#2}{#3}
+    \nodelabel[#1]{#3}{#2}{#4}{#5}
+}
+\newcommand{\nodedistswitch}[5][right]{
+    \icondistswitch{#2}{#3}
+    \nodelabel[#1]{#3}{#2}{#4}{#5}
+}
+\newcommand{\nodeswitch}[5][right]{    
+    \iconswitch{#2}{#3}
+    \nodelabel[#1]{#3}{#2}{#4}{#5}
+}
+\newcommand{\nodecoreswitch}[5][right]{    
+    \iconcoreswitch{#2}{#3}
+    \nodelabel[#1]{$(#3)-(0,.4)$}{#2}{#4}{#5}
+}
+\newcommand{\nodehost}[5][right]{
+   \iconhost{#2}{#3}
+   \nodelabel[#1]{#3}{#2}{#4}{#5}
+}
+
+
+
+%
+% Clusters of nodes
+%
+% Syntax: \cluster<type>[<label position>]{<name>}{<coordinates>}{<type>}{<IP address>}
+%
+
+\newcommand{\clustercloud}[3][bottom]{
+    \draw[network node,draw=mdtpurple,fill=mdtpalegray] (#3) ellipse (15mm and 10mm);
+    \node (#2) at (#3) {#2};
+    \ifthenelse{\equal{#1}{top}}{
+        \coordinate (a) at ($(#3)-(10mm,-7mm)$);
+        \coordinate (b) at ($(#3)+(10mm,7mm)$);
+    }{
+        \coordinate (a) at ($(#3)-(10mm,7mm)$);
+        \coordinate (b) at ($(#3)+(10mm,-7mm)$);
+    }
+    \message{clustercloud: #2-1^^J}
+    \iconrouter{#2-1}{a}
+    \message{clustercloud: #2-2^^J}
+    \iconrouter{#2-2}{b}
+}
+
+\newcommand{\clusterfirewall}[5][bottom]{
+    \coordinate (left) at ($(#3)-(1,0)$);
+    \coordinate (right) at ($(#3)+(1,0)$);
+    \iconfirewall{#2-1}{left}
+    \iconfirewall{#2-2}{right}
+    
+    \begin{pgfonlayer}{connections}
+        \node (#2) [draw=mdtmedtronicblue,rounded corners,inner sep=2mm,dashed,fit=(#2-1) (#2-2)] {};
+    \end{pgfonlayer}
+    \connect{#2-1}{}{#2-2}{}
+    
+    \nodelabel[#1]{#3}{#2}{#4}{#5}
+}
+
+
+
+
+%
+% Syntax:
+% \nodelabel[<position>]{<coordinates>}{<hostname>}{<type>}{<IP address>}
+\newcommand{\nodelabel}[5][right]{%
+    \def\text{%
+        \ifthenelse{\equal{#4}{}}{%
+            \ifthenelse{\equal{#5}{}}{%
+                \contour{white}{\textbf{#3}}%
+            }{%
+                \contour{white}{\textbf{#3}}\\\contour{white}{\emph{#4}}%
+            }%
+        }{%
+            \contour{white}{\textbf{#3}}\\\contour{white}{\emph{#4}}\\\contour{white}{#5}%
+        }%
+    }
+
+    \begin{pgfonlayer}{labels}
+    
+    % On the right
+    \ifthenelse{\equal{#1}{right}}{
+        %\node[node label,anchor=west] at ($(#2)+(1,0)$) {\contour{white}{\textbf{#3}\\\emph{#4}\\#5}};
+        \node[node label,anchor=west] at ($(#2)+(1,0)$) {\text};
+        
+    % On the left
+    }{\ifthenelse{\equal{#1}{left}}{
+        \node[node label,anchor=east] at ($(#2)-(1,0)$) {\text};
+    
+    % At the top
+    }{\ifthenelse{\equal{#1}{top}}{
+        \node[node label,anchor=south] at ($(#2)+(0,1)$) {\text};
+    
+    % At the bottom
+    }{\ifthenelse{\equal{#1}{bottom}}{
+        \node[node label,anchor=north] at ($(#2)-(0,1)$) {\text};
+    
+    }{}}}}
+    
+    \end{pgfonlayer}
+    
+    \begin{pgfonlayer}{hostnames}
+        \node[node label,anchor=north] at ($(#2)-(0,.6)$) {\contour{white}{#3}};
+    \end{pgfonlayer}
+}
+
+%
+% Syntax:
+% \vlaninformationR[<xshift>]{<node name>}{<relative location>}
+%\newcommand{\vlaninformationR}[4][5cm]{
+%    \matrix (#2) [matrix of nodes,
+%        right=of #3,
+%        xshift=#1,
+%        left delimiter=\{,
+%        nodes={
+%            anchor=west,
+%            align=left
+%            }
+%        ] {
+%            #4
+%    };
+%}

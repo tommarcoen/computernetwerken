@@ -1,0 +1,69 @@
+%
+% connections.tex
+%
+% This document contains all the commands needed to create connections between
+% different network nodes, e.g.
+%  - a normal connection, with our without labels.
+%  - a vPC connection between 3 or 4 nodes.
+%
+
+%
+% Syntax:
+% \connect[<color>]{<node1>}{<intf1>}{<node2>}{<intf2>}
+\newcommand{\connect}[5][black]{
+
+    % Save the coordinates for the interface labels
+    \path (#2) -- (#4) coordinate[very near start] (i1) coordinate[midway] (im) coordinate[very near end] (i2);
+    
+    % Draw the connection between the two devices on the correct layer.
+    \begin{pgfonlayer}{connections}
+      \draw[color=#1] (#2) -- (#4);
+    \end{pgfonlayer}
+    
+    % Draw the interface labels on the correct layer.
+    \begin{pgfonlayer}{interfaces}
+        \ifthenelse{\equal{#3}{}}{}{\node[interface label,fill=white] at (i1) {\contour{white}{#3}};}
+        \ifthenelse{\equal{#5}{}}{}{\node[interface label,fill=white] at (i2) {\contour{white}{#5}};}
+    \end{pgfonlayer}
+    
+    %\ifthenelse{\equal{#5}{}}{
+    %    % Parameter 5 is empty:
+    %    \ifthenelse{\equal{#3}{}}{
+    %        % Parameter 3 is empty: no interfaces have been given.
+    %        \draw[color=#1] (#2) -- (#4);
+    %    }{
+    %        % Both devices share the same interface name.
+    %        \draw[color=#1] (#2) -- (#4)
+    %            node [midway,interface] {#3};
+    %    }
+    %}{
+    %    % Parameter 5 is not empty: both interfaces are given.
+    %    \draw[color=#1] (#2) -- (#4)
+    %        node [on background layer,near start,interface] {#3}
+    %        node [near end,interface] {#5};
+    %}
+}
+
+%
+% Syntax:
+% \connectClusters[<straight/cross>]{cluster1}{cluster2}
+\newcommand{\connectClusters}[3][S]{
+    \message{connectClusters 2-1: #2-1^^J}
+    \message{connectClusters 2-2: #2-2^^J}
+    \message{connectClusters 3-1: #3-1^^J}
+    \message{connectClusters 3-2: #3-2^^J}
+    \ifthenelse{\equal{#1}{S}}{
+        \connect{#2-1}{}{#3-1}{}
+        \connect{#2-2}{}{#3-2}{}
+    }{
+        \connect{#2-1}{}{#3-2}{}
+        \connect{#2-2}{}{#3-1}{}
+    }
+}
+
+%
+% Syntax:
+% \arrowcoords[<position>]{<coordinates start>}{<coordinates end>}{<text>}
+\newcommand{\arrowcoords}[4][midway]{
+    \draw[mdtgreen, arrows={-latex'}, shorten <= 0.25cm, shorten >= 0.25cm, very thick, distance=2cm] (#2) to[out=230,in=170] (#3) node[#1] {#4};
+}
