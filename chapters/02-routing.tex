@@ -42,11 +42,52 @@ We conclude the chapter with a brief introduction to both Open Shortest Path Fir
 
 
 
+\section{The router's routing table}
+
+Every host which has an \abbr{IP} address, also has a routing table which tells the device how to forward traffic.
+Depending on your operating system you can view the local routing table with \cmd{netstat} or \cmd{route}.
+Below is an example for a server running FreeBSD.
+\begin{verbatim}
+$ netstat -rnf inet
+Routing tables
+
+Internet:
+Destination        Gateway            Flags     Netif Expire
+default            198.19.208.1       UGS      vtnet0
+10.18.0.0/16       link#1             U        vtnet0
+10.18.0.5          link#1             UHS         lo0
+10.133.0.0/16      link#2             U        vtnet1
+10.133.19.35       link#2             UHS         lo0
+127.0.0.1          link#3             UH          lo0
+198.19.208.0/21    link#1             U        vtnet0
+198.19.210.27      link#1             UHS         lo0
+\end{verbatim}
+I have given three flags to the command.
+The first flag (``-r'') tells \cmd{netstat} to list the routing tables.
+The second flag (``-n'') tells \cmd{netstat} to not resolve hostnames.
+Omitting this flag results in ``127.0.0.1'' being shown as ``localhost'' and ``198.19.210.27'' -- which is this host's local IP address -- to be replaced by the hostname of this host.
+The third and final option (``-f inet'') makes \cmd{netstat} only display the \abbr{IP} version~4 or \emph{inet4} routing table.
+
+
+
 \section{Static routes}
 
 Although I made them sound as something terrible and to-be avoided, static routes are very useful and are still used extensively in companies both small and large.
 Somtimes there is only one way out and then it does not make sense to run a routing protocol.
 
+Let's start with the example in \vref{fig:routing-home-network}.
+The only way out for your home router is via the ISP router.
+A simple static default route will thus suffice.
+A \emph{default route} is the name given to the prefix 0.0.0.0/0 meaning that zero bits (due to the prefix length being zero) have to match the given prefix 0.0.0.0.
+This matches all possible IP addresses.
+
+
+\begin{figure}
+   \centering
+   Cloud -- ISP router -- home router -- local network (switch) with two computers
+   \caption{Home router connecting your local network to the Internet}
+   \label{fig:routing-home-network}
+\end{figure}
 
 
 \section{Router Information Protocol}
