@@ -1,6 +1,6 @@
-\documentclass[12pt,b5paper]{memoir}
+\documentclass[11pt,b5paper]{memoir}
 
-\title{Computernetwerken met TCP/IP}
+\title{An introduction to computernetworks}
 \author{Tom Marcoen}
 \date{2022}
 
@@ -9,8 +9,7 @@
 \input{tex/language}
 \input{tex/fonts}
 \input{tex/packages}
-
-\pagestyle{ruled}
+\input{tex/layout}
 
 \usepackage[backend=biber]{biblatex}
 \addbibresource{frankenstein/resources.bib}
@@ -19,9 +18,9 @@
 \begin{document}
 \include{tex/titlepages}
 \frontmatter
-\include{chapters/voorwoord}
+\include{chapters/00-preface}
 \tableofcontents
-\include{chapters/inleiding}
+\include{chapters/00-introduction}
 \mainmatter
 \include{chapters/ip-adressen}
 \include{chapters/routering}

@@ -1,13 +1,57 @@
-\chapter{Routering}
-\label{sec:routering}
+\chapter{Routing}
+\label{sec:routing}
 
-\section{Statische routes}
+A \emph{router} connects multiple networks together.
+\Vref{fig:routing-basic} shows a router in\-ter\-con\-nect\-ing two networks.
+When a host of one network wants to communicate with a host on the other network, it can send the traffic to the router.
+The router can forward the traffic on to the other network.
+Things are easy for this router as there are only two networks and the router knows about both of them as it has an interface in each network.
+
+
+\begin{figure}
+   \centering
+   A ROUTER CONNECTING TWO NETWORKS TOGETHER
+   \caption{A router connecting two networks together}
+   \label{fig:routing-basic}
+\end{figure}
+
+Things become a bit more complex in \vref{fig:routing-two-routers}.
+Router \hostname{blue} knows about three of the four networks as it has an interface in these three networks.
+Router \hostname{red} only knows about two of the four networks.
+For \hostname{blue} to be able to send traffic to the fourth network, we must teach \hostname{blue} how to reach this network.
+In this case, things are relatively easy: we can tell \hostname{blue} to forward all traffic destined to this fourth network to \hostname{red}, who already knows about this network.
+Similarly we need to teach \hostname{red} how to reach the two networks that it does not know about.
+
+
+\begin{figure}
+   \centering
+   \caption{Two routers interconnecting a total of four networks}
+   \label{fig:routing-two-routers}
+\end{figure}
+
+
+We could manually configure both \hostname{blue} and \hostname{red} but this is tiresome, repetitive work, error-prone and static.
+It does not react well to changes in the network, for example, when a link fails or gets added.
+The industry thus developed several protocols for the routers to exchange this information dynamically.
+Each routers tells their neighbouring routers the networks it knows about.
+This wasy, eventually all routers learn about all networks and they can calculate the best path to reach each network.
+
+In this chapter will first consider static routing in more detail.
+Next we will discuss the Routing Information Protocol, a simple yet still widely used protocol for dynamically exchanging network prefixes.
+We conclude the chapter with a brief introduction to both Open Shortest Path First and the Border Gateway Protocol.
 
 
 
-\section{Router Information Protocol (RIP)}
+\section{Static routes}
 
-\section{OSPF}
+Although I made them sound as something terrible and to-be avoided, static routes are very useful and are still used extensively in companies both small and large.
+Somtimes there is only one way out and then it does not make sense to run a routing protocol.
 
-\section{BGP}
+
+
+\section{Router Information Protocol}
+
+\section{Open Shortest Path First}
+
+\section{Border Gateway Protocol}
 

@@ -1,12 +1,12 @@
 %\usepackage{geometry}
 %\geometry{a4paper,top=30mm,bottom=65mm,left=30mm,right=65mm,footskip=30mm}
-\settypeblocksize{555pt}{*}{.617}
+%\settypeblocksize{555pt}{*}{.617}
 % s = w/8
-\setlrmargins{26.25mm}{*}{*}
-\setheadfoot{\baselineskip}{3\baselineskip}
-\setheaderspaces{*}{\baselineskip}{*}
-\setmarginnotes{2\baselineskip}{45mm}{.6\baselineskip}
-\checkandfixthelayout
+%\setlrmargins{26.25mm}{*}{*}
+%\setheadfoot{\baselineskip}{3\baselineskip}
+%\setheaderspaces{*}{\baselineskip}{*}
+%\setmarginnotes{2\baselineskip}{45mm}{.6\baselineskip}
+%\checkandfixthelayout
 \raggedbottom
 
 \pagestyle{ruled}
@@ -19,7 +19,7 @@
   label=(\roman*),
 }
 \firmlists
-\renewcommand*{\descriptionlabel}[1]{\hspace\labelsep\scshape #1:}
+\renewcommand*{\descriptionlabel}[1]{\hspace\labelsep\scshape #1 --}
 
 % Side notes
 \strictpagechecktrue
@@ -36,3 +36,11 @@
 \usepackage{caption}
 \DeclareCaptionLabelFormat{bringhurst}{\scshape\textls[50]{\MakeLowercase{#1}\,#2}}
 \captionsetup{font={sf,small},labelformat=bringhurst,format=hang}
+
+
+
+\newcommand*{\abbr}[1]{%
+   % Format abbreviations as small capitals
+   \texorpdfstring{\textsc{\MakeLowercase{#1}}}{#1}%
+}
+\newcommand{\hostname}[1]{\texttt{#1}}
