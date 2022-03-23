@@ -46,7 +46,7 @@ We conclude the chapter with a brief introduction to both Open Shortest Path Fir
 
 Every host which has an \abbr{IP} address, also has a routing table which tells the device how to forward traffic.
 Depending on your operating system you can view the local routing table with \cmd{netstat} or \cmd{route}.
-Below is an example for a server running FreeBSD.
+Below is an example for a server running FreeBSD version 13.0-\textsc{release}-p8.
 \begin{verbatim}
 $ netstat -rnf inet
 Routing tables
@@ -67,6 +67,38 @@ The first flag (``-r'') tells \cmd{netstat} to list the routing tables.
 The second flag (``-n'') tells \cmd{netstat} to not resolve hostnames.
 Omitting this flag results in ``127.0.0.1'' being shown as ``localhost'' and ``198.19.210.27'' -- which is this host's local IP address -- to be replaced by the hostname of this host.
 The third and final option (``-f inet'') makes \cmd{netstat} only display the \abbr{IP} version~4 or \emph{inet4} routing table.
+
+The first column lists the prefix and prefix length with the exception of a \emph{host route} or single \abbr{IP} address, which has a prefix length of 32 bits, and the default route.
+The world ``default'' means ``0.0.0.0/0'' or ``no bits have to match,'' i.e.~it accept all possible \abbr{IP} addresses.
+
+The second column lists the \emph{gateway} or router to which to send the packets destined for remote networks.
+Only the default route has a gateway listed, which is also sometimes called the \emph{gateway of last resort}.
+The other networks are known the the computer as it has an interface in that network so there is no need for a gateway.
+
+We will skip the flags.
+You can look those up in the documentation.
+Finally the last column lists the interface from which to send the packets to their destination.
+
+Now let's take a look at the first two entries, 0.0.0.0/0 and 10.18.0.0/16 and assume we want to send a packet destined to 10.18.20.7.
+It matched the default route as all packets match this default, but it also matched the first sixteen bits of the 10.18.0.0 prefix.
+Which route must it take then?
+This brings us to the first important rule about routing tables:
+
+\begin{quote}
+   When selecting a route from the routing table, the longest match always wins.
+\end{quote}
+
+As the \abbr{IP} address matches the prefix 10.18.0.0/16 with sixteen bits and the prefix 0.0.0.0/0 with zero bits, the packet is sent out on the local network connected to vtnet0.
+This happens to be the same interface as the default route is pointed out to but remember the \emph{address resolution protocol} (\abbr{ARP})!
+When you send out traffic destined for a directly connected network you send out an \abbr{ARP} request for the destination \abbr{IP} address while when you need to forward the packet to a gateway, you send out an \abbr{ARP} request for that gateway's \abbr{MAC} address (see \vref{sec:arp}).
+
+Before we move on to static routing, let's take a quick look at an example of a routing table on Windows~10.
+Note that the command is not \cmd{netstat} but \cmd{route print}.
+
+\begin{verbatim}
+C:\>route print -4
+\end{verbatim}
+
 
 
 
