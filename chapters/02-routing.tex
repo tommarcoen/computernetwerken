@@ -94,9 +94,28 @@ When you send out traffic destined for a directly connected network you send out
 
 Before we move on to static routing, let's take a quick look at an example of a routing table on Windows~10.
 Note that the command is not \cmd{netstat} but \cmd{route print}.
+I have omitted the interface list which is printed at the top as this is not relevant for this example.
 
 \begin{verbatim}
 C:\>route print -4
+...
+Active Routes:
+===============================================================
+Network Destination        Netmask  Gateway   Interface  Metric
+          0.0.0.0          0.0.0.0  10.0.0.1  10.0.0.75      35
+         10.0.0.0        255.0.0.0  On-link   10.0.0.75     290
+        10.0.0.75  255.255.255.255  On-link   10.0.0.75     290
+       10.0.0.255  255.255.255.255  On-link   10.0.0.75     290
+        127.0.0.0        255.0.0.0  On-link   127.0.0.1     330
+        127.0.0.1  255.255.255.255  On-link   127.0.0.1     330
+  127.255.255.255  255.255.255.255  On-link   127.0.0.1     330
+        224.0.0.0        240.0.0.0  On-link   127.0.0.1     330
+        224.0.0.0        240.0.0.0  On-link   10.0.0.75     290
+  255.255.255.255  255.255.255.255  On-link   127.0.0.1     330
+  255.255.255.255  255.255.255.255  On-link   10.0.0.75     290
+===============================================================
+Persistent Routs:
+  None
 \end{verbatim}
 
 
@@ -122,7 +141,31 @@ This matches all possible IP addresses.
 \end{figure}
 
 
+\Vref{fig:routing-static-vpn} shows a second example for static routing.
+Two offices are connected to the Internet and have an IPsec \abbr{VPN} tunnel configured between them.
+For the devices in the first office to reach the devices in the other office through the tunnel, you can configure a static routing directing the network traffic for the other network through the tunnel interface.
+
+
+\begin{figure}
+   \centering
+   Two networks connecting to the Internet and a \abbr{VPN} tunnel between them
+   \caption{Static routing is often used to direct traffic through a \abbr{VPN} tunnel}
+   \label{fig:routing-static-vpn}
+\end{figure}
+
+
+The third example is one from the big enterprises and service providers.
+They tend to have a separate management network.
+Servers have their default gateway pointing out the public interface but need to send all management traffic out their secondary interface designated for management.
+
+
+
+\section{Dynamic routing protocols}
+
+
+
 \section{Router Information Protocol}
+
 
 \section{Open Shortest Path First}
 

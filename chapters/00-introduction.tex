@@ -5,9 +5,64 @@ These computers, as well as the network devices interconnecting them, are also c
 The interconnections between these nodes are either made up of physical cables or by using wireless radio frequencies.
 Examples of these interconnections include fiber optic cabling, twisted pair, coax, Wi-Fi, Bluetooth, and \abbr{5G}.
 
-There are several possibilities how to interconnect these devices.
-These different arrangements are called \emph{network topologies} and we will discuss them in more detail later in this introductory chapter.
-Two examples include a point-to-point link and a star topology.
+
+
+\section{The size of a network}
+
+We can categories computer network depending on their geographical size.
+A small network spanning a local area, e.g.~a house or office building, is called a \emph{local area network} or \abbr{LAN}.
+A large network spanning a country, continent or even the entire world, is called a \emph{wide area network} or \abbr{WAN}.
+The networks operated by Internet service providers are such examples but the best known example is of course the Internet itself.
+
+There are several categories in between these two extremes, for example a campus area network (\abbr{CAN}) or metropolitan area network (\abbr{MAN}) but these terms are not that widely used.
+The term \abbr{SAN} or \emph{storage area network} is in common use, however, and refers to a network connecting storage appliances together.
+
+
+
+\section{Network topologies}
+
+Apart from their physical size we can also categorise networks based on their topology.
+There is a difference between the physical topology -- how the cables go -- and the logical topology -- how the data flows through the network.
+Let's start off with the most simple topology: a point-to-point link between two devices.
+Examples include a serial cable connecting a terminal to the computer, a direct connection using a \abbr{UTP} cable, or an infrared connection.
+
+Next consider the ring topology in \vref{fig:intro-topo-ring}.
+Note that this can be considered a series of point-to-point links.
+There is a big difference between a ring topology and a series of point-to-point links, however.
+Where a series of point-to-point links can still function correctly when one of the links is broken, a ring topology requires the ring to be intact.
+This is because the ring topology uses a protocol that passes a token around the ring used for deciding when a host can put data on the ring.
+Examples of a ring topology include \abbr{FDDI} and Token Ring, both of which no longer exist.
+
+
+\begin{figure}
+   \centering
+   Ring topology
+   \caption{Computers connected in a ring topology}
+   \label{fig:intro-topo-ring}
+\end{figure}
+
+
+This ring topology can be both a physical and a logical ring, or it could be a physical star topology and a logical ring topology.
+An example is Token Ring which has a central \emph{media access unit} (\abbr{MAU}) to which all computers connect.
+The \abbr{MAU} makes sure all devices are logically connected in a ring and, when a cable gets disconnected or a device is turned off, the \abbr{MAU} skips that link and restores the ring with the remaining devices.
+
+Both Thicknet and Thinnet form a physical and logical bus topology with all devices connecting to a long cable.
+Ethernet hubs form a physical star topology with the hub being the centre, much like the \abbr{MAU} in a Token Ring network.
+Logically the Ethernet network operates just like the Thinnet bus topology as all devices receive all traffic on the wire.
+An Ethernet switch changes this behavior as it isolates the differnet cable segments from each other.
+It thus forms both a physical and a logical star topology.
+
+%Thick- en thinnet gebruiken beide een fysieke busstructuur waarbij alle computers op één lange kabel geprikt worden.
+%Beide standaarden gebruiken coax (echter van een andere dikte, vandaar de namen) maar beide gebruiken een andere manier om de computers met het netwerk te verbinden.
+%Thicknet gebruikt ``vampire taps'' en een \emph{drop cable} terwijl thinnet BNC-koppelstukken gebruikt.%
+%   \footnote{Er was ook een N-connector beschikbaar voor Thicknet maar deze werd blijkbaar amper gebruikt (\href{http://www.mattmillman.com/projects/10base5/}{bron}).}
+
+%Hoewel Token Ring een fysieke stertopologie heeft -- met een centrale media access unit (MAU) -- vormen de kabels een logische ringtopologie.
+%Hubs en switches vormen ook een fysieke stertopologie.
+%Een hub werkt functioneel zoals thinnet en vormt aldus een logische busstructuur terwijl een switch als een reeks logische point-to-pointverbindingen werkt.
+
+%Een \emph{full mesh} netwerk is een netwerk waarbij elk toestel met elk ander toestel verbonden is door middel van point-to-pointverbindingen.
+%Een \emph{partial mesh} netwerk is een netwerk waarbij een deel van de directe verbindingen van een full mesh ontbreken.
 
 
 \section{Network protocols}
@@ -41,31 +96,6 @@ Ethernet gebruikte eerst thicknet (1982), daarna thinnet (1983), en vervolgens t
 Concurrerende protocollen waren Token Ring (1984) en FDDI (1987).
 Begin jaren 90 kwamen de Ethernetswitches en verdrong Ethernet vrij snel alle andere protocollen.
 
-
-
-\section{Netwerktopologieën}
-
-De meest eenvoudige topologie is een point-to-pointverbinding tussen twee computers door beide computers rechtstreeks met elkaar te verbindinen met een kabel.
-Deze topologie schaalt echter niet goed.
-Enkele voorbeelden zijn een seriële kabel, een UTP-kabel, of eeninfraroodverbinding.
-
-Thick- en thinnet gebruiken beide een fysieke busstructuur waarbij alle computers op één lange kabel geprikt worden.
-Beide standaarden gebruiken coax (echter van een andere dikte, vandaar de namen) maar beide gebruiken een andere manier om de computers met het netwerk te verbinden.
-Thicknet gebruikt ``vampire taps'' en een \emph{drop cable} terwijl thinnet BNC-koppelstukken gebruikt.%
-   \footnote{Er was ook een N-connector beschikbaar voor Thicknet maar deze werd blijkbaar amper gebruikt (\href{http://www.mattmillman.com/projects/10base5/}{bron}).}
-
-Hoewel Token Ring een fysieke stertopologie heeft -- met een centrale media access unit (MAU) -- vormen de kabels een logische ringtopologie.
-Hubs en switches vormen ook een fysieke stertopologie.
-Een hub werkt functioneel zoals thinnet en vormt aldus een logische busstructuur terwijl een switch als een reeks logische point-to-pointverbindingen werkt.
-
-Een \emph{full mesh} netwerk is een netwerk waarbij elk toestel met elk ander toestel verbonden is door middel van point-to-pointverbindingen.
-Een \emph{partial mesh} netwerk is een netwerk waarbij een deel van de directe verbindingen van een full mesh ontbreken.
-
-
-
-\section{The size of a network}
-
-Explain LAN and WAN and a few other flavors like SAN and MAN.
 
 
 
