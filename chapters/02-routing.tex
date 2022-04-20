@@ -1,5 +1,5 @@
 \chapter{Routing}
-\label{sec:routing}
+\label{chap:routing}
 
 A \emph{router} connects multiple networks together.
 \Vref{fig:routing-basic} shows a router in\-ter\-con\-nect\-ing two networks.
@@ -30,11 +30,10 @@ Similarly we need to teach \hostname{red} how to reach the two networks that it 
 \end{figure}
 
 
-We could manually configure both \hostname{blue} and \hostname{red} but this is tiresome, repetitive work, error-prone and static.
-It does not react well to changes in the network, for example, when a link fails or gets added.
+We could manually configure both \hostname{blue} and \hostname{red} but this is repetitive work, error-prone and it does not react well to changes in the network, for example, when a link fails or gets added.
 The industry thus developed several protocols for the routers to exchange this information dynamically.
-Each routers tells their neighbouring routers the networks it knows about.
-This wasy, eventually all routers learn about all networks and they can calculate the best path to reach each network.
+Each router tells its neighbouring routers the networks it knows about.
+This way, eventually all routers learn about all networks and they can calculate the best path to reach each network.
 
 In this chapter will first consider static routing in more detail.
 Next we will discuss the Routing Information Protocol, a simple yet still widely used protocol for dynamically exchanging network prefixes.
@@ -63,7 +62,7 @@ default            198.19.208.1       UGS      vtnet0
 198.19.210.27      link#1             UHS         lo0
 \end{verbatim}
 I have given three flags to the command.
-The first flag (``-r'') tells \cmd{netstat} to list the routing tables.
+The first flag (``-r'') tells \cmd{netstat} to list the routing table.
 The second flag (``-n'') tells \cmd{netstat} to not resolve hostnames.
 Omitting this flag results in ``127.0.0.1'' being shown as ``localhost'' and ``198.19.210.27'' -- which is this host's local IP address -- to be replaced by the hostname of this host.
 The third and final option (``-f inet'') makes \cmd{netstat} only display the \abbr{IP} version~4 or \emph{inet4} routing table.
@@ -73,14 +72,14 @@ The world ``default'' means ``0.0.0.0/0'' or ``no bits have to match,'' i.e.~it 
 
 The second column lists the \emph{gateway} or router to which to send the packets destined for remote networks.
 Only the default route has a gateway listed, which is also sometimes called the \emph{gateway of last resort}.
-The other networks are known the the computer as it has an interface in that network so there is no need for a gateway.
+The other networks are known to the computer as it has an interface in those networks so there is no need for a gateway.
 
-We will skip the flags.
+We will skip the flags in the third column.
 You can look those up in the documentation.
 Finally the last column lists the interface from which to send the packets to their destination.
 
-Now let's take a look at the first two entries, 0.0.0.0/0 and 10.18.0.0/16 and assume we want to send a packet destined to 10.18.20.7.
-It matched the default route as all packets match this default, but it also matched the first sixteen bits of the 10.18.0.0 prefix.
+Now let's take a look at the first two entries -- namely 0.0.0.0/0 and 10.18.0.0/16 -- and assume we want to send a packet destined to 10.18.20.7.
+It matches the default route as all packets match this default, but it also matches the first sixteen bits of the 10.18.0.0 prefix.
 Which route must it take then?
 This brings us to the first important rule about routing tables:
 
@@ -122,6 +121,7 @@ Persistent Routs:
 
 
 \section{Static routes}
+\label{sec:routing-static}
 
 Although I made them sound as something terrible and to-be avoided, static routes are very useful and are still used extensively in companies both small and large.
 Somtimes there is only one way out and then it does not make sense to run a routing protocol.
@@ -136,7 +136,7 @@ This matches all possible IP addresses.
 \begin{figure}
    \centering
    Cloud -- ISP router -- home router -- local network (switch) with two computers
-   \caption{Home router connecting your local network to the Internet}
+   \caption{A home router connecting your local network to the Internet}
    \label{fig:routing-home-network}
 \end{figure}
 
@@ -155,19 +155,81 @@ For the devices in the first office to reach the devices in the other office thr
 
 
 The third example is one from the big enterprises and service providers.
-They tend to have a separate management network.
+They tend to have a separate management network (\vref{fig:routing-static-management}).
 Servers have their default gateway pointing out the public interface but need to send all management traffic out their secondary interface designated for management.
+
+
+\begin{figure}
+   \centering
+   Server connecting to a ``public'' network and a management network
+   \caption{Large enterprises and service providers tend to have separate management networks requiring static routing to be configured on the servers}
+   \label{fig:routing-static-management}
+\end{figure}
 
 
 
 \section{Dynamic routing protocols}
+\label{sec:routing-dynamic}
+
+In specific simple network topologies static routing is perfectly suitable to provide connectivity between routers.
+However, most networks are not this simplistic and a dynamic routing protocol then makes life a lot easier.
+
+There are two kinds of dynamic routing protocols: \emph{distance-vector} and \emph{link-state} protocols.
+A distance-vector routing protocol calculates the best routes to reach every network that it knows and then sends this information to its neighbours as a vector containing distance and direction.
+You can compare these vectors to the fingerposts you see on crossroads.
+They list the cities you can reach, the direction to go to and the distance you have to travel before reaching your destination.
+A router using a distance-vector routing protocol does not know the detailed information on the different paths available.
+It only knows that the best (shortest) route is a given direction.
+This is also sometimes called \emph{routing by rumour}.
+
+Link-state routing protocols are comparable to a street map.
+Every router sends updates throughout the network indicating which networks it is connected to.
+A router can use the updates from all other routers to construct a complete network map.
+It knows exactly which router connects to which and where each network is located.
+It will then calcuate the best route based on this information.
+
+The Routing Information Protocol (\abbr{RIP}) and the Enhanced Interior Gateway Routing Protocol (\abbr{EIGRP}) are both examples of distance-vector routing protocols.
+Open Shortest Path First (\abbr{OSPF}) and Intermediate System to Intermediate System (\abbr{IS-IS}) are two link-state routing protocols.
+
+Each routing protocol uses a \emph{metric} to calcuate the best path but each protocol can decide what this metric must be.
+It could mean the shortest path (least amount of routers it must pass) or it could mean the fastest path (using the fastest links).
+It can also be a combination of different factors.
+
+\section{Routing Information Protocol}
+\label{sec:rip}
+
+The Routing Information Protocol (\abbr{RIP}) is the simplest distance-vector routing protocol and uses a \emph{hop count} to calculate the metric.
+The hop count corresponds to the number of routers you have to pass to reach the destination.
+The hop count for a given prefix is unique per router.
+Each router determines its cost to reach the given prefix.
 
 
+\begin{figure}
+   \caption{For router \hostname{blue} to reach network 10.0.0.0/24, traffic must pass two more routers, making the hop count a value of two}
+   \label{fig:routing-rip-hop-count}
+\end{figure}
 
-\section{Router Information Protocol}
+
+\abbr{RIP} is only interesting for smaller, stable networks as it is slow to converge and it has a maximum hop count of fifteen.
+The value sixteen means a network is unreachable.
+It implements \emph{split horizong}, \emph{route poisoning} and \emph{holddown} mechanisms to prevent incorrect routing information from being propagated.
+
+\begin{description}
+\item[split horizon]
+This mechanism prevents a router from advertising prefixes it receives on an interface back out on that same interface.
+\item[route poisoning]
+When a network becomes unavailable, instead of not advertising it in subsequent routing updates, advertise it with a maximum metric value to indicate it is unavailable.
+The prefix is thus explicitly advertised as being unavailable instead of implicitly by its absence from the updates.
+\item[holddown timer]
+When a network becomes unavailable the router starts a holddown timer.
+During this period it will not accept updates from routers that this network is in fact reachable.
+This can be stated as ``bad news travels fast, good news travels slow.''
+\end{description}
 
 
 \section{Open Shortest Path First}
+\label{sec:ospf}
 
 \section{Border Gateway Protocol}
+\label{sec:bgp}
 
