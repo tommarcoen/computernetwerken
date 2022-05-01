@@ -45,7 +45,7 @@ We conclude the chapter with a brief introduction to both Open Shortest Path Fir
 
 Every host which has an \abbr{IP} address, also has a routing table which tells the device how to forward traffic.
 Depending on your operating system you can view the local routing table with \cmd{netstat} or \cmd{route}.
-Below is an example for a server running FreeBSD version 13.0-\textsc{release}-p8.
+Below is an example for a server running FreeBSD version 13.0-RELEASE-p8.
 \begin{verbatim}
 $ netstat -rnf inet
 Routing tables
@@ -229,6 +229,30 @@ This can be stated as ``bad news travels fast, good news travels slow.''
 
 \section{Open Shortest Path First}
 \label{sec:ospf}
+
+Link-state routing protocols, such as Open Shortest Path First (OSPF), are something entirely different.
+These routing protocols work by sending each other updates about their own connectivity.
+
+In \cref{fig:routing-ospf-lsa-1} \hostname{blue} will send out a type-1 LSA to its neighbours in which it provides them the following information:
+\begin{itemize}
+\item
+   its \emph{router ID}.
+   Every router must have a unique identifier.
+   This is a 32-bit number, formatted as a dotted decimal number and usually taken as a loopback \abbr{IP} address so that an administrator can ping the router ID when troubleshooting network issues.
+\item 
+   connected interfaces.
+   As \hostname{blue} connects to three different networks, it provides this information in its updates.
+\end{itemize}
+
+\begin{figure}
+   \centering
+   \fbox{\parbox{.7\textwidth}{
+      Router \hostname{blue} connects to three other routers.
+      Router \hostname{red} will forward this information to its neighbours.
+   }}
+   \caption{Router \hostname{blue} sends out a type-1 \abbr{LSA} telling all other routers about its connectivity}
+   \label{fig:routing-ospf-lsa-1}
+\end{figure}
 
 \section{Border Gateway Protocol}
 \label{sec:bgp}

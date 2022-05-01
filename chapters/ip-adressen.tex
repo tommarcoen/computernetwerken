@@ -123,6 +123,7 @@ Deze sprong zie je trouwens ook terug bij de broadcastadressen ($63 + 64 = 127$)
 
 \begin{table}[htp]
    \centering
+   %\libertineTabular
    \begin{tabular}{rll}
    \textit{bits} & \textit{netwerkadres}     & \textit{broadcastadres} \\[1ex]
    \textit{00}   & 192.168.0.0/26   & 192.168.0.63   \\
@@ -225,6 +226,7 @@ De vier stappen die het protocol doorloopt, zijn
 \item[acknowledge]
    De DHCP-server bevestigt dat de reservatie in orde is.
 \end{description}
+
 Initiëel gebeuren deze vier pakketjes via broadcast naar het speciale broadcastadres 255.255.255.255.
 Echter als de lease half om is, kan de client deze lease verlengen door een request te versturen naar de DHCP-server.
 Dit kan via unicast gebeuren naar het IP-adres van de DHCP-server van wie de client de offer heeft gekozen.
