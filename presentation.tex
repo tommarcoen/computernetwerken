@@ -1,8 +1,28 @@
-\documentclass{beamer}
+%\documentclass[14pt,t]{beamer}
+\documentclass[t,12pt,aspectratio=169]{beamer}
+\beamertemplatenavigationsymbolsempty
+
+\newcommand{\maketitleframe}[2][]{
+   \begin{frame}[c]
+      \centering
+      {\Huge #2\\~}
+      
+      #1
+      \end{frame}
+}
+\newcommand{\makewordframe}[1]{
+   \begin{frame}[c]
+      \centering
+      {\Huge #1}
+   \end{frame}
+}
+
 
 \begin{document}
-\begin{frame}
-\label{computernetwerk}
-hello world
-\end{frame}
+
+\maketitleframe[An introduction]{Computer networks}
+\makewordframe{tom@marcoen.net}
+\makewordframe{computer}
+\makewordframe{network}
+
 \end{document}
