@@ -1,1 +1,32 @@
 \Chapter{Introduction}
+
+\section{Routing schemes}
+\label{sec:routing-schemes}
+\mode<article>{
+Routing schemes differ in how they deliver messages.
+Unicast is the dominant form of message delivery on the Internet.
+}
+
+\Paragraph{unicast}
+\mode<article>{
+Unicast is a one-to-one transmission from one point in the network to another point; that is, one sender and one receiver, each identified by a network address.
+}
+
+\Paragraph{broadcast}
+\mode<article>{
+Broadcasting is a method of transferring a message to all recipients simultaneously.
+Broadcasting can be performed as a high-level operation in a program, or it may be a low-level networking operation, for example broadcasting on Ethernet.
+}
+
+\Paragraph{multicast}
+\mode<article>{
+Multicast is group communication where data transmission is addressed to a group of destination computers simultaneously.
+Multicast can be one-to-many or many-to-many distribution.
+}
+
+\Paragraph{anycast}
+\mode<article>{
+Anycast is a network addressing and routing methodology in which a single destination IP address is shared by devices (generally servers) in multiple locations.
+Routers direct packets addressed to this destination to the location nearest the sender, using their normal decision-making algorithms, typically the lowest number of BGP network hops.
+Anycast routing is widely used by \emph{content delivery networks} (CDN) such as web and DNS hosts, to bring their content closer to end users.
+}
