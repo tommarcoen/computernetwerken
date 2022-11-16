@@ -130,6 +130,7 @@ For example, the IP address 198.51.100.37 falls into the class~C range as $192\l
 }
 \newsavebox{\classful}
 \savebox{\classful}{
+   \sffamily
    \begin{tabular}{crllr}
    \textbf{class} & \textbf{range} & \textbf{format} & \textbf{subnet mask} & \textbf{\# addresses} \\[1ex]
    A & 0--127 & N.H.H.H & 255.0.0.0 & \num{16777216} \\
@@ -189,6 +190,7 @@ In the first example, we group the networks 198.18.0.0/16 and 198.19.0.0/16 into
 The third row displays the subnet mask in binary format.
 
 \begin{center}
+\sffamily
 \begin{tabular}{c|c@{\qquad}l}
 \color{spot1} 1100 0110 . 0001 001\color{spot2} 0 & . 0000 0000 . 0000 0000 & 198.18.0.0/16 \\
 \color{spot1} 1100 0110 . 0001 001\color{spot2} 1 & . 0000 0000 . 0000 0000 & 198.19.0.0/16 \\
@@ -217,6 +219,7 @@ However, this supernet includes all the other networks as well, from 198.16.0.0 
 
 
 \begin{center}
+\sffamily
 \begin{tabular}{c|cl}
 \color{spot1} 1100 0110 . 0001 0\color{spot2} 000 & . 0000 0000 . 0000 0000 & 198.16.0.0/16 \\
 \color{spot1} 1100 0110 . 0001 0\color{spot2} 001 & . 0000 0000 . 0000 0000 & 198.17.0.0/16 \\

@@ -1,6 +1,263 @@
 \Chapter{Introduction}
+\label{chap:introduction}
 
-\section{Routing schemes}
+\mode<article>{
+This course is all about computer networks.
+I believe it is fair to assume we all know what a computer is even though we sometimes do not realise just how many devices have a computer hidden inside them.
+
+The ATM you use to get money from your bank account is a computer.
+Your car includes a computer.
+Studio mixers are computers and even have a network interface.%
+    \footnote{For example, \href{https://www.presonus.com/learn/technical-articles/How-To-Network-Studiolive-Digital-Mixers-for-Remote-Control}{this article} explains how to connect a PreSonus StudioLive 16 to the network for remote control. But it is also possible to send the audio over the network to the mixer.}
+% Dante for AV systems: https://www.audinate.com/meet-dante/what-is-dante
+% Art-Net for lighting systems: https://art-net.org.uk
+    
+When you connect these computers together using network cables or using wireless network adapters, they form a network.
+A computer network is used to exchange information between different computers.
+
+In this introductory chapter we will first discuss a few names used to talk about the geographic and organisational size of a network.
+We will then take a look at some different topologies that can arise when connecting computers together in a network.
+This includes both physical and logical topologies.
+
+Next we will take a look at the history and evolution of computer networks and we differentiate between 
+local networks and wide-area networks, of which the Internet is the best-known example.
+
+We then move on to a more theoretical part of the introduction when we will talk about the networking models and explain what a protocol is, as well as give some examples.
+We also cover routing schemes.
+
+We will ask some questions about how network communication goes and circle back to the network models when we talk about encapsulation.
+
+Finally, we will talk about network symbols used in literature to create network diagrams.
+
+\section{Network size}
+\label{sec:network-size}
+
+Networks may be characterised by many properties or features, such as physical capacity, organisational scope (\vref{sec:organisational-scope}), user authorisation, access rights, and others.
+Another distinct classification method is that of the physical extent or geographic scale.
+
+\paragraph{local area network (LAN)}
+A computer network that interconnects computers within a limited area such as a residence, school, laboratory, office building or university campus (though this is also called a \emph{campus area network}).
+
+The term ``LAN'' can be used both for a single \emph{broadcast domain} (see \vref{sec:routing-schemes,sec:routing}) or local network, similar to a ``WLAN'' being a single wireless broadcast domain and a ``VLAN'' being a virtual LAN defined on a switch or group of switches; but the term ``LAN'' can also mean the group of all of these local networks, forming the complete company or home network.
+In that case, ``local'' refers to the geographic location (one building) instead of the physical property of the network (a single broadcast domain).
+
+\paragraph{wide area network (WAN)}
+A telecommunications network that extends over a large geographic area.
+Wide area networks are often established with \emph{leased telecommunication circuits}.
+These networks are mostly operated by Internet service providers.
+
+\paragraph{personal area network (PAN)}
+A computer network for interconnecting electronic devices within an individual person's workspace.
+One example is your mobile phone pairing wirelessly with your watch and ear buds.
+
+\paragraph{campus area network (CAN)}
+A computer network made up of an interconnection of \emph{local area networks} within a limited geographical area.
+The networking equipment (switches, routers) and transmission media (optical fibre, copper plant, cat~5 cabling etc.) are almost entirely owned by the campus tenant or owner: an enterprise, university, government etc.
+A campus area network is larger than a local area network but smaller than a MAN or WAN.
+
+An example would be the High Tech Campus in Eindhoven.
+The buildings house different companies which are all interconnected using fibre optic cabling owned and maintained by the Campus IT team.
+The campus also has its own data centres and provides redundant connections to the Internet.
+
+\paragraph{metropolitan area network (MAN)}
+A computer network that interconnects users with computer resources in a geographic region of the size of a metropolitan area.
+The term MAN is applied to the interconnection of local area networks in a city into a single larger network which may then also offer efficient connection to a wide area network.
+
+\paragraph{storage area network (SAN)}
+A computer network which provides access to consolidated, block-level data storage.
+SANs are primarily used to access data storage devices, such as disk arrays and tape libraries from servers so that the devices appear to the operating system as direct-attached storage.
+A SAN typically is a dedicated network of storage devices not accessible through the local area network.
+
+
+\section{Network ownership}
+\label{sec:newtork-ownership}
+
+\paragraph{internet}
+An internetwork is the connection of multiple different computer networks to form a single network.
+
+The Internet is the largest example of an internetwork.
+It is a global system of interconnected governmental, academic, corporate, public, and private computer networks.
+Participants on the Internet use a diverse array of methods of several hundred documented, and often standardised, protocols compatible with the Internet Protocol Suite and an addressing system (IP addresses).
+Service providers and large enterprises exchange information about the reachability of their address spaces through the Border Gateway Protocol (BGP) (see \vref{sec:routing}), forming a redundant worldwide mesh of transmission paths.
+
+\paragraph{intranet}
+An intranet is a set of networks that are under the control of a single administrative entity.
+The intranet uses the Internet Protocol (IP) and IP-based tools such as web browsers and file transfer applications.
+The administrative entity limits the use of the intranet to its authorised users.
+Most commonly, an intranet is the internal LAN of an organisation.
+A large intranet typically has at least one web server to provide users with organisational information.
+An intranet is also anything behind the router on a local area network.
+
+\paragraph{extranet}
+An extranet is a network that is also under the administrative control of a single organisation but supports a limited connection to a specific external network.
+For example, an organisation may provide access to some aspects of its intranet to share data with its business partners or customers.
+These other entities are not necessarily trusted from a security standpoint.
+Network connection to an extranet is often, but not always, implemented via WAN technology, such as IPsec VPN tunnels.
+
+\paragraph{DMZ}
+A DMZ or demilitarised zone is smilar to an extranet but where an extranet only provides access to resources for a limited subnet of business partners or customers, services hosted in a DMZ are generally accessible by anyone on the Internet.
+It is an isolated and heavily firewalled part of a company's intranet.
+
+\section{Network evolution}
+\label{sec:network-evolution}
+
+Let's briefly examine the evolution of both local area networks and wide area networks.
+
+\subsection{Local area networks}
+\label{sec:network-evolution-lan}
+
+\paragraph{mainframe (1970)}
+By the early 1970s, many mainframes acquired interactive user terminals operating as time-sharing computers, supporting hundreds of users simultaneously along with batch processing.
+Users gained access through keyboard or typewriter terminals and specialised text terminal CRT displays with integral keyboards, or later from personal computers equipped with terminal emulation software.
+
+These terminals used proprietary cabling.
+Replacing your mainframe with a model from a competitor thus also meant replacing all cables in the walls.
+    
+\paragraph{Systems Network Architecture (1974)}
+Systems Network Architecture (SNA) is IBM's proprietary networking architecture, created in 1974.
+It is a complete protocol stack for interconnecting computers and their resources.
+SNA describes formats and protocols and is, in itself, not a piece of software.
+The implementation of SNA takes the form of various communications packages, most notably Virtual Telecommunications Access Method (VTAM), the mainframe software package for SNA communications.
+    
+\paragraph{thicknet (1980)}
+% https://en.wikipedia.org/wiki/10BASE5
+10BASE5 (also known as thick Ethernet or \emph{thicknet}) was the first commercially available variant of Ethernet.
+The technology was standardised in 1982 as IEEE 802.3.
+10BASE5 uses a thick and stiff coaxial cable up to 500 meters in length.
+Up to 100 stations can be connected to the cable using vampire taps and share a single collision domain with \SI{10}{\mega\bit\per\second} of bandwidth shared among them.
+The system is difficult to install and maintain.
+
+\paragraph{Token Ring (1984)}
+Token Ring is a computer networking technology used to build local area networks.
+It was introduced by IBM in 1984, and standardised in 1989 as IEEE 802.5.
+
+It uses a special three-byte frame called a \emph{token} that is passed around a logical ring of workstations or servers.
+This token passing is a channel access method providing fair access for all stations, and eliminating the collisions of contention-based access methods.
+
+Token Ring was a successful technology, particularly in corporate environments, but was gradually eclipsed by the later versions of Ethernet.
+
+\paragraph{thinnet (1985)}
+10BASE2 (also known as cheapernet, thin Ethernet, \emph{thinnet}, and \emph{thinwire}) is a variant of Ethernet that uses thin coaxial cable terminated with BNC connectors to build a local area network.
+
+During the mid to late 1980s this was the dominant \SI{10}{\mega\bit\per\second} Ethernet standard, but due to the immense demand for high speed networking, the low cost of category-5 cable, and the popularity of 802.11 wireless networks, both 10BASE2 and 10BASE5 have become increasingly obsolete.
+
+\paragraph{Ethernet switches (1985)}
+% https://en.wikipedia.org/wiki/Network_switch
+Ethernet switches are the most common form of network switch.
+The first MAC Bridge was invented in 1983 by Mark Kempf, an engineer in the Networking Advanced Development group of Digital Equipment Corporation.
+The first two-port bridge product (LANBridge 100) was introduced by that company shortly after.
+The company subsequently produced multi-port switches for both Ethernet and FDDI such as GigaSwitch.
+Digital decided to license its MAC bridge patent in a royalty-free, non-dis\-crim\-i\-na\-tory basis that allowed IEEE standardisation.
+This permitted a number of other companies to produce multi-port switches, including Kalpana.
+Ethernet was initially a shared-access medium, but the introduction of the MAC bridge began its transformation into its most-common point-to-point form without a collision domain.
+Switches also exist for other types of networks including Fibre Channel, ATM, and InfiniBand.
+    
+\subsection{Wide area networks}
+\label{sec:network-evoluation-wan}
+
+\paragraph{ARPAnet (1971)}
+The ARPAnet or Advanced Research Projects Agency network was the first wide-area packet-switched network with distributed control and one of the first networks to implement the TCP/IP protocol suite.
+Both technologies became the technical foundation of the Internet.
+The first four nodes were designated as a testbed for developing and debugging the 1822 protocol, which was a major undertaking.
+While they were connected electronically in 1969, network applications were not possible until the Network Control Program was implemented in 1970 enabling the first two host-host protocols, remote login (Telnet) and file transfer (FTP) which were specified and implemented between 1969 and 1973.
+The network was declared operational in 1971.
+Network traffic began to grow once email was established at the majority of sites by around 1973.
+
+Many of the earliest systems on the ARPAnet were PDP-11's, see \vref{fig:thompson}.%
+\footnote{\href{https://www.truecable.com/blogs/cable-academy/a-brief-history-of-network-technology}{https://www.truecable.com/blogs/cable-academy/a-brief-history-of-network-technology}}
+The DECSA communications server was a communications platform developed by DEC based on a PDP-11/24, with the provision for user installable I/O cards including asynchronous and synchronous modules.
+This product was used as one of the earliest commercial platforms upon which networking products could be built, including X.25 gateways, SNA gateways, routers, and terminal servers.%
+\footnote{A terminal server connects devices with a serial port to a local are network.}
+Ethernet adapters were also available.
+
+\begin{figure}
+\centering
+\includegraphics[width=.5\textwidth]{images/thompson.png}
+\caption{Ken Thompson (sitting) and Dennis Ritchie working on a PDP-11, circa~1970. The picture was taken by Peter Hamer and the line drawing was made by \href{https://www.truecable.com/blogs/cable-academy/a-brief-history-of-network-technology}{truecable.com}.}
+\label{fig:thompson}
+\end{figure}
+
+\paragraph{X.25 (1976)}
+X.25 is an ITU-T standard protocol suite for packet-switched data communication in WAN.
+Is is one of the oldest packet-switching communication protocols available; it was developed several years before IPv4 (1981) and the OSI Reference Model (1984).
+The protocol suite is designed as three conceptual layers, which correspond closely to the lower three layers of the seven-layer OSI model.
+It also supports functionality not found in the OSI network layer.
+
+\paragraph{Minitel (1984)}
+In the early 1980s the French launched the Minitel project, an ambitious plan to bring data networking into everyone’s home.
+Sponsored by the French government, the Minitel system consisted of a public packet-switched network, Minitel servers, and inexpensive terminals with built-in low-speed modems.
+The Minitel became a huge success in 1984 when the French government gave away a free Minitel terminal to each French household that wanted one.
+Minitel sites included free sites -- such as a telephone directory site -- as well as private sites, which collected a usage-based fee from each user.
+At its peak in the mid 1990s, it offered more than 20,000 services, ranging from home banking to specialised research databases.
+The Minitel was in a large proportion of French homes ten years before most Americans had ever heard of the Internet.
+
+\paragraph{NSFnet (1985)}
+The National Science Foundation Network (NSFnet) was a program of coordinated, evolving projects sponsored by the National Science Foundation (NSF) from 1985 to 1995 to promote advanced research and education networking in the United States.
+The program created several nationwide backbone computer networks in support of these initiatives.
+Initially created to link researchers to the NSF-funded supercomputing centers, through further public funding and private industry partnerships it developed into a major part of the Internet backbone.
+
+The National Science Foundation permitted only government agencies and universities to use the network until 1989 when the first commercial Internet service provider emerged.
+By 1991, the NSF removed access restrictions and the commercial ISP business grew rapidly.
+
+\paragraph{Internet (1991)}
+The Internet consists of many commercial Internet service providers, Internet exchange points, content delivery networks, commercial companies\ldots
+
+\paragraph{IPsec virtual private networks (1995)}
+% TODO: complete this section
+
+%\paragraph{MPLS virtual private networks (1999)}
+
+\paragraph{cloud computing (2002)}
+In July 2002, Amazon created subsidiary Amazon Web Services, with the goal to ``enable developers to build innovative and entrepreneurial applications on their own.''
+In March 2006 Amazon introduced its Simple Storage Service (S3), followed by Elastic Compute Cloud (EC2) in August of the same year.
+These products pioneered the usage of server virtualisation to deliver IaaS at a cheaper and on-demand pricing basis.
+
+\paragraph{YouTube (2005)}
+YouTube was launched on February 14, 2005 and was the beginning of ubiquitous video and massive amounts of user-generated content.
+
+
+}
+
+\Section{Nework topologies}
+\label{sec:network-topologies}
+
+\mode<article>{
+Network topology is the arrangement of the elements (links, nodes, etc.) of a communication network.
+Network topology can be used to define or describe the arrangement of various types of telecommunication networks, including computer networks.
+
+Network topology is the topological structure of a network and may be depicted physically or logically.
+Physical topology is the placement of the various components of a network (e.g., device location and cable installation), while logical topology illustrates how data flows within a network.
+Distances between nodes, physical interconnections, transmission rates, or signal types may differ between two different networks, yet their logical topologies may be identical.
+A network’s physical topology is a particular concern of the physical layer of the OSI model (\vref{sec:network-models}).
+}
+
+\Paragraph{ring}
+\mode<article>{
+Each node connects to exactly two other nodes, forming a single continuous pathway for signals through each node -- a ring.
+Data travels from node to node, with each node along the way handling every packet.
+}
+
+\Paragraph{bus}
+\mode<article>{
+Nodes are directly connected to a common \emph{half-duplex}%
+\footnote{A half-duplex (HDX) system provides communication in both directions, but only one direction at a time, not simultaneously in both directions.}
+link called a bus.
+}
+
+\Paragraph{star}
+\mode<article>{
+Every host is connected to a central hub.
+In its simplest form, one central hub acts as a conduit to transmit messages.
+The star network is one of the most common computer network topologies.
+}
+
+\Paragraph{mesh}
+\mode<article>{
+The infrastructure nodes connect directly, dynamically and non-hi\-er\-ar\-chi\-cal\-ly to as many other nodes as possible and cooperate with one another to efficiently route data to and from clients.
+}
+
+
+\Section{Routing schemes}
 \label{sec:routing-schemes}
 \mode<article>{
 Routing schemes differ in how they deliver messages.
@@ -29,4 +286,197 @@ Multicast can be one-to-many or many-to-many distribution.
 Anycast is a network addressing and routing methodology in which a single destination IP address is shared by devices (generally servers) in multiple locations.
 Routers direct packets addressed to this destination to the location nearest the sender, using their normal decision-making algorithms, typically the lowest number of BGP network hops.
 Anycast routing is widely used by \emph{content delivery networks} (CDN) such as web and DNS hosts, to bring their content closer to end users.
+}
+
+\Section{Network models}
+\label{sec:network-models}
+
+\Paragraph{OSI model}
+\mode<article>{
+The Open Systems Interconnection (OSI) model  (see \vref{fig:network-models}) is a conceptual model that describes the universal standard of communication functions of a telecommunication system or computing system, without any regard to the system's underlying internal technology and specific protocol suites.
+}
+
+\Paragraph{TCP/IP model}
+\mode<article>{
+The TCP/IP model is also known as the DoD model because the development of the networking method was funded by the United States Department of Defense through DARPA.
+The Internet protocol suite predates the OSI model, a more comprehensive reference framework for general networking systems.
+}
+
+\Paragraph{Hybrid model}
+\mode<article>{
+Comer~\cite[166]{comer:1995}, Kozierok~\cite[129]{kozierok:2005}, Tanenbaum~\cite[70]{tanenbaum:2010}, and others use a hybrid, five-layer model, which I also prefer to use.
+The upper layers (session, presentation, and application) are not important for a network engineer, nor are they clearly separated.
+The bottom two layers are good to keep separated as the data link layer contains Ethernet switches and is the territory of the network engineer, while the physical layer is the responsibility of the people doing the cabling.
+}
+
+\mode<article>{
+\begin{figure}
+\centering
+\input{images/network-models}
+\caption{The three network models}
+\label{fig:network-models}
+\end{figure}
+}
+
+\slide{\input{images/network-models}}
+
+
+\Section{Network communication}
+\label{sec:network-communication}
+
+\Paragraph{How to reach the server?}
+\mode<article>{
+You will need the IP address of the computer you want to communicate with.
+We can get this address using the Domain Name System (see \vref{chap:applications}) and we can use a search engine to find the domain names of the websites we want to access.
+}
+
+\Paragraph{Which application is the data for?}
+\mode<article>{
+We will use \emph{port numbers} (see \vref{chap:transport-layer}) to indicate which application the data is for.
+}
+
+\Paragraph{How to send a lot of data?}
+\mode<article>{
+Not all protocols allow us to send the same amount of data.
+For example, Ethernet limits the packet size to 1522~bytes while ATM had a limit of 53~bytes per packet.
+This means that, depending on the protocol in use, we will have to \emph{fragment} our data in smaller pieces and the destination will need to piece back these pieces together.
+}
+
+\Paragraph{What if something goes wrong?}
+\mode<article>{
+Data can get corrupted or lost in transit.
+Different protocols will deal differently with these issues.
+}
+
+\Section{Encapsulation}
+\label{sec:encapsulation}
+
+\mode<article>{
+\Vref{fig:encapsulation} shows the five layers of the hybrid model and the different headers (and trailer) which get added by each layer.
+When data gets send from a host on the left to a host on the right, the application passes the data to the operating system's kernel to be sent on the network.
+For each layer of the protocol stack a header gets added so that the corresponding layer on the receiver's side knows what the data is for.
+That is, the transport layer on the sender's side communicates with the transport layer on the receiver's side and the network layer on the sender's side communicates with the corresponding layer on the receiver's side.
+
+\begin{figure}
+\centering
+\input{images/data-encapsulation}
+\caption{%
+Data encapsulation at the source and decapsulation at the destination.
+Each layer adds its own header, but the data link layer also adds a trailer.
+}
+\label{fig:encapsulation}
+\end{figure}
+
+The data combined with the transport layer header is called a \emph{segment};
+a segment and the network layer header is called a \emph{packet};
+a packet and the data link header and trailer is called a \emph{frame}.
+}
+\slide{\scalebox{.7}{\input{images/data-encapsulation}}}
+
+\Paragraph{port numbers}
+\mode<article>{
+The segment header at the transport layer adds port numbers which indicate which application the data is destined for.
+}
+
+\Paragraph{IP addresses}
+\mode<article>{
+The packet header at the network layer adds IP addresses indicating which host the data is destined for.
+}
+
+\Paragraph{Domain Name System (DNS)}
+\mode<article>{
+DNS is used to find the IP address of the destination host.
+See \vref{chap:applications} for more details.
+}
+
+\Paragraph{MAC addresses}
+\mode<article>{
+MAC addresses are added to the frame header at the data link layer.
+They are used to deliver the frame on the local network.
+See \vref{chap:ethernet} for further details.
+}
+
+\Paragraph{Address Resolution Protocol (ARP)}
+\mode<article>{
+The Address Resolution Protocol (ARP) is a communication protocol used for discovering the data link layer address, such as a MAC address, associated with a given network layer address, typically an IPv4 address.
+
+Two computers in an office (host~A and host~B) are connected to each other in a local area network by Ethernet cables and network switches, with no intervening gateways or routers.
+Host~A has a packet to send to host~B.
+Through DNS, it determines that host~B has the IP address 203.0.113.55.
+
+To send the message, it also requires host~B's MAC address.
+First, host~A uses a cached ARP table to look up 203.0.113.55 for any existing records of host~B's MAC address (00eb.\-24b2.\-05ac).
+If the MAC address is found, it sends an Ethernet frame containing the IP packet onto the link with the destination address 00eb.\-24b2.\-05ac.
+If the cache did not produce a result for 203.0.113.55, host~A has to send a broadcast ARP request message (with the destination MAC address of ffff.\-ffff.\-ffff), which is accepted by all computers on the local network, requesting an answer for 203.0.113.55.
+
+Host~B responds with an ARP response message containing its MAC and IP addresses.
+As part of fielding the request, host~B may insert an entry for host~A into its ARP table for future use.
+
+Host~A receives and caches the response information in its ARP table and can now send the packet.
+
+The above example assumes both computers are located on the same local network.
+Host~A needs to determine this is the case by AND'ing%
+\footnote{AND is a binary operator used in boolean algebra. It returns a 1 if both its inputs are 1 and returns a 0 in all other cases.}
+both its own IP address and the IP address of the second computer with its own \emph{subnet mask}.
+If both results match, both computers are located in the same network; otherwise the second computer is located in a remote network and we need to send the frame to the \emph{default gateway}%
+\footnote{Or to a different \emph{gateway}, depending on the routing table. See \vref{sec:routing} for more details.}
+instead.
+
+In this case, host~A sends an ARP request -- assuming there is no valid entry in its cache -- for the MAC address of the default gateway.
+When the default gateway receives this frame, it verifies the frame is addressed to its MAC address but the destination IP address is none an IP address owned by the router so it must forward the packet to further along to the destination.
+See \vref{sec:routing} on how routers work.
+
+\Vref{fig:data-flow} shows a topology with two routers between the source and the destination.
+Each router, when sending the frame forward, must do an ARP lookup to generate a new frame header as MAC addresses are local to a given network segment.
+It is the only layer that gets stripped and regenerated at each router hop.
+The network and transport layers are host-to-host.
+
+
+\begin{figure}
+\centering
+\input{images/data-flow}
+\caption{Encapsulation and data flow in the network}
+\label{fig:data-flow}
+\end{figure}
+
+
+\Cref{fig:data-flow} is a bit misleading in this way.
+Although the routers check the IP addresses of the network layer header, the header does not change significantly.
+See \vref{sec:nat} for an example of a router that changes the IP addresses in the header.
+}
+
+\Section{Network icons}
+\label{sec:network-icons}
+
+\mode<article>{
+\Vref{fig:icons} shows the three basic network icons used most often in network drawings.
+Many different variants exist for these icons, depending on taste or function (e.g.~a core switch versus an access switch).
+There are more icons available for devices such as wireless LAN controllers, acccess points, load balancers, and many more.
+\begin{figure}
+   \centering
+   \begin{subfigure}[b]{18mm}
+   \includegraphics[width=\textwidth]{images/router.jpg}
+   \caption{router}
+   \label{fig:icon-router}
+   \end{subfigure}
+   \qquad
+   \begin{subfigure}[b]{18mm}
+   \includegraphics[width=\textwidth]{images/switch.png}
+   \caption{switch}
+   \label{fig:icon-switch}
+   \end{subfigure}
+   \qquad
+   \begin{subfigure}[b]{18mm}
+   \includegraphics[width=\textwidth]{images/firewall.png}
+   \caption{firewall}
+   \label{fig:icon-firewall}
+   \end{subfigure}
+   \caption{Network icons for a router, a switch, and a firewall}
+   \label{fig:icons}
+\end{figure}
+}
+\slide{
+   \includegraphics[width=.1\textwidth]{images/router.jpg}\qquad%
+   \includegraphics[width=.1\textwidth]{images/switch.png}\qquad%
+   \includegraphics[width=.1\textwidth]{images/firewall.png}
 }
