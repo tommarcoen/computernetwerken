@@ -1,0 +1,18 @@
+\documentclass[a4paper,12pt,oneside]{memoir}
+\isopage
+\checkandfixthelayout
+\pagestyle{ruled}
+\frenchspacing
+\usepackage[noamssymb,noamsthm,envcountsect]{beamerarticle}
+\setjobnamebeamerversion{main.presentation}
+
+\setfloatlocations{figure}{hbp}
+\setfloatlocations{table}{htp}
+
+% Lists
+\usepackage{multicol}
+\usepackage{enumitem}
+\firmlists
+\renewcommand*{\descriptionlabel}[1]{\hspace\labelsep\itshape #1 ---}
+
+\input{main}
