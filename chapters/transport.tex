@@ -3,3 +3,81 @@
 
 \Section{User Datagram Protocol}
 \label{sec:udp}
+
+\Paragraph{port numbers}
+\mode<article>{
+In computer networking, a port is a communication endpoint.
+At the software level, within an operating system, a port is a logical construct that identifies a specific process or a type of network service.
+A port is identified for each transport protocol and address combination by a 16-bit unsigned number, known as the \emph{port number}.
+
+A port number is always associated with an IP address of a host and the type of transport protocol used for communication.
+It completes the destination or origination network address of a message.
+Specific port numbers are reserved to identify specific services so that an arriving packet can be easily forwarded to a running application.
+For this purpose, port numbers lower than 1024 identify the historically most commonly used services and are called the \emph{well-known port numbers}.
+Higher-numbered ports are available for general use by applications and are known as \emph{ephemeral ports}.
+
+\Vref{tab:port-numbers} lists a few well-known port numbers while \vref{tab:ephemeral-ports} lists the range of port numbers used by some operating systems.
+
+\begin{table}
+    \centering
+    \begin{tabular}{rl}
+    \textbf{port} & \textbf{application} \\[1ex]
+     22 & SSH \\
+     25 & SMTP \\
+     53 & DNS \\
+     67 & DHCP (server) \\
+     68 & DHCP (client) \\
+     80 & HTTP \\
+    110 & POP3 \\
+    143 & IMAP \\
+    443 & HTTPS \\
+    \end{tabular}
+    \caption{A few well-known ports}
+    \label{tab:port-numbers}
+\end{table}
+
+\begin{table}
+    \centering
+    \begin{tabular}{lr@{--}l}
+    \textbf{operating system} & \multicolumn{2}{l}{\textbf{port range}} \\[1ex]
+    Many Linux kernels & \num{32768} & \num{60999} \\
+    FreeBSD            & \num{49152} & \num{65535} \\
+    Windows XP         & \num{1025} & \num{5000} \\
+    Windows 7          & \num{49152} & \num{65535} \\
+    \end{tabular}
+    \caption{Port ranges used by operating systems as ephemeral ports}
+    \label{tab:ephemeral-ports}
+\end{table}
+}
+\slide{well-known port numbers}
+\slide{ephemeral port numbers}
+
+
+\Paragraph{checksum}
+\mode<article>{
+A checksum is a small-sized block of data derived from another block of digital data for the purpose of detecting errors that may have been introduced during its transmission or storage.
+By themselves, checksums are often used to verify data integrity but are not relied upon to verify data authenticity.
+}
+
+\Paragraph{``unreliable''}
+\mode<article>{
+UDP does not keep track of which packets have been sent and received correctly.
+It sends data and forgets about it.
+Should the application require reliability, it itself is responsible for this function.
+This lack of reliability makes UDP a very fast protocol.
+}
+
+\Section{Transmission Control Protocol}
+\label{sec:tcp}
+
+
+\Paragraph{port numbers and checksum}
+\mode<article>{
+See \cref{sec:udp}.
+}
+
+\Paragraph{``reliable''}
+{
+TCP makes sure all data that is sent, is also received correctly by the destination.
+It uses a combination of \emph{sequence numbers} and \emph{acknowledgements} to achieve this reliability.
+}
