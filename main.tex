@@ -1,7 +1,6 @@
 \usepackage{xparse}
 
 % Fonts
-\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[mono=false]{libertine}
 %\usepackage{libertinehologopatch}
@@ -55,8 +54,8 @@
 
 \mode<article>{
    \frontmatter
-   \thispagestyle{empty}
    \maketitle
+   \thispagestyle{empty}
    \clearforchapter
    \tableofcontents
    \input{chapters/preface}
@@ -68,6 +67,10 @@
 \include{chapters/introduction}
 \include{chapters/ip}
 \include{chapters/transport}
+\include{chapters/ethernet}
+\include{chapters/physical}
+\include{chapters/applications}
+\include{chapters/cisco-pt}
 
 \mode<article>{
 \nocite{*}

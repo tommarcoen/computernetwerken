@@ -83,3 +83,59 @@ See \cref{sec:udp}.
 TCP makes sure all data that is sent, is also received correctly by the destination.
 It uses a combination of \emph{sequence numbers} and \emph{acknowledgements} to achieve this reliability.
 }
+
+\Paragraph{three-way handshake}
+\mode<article>{
+Before a client attempts to connect with a server, the server must first bind to and listen at a port to open it up for connections: this is called a passive open.
+Once the passive open is established, a client may establish a connection by initiating an active open using the three-way handshake.
+\begin{description}
+\item[SYN]
+The active open is performed by the client sending a SYN to the server.
+The client sets the segment's sequence number to a random value $A$.
+\item[SYN+ACK]
+In response, the server replies with a SYN+ACK.
+The acknowledgement number is set to one more than the received sequence number i.e. $A+1$, and the sequence number that the server chooses for the packet is another random number, $B$.
+\item[ACK]
+Finally, the client sends an ACK back to the server.
+The sequence number is set to the received acknowledgment value i.e. $A+1$, and the acknowledgment number is set to one more than the received sequence number i.e. $B+1$.
+\end{description}
+Steps 1 and 2 establish and acknowledge the sequence number for one direction.
+Steps~2 and~3 establish and acknowledge the sequence number for the other direction.
+Following the completion of these steps, both the client and server have received acknowledgements and a full-duplex communication is established.
+}
+
+\Paragraph{acknowledgements}
+\mode<article>{
+TCP uses a sequence number to identify each byte of data.
+The sequence number identifies the order of the bytes sent from each computer so that the data can be reconstructed in order, regardless of any out-of-order delivery that may occur.
+The sequence number of the first byte is chosen by the transmitter for the first packet, which is flagged SYN.
+This number can be arbitrary, and should, in fact, be unpredictable to defend against TCP sequence prediction attacks.
+
+Acknowledgements (ACKs) are sent with a sequence number by the receiver of data to tell the sender that data has been received to the specified byte.
+ACKs do not imply that the data has been delivered to the application, they merely signify that it is now the receiver's responsibility to deliver the data.
+
+Reliability is achieved by the sender detecting lost data and retransmitting it.
+TCP uses two primary techniques to identify loss.
+Retransmission timeout (RTO) and duplicate cumulative acknowledgements (DupAcks).
+}
+
+\Paragraph{flow control}
+\mode<article>{
+TCP uses a \emph{sliding window} flow control protocol.
+In each TCP segment, the receiver specifies in the \emph{receive window} field the amount of additionally received data (in bytes) that it is willing to buffer for the connection.
+The sending host can send only up to that amount of data before it must wait for an acknowledgement and receive window update from the receiving host.
+}
+
+\Paragraph{congestion control}
+\mode<article>{
+The final main aspect of TCP is congestion control.
+TCP uses a number of mechanisms to achieve high performance and avoid congestion collapse, where network performance can fall by several orders of magnitude.
+These mechanisms control the rate of data entering the network, keeping the data flow below a rate that would trigger collapse.
+They also yield an approximately max-min fair allocation between flows.
+
+Acknowledgments for data sent, or lack of acknowledgments, are used by senders to infer network conditions between the TCP sender and receiver.
+Coupled with timers, TCP senders and receivers can alter the behavior of the flow of data.
+This is more generally referred to as \emph{congestion control} and/or \emph{network congestion avoidance}.
+
+Modern implementations of TCP contain four intertwined algorithms: \emph{slow-start}, congestion avoidance, \emph{fast retransmit}, and \emph{fast recovery} (RFC~5681).
+}

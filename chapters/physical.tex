@@ -1,0 +1,182 @@
+\Chapter{Wires and wireless}
+\label{chap:wires-wireless}
+
+\Section{Wires}
+\label{sec:wires}
+
+\Paragraph{twisted pair}
+\mode<article>{
+Twisted pair cabling is a type of wiring in which two conductors of a single circuit are twisted together for the purposes of improving electromagnetic compatibility.
+Compared to a single conductor or an untwisted balanced pair, a twisted pair reduces electromagnetic radiation from the pair and crosstalk between neighbouring pairs and improves rejection of external electromagnetic interference.
+It was invented by Alexander Graham Bell.
+}
+
+\Paragraph{shielded vs unshielded}
+\mode<article>{
+For additional noise immunity, twisted-pair cabling may be shielded.
+Cable with shielding is known as shielded twisted pair (STP) and without as unshielded twisted pair (UTP).
+
+Common shield construction types include \emph{individual shielding} (U/\-FTP) with aluminium foil for each twisted pair or quad.
+This type of shielding helps prevent EMI from entering or exiting individual pairs and also protects neighbouring pairs from crosstalk.
+\emph{Overall shielding} with overall foil (F/UTP), braided shield (S/UTP), or braiding with foil across all of the pairs (SF/UTP).
+This type of shielding helps prevent EMI from entering or exiting the cable.
+
+Finally, there is \emph{individual and overall shielding} which uses individual shielding using foil between the twisted pair sets, and also an outer foil or braided shielding (F/FTP, S/FTP, and SF/FTP).
+This type of shielding helps prevent EMI from entering or exiting the cable and also protects neighbouring pairs from crosstalk.
+}
+
+\Paragraph{categories}
+\mode<article>{
+There are different categories of twisted pair cabling.
+Each category must adhere to a different standard and stringent specifications for crosstalk and system noise.
+These standard specify the maximum distance a cable must be able to cover, the bandwidth, and the required shielding.
+
+See \vref{tab:tp-categories} for an overview of the different categories.
+
+
+\begin{table}
+   \caption{Twisted pair categories}
+   \label{tab:tp-categories}
+   \centering
+   \sffamily
+   \begin{tabular}{lrrl}
+   \textbf{cat.} & \textbf{dist. (m)} & \textbf{BW (MHz)} & \textbf{application} \\[1ex]
+   3 & 100 & 16 & 10BASE-T \\
+   4 &     & 20 & Token Ring \\
+   5 & 100 & 100 & 1000BASE-T \\
+   5e & 100 & 100 & 1000BASE-T, 2.5GBASE-T \\
+   6  & 55  & 250 & 10GBASE-T \\
+   $6_\mathrm{A}$ & 100 & 500 & 10GBASE-T \\
+   7 & 100 & 600 & 10GBASE-T \\
+   $7_\mathrm{A}$ & & 1000 & \\
+   8.1 & 36 & 2000 & 40GBASE-T \\
+   8.2 & 36 & 2000 & 40GBASE-T \\
+   \end{tabular}
+\end{table}
+}
+
+\Paragraph{Fast Ethernet}
+\mode<article>{
+100BASE-TX is the predominant form of Fast Ethernet, and runs over two wire-pairs inside a category~5 or above cable.
+Each network segment can have a maximum cabling distance of \SI{100}{\metre}.
+One pair is used for each direction, providing full-duplex operation with \SI{100}{\mega\bit\per\second} of throughput in each direction.
+Like 10BASE-T, the active pairs in a standard connection are terminated on pins 1,~2,~3 and~6.
+Since a typical category~5 cable contains 4~pairs, it can support two 100BASE-TX links with a wiring adaptor.
+}
+
+\Paragraph{crossover cable}
+\mode<article>{
+An Ethernet crossover cable is a crossover cable for Ethernet used to connect computing devices together directly.
+It is most often used to connect two devices of the same type, e.g. two computers (via their network interface controllers) or two switches to each other.
+By contrast, \emph{straight through} patch cables are used to connect devices of different types, such as a computer to a network switch.
+Intentionally crossed wiring in the crossover cable connects the transmit signals at one end to the receive signals at the other end.
+Many network devices today support auto MDI-X (aka ``auto crossover'') capability, wherein a patch cable can be used in place of a crossover cable, or vice versa, and the receive and transmit signals are reconfigured automatically within the device to yield a working connection.
+}
+
+\Paragraph{auto MDI-X}
+\mode<article>{
+Auto MDI-X (aka ``auto crossover'') automatically detects the required cable connection type and configures the connection appropriately, removing the need for crossover cables to interconnect switches or connecting PCs peer-to-peer.
+As long as it is enabled on either end of a link, either type of cable can be used.
+For auto MDI-X to operate correctly, the data rate on the interface and duplex setting must be set to ``auto.''
+
+Gigabit and faster Ethernet links over twisted pair cable use all four cable pairs for simultaneous transmission in both directions.
+For this reason, there are no dedicated transmit and receive pairs, and consequently, crossover cables are never required for 1000BASE-T communication.
+}
+
+\Paragraph{Gigabit Ethernet}
+\mode<article>{
+In computer networking, Gigabit Ethernet (GbE or 1~GigE) is the term applied to transmitting Ethernet frames at a rate of a gigabit per second.
+The most popular variant 1000BASE-T is defined by the IEEE 802.3ab standard.
+It came into use in 1999, and has replaced Fast Ethernet in wired local networks due to its considerable speed improvement over Fast Ethernet, as well as its use of cables and equipment that are widely available, economical, and similar to previous standards.
+
+Each 1000BASE-T network segment is recommended to be a maximum length of 100 meters, and must use Category~5 cable or better (including Cat~5e and Cat~6).
+
+In a departure from both 10BASE-T and 100BASE-TX, 1000BASE-T uses four lanes over all four cable pairs for simultaneous transmission in both directions.
+}
+
+\Paragraph{optical fibre}
+\mode<article>{
+An optical fibre is a flexible, transparent fibre made by drawing glass (silica) or plastic to a diameter slightly thicker than that of a human hair.
+Fibres are used instead of metal wires because signals travel along them with less loss; in addition, fibres are immune to electromagnetic interference, a problem from which metal wires suffer.
+
+
+\begin{table}
+   \caption{Fibre optic categories}
+   \label{tab:fo-categories}
+   \centering
+   \sffamily
+   \begin{tabular}{lrrll}
+   \textbf{cat.} & \textbf{core ($\mathrm{\mu{}m}$}) & {\small\textbf{BW (MHz)}} & \textbf{color} & \textbf{Ethernet standard} \\[1ex]
+   OM1 & 62.5    &  200 & orange & {\small 10GBASE-SR (\SI{33}{\metre})} \\
+   OM2 & 50      &  500 & orange & {\small 10GBASE-SR (\SI{82}{\metre})} \\
+   OM3 & 50      & 2000 & aqua   & {\small 100GBASE-SR4 (\SI{100}{\metre})} \\
+   OM4 & 50      & 4700 & aqua   & {\small 100GBASE-SR4 (\SI{150}{\metre})}\\
+   OS1 & 8--10.5 &      & yellow & {\small 100GBASE-ER4 (\SI{40}{\kilo\metre})} \\
+   OS2 & 8--10.5 &      & yellow & {\small 100GBASE-ER4 (\SI{40}{\kilo\metre})} \\
+   \end{tabular}
+\end{table}
+}
+
+\Paragraph{single-mode}
+\mode<article>{
+In fibre-optic communication, a single-mode optical fibre (SMF), also known as fundamental- or mono-mode, is an optical fibre designed to carry only a single mode of light -- the transverse mode.
+Waves can have the same mode but have different frequencies. This is the case in single-mode fibres, where we can have waves with different frequencies, but of the same mode, which means that they are distributed in space in the same way, and that gives us a single ray of light.
+}
+
+\Paragraph{multi-mode}
+\mode<article>{
+Multi-mode optical fibre is a type of optical fibre mostly used for communication over short distances, such as within a building or on a campus.
+Multi-mode links can be used for data rates up to \SI{100}{\giga\bit\per\second}.
+Multi-mode fibre has a fairly large core diameter that enables multiple light modes to be propagated and limits the maximum length of a transmission link because of modal dispersion.
+}
+
+
+\Section{Wireless}
+\label{sec:wireless}
+
+\Paragraph{802.11}
+\mode<article>{
+IEEE 802.11 specifies the set of media access control (MAC) and physical layer (PHY) protocols for implementing wireless local area network (WLAN) computer communication.
+The standard and amendments provide the basis for wireless network products using the Wi-Fi brand and are the world's most widely used wireless computer networking standards.
+}
+
+\Paragraph{frequency}
+\mode<article>{
+IEEE 802.11 uses various frequencies including, but not limited to, \SI{2.4}{\giga\hertz}, \SI{5}{\giga\hertz}, \SI{6}{\giga\hertz}, and \SI{60}{\giga\hertz} frequency bands.
+Although IEEE 802.11 specifications list channels that might be used, the radio frequency spectrum availability allowed varies significantly by regulatory domain.
+}
+
+\Paragraph{bandwidth}
+\mode<article>{
+The bandwidth is one of the determinants of the capacity of a given communication channel.
+Using a wireless channel with a bandwidth of \SI{40}{\mega\hertz} results in bigger speeds than a bandwidth of \SI{20}{\mega\hertz}.
+However, when choosing the bandwidth, you have to make sure all devices that must connect to the wireless network do support this higher bandwidth.
+}
+
+\Paragraph{channel}
+\mode<article>{
+The \SI{2.4}{\giga\hertz} frequency supports eleven channels in the United States and thirteen channels in Europe and most of the world.
+The \SI{5}{\giga\hertz} frequency supports over fifty channels, depending on the bandwidth used.
+}
+
+\Paragraph{SSID}
+\mode<article>{
+The service set identifier (SSID) defines a service set or extended service set.%
+\footnote{An extended service set (ESS) is a wireless network, created by multiple access points, which appears to users as a single, seamless network, such as a network covering a home or office that is too large for reliable coverage by a single access point.}
+Normally it is broadcast in the clear by stations in beacon packets to announce the presence of a network and seen by users as a wireless network name.
+}
+
+\Paragraph{antennas}
+\mode<article>{
+Professional access points are designed to be mounted upside down on the ceiling.
+They radiate down into the room for a few meters and try to cover as much space on the floor as possible.
+They are not designed to radiate upwards to the above floor or far down, to reach the floor below.
+
+If you want to use such an access point to cover a large area in a garden, you would have to connect a different, external, antenna with a different coverage area.
+}
+
+\Paragraph{security}
+\mode<article>{
+Wi-Fi security includes Wired Equivalent Privacy (WEP) and Wi-Fi Protected Access (WPA).
+WEP is a notoriously weak security standard: the password it uses can often be cracked in a few minutes with a basic laptop computer and widely available software tools.
+}
