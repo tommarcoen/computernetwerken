@@ -253,6 +253,8 @@ In December 1998, IPv6 became a draft standard for the IETF, which subsequently 
 \Section{Subnetting}
 \label{sec:subnetting}
 
+% TODO: at least attempt to explain subnetting
+
 \newsavebox{\subnettingOne}
 \savebox{\subnettingOne}{
 \begin{tikzpicture}
@@ -531,11 +533,18 @@ They must thus learn about distant networks.
 This can happen in one of two ways, either the network administrator manually configures the router to forward a certain prefix to some other router (the \emph{next-hop} router) or the routers in a network can use a \emph{dynamic routing protocol} to teach each other about the networks they know and how to reach them.
 }
 
+\slide{routing table}
+\begin{frame}[fragile]
+\usebox\lstrouterThree
+\end{frame}
+
 \Paragraph{time to live}
 \mode<article>{
 The IP header contains a time-to-live (TTL) field which indicates how many routers (hops) it can pass before it must be deleted.
 This prevents the data packet from circulating indefinitely.
 As it is an 8-bit field, the maximum value is 255 but a recommended initial value is~64.\footnote{See RFC~1700, p.~64.}
+
+As it does not really signify some time spent in transit, with the development of IPv6, they changed the name of this field to \emph{hop limit} as that is what it really does: limit the number of hops (routers) that a packet can travel.
 }
 
 
@@ -548,6 +557,10 @@ Token Ring has a much larger MTU of 4464~bytes, ATM and X.25 have much smaller M
 When a router connects an Ethernet segment to an ATM circuit, it must \emph{fragment} the 1500-byte frames it receives into 48-byte cells that it can forward across the ATM network.
 Once fragmented, routers do not reassemble the pieces back together as they might take different paths through the network and are not guaranteed to arrive in the correct order.
 The end host is responsible for piecing all fragments back together.
+
+Another example when fragmentation is being used, is in the communication between a data centre and campus network as the former often uses jumbo frames (9000~bytes) while the latter uses normal Ethernet frames which have a maximum size of 1500~bytes.
+
+Finally, you will also encounter fragmentation on IPsec virtual networks where the maximum transmission unit is slightly smaller than the normal 1500~bytes.
 }
 
 \Paragraph{broadcast domain}
@@ -584,7 +597,7 @@ Once the entire map has been drawn, each router can calculate the best path to r
 \end{description}
 }
 \slide{distance-vector}
-\slide{link-sate}
+\slide{link-state}
 
 \Paragraph{metric}
 \mode<article>{
@@ -615,20 +628,31 @@ EIGRP uses a very complex formula to determine the metric, see \vref{eqn:eigrp-m
 The Routing Information Protocol is an example of a distance-vector routing protocol using the \emph{hop count} or the number of routers to count how good a given path is.
 It is a very simple protocol useful in smaller networks.
 The protocol is not suitable for larger networks because of its slow \emph{convergence time} and its tendency to propagate good information slowly and negative information quickly.
+}
 
-\begin{description}
-\item[route poisoning]
+\Paragraph{route poisoning}
+\mode<article>{
+% source: https://www.geeksforgeeks.org/route-poisoning-and-count-to-infinity-problem-in-routing/
 The main issue with distance-vector routing protocols is routing loops. This routing loop in the network causes the count-to-infinity problem.
 Routing loops usually occur when an interface goes down or two routers send updates at the same time.
-% TODO: finish the paragraph
-% source: https://www.geeksforgeeks.org/route-poisoning-and-count-to-infinity-problem-in-routing/
 
-\item[split horizon]
-% TODO: explain this
-\item[hold-down timer]
-% TODO: explain this
-\end{description}
+Route poisoning helps to alleviate this problem by advertising the route back to its source with a metric of infinity.
+This ensures that the router originally advertising the prefix can never use its neighbors to reach the given network.
 }
+
+\Paragraph{split horizon}
+\mode<article>{
+Split horizon is another method to prevent routing loops from occuring.
+This time, instead of advertising the routes back with a metric of infinity, we simple do not advertise the route back to where we learned it from.
+This method is not as good as using route poisoning to prevent routing loops.
+Logically you can use both both methods. Either you use neither method, or you use one or the other.
+}
+
+\Paragraph{hold-down timer}
+Holddown works by having each router start a timer when they first receive information about a network that is unreachable.
+Until the timer expires, the router will discard any subsequent route messages that indicate the route is in fact reachable.
+It can solve the case where multiple routers are connected indirectly.
+There are realistic scenarios where split horizon and split horizon with poisoned reverse can do nothing.
 
 
 \Paragraph{Enhanced Interior Gateway Routing Protocol (EIGRP)}
@@ -638,15 +662,24 @@ This protocol was a Cisco proprietary protocol which has been made publicly avai
 While RIP and OSPF have a very simple metric, EIGRP has a rather complex one.
 The metric $m$ is calculated as such:
 \begin{equation}
-m = \left[\left(k_1 B_m  + k_2 \frac{B_m}{256-L} + k_3 D_s\right) \times \frac{k_5}{k_4} \frac{1}{R}\right] \times 256,
+m = \left[\left(k_1 B_m  + k_2 \frac{B_m}{256-L} + k_3 D_s\right) \times \frac{k_5}{k_4 + R}\right] \times 256,
 \label{eqn:eigrp-metric}
 \end{equation}
 with $B_m$ being the minimum bandwidth along the path to the destination, $D_s$ being the total delay along the path, $L$ and $R$ being the load an the reliability of the link respectively, taken over a five-minute interval.
-The five $k$-values are user-configurable weights to each part of the equation.
-% TODO: finish this paragraph
+The five $k$ values are user-configurable weights to each part of the equation.
 
 As if \cref{eqn:eigrp-metric} is not complex enough, there are a few important caveats.
-% TODO: finish this paragraph
+The minimum bandwidth $B_m$ is calculated by dividing a reference bandwidth of \SI{1e7}{\bit\per\second} by the smallest configured bandwidth on the interfaces along the path.
+It does not take into account the actual bandwidth of an interface, but the setting configured on the interface.
+
+The total delay also is not measured along the path but fixed values are used depending on the interface type.
+A serial interface always has a default delay of \SI{20000}{\micro\second} while a Gigabit Ethernet interface has a default delay of \SI{10}{\micro\second}, regardless of the length of the cable.
+Both settings are user configurable.
+
+If load an reliability are used in the computation -- which by default they are not -- the initial values are set during peer establishment and do not change dynamically with the router.
+These values are a remnant of an older version of the protocol where they did change with every update to reflect the live status of the network.
+
+Finally, when $k_5=0$, instead of the entire equation to become zero, this factor is removed from the equation.
 }
 
 \Paragraph{Open Shortest Path First (OSPF)}
@@ -656,9 +689,11 @@ The Open Shortest Path First protocol is a link-state routing protocol suitable 
 }
 
 \Paragraph{Border Gateway Protocol (BGP)}
+\mode<article>{
 BGP is neither a distance-vector nor a link-state routing protocol.
 It is the only \emph{path-vector} routing protocol and it is used to interconnect different \emph{autonomous systems}, meaning it can be used to interconnect networks operated by different organisations.
 A basic BGP configuration is relatively simple but it can quickly become extremely complex.
 
 Contrary to normal routing protocols which serve to make all networks known within the entire internetwork, BGP aims to limit reachability and focusses on \emph{policies}.
 You can tweak the protocol so that you can exactly control the path a packet has to travel through the network to reach its destination.
+}
