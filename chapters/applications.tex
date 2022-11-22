@@ -117,17 +117,25 @@ After the client receives the IP address from the resolver (step~8) it can initi
 
 
 \begin{figure}
-   \centering
-   \includegraphics[width=\textwidth]{images/recursive-resolver.png}
-   \caption{DNS address resolution}
-   \label{fig:dns}
-   \end{figure}
+\centering
+\includegraphics[width=\textwidth]{images/recursive-resolver.png}
+\caption{DNS address resolution}
+\label{fig:dns}
+\end{figure}
    
 }
 
 \Paragraph{mDNS}
-% TODO: complete this
+\mode<article>{
+When a multicast DNS client needs to resolve a hostname, it sends an IP multicast query message that asks the host having that name to identify itself.
+That target machine then multicasts a message that includes its IP address.
+All machines in that subnet can then use that information to update their mDNS caches.
+Any host can relinquish its claim to a name by sending a response packet with a time to live (TTL) equal to zero.
 
+By default, mDNS exclusively resolves hostnames ending with the ``.local'' top-level domain.
+This can cause problems if .local includes hosts that do not implement mDNS but that can be found via a conventional unicast DNS server.
+Resolving such conflicts requires network-configuration changes that mDNS was designed to avoid.
+}
 
 \Section{E-mail}
 

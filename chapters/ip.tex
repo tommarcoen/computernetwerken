@@ -649,11 +649,12 @@ Logically you can use both both methods. Either you use neither method, or you u
 }
 
 \Paragraph{hold-down timer}
+\mode<article>{
 Holddown works by having each router start a timer when they first receive information about a network that is unreachable.
 Until the timer expires, the router will discard any subsequent route messages that indicate the route is in fact reachable.
 It can solve the case where multiple routers are connected indirectly.
 There are realistic scenarios where split horizon and split horizon with poisoned reverse can do nothing.
-
+}
 
 \Paragraph{Enhanced Interior Gateway Routing Protocol (EIGRP)}
 \mode<article>{
