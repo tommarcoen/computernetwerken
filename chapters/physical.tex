@@ -55,6 +55,20 @@ See \vref{tab:tp-categories} for an overview of the different categories.
 \end{table}
 }
 
+\Paragraph{RJ45}
+\mode<article>{
+The connector used for network cables is actually called an 8P8C connector but everyone knows it as a RJ45 connector.
+A completely plastic connector is used for unshielded cabling while a metalic version exists for shield cabling.
+
+\begin{figure}
+   \centering
+   \includegraphics[width=.5\textwidth]{images/8p8c.png}
+   \caption{Two plastic RJ45 connectors used with unshielded cabling}
+   \label{fig:rj45}
+\end{figure}
+}
+\slide{\includegraphics[width=.7\textwidth]{images/8p8c.png}}
+
 \Paragraph{Fast Ethernet}
 \mode<article>{
 100BASE-TX is the predominant form of Fast Ethernet, and runs over two wire-pairs inside a category~5 or above cable.
@@ -73,16 +87,6 @@ Intentionally crossed wiring in the crossover cable connects the transmit signal
 Many network devices today support auto MDI-X (aka ``auto crossover'') capability, wherein a patch cable can be used in place of a crossover cable, or vice versa, and the receive and transmit signals are reconfigured automatically within the device to yield a working connection.
 }
 
-\Paragraph{auto MDI-X}
-\mode<article>{
-Auto MDI-X (aka ``auto crossover'') automatically detects the required cable connection type and configures the connection appropriately, removing the need for crossover cables to interconnect switches or connecting PCs peer-to-peer.
-As long as it is enabled on either end of a link, either type of cable can be used.
-For auto MDI-X to operate correctly, the data rate on the interface and duplex setting must be set to ``auto.''
-
-Gigabit and faster Ethernet links over twisted pair cable use all four cable pairs for simultaneous transmission in both directions.
-For this reason, there are no dedicated transmit and receive pairs, and consequently, crossover cables are never required for 1000BASE-T communication.
-}
-
 \Paragraph{Gigabit Ethernet}
 \mode<article>{
 In computer networking, Gigabit Ethernet (GbE or 1~GigE) is the term applied to transmitting Ethernet frames at a rate of a gigabit per second.
@@ -92,6 +96,16 @@ It came into use in 1999, and has replaced Fast Ethernet in wired local networks
 Each 1000BASE-T network segment is recommended to be a maximum length of 100 meters, and must use Category~5 cable or better (including Cat~5e and Cat~6).
 
 In a departure from both 10BASE-T and 100BASE-TX, 1000BASE-T uses four lanes over all four cable pairs for simultaneous transmission in both directions.
+}
+
+\Paragraph{auto MDI-X}
+\mode<article>{
+Auto MDI-X (aka ``auto crossover'') automatically detects the required cable connection type and configures the connection appropriately, removing the need for crossover cables to interconnect switches or connecting PCs peer-to-peer.
+As long as it is enabled on either end of a link, either type of cable can be used.
+For auto MDI-X to operate correctly, the data rate on the interface and duplex setting must be set to ``auto.''
+
+Gigabit and faster Ethernet links over twisted pair cable use all four cable pairs for simultaneous transmission in both directions.
+For this reason, there are no dedicated transmit and receive pairs, and consequently, crossover cables are never required for 1000BASE-T communication.
 }
 
 \Paragraph{optical fibre}
@@ -130,6 +144,40 @@ Multi-mode links can be used for data rates up to \SI{100}{\giga\bit\per\second}
 Multi-mode fibre has a fairly large core diameter that enables multiple light modes to be propagated and limits the maximum length of a transmission link because of modal dispersion.
 }
 
+\Paragraph{transceivers}
+\mode<article>{
+As there are so many different options regarding transceivers depending on bandwidth, distance and the use of lasers or LEDs, network equipment does not have built-in transceivers.
+It is more convenient to have a modular system where you can plug in the transceiver you need.
+There are different form factors available, including SFP, SFP+ and QSFP.
+
+\begin{figure}
+   \centering
+   \includegraphics[width=.5\textwidth]{images/sfp.png}
+   \caption{A small form-factor pluggable (SFP) transceiver}
+   \label{fig:sfp}
+\end{figure}
+
+Nowadays most connectors are LC (as in \vref{fig:sfp}) but in data centres MPO cables (\vref{fig:mpo}) are also used for high-speed connections and for interconnecting patch panels.
+An MPO cable can have up to 72 fiber strands in a cable.
+See also \href{https://www.qsfptek.com/article/fiber-connector-types-lc-sc-fc-st-mtp-mpo}{qsfptek.com} for more information on different fibre optic connectors.
+
+\begin{figure}
+   \centering
+   \includegraphics[width=\textwidth]{images/mpo.png}
+   \caption{MPO connnector}
+   \label{fig:mpo}
+\end{figure}
+
+\begin{figure}
+   \centering
+   \includegraphics[width=.7\textwidth]{images/mpo-cassette.png}
+   \caption{MPO cassette}
+   \label{fig:mpo-cassette}
+\end{figure}
+}
+\slide{\includegraphics[width=.7\textwidth]{images/sfp.png}}
+\slide{\includegraphics[width=.7\textwidth]{images/mpo.png}}
+\slide{\includegraphics[width=.7\textwidth]{images/mpo-cassette.png}}
 
 \Section{Wireless}
 \label{sec:wireless}

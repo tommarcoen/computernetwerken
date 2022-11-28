@@ -623,6 +623,15 @@ EIGRP uses a very complex formula to determine the metric, see \vref{eqn:eigrp-m
 \end{figure}
 }
 
+\Paragraph{administrative distance}
+\mode<article>{
+The \emph{metric} indicates the preference of a single route learnt from different routers using the same routing protocol.
+It is however also possible for a router to learn a route from different routing protocols.
+The \emph{administrative distance} gives the preference or credibility of a routing protocol over another.
+For example, on Cisco routers the administrative distance or credibility of RIP is 110 while the administrative distance of OSPF is 90.
+As lower values are preferred, when a router running both RIP and OSPF learn about the same route from both protocols, it will prefer the route learnt from OSPF over the route learnt from RIP.
+}
+
 \Paragraph{Routing Information Protocol (RIP)}
 \mode<article>{
 The Routing Information Protocol is an example of a distance-vector routing protocol using the \emph{hop count} or the number of routers to count how good a given path is.
