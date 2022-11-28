@@ -16,6 +16,19 @@
 \firmlists
 \renewcommand*{\descriptionlabel}[1]{\hspace\labelsep\itshape #1 ---}
 
+% Figures and tables
+\usepackage{caption}
+\captionsetup{
+    font={small,sf},
+    labelfont={sc,color=labelcolor},
+    labelsep=endash
+    }
+\captionsetup[table]{position=above}
+\captionsetup[figure]{position=below}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\setkeys{Gin}{width=.75\textwidth} % from the graphicx package
+
 \usepackage[backend=biber]{biblatex}
 \addbibresource{bibliography.bib}
 
