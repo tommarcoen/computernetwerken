@@ -108,6 +108,18 @@ Gigabit and faster Ethernet links over twisted pair cable use all four cable pai
 For this reason, there are no dedicated transmit and receive pairs, and consequently, crossover cables are never required for 1000BASE-T communication.
 }
 
+\Paragraph{100Gbit Ethernet}
+\mode<article>{
+Using Cat.~8 twisted pair cabling it is possible to go up to \SI{40}{\giga\bit\per\second} using cables up to \SI{30}{\metre}.
+Higher speeds or longer lengths require fibre optic cables to be used.
+}
+
+\Paragraph{direct-attach copper}
+\mode<article>{
+This is a copper 10~Gigabit Ethernet cable which comes in either an active or passive twinax (twinaxial) cable assembly and connects directly into an SFP+ housing.
+40GBASE-CR4 and 100GBASE-CR10 physical layers using \SI{7}{\metre} twin-axial cable are being developed as part of the 100~Gbit Ethernet specifications by the IEEE.
+}
+
 \Paragraph{optical fibre}
 \mode<article>{
 An optical fibre is a flexible, transparent fibre made by drawing glass (silica) or plastic to a diameter slightly thicker than that of a human hair.
@@ -151,9 +163,20 @@ It is more convenient to have a modular system where you can plug in the transce
 There are different form factors available, including SFP, SFP+ and QSFP.
 
 \begin{figure}
+   \begin{subfigure}[b]{0.45\textwidth}
    \centering
-   \includegraphics[width=.5\textwidth]{images/sfp.png}
-   \caption{A small form-factor pluggable (SFP) transceiver}
+   \includegraphics[width=\textwidth]{images/sfp.png}
+   \caption{An SFP with an LC connector}
+   \label{fig:sfp-lc}
+   \end{subfigure}
+   \hfill
+   \begin{subfigure}[b]{0.45\textwidth}
+   \centering
+   \includegraphics[width=\textwidth]{images/sfp-rj45.png}
+   \caption{An SFP with a RJ45 connector}
+   \label{fig:sfp-rj45}
+   \end{subfigure}
+   \caption{Two small form-factor pluggable (SFP) transceivers}
    \label{fig:sfp}
 \end{figure}
 
@@ -170,7 +193,7 @@ See also \href{https://www.qsfptek.com/article/fiber-connector-types-lc-sc-fc-st
 
 \begin{figure}
    \centering
-   \includegraphics[width=.7\textwidth]{images/mpo-cassette.png}
+   \includegraphics[width=.5\textwidth]{images/mpo-cassette.png}
    \caption{MPO cassette}
    \label{fig:mpo-cassette}
 \end{figure}
@@ -179,6 +202,11 @@ See also \href{https://www.qsfptek.com/article/fiber-connector-types-lc-sc-fc-st
 \slide{\includegraphics[width=.7\textwidth]{images/mpo.png}}
 \slide{\includegraphics[width=.7\textwidth]{images/mpo-cassette.png}}
 
+
+
+
+
+
 \Section{Wireless}
 \label{sec:wireless}
 
@@ -186,6 +214,26 @@ See also \href{https://www.qsfptek.com/article/fiber-connector-types-lc-sc-fc-st
 \mode<article>{
 IEEE 802.11 specifies the set of media access control (MAC) and physical layer (PHY) protocols for implementing wireless local area network (WLAN) computer communication.
 The standard and amendments provide the basis for wireless network products using the Wi-Fi brand and are the world's most widely used wireless computer networking standards.
+
+\begin{table}
+   \centering
+   \sffamily
+   \begin{tabular}{lrrrl}
+   \textbf{standard} & \textbf{generation} & \textbf{max linkrate}   & \textbf{adoption} & \textbf{frequency} \\
+                     &                     & {\small \textbf{(Mbps)}} &                   & {\small \textbf{(GHz)}} \\[1ex]
+   802.11   & 0  &       2 & 1997 & 2.4 \\
+   802.11a  & 2  &      54 & 1999 & 5   \\
+   802.11b  & 1  &      11 & 1999 & 2.4 \\
+   802.11g  & 3  &      54 & 2003 & 2.4 \\
+   802.11n  & 4  &     600 & 2008 & 2.4/5 \\
+   802.11ac & 5  &  6\,933 & 2014 & 5 \\
+   802.11ax & 6  &  9\,608 & 2019 & 2.4/5 \\
+            & 6E &  9\,608 & 2020 & 2.4/5/6 \\
+   802.11be & 7  & 40\,000 & \emph{t.b.d.} & 2.4/5/6 \\
+   \end{tabular}
+   \caption{Wi-Fi generations}
+   \label{fig:wifi-generations}
+\end{table}
 }
 
 \Paragraph{frequency}
@@ -194,17 +242,17 @@ IEEE 802.11 uses various frequencies including, but not limited to, \SI{2.4}{\gi
 Although IEEE 802.11 specifications list channels that might be used, the radio frequency spectrum availability allowed varies significantly by regulatory domain.
 }
 
+\Paragraph{channel}
+\mode<article>{
+The \SI{2.4}{\giga\hertz} frequency supports eleven channels in the United States and thirteen channels in Europe and most of the world.
+The \SI{5}{\giga\hertz} frequency supports over fifty channels, depending on the bandwidth used.
+}
+
 \Paragraph{bandwidth}
 \mode<article>{
 The bandwidth is one of the determinants of the capacity of a given communication channel.
 Using a wireless channel with a bandwidth of \SI{40}{\mega\hertz} results in bigger speeds than a bandwidth of \SI{20}{\mega\hertz}.
 However, when choosing the bandwidth, you have to make sure all devices that must connect to the wireless network do support this higher bandwidth.
-}
-
-\Paragraph{channel}
-\mode<article>{
-The \SI{2.4}{\giga\hertz} frequency supports eleven channels in the United States and thirteen channels in Europe and most of the world.
-The \SI{5}{\giga\hertz} frequency supports over fifty channels, depending on the bandwidth used.
 }
 
 \Paragraph{SSID}
@@ -227,4 +275,16 @@ If you want to use such an access point to cover a large area in a garden, you w
 \mode<article>{
 Wi-Fi security includes Wired Equivalent Privacy (WEP) and Wi-Fi Protected Access (WPA).
 WEP is a notoriously weak security standard: the password it uses can often be cracked in a few minutes with a basic laptop computer and widely available software tools.
+
+There are two options available when chosing WPA: personal mode and enterprise mode.
+WPA personal is also referred to as PSK or pre-shared key.
+This mode is designed for home and small office networks and does not require an authentication server.
+Instead all users can access the wireless network using a common pre-shared key.
+
+WPA enterprise or 802.1X requires a RADIUS server for authentication.
+This mode requires a more complicated setup, but provides additional security (e.g.\ protection against dictionary attacks on short passwords).
+Most noticably, it requires users to authenticate to the wireless network using both a username and a password.
+Often the credentials required are the same as the credentials required to access your company computer and thus Windows can authenticate to the wireless network automatically.
+
+Wi-Fi protected setup or WPS is an alternative authentication key distribution method intended to simplify and strengthen the process, but which, as widely implemented, creates a major security hole via WPS PIN recovery.
 }

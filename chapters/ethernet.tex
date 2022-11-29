@@ -48,7 +48,7 @@ These learnt MAC addresses are stored in the MAC-address table.
 
 \Paragraph{time to live?}
 \mode<article>{
-Ethernet has to time-to-live field so when a loop gets created in the network, the frames will keep traversing the network, bringing the entire network down.
+Ethernet has no time-to-live field so when a loop gets created in the network, the frames will keep traversing the network, bringing the entire network down.
 }
 
 \Paragraph{Spanning-Tree Protocol}
@@ -114,3 +114,10 @@ Examples of configuration changes that one can do from a managed switch include:
 \slide{802.1X}
 \slide{DHCP snooping}
 \slide{dynamic ARP inspection}
+
+\Paragraph{layer 3 switch}
+\mode<article>{
+Engineers learnt to build larger and more complex chips allowing them to introduce more complex logic into the switches.
+Layer~3 switches can route packets in hardware based on IP address as if they were routers.
+It is now often more convenient to put a layer 3 switch into your networking combining the functionality of both the router and the switch.
+}
