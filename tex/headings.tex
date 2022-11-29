@@ -1,0 +1,46 @@
+\newcommand{\Chapter}[1]{
+\only<article>{\chapter{#1}}
+\only<beamer>{\section{#1}}
+{\setbeamercolor{background canvas}{bg=backgroundchapter}
+\mode<beamer>{
+\begin{frame}
+\begin{center}
+\Large\textbf{#1}
+\end{center}
+\end{frame}}
+}}
+
+\newcommand{\Section}[1]{
+\only<article>{\section{#1}}
+\only<beamer>{\subsection{#1}}
+\mode<beamer>{
+{\setbeamercolor{background canvas}{bg=backgroundsection}
+\begin{frame}
+\begin{center}
+\Large\textbf{#1}
+\end{center}
+\end{frame}}
+}}
+
+\NewDocumentCommand{\Paragraph}{om}{
+\only<article>{\paragraph{#2\IfNoValueF{#1}{ (#1)}}}
+\mode<beamer>{
+\begin{frame}
+\begin{center}
+\Large #2
+
+\IfNoValueF{#1}{{\footnotesize\color{slidesubtext} #1}}
+\end{center}
+\end{frame}
+}}
+
+\newcommand{\slide}[2][]{
+\mode<beamer>{
+\begin{frame}
+\begin{center}
+\Large #2
+
+{\footnotesize\color{slidesubtext} #1}
+\end{center}
+\end{frame}
+}}

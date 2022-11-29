@@ -1,0 +1,35 @@
+\documentclass[a4paper,12pt,twoside]{memoir}
+\usepackage[utf8]{inputenc}
+\isopage
+\checkandfixthelayout
+\pagestyle{ruled}
+\frenchspacing
+\usepackage[noamssymb,noamsthm,envcountsect]{beamerarticle}
+\setjobnamebeamerversion{main.presentation}
+
+\setfloatlocations{figure}{hbp}
+\setfloatlocations{table}{htp}
+
+% Lists
+\usepackage{multicol}
+\usepackage{enumitem}
+\firmlists
+\renewcommand*{\descriptionlabel}[1]{\hspace\labelsep\itshape #1 ---}
+
+% Figures and tables
+\usepackage{caption}
+\captionsetup{
+    font={small,sf},
+    labelfont={sc,color=labelcolor},
+    labelsep=endash
+    }
+\captionsetup[table]{position=above}
+\captionsetup[figure]{position=below}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\setkeys{Gin}{width=.75\textwidth} % from the graphicx package
+
+\usepackage[backend=biber]{biblatex}
+\addbibresource{bibliography.bib}
+
+\input{main}
