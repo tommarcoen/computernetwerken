@@ -376,7 +376,7 @@ This requires huge lists with available IP addresses which are being updated con
 \Paragraph{DORA}
 \mode<article>{
 DHCP operations fall into four phases: server discovery, IP address lease offer, lease request, and lease acknowledgement.
-These stages (see \vref{fig:dora}) are often abbreviated as ``DORA'' for discovery, offer, request, and acknowledgement.
+These stages (see \vref{fig:dora}) are often abbreviated as `DORA' for discovery, offer, request, and acknowledgement.
 
 \begin{figure}
     \centering
@@ -418,8 +418,8 @@ As it is impractical to configure a DHCP server on each network, routers can be 
 
 \Paragraph{private IP space}
 \mode<article>{
-There is nothing special about ``private'' IP addresses.
-They are not treated any different from ``public'' IP addresses by routers or end hosts.
+There is nothing special about `private' IP addresses.
+They are not treated any different from `public' IP addresses by routers or end hosts.
 The only difference is that they \emph{should} not be routed on the public Internet.
 This means that Internet service providers (ISP) should block packets with a private IP address as either the source or the destination address.
 
@@ -441,7 +441,7 @@ These include:
 \end{multicols}
 
 The address range 169.254.0.0/16 is a special case.
-These are defined as ``link-local'' addresses which cannot be forwarded by a router.
+These are defined as `link-local' addresses which cannot be forwarded by a router.
 Microsoft uses these addresses as APIPA or \emph{automatic private IP addressing}.
 A Windows computers takes a random IP address from this range when it is configured to receive an IP address from a DHCP server but it receives no responses from any DHCP server.
 }
@@ -463,7 +463,7 @@ To avoid ambiguity in how replies are translated, further modifications to the p
 For TCP and UDP the port numbers are changed so that the combination of IP address and port number on the returned packet can be unambiguously mapped to the corresponding private network destination.
 RFC~2663 uses the term \emph{network address and port translation} (NAPT) for this type of NAT.
 Other names include \emph{port-based address translation} (PAT), IP \emph{masquerading}, NAT \emph{overload} and \emph{many-to-one} NAT.
-This is the most common type of NAT and has become synonymous with the term ``NAT'' in common usage.
+This is the most common type of NAT and has become synonymous with the term `NAT' in common usage.
 }
 
 \Paragraph{pool of public addresses}

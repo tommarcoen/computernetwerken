@@ -7,7 +7,7 @@
 \mode<article>{
 Telnet is an application protocol used on a network to provide a bidirectional interactive text-oriented communication facility using a virtual terminal connection.
 Telnet was developed in 1969.
-The name stands for ``teletype network.''
+The name stands for `teletype network.'
 
 Historically, Telnet provided access to a command-line interface on a remote host.
 However, because of serious security concerns -- it sends all data, including passwords, in clear-text over the network -- when using Telnet over an open network such as the Internet, its use for this purpose has waned significantly in favour of SSH.
@@ -104,13 +104,13 @@ A recursive query is one for which the DNS server answers the query completely b
 
 The \emph{iterative} query procedure is a process in which a DNS resolver queries a chain of one or more DNS servers.
 Each server refers the client to the next server in the chain, until the current server can fully resolve the request.
-For example, a possible resolution of www.ex\-am\-ple.com would query a global root server, then a ``com'' server, and finally an ``example.com'' server.
+For example, a possible resolution of www.ex\-am\-ple.com would query a global root server, then a `com' server, and finally an `example.com' server.
 }
 
 \Paragraph{address resolution}
 \mode<article>{
 The process of address resolution is shown in \vref{fig:dns}.
-The computer in the top left corner wants to acccess the server ``example.com.''
+The computer in the top left corner wants to acccess the server `example.com.'
 The client computer queries its local DNS resolver using a recursive query (step~1) for the IP address of example.com.
 The resolver uses iterative queries to retrieve the required IP address (steps~2 through 7).
 After the client receives the IP address from the resolver (step~8) it can initiate communication with the server (steps~9 and~10).
@@ -132,7 +132,7 @@ That target machine then multicasts a message that includes its IP address.
 All machines in that subnet can then use that information to update their mDNS caches.
 Any host can relinquish its claim to a name by sending a response packet with a time to live (TTL) equal to zero.
 
-By default, mDNS exclusively resolves hostnames ending with the ``.local'' top-level domain.
+By default, mDNS exclusively resolves hostnames ending with the `.local' top-level domain.
 This can cause problems if .local includes hosts that do not implement mDNS but that can be found via a conventional unicast DNS server.
 Resolving such conflicts requires network-configuration changes that mDNS was designed to avoid.
 }
