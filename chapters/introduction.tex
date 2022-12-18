@@ -221,11 +221,11 @@ YouTube was launched on February 14, 2005 and was the beginning of ubiquitous vi
 \label{sec:network-topologies}
 
 \mode<article>{
-Network topology is the arrangement of the elements (links, nodes, etc.) of a communication network.
-Network topology can be used to define or describe the arrangement of various types of telecommunication networks, including computer networks.
+The network \emph{topology} is the arrangement of the elements (links, nodes, etc.) of a communication network.
+It can be used to define or describe the arrangement of various types of telecommunication networks, including computer networks.
 
 Network topology is the topological structure of a network and may be depicted physically or logically.
-Physical topology is the placement of the various components of a network (e.g., device location and cable installation), while logical topology illustrates how data flows within a network.
+The physical topology describes how the components are physically connected together, while the logical topology illustrates how data flows within a network.
 Distances between nodes, physical interconnections, transmission rates, or signal types may differ between two different networks, yet their logical topologies may be identical.
 A network’s physical topology is a particular concern of the physical layer of the OSI model (\vref{sec:network-models}).
 }
@@ -234,6 +234,9 @@ A network’s physical topology is a particular concern of the physical layer of
 \mode<article>{
 Each node connects to exactly two other nodes, forming a single continuous pathway for signals through each node -- a ring.
 Data travels from node to node, with each node along the way handling every packet.
+
+Token Ring is an example of a LAN technology that uses a physical and logical ring topology.
+The Telenet backbone is an example of interconnecting physical ring structures though the logical structure is a mesh of point-to-point links.
 }
 
 \Paragraph{bus}
@@ -241,6 +244,8 @@ Data travels from node to node, with each node along the way handling every pack
 Nodes are directly connected to a common \emph{half-duplex}%
 \footnote{A half-duplex (HDX) system provides communication in both directions, but only one direction at a time, not simultaneously in both directions.}
 link called a bus.
+An example of a physical bus structure, would be the old Ethernet networks using coaxial cable.
+Connecting devices together using cat.~5-cable and a hub, results in a logical bus structure even though the physical structure is a star.
 }
 
 \Paragraph{star}
@@ -253,6 +258,8 @@ The star network is one of the most common computer network topologies.
 \Paragraph{mesh}
 \mode<article>{
 The infrastructure nodes connect directly, dynamically and non-hi\-er\-ar\-chi\-cal\-ly to as many other nodes as possible and cooperate with one another to efficiently route data to and from clients.
+A \emph{full} mesh is a network where every node has a connection to every other node.
+A \emph{partial} mesh is a network where some of the connects of a full mesh are missing.
 }
 
 
@@ -285,6 +292,11 @@ Multicast can be one-to-many or many-to-many distribution.
 Anycast is a network addressing and routing methodology in which a single destination IP address is shared by devices (generally servers) in multiple locations.
 Routers direct packets addressed to this destination to the location nearest the sender, using their normal decision-making algorithms, typically the lowest number of BGP network hops.
 Anycast routing is widely used by \emph{content delivery networks} (CDN) such as web and DNS hosts, to bring their content closer to end users.
+}
+
+\mode<article>{
+In this course we will only cover unicast and broadcast.
+Multicast and anycast are only used in very specific networks.
 }
 
 \Section{Network models}

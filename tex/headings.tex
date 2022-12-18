@@ -44,3 +44,17 @@
 \end{center}
 \end{frame}
 }}
+
+\newcommand{\titleslide}[2][]{
+\mode<beamer>{
+{\setbeamercolor{background canvas}{bg=backgroundtitle}
+\begin{frame}
+\begin{center}
+\Large\textsc{#2}
+
+{\footnotesize\color{white} \textit{#1}}
+\end{center}
+\end{frame}
+}
+}
+}
