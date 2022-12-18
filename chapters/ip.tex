@@ -122,7 +122,7 @@ With both the 0 and 255 networks reserved, in reality only 254 network could be 
 
 \Paragraph[1981]{classful addressing}
 \mode<article>{
-As the Internet community realised 254 networks were not enough, they kept the networks that were already assigned to companies and created a new system based on classes.
+As the internet community realised 254 networks were not enough, they kept the networks that were already assigned to companies and created a new system based on classes.
 The first octet of the IP address determined that class of IP address and the class determined the size of the network, i.e.~which part is used for the network and which part is used for the host address.
 \Vref{tab:classful-addressing} shows the different classes, their subnet mask and the number of hosts per network.
 An IP address belongs to a certain class if the first octet falls into the given range.
@@ -240,8 +240,8 @@ However, this supernet includes all the other networks as well, from 198.16.0.0 
 \Paragraph[1993]{classless inter-domain routing}
 \mode<article>{
 Classless inter-domain routing (CIDR) is a method for allocating IP addresses and for IP routing.
-The Internet Engineering Task Force (IETF) introduced CIDR to replace the previous classful network addressing architecture on the Internet.
-Its goal was to slow the growth of routing tables on routers across the Internet, and to help slow the rapid exhaustion of IPv4 addresses.
+The Internet Engineering Task Force (IETF) introduced CIDR to replace the previous classful network addressing architecture on the internet.
+Its goal was to slow the growth of routing tables on routers across the internet, and to help slow the rapid exhaustion of IPv4 addresses.
 }
 
 \Paragraph[1998]{IP version 6}
@@ -348,14 +348,14 @@ The prefix length is the number of ones in the subnet mask.
 We are the network administrators of a small company.
 We have a couple (50) of desktop computers for the employees, as well as a few (10) servers.
 We contact RIPE NCC%
-    \footnote{Réseaux IP Européens Network Coordination Centre (RIPE NCC) is the \emph{regional Internet registry} (RIR) for Europe, the Middle East and parts of central Asia. As a RIR, it oversees the allocation and registration of Internet number resources such as IP addresses and autonomous system numbers.}
+    \footnote{Réseaux IP Européens Network Coordination Centre (RIPE NCC) is the \emph{regional internet registry} (RIR) for Europe, the Middle East and parts of central Asia. As a RIR, it oversees the allocation and registration of internet number resources such as IP addresses and autonomous system numbers.}
 and tell them we need sixty IP addresses, plus some extra just in case we will grow and need more computers.
 Since a class~c address range contains 256~IP addresses, RIPE will give us one such range, e.g.~198.51.100.0/24.
 
 Now we have a problem.
 We have plenty of IP addresses but we need two separate networks.
 Or perhaps we need three or even four.
-Maybe we want to isolate the public Internet-facing servers from the private servers that should not be reachable from the Internet.
+Maybe we want to isolate the public internet-facing servers from the private servers that should not be reachable from the internet.
 
 Remember that these different classes are just made-up methods of determining which part of the IP address is the network number and which part is the host identifier.
 IP addresses themselves are just 32-bit numbers so we can group them any way we like.
@@ -420,8 +420,8 @@ As it is impractical to configure a DHCP server on each network, routers can be 
 \mode<article>{
 There is nothing special about `private' IP addresses.
 They are not treated any different from `public' IP addresses by routers or end hosts.
-The only difference is that they \emph{should} not be routed on the public Internet.
-This means that Internet service providers (ISP) should block packets with a private IP address as either the source or the destination address.
+The only difference is that they \emph{should} not be routed on the public internet.
+This means that internet service providers (ISP) should block packets with a private IP address as either the source or the destination address.
 
 There are several blocks of private IP addresses which can be used internally by organisations without having to ask for permission to do so.
 These include:
@@ -451,9 +451,9 @@ A Windows computers takes a random IP address from this range when it is configu
 The majority of network address translators map multiple private hosts to one publicly exposed IP address.
 In a typical configuration, a local network uses one of the designated private IP address subnets (RFC~1918).
 A router in that network has a private address of that address space.
-The router is also connected to the Internet with a public address, typically assigned by an Internet service provider.
+The router is also connected to the internet with a public address, typically assigned by an internet service provider.
 
-As traffic passes from the local network to the Internet, the source address in each packet is translated on the fly from a private address to the public address.
+As traffic passes from the local network to the internet, the source address in each packet is translated on the fly from a private address to the public address.
 The router tracks basic data about each active connection (particularly the destination address and port).
 When a reply returns to the router, it uses the connection tracking data it stored during the outbound phase to determine the private address on the internal network to which to forward the reply.
 
@@ -469,7 +469,7 @@ This is the most common type of NAT and has become synonymous with the term `NAT
 \Paragraph{pool of public addresses}
 \mode<article>{
 It is possible to use multiple public IP addresses to translate the private IP address into.
-When this is used in combination with port-based address translation, it allows for multiple thousands of private hosts to communicate on the Internet.
+When this is used in combination with port-based address translation, it allows for multiple thousands of private hosts to communicate on the internet.
 }
 
 \Paragraph{one-to-one translation}
