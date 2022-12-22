@@ -1,6 +1,7 @@
 #!/bin/sh
 pdflatex main.book
 biber main.book
+makeindex main.book
 pdflatex main.book
 pdflatex main.book
 pdflatex main.book
