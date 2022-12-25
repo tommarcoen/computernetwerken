@@ -51,73 +51,73 @@ These learnt MAC addresses are stored in the \ac{MAC}-address table.
 Ethernet has no \acl{TTL} field so when a loop gets created in the network, the frames will keep traversing the network, bringing the entire network down.
 }
 
-\Paragraph{Spanning-Tree Protocol}
+\Paragraph{\acf{STP}}
 \mode<article>{
-The Spanning-Tree Protocol (STP) is a network protocol that builds a loop-free logical topology for Ethernet networks.
-The basic function of STP is to prevent bridge loops and the broadcast radiation that results from them.
-STP also allows a network design to include backup links providing fault tolerance if an active link fails.
+The \acl{STP} is a network protocol that builds a loop-free logical topology for Ethernet networks.
+The basic function of \acs{STP} is to prevent bridge loops and the broadcast radiation that results from them.
+\acs{STP} also allows a network design to include backup links providing fault tolerance if an active link fails.
 }
 
-\Paragraph{link aggregation groups}
+\Paragraph{\acf{LAG}}
 \mode<article>{
 Link aggregation is the combining (aggregating) of multiple network connections in parallel by any of several methods, in order to increase throughput beyond what a single connection could sustain, to provide redundancy in case one of the links should fail, or both.
-A link aggregation group (LAG) is the combined collection of physical ports.
+A \ac{LAG} is the combined collection of physical ports.
 Other umbrella terms used to describe the concept include trunking, bundling, bonding, channeling or teaming.
 }
 
 \Paragraph{managed switch}
 \mode<article>{
 Managed switches have one or more methods to modify the operation of the switch.
-Common management methods include: a command-line interface (CLI) accessed via serial console, telnet or Secure Shell (see \vref{chap:applications}), an embedded Simple Network Management Protocol (SNMP) agent allowing management from a remote console or management station, or a web interface for management from a web browser.
-Examples of configuration changes that one can do from a managed switch include: enabling features such as Spanning-Tree Protocol or port mirroring, setting port bandwidth, creating or modifying VLANs (virtual LANs), etc.
+Common management methods include: a \ac{CLI} accessed via serial console, telnet or \ac{SSH} (see \vref{chap:applications}), an embedded \ac{SNMP} agent allowing management from a remote console or management station, or a web interface for management from a web browser.
+Examples of configuration changes that one can do from a managed switch include: enabling features such as \ac{STP} or port mirroring, setting port bandwidth, creating or modifying \acp{VLAN}, etc.
 \begin{description}
-\item[VLAN]
-   A virtual local area network (VLAN) is any broadcast domain that is partitioned and isolated in a computer network at the data link layer.
-   VLANs work by applying tags to network frames and handling these tags in networking systems -- creating the appearance and functionality of network traffic that is physically on a single network but acts as if it is split between separate networks.
-   In this way, VLANs can keep network applications separate despite being connected to the same physical network, and without requiring multiple sets of cabling and networking devices to be deployed.
+\item[\ac{VLAN}]
+   A \acf{VLAN} is any broadcast domain that is partitioned and isolated in a computer network at the data link layer.
+   \acp{VLAN} work by applying tags to network frames and handling these tags in networking systems -- creating the appearance and functionality of network traffic that is physically on a single network but acts as if it is split between separate networks.
+   In this way, \acp{VLAN} can keep network applications separate despite being connected to the same physical network, and without requiring multiple sets of cabling and networking devices to be deployed.
 \item[port security]
-   MAC \emph{filtering} is a security access control method whereby the MAC address assigned to each network card is used to determine access to the network.
-   MAC filtering on a network permits and denies network access to specific devices through the use of blacklists and whitelists.
-   Many devices that support MAC filtering do so on a device basis.
-   Whitelisted MAC addresses are allowed through any port on the device and blacklisted MAC addresses are blocked on all ports.
-   Other devices, such as Cisco Catalyst switches, support MAC filtering on a port-by-port basis.
+   \ac{MAC} \emph{filtering} is a security access control method whereby the \acs{MAC} address assigned to each network card is used to determine access to the network.
+   \ac{MAC} filtering on a network permits and denies network access to specific devices through the use of blacklists and whitelists.
+   Many devices that support \acs{MAC} filtering do so on a device basis.
+   Whitelisted \ac{MAC} addresses are allowed through any port on the device and blacklisted \acs{MAC} addresses are blocked on all ports.
+   Other devices, such as Cisco Catalyst switches, support \acs{MAC} filtering on a port-by-port basis.
    This is referred to as port security.
 \item[802.1X]
-   IEEE 802.1X is an IEEE standard for port-based network access control (PNAC).
-   It provides an authentication mechanism to devices wishing to attach to a LAN or WAN.
+   \acs{IEEE} \abbr{802.1X} is an \acs{IEEE} standard for \ac{PNAC}.
+   It provides an authentication mechanism to devices wishing to attach to a \ac{LAN} or \ac{WAN}.
    
-   802.1X authentication involves three parties: a supplicant, an authenticator, and an authentication server.
-   The supplicant is a client device (such as a laptop) that wishes to attach to the LAN or WAN.
+   \abbr{802.1X} authentication involves three parties: a supplicant, an authenticator, and an authentication server.
+   The supplicant is a client device (such as a laptop) that wishes to attach to the \ac{LAN} or \ac{WAN}.
    The authenticator is a network device that provides a data link between the client and the network and can allow or block network traffic between the two, such as an Ethernet switch or wireless access point; and the authentication server is typically a trusted server that can receive and respond to requests for network access, and can tell the authenticator if the connection is to be allowed, and various settings that should apply to that client's connection or setting.
-   Authentication servers typically run software supporting the RADIUS and EAP protocols.
-\item[DHCP snooping]
-   DHCP snooping is a series of techniques applied to improve the security of a DHCP infrastructure.
-   DHCP servers allocate IP addresses to clients on a LAN.
-   DHCP snooping can be configured on LAN switches to exclude rogue DHCP servers and remove malicious or malformed DHCP traffic.
-   In addition, information on hosts which have successfully completed a DHCP transaction is accrued in a database of bindings which may then be used by other security or accounting features.
+   Authentication servers typically run software supporting the \ac{RADIUS} and \ac{EAP} protocols.
+\item[\ac{DHCP} snooping]
+   \ac{DHCP} snooping is a series of techniques applied to improve the security of a \ac{DHCP} infrastructure.
+   \ac{DHCP} servers allocate \ac{IP} addresses to clients on a \ac{LAN}.
+   \ac{DHCP} snooping can be configured on \ac{LAN} switches to exclude rogue \ac{DHCP} servers and remove malicious or malformed \ac{DHCP} traffic.
+   In addition, information on hosts which have successfully completed a \ac{DHCP} transaction is accrued in a database of bindings which may then be used by other security or accounting features.
    
-   The DHCP snooping feature performs the following activities:
+   The \ac{DHCP} snooping feature performs the following activities:
    \begin{itemize}
-   \item validates DHCP messages received from untrusted sources and filters out invalid messages.
-   \item rate-limits DHCP traffic both from trusted and untrusted sources.
-   \item builds and maintains the DHCP snooping database, which contains information about untrusted hosts with leased IP addresses.
-   \item Utilises the DHCP snooping binding database to validate subsequent requests from untrusted hosts.
+   \item validates \acs{DHCP} messages received from untrusted sources and filters out invalid messages.
+   \item rate-limits \acs{DHCP} traffic both from trusted and untrusted sources.
+   \item builds and maintains the \acs{DHCP} snooping database, which contains information about untrusted hosts with leased \acs{IP} addresses.
+   \item Utilises the \acs{DHCP} snooping binding database to validate subsequent requests from untrusted hosts.
    \end{itemize}
-\item[dynamic ARP inspecition]
-   Dynamic ARP inspection (DAI) is a security feature that validates Address Resolution Protocol (ARP) packets in a network.
-   DAI allows a network administrator to intercept, log, and discard ARP packets with invalid MAC-address-to-IP-address bindings.
+\item[\acf{DAI}]
+   \acl{DAI} is a security feature that validates \ac{ARP} packets in a network.
+   \acs{DAI} allows a network administrator to intercept, log, and discard \ac{ARP} packets with invalid \acs{MAC}-address-to-\acs{IP}-address bindings.
    This capability protects the network from certain `man-in-the-middle' attacks.
 \end{description}
 }
-\slide{VLAN}
+\slide{\acs{VLAN}}
 \slide{port security}
-\slide{802.1X}
-\slide{DHCP snooping}
-\slide{dynamic ARP inspection}
+\slide{\abbr{802.1X}}
+\slide{\acs{DHCP} snooping}
+\slide{\acf{DAI}}
 
 \Paragraph{layer 3 switch}
 \mode<article>{
 Engineers learnt to build larger and more complex chips allowing them to introduce more complex logic into the switches.
-Layer~3 switches can route packets in hardware based on IP address as if they were routers.
+Layer~3 switches can route packets in hardware based on \acs{IP} address as if they were routers.
 It is now often more convenient to put a layer 3 switch into your networking combining the functionality of both the router and the switch.
 }
