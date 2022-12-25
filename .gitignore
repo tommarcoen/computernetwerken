@@ -1,11 +1,16 @@
 .DS_Store
+*.acn
+*.acr
+*.alg
 *.aux
 *.bbl
 *.bcf
 *.blg
+*.glo
 *.idx
 *.ilg
 *.ind
+*.ist
 *.lof
 *.log
 *.lot
