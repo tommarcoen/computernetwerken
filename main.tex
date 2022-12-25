@@ -4,7 +4,7 @@
 \usepackage[T1]{fontenc}
 %\usepackage{libertinehologopatch}
 \usepackage[supstfm=libertinesups]{superiors}
-\usepackage[mono=false]{libertine}
+\usepackage[mono=false,oldstyle]{libertine}
 \usepackage{libertinust1math}
 \usepackage{microtype}
 \microtypesetup{tracking=smallcaps,letterspace=50}
@@ -48,10 +48,15 @@
 \creflabelformat{equation}{#2\textup{#1}#3} % remove the brackets from an equation reference, i.e. "eq. 2.1" instead of "eq. (2.1)"
 
 
-\usepackage[nomain,acronym,automake,nonumberlist]{glossaries-extra}
-\setabbreviationstyle[abbreviation]{long-short-sc}
+%\usepackage[nomain,acronym,automake,nonumberlist]{glossaries-extra}
+\usepackage[nomain,acronym,automake,stylemods=mcols,style=mcolindexgroup,shortcuts=ac]{glossaries-extra}
+\setlength{\columnsep}{3em}
+\setabbreviationstyle{long-short-sc}
+%\setabbreviationstyle[shortonly]{short-sc-nolong}
+\renewcommand*{\glsabbrvscfont}[1]{\textsc{\MakeLowercase{#1}}}
+%\renewcommand*{\glsabbrvonlyfont}[1]{\textsc{\MakeLowercase{#1}}}
 \loadglsentries{tex/abbreviations}
-\glsdisablehyper
+%\glsdisablehyper
 \makeglossaries
 \newcommand{\abbr}[1]{\textsc{\MakeLowercase{#1}}}
 
@@ -71,7 +76,7 @@
    \clearforchapter
    \tableofcontents
    \input{chapters/preface}
-   \printglossary[acronym]
+   \printglossary[acronym,toctitle={List of acronyms}]
    \mainmatter
 }
 \titleslide[an introduction]{Computer networks}

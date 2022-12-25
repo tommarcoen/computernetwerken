@@ -1,7 +1,7 @@
 \Chapter{Transport layer protocols}
 \label{chap:transport-layer}
 
-\Section{User Datagram Protocol}
+\Section{\acl{UDP}}
 \label{sec:udp}
 
 \Paragraph{port numbers}
@@ -10,7 +10,7 @@ In computer networking, a port is a communication endpoint.
 At the software level, within an operating system, a port is a logical construct that identifies a specific process or a type of network service.
 A port is identified for each transport protocol and address combination by a 16-bit unsigned number, known as the \emph{port number}.
 
-A port number is always associated with an IP address of a host and the type of transport protocol used for communication.
+A port number is always associated with an \acs{IP} address of a host and the type of transport protocol used for communication.
 It completes the destination or origination network address of a message.
 Specific port numbers are reserved to identify specific services so that an arriving packet can be easily forwarded to a running application.
 For this purpose, port numbers lower than 1024 identify the historically most commonly used services and are called the \emph{well-known port numbers}.
@@ -23,11 +23,11 @@ Higher-numbered ports are available for general use by applications and are know
     \sffamily
     \begin{tabular}{rl}
     \textbf{port} & \textbf{application} \\[1ex]
-     22 & SSH \\
-     25 & SMTP \\
-     53 & DNS \\
-     67 & DHCP (server) \\
-     68 & DHCP (client) \\
+     22 & \acs{SSH} \\
+     25 & \acs{SMTP} \\
+     53 & \acs{DNS} \\
+     67 & \acs{DHCP} (server) \\
+     68 & \acs{DHCP} (client) \\
      80 & HTTP \\
     110 & POP3 \\
     143 & IMAP \\
@@ -63,13 +63,13 @@ By themselves, checksums are often used to verify data integrity but are not rel
 
 \Paragraph{`unreliable'}
 \mode<article>{
-UDP does not keep track of which packets have been sent and received correctly.
+The \ac{UDP} does not keep track of which packets have been sent and received correctly.
 It sends data and forgets about it.
 Should the application require reliability, it itself is responsible for this function.
-This lack of reliability makes UDP a very fast protocol.
+This lack of reliability makes \ac{UDP} a very fast protocol.
 }
 
-\Section{Transmission Control Protocol}
+\Section{\acl{TCP}}
 \label{sec:tcp}
 
 
@@ -80,7 +80,7 @@ See \cref{sec:udp}.
 
 \Paragraph{`reliable'}
 \mode<article>{
-TCP makes sure all data that is sent, is also received correctly by the destination.
+The \ac{TCP} makes sure all data that is sent, is also received correctly by the destination.
 It uses a combination of \emph{sequence numbers} and \emph{acknowledgements} to achieve this reliability.
 }
 
@@ -89,14 +89,14 @@ It uses a combination of \emph{sequence numbers} and \emph{acknowledgements} to 
 Before a client attempts to connect with a server, the server must first bind to and listen at a port to open it up for connections: this is called a passive open.
 Once the passive open is established, a client may establish a connection by initiating an active open using the three-way handshake.
 \begin{description}
-\item[SYN]
-The active open is performed by the client sending a SYN to the server.
+\item[\abbr{SYN}]
+The active open is performed by the client sending a \abbr{SYN} to the server.
 The client sets the segment's sequence number to a random value $A$.
-\item[SYN+ACK]
-In response, the server replies with a SYN+ACK.
+\item[\abbr{SYN+ACK}]
+In response, the server replies with a \abbr{SYN+ACK}.
 The acknowledgement number is set to one more than the received sequence number i.e. $A+1$, and the sequence number that the server chooses for the packet is another random number, $B$.
-\item[ACK]
-Finally, the client sends an ACK back to the server.
+\item[\abbr{ACK}]
+Finally, the client sends an \abbr{ACK} back to the server.
 The sequence number is set to the received acknowledgment value i.e. $A+1$, and the acknowledgment number is set to one more than the received sequence number i.e. $B+1$.
 \end{description}
 Steps 1 and 2 establish and acknowledge the sequence number for one direction.
@@ -106,36 +106,35 @@ Following the completion of these steps, both the client and server have receive
 
 \Paragraph{acknowledgements}
 \mode<article>{
-TCP uses a sequence number to identify each byte of data.
+\ac{TCP} uses a sequence number to identify each byte of data.
 The sequence number identifies the order of the bytes sent from each computer so that the data can be reconstructed in order, regardless of any out-of-order delivery that may occur.
-The sequence number of the first byte is chosen by the transmitter for the first packet, which is flagged SYN.
-This number can be arbitrary, and should, in fact, be unpredictable to defend against TCP sequence prediction attacks.
+The sequence number of the first byte is chosen by the transmitter for the first packet, which is flagged \abbr{SYN}.
+This number can be arbitrary, and should, in fact, be unpredictable to defend against \ac{TCP} sequence prediction attacks.
 
-Acknowledgements (ACKs) are sent with a sequence number by the receiver of data to tell the sender that data has been received to the specified byte.
-ACKs do not imply that the data has been delivered to the application, they merely signify that it is now the receiver's responsibility to deliver the data.
+Acknowledgements (\abbr{ACK}) are sent with a sequence number by the receiver of data to tell the sender that data has been received to the specified byte.
+Acknowledgements do not imply that the data has been delivered to the application, they merely signify that it is now the receiver's responsibility to deliver the data.
 
 Reliability is achieved by the sender detecting lost data and retransmitting it.
-TCP uses two primary techniques to identify loss.
-Retransmission timeout (RTO) and duplicate cumulative acknowledgements (DupAcks).
+\ac{TCP} uses two primary techniques to identify loss: retransmission timeout (\abbr{RTO}) and duplicate cumulative acknowledgements.
 }
 
 \Paragraph{flow control}
 \mode<article>{
-TCP uses a \emph{sliding window} flow control protocol.
-In each TCP segment, the receiver specifies in the \emph{receive window} field the amount of additionally received data (in bytes) that it is willing to buffer for the connection.
+\acs{TCP} uses a \emph{sliding window} flow control protocol.
+In each \acs{TCP} segment, the receiver specifies in the \emph{receive window} field the amount of additionally received data (in bytes) that it is willing to buffer for the connection.
 The sending host can send only up to that amount of data before it must wait for an acknowledgement and receive window update from the receiving host.
 }
 
 \Paragraph{congestion control}
 \mode<article>{
-The final main aspect of TCP is congestion control.
-TCP uses a number of mechanisms to achieve high performance and avoid congestion collapse, where network performance can fall by several orders of magnitude.
+The final main aspect of \acs{TCP} is congestion control.
+\acs{TCP} uses a number of mechanisms to achieve high performance and avoid congestion collapse, where network performance can fall by several orders of magnitude.
 These mechanisms control the rate of data entering the network, keeping the data flow below a rate that would trigger collapse.
 They also yield an approximately max-min fair allocation between flows.
 
-Acknowledgments for data sent, or lack of acknowledgments, are used by senders to infer network conditions between the TCP sender and receiver.
-Coupled with timers, TCP senders and receivers can alter the behavior of the flow of data.
+Acknowledgments for data sent, or lack of acknowledgments, are used by senders to infer network conditions between the \acs{TCP} sender and receiver.
+Coupled with timers, \acs{TCP} senders and receivers can alter the behavior of the flow of data.
 This is more generally referred to as \emph{congestion control} and/or \emph{network congestion avoidance}.
 
-Modern implementations of TCP contain four intertwined algorithms: \emph{slow-start}, congestion avoidance, \emph{fast retransmit}, and \emph{fast recovery} (RFC~5681).
+Modern implementations of \acs{TCP} contain four intertwined algorithms: \emph{slow-start}, congestion avoidance, \emph{fast retransmit}, and \emph{fast recovery} (\acs{RFC}~5681).
 }
