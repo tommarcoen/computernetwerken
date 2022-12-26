@@ -7,22 +7,22 @@
 \Paragraph{twisted pair}
 \mode<article>{
 Twisted pair cabling is a type of wiring in which two conductors of a single circuit are twisted together for the purposes of improving electromagnetic compatibility.
-Compared to a single conductor or an untwisted balanced pair, a twisted pair reduces electromagnetic radiation from the pair and crosstalk between neighbouring pairs and improves rejection of external electromagnetic interference.
+Compared to a single conductor or an untwisted balanced pair, a twisted pair reduces electromagnetic radiation from the pair and crosstalk between neighbouring pairs and improves rejection of external \ac{EMI}.
 It was invented by Alexander Graham Bell.
 }
 
 \Paragraph{shielded vs unshielded}
 \mode<article>{
 For additional noise immunity, twisted-pair cabling may be shielded.
-Cable with shielding is known as shielded twisted pair (STP) and without as unshielded twisted pair (UTP).
+Cable with shielding is known as \ac{ShTP} and without as \ac{UTP}.
 
-Common shield construction types include \emph{individual shielding} (U/\-FTP) with aluminium foil for each twisted pair or quad.
-This type of shielding helps prevent EMI from entering or exiting individual pairs and also protects neighbouring pairs from crosstalk.
-\emph{Overall shielding} with overall foil (F/UTP), braided shield (S/UTP), or braiding with foil across all of the pairs (SF/UTP).
-This type of shielding helps prevent EMI from entering or exiting the cable.
+Common shield construction types include \emph{individual} shielding (\abbr{U/\-FTP}) with aluminium foil for each twisted pair or quad.
+This type of shielding helps prevent \ac{EMI} from entering or exiting individual pairs and also protects neighbouring pairs from crosstalk.
+\emph{Overall} shielding with overall foil (\abbr{F/UTP}), braided shield (\abbr{S/UTP}), or braiding with foil across all of the pairs (\abbr{SF/UTP}).
+This type of shielding helps prevent \ac{EMI} from entering or exiting the cable.
 
-Finally, there is \emph{individual and overall shielding} which uses individual shielding using foil between the twisted pair sets, and also an outer foil or braided shielding (F/FTP, S/FTP, and SF/FTP).
-This type of shielding helps prevent EMI from entering or exiting the cable and also protects neighbouring pairs from crosstalk.
+Finally, there is \emph{individual and overall} shielding which uses individual shielding using foil between the twisted pair sets, and also an outer foil or braided shielding (\abbr{F/FTP}, \abbr{S/FTP}, and \abbr{SF/FTP}).
+This type of shielding helps prevent \ac{EMI} from entering or exiting the cable and also protects neighbouring pairs from crosstalk.
 }
 
 \Paragraph{categories}
@@ -41,29 +41,29 @@ See \vref{tab:tp-categories} for an overview of the different categories.
    \sffamily
    \begin{tabular}{lrrl}
    \textbf{cat.} & \textbf{dist. (m)} & \textbf{BW (MHz)} & \textbf{application} \\[1ex]
-   3 & 100 & 16 & 10BASE-T \\
+   3 & 100 & 16 & \abbr{10BASE-T} \\
    4 &     & 20 & Token Ring \\
-   5 & 100 & 100 & 1000BASE-T \\
-   5e & 100 & 100 & 1000BASE-T, 2.5GBASE-T \\
-   6  & 55  & 250 & 10GBASE-T \\
-   $6_\mathrm{A}$ & 100 & 500 & 10GBASE-T \\
-   7 & 100 & 600 & 10GBASE-T \\
+   5 & 100 & 100 & \abbr{1000BASE-T} \\
+   5e & 100 & 100 & \abbr{1000BASE-T}, \abbr{2.5GBASE-T} \\
+   6  & 55  & 250 & \abbr{10GBASE-T} \\
+   $6_\mathrm{A}$ & 100 & 500 & \abbr{10GBASE-T} \\
+   7 & 100 & 600 & \abbr{10GBASE-T} \\
    $7_\mathrm{A}$ & & 1000 & \\
-   8.1 & 36 & 2000 & 40GBASE-T \\
-   8.2 & 36 & 2000 & 40GBASE-T \\
+   8.1 & 36 & 2000 & \abbr{40GBASE-T} \\
+   8.2 & 36 & 2000 & \abbr{40GBASE-T} \\
    \end{tabular}
 \end{table}
 }
 
-\Paragraph{RJ45}
+\Paragraph{\acs{RJ45}}
 \mode<article>{
-The connector used for network cables is actually called an 8P8C connector but everyone knows it as a RJ45 connector.
+The connector used for network cables is actually called an \acs{8P8C} connector but everyone knows it as a \acs{RJ45} connector.
 A completely plastic connector is used for unshielded cabling while a metalic version exists for shield cabling.
 
 \begin{figure}
    \centering
    \includegraphics[width=.5\textwidth]{images/8p8c.png}
-   \caption{Two plastic RJ45 connectors used with unshielded cabling}
+   \caption{Two plastic \acs{RJ45} connectors used with unshielded cabling}
    \label{fig:rj45}
 \end{figure}
 }
@@ -71,11 +71,11 @@ A completely plastic connector is used for unshielded cabling while a metalic ve
 
 \Paragraph{Fast Ethernet}
 \mode<article>{
-100BASE-TX is the predominant form of Fast Ethernet, and runs over two wire-pairs inside a category~5 or above cable.
+\abbr{100BASE-TX} is the predominant form of Fast Ethernet, and runs over two wire-pairs inside a category~5 or above cable.
 Each network segment can have a maximum cabling distance of \SI{100}{\metre}.
 One pair is used for each direction, providing full-duplex operation with \SI{100}{\mega\bit\per\second} of throughput in each direction.
-Like 10BASE-T, the active pairs in a standard connection are terminated on pins 1,~2,~3 and~6.
-Since a typical category~5 cable contains 4~pairs, it can support two 100BASE-TX links with a wiring adaptor.
+Like \abbr{10BASE-T}, the active pairs in a standard connection are terminated on pins 1,~2,~3 and~6.
+Since a typical category~5 cable contains 4~pairs, it can support two \abbr{100BASE-TX} links with a wiring adaptor.
 }
 
 \Paragraph{crossover cable}
@@ -84,31 +84,30 @@ An Ethernet crossover cable is a crossover cable for Ethernet used to connect co
 It is most often used to connect two devices of the same type, e.g. two computers (via their network interface controllers) or two switches to each other.
 By contrast, \emph{straight through} patch cables are used to connect devices of different types, such as a computer to a network switch.
 Intentionally crossed wiring in the crossover cable connects the transmit signals at one end to the receive signals at the other end.
-Many network devices today support auto MDI-X (aka `auto crossover') capability, wherein a patch cable can be used in place of a crossover cable, or vice versa, and the receive and transmit signals are reconfigured automatically within the device to yield a working connection.
+Many network devices today support auto \acs{MDI-X} (aka `auto crossover') capability, wherein a patch cable can be used in place of a crossover cable, or vice versa, and the receive and transmit signals are reconfigured automatically within the device to yield a working connection.
 }
 
 \Paragraph{Gigabit Ethernet}
 \mode<article>{
 In computer networking, Gigabit Ethernet (GbE or 1~GigE) is the term applied to transmitting Ethernet frames at a rate of a gigabit per second.
-The most popular variant 1000BASE-T is defined by the IEEE 802.3ab standard.
+The most popular variant \abbr{1000BASE-T} is defined by the \acs{IEEE} 802.3ab standard.
 It came into use in 1999, and has replaced Fast Ethernet in wired local networks due to its considerable speed improvement over Fast Ethernet, as well as its use of cables and equipment that are widely available, economical, and similar to previous standards.
 
-Each 1000BASE-T network segment is recommended to be a maximum length of 100 meters, and must use Category~5 cable or better (including Cat~5e and Cat~6).
-
-In a departure from both 10BASE-T and 100BASE-TX, 1000BASE-T uses four lanes over all four cable pairs for simultaneous transmission in both directions.
+Each \abbr{1000BASE-T} network segment is recommended to be a maximum length of 100~metres, and must use Category~5 cable or better (including Cat~5e and Cat~6).
+In a departure from both \abbr{10BASE-T} and \abbr{100BASE-TX}, \abbr{1000BASE-T} uses four lanes over all four cable pairs for simultaneous transmission in both directions.
 }
 
-\Paragraph{auto MDI-X}
+\Paragraph{auto \acs{MDI-X}}
 \mode<article>{
-Auto MDI-X (aka `auto crossover') automatically detects the required cable connection type and configures the connection appropriately, removing the need for crossover cables to interconnect switches or connecting PCs peer-to-peer.
+Auto \acs{MDI-X} (aka `auto crossover') automatically detects the required cable connection type and configures the connection appropriately, removing the need for crossover cables to interconnect switches or connecting \acsp{PC} peer-to-peer.
 As long as it is enabled on either end of a link, either type of cable can be used.
-For auto MDI-X to operate correctly, the data rate on the interface and duplex setting must be set to `auto.'
+For auto \acs{MDI-X} to operate correctly, the data rate on the interface and duplex setting must be set to `auto.'
 
 Gigabit and faster Ethernet links over twisted pair cable use all four cable pairs for simultaneous transmission in both directions.
-For this reason, there are no dedicated transmit and receive pairs, and consequently, crossover cables are never required for 1000BASE-T communication.
+For this reason, there are no dedicated transmit and receive pairs, and consequently, crossover cables are never required for \abbr{1000BASE-T} communication.
 }
 
-\Paragraph{100Gbit Ethernet}
+\Paragraph{100\,Gbit Ethernet}
 \mode<article>{
 Using Cat.~8 twisted pair cabling it is possible to go up to \SI{40}{\giga\bit\per\second} using cables up to \SI{30}{\metre}.
 Higher speeds or longer lengths require fibre optic cables to be used.
@@ -116,8 +115,8 @@ Higher speeds or longer lengths require fibre optic cables to be used.
 
 \Paragraph{direct-attach copper}
 \mode<article>{
-This is a copper 10~Gigabit Ethernet cable which comes in either an active or passive twinax (twinaxial) cable assembly and connects directly into an SFP+ housing.
-40GBASE-CR4 and 100GBASE-CR10 physical layers using \SI{7}{\metre} twin-axial cable are being developed as part of the 100~Gbit Ethernet specifications by the IEEE.
+This is a copper 10~Gigabit Ethernet cable which comes in either an active or passive twinax (twinaxial) cable assembly and connects directly into an \acs{SFP+} housing.
+\abbr{40GBASE-CR4} and \abbr{100GBASE-CR10} physical layers using \SI{7}{\metre} twin-axial cable are being developed as part of the 100~Gbit Ethernet specifications by the \acs{IEEE}.
 }
 
 \Paragraph{optical fibre}
@@ -132,20 +131,20 @@ Fibres are used instead of metal wires because signals travel along them with le
    \centering
    \sffamily
    \begin{tabular}{lrrll}
-   \textbf{cat.} & \textbf{core ($\mathrm{\mu{}m}$}) & {\small\textbf{BW (MHz)}} & \textbf{color} & \textbf{Ethernet standard} \\[1ex]
-   OM1 & 62.5    &  200 & orange & {\small 10GBASE-SR (\SI{33}{\metre})} \\
-   OM2 & 50      &  500 & orange & {\small 10GBASE-SR (\SI{82}{\metre})} \\
-   OM3 & 50      & 2000 & aqua   & {\small 100GBASE-SR4 (\SI{100}{\metre})} \\
-   OM4 & 50      & 4700 & aqua   & {\small 100GBASE-SR4 (\SI{150}{\metre})}\\
-   OS1 & 8--10.5 &      & yellow & {\small 100GBASE-ER4 (\SI{40}{\kilo\metre})} \\
-   OS2 & 8--10.5 &      & yellow & {\small 100GBASE-ER4 (\SI{40}{\kilo\metre})} \\
+   \textbf{cat.} & \textbf{core ($\bm{\mathrm{\upmu{}m}}$)} & {\small\textbf{\abbr{BW} (MHz)}} & \textbf{color} & \textbf{Ethernet standard} \\[1ex]
+   \abbr{OM1} & 62.5    &  200 & orange & {\small \abbr{10GBASE-SR} (\SI{33}{\metre})} \\
+   \abbr{OM2} & 50      &  500 & orange & {\small \abbr{10GBASE-SR} (\SI{82}{\metre})} \\
+   \abbr{OM3} & 50      & 2000 & aqua   & {\small \abbr{100GBASE-SR4} (\SI{100}{\metre})} \\
+   \abbr{OM4} & 50      & 4700 & aqua   & {\small \abbr{100GBASE-SR4} (\SI{150}{\metre})}\\
+   \abbr{OS1} & 8--10.5 &      & yellow & {\small \abbr{100GBASE-ER4} (\SI{40}{\kilo\metre})} \\
+   \abbr{OS2} & 8--10.5 &      & yellow & {\small \abbr{100GBASE-ER4} (\SI{40}{\kilo\metre})} \\
    \end{tabular}
 \end{table}
 }
 
 \Paragraph{single-mode}
 \mode<article>{
-In fibre-optic communication, a single-mode optical fibre (SMF), also known as fundamental- or mono-mode, is an optical fibre designed to carry only a single mode of light -- the transverse mode.
+In fibre-optic communication, a \ac{SMF}, also known as fundamental- or mono-mode, is an optical fibre designed to carry only a single mode of light -- the transverse mode.
 Waves can have the same mode but have different frequencies. This is the case in single-mode fibres, where we can have waves with different frequencies, but of the same mode, which means that they are distributed in space in the same way, and that gives us a single ray of light.
 }
 
@@ -158,30 +157,30 @@ Multi-mode fibre has a fairly large core diameter that enables multiple light mo
 
 \Paragraph{transceivers}
 \mode<article>{
-As there are so many different options regarding transceivers depending on bandwidth, distance and the use of lasers or LEDs, network equipment does not have built-in transceivers.
+As there are so many different options regarding transceivers depending on bandwidth, distance and the use of lasers or \acsp{LED}, network equipment does not have built-in transceivers.
 It is more convenient to have a modular system where you can plug in the transceiver you need.
-There are different form factors available, including SFP, SFP+ and QSFP.
+There are different form factors available, including \acs{SFP}, \acs{SFP+} and \acs{QSFP}.
 
 \begin{figure}
    \begin{subfigure}[b]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{images/sfp.png}
-   \caption{An SFP with an LC connector}
+   \caption{An \acs{SFP} with an LC connector}
    \label{fig:sfp-lc}
    \end{subfigure}
    \hfill
    \begin{subfigure}[b]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{images/sfp-rj45.png}
-   \caption{An SFP with a RJ45 connector}
+   \caption{An \acs{SFP} with a \acs{RJ45} connector}
    \label{fig:sfp-rj45}
    \end{subfigure}
-   \caption{Two small form-factor pluggable (SFP) transceivers}
+   \caption{Two small \acf{SFP} transceivers}
    \label{fig:sfp}
 \end{figure}
 
 Nowadays most connectors are LC (as in \vref{fig:sfp}) but in data centres MPO cables (\vref{fig:mpo}) are also used for high-speed connections and for interconnecting patch panels.
-An MPO cable can have up to 72 fiber strands in a cable.
+An MPO cable can have up to 72 fibre strands in a cable.
 See also \href{https://www.qsfptek.com/article/fiber-connector-types-lc-sc-fc-st-mtp-mpo}{qsfptek.com} for more information on different fibre optic connectors.
 
 \begin{figure}
@@ -265,7 +264,7 @@ Normally it is broadcast in the clear by stations in beacon packets to announce 
 \Paragraph{antennas}
 \mode<article>{
 Professional access points are designed to be mounted upside down on the ceiling.
-They radiate down into the room for a few meters and try to cover as much space on the floor as possible.
+They radiate down into the room for a few metres and try to cover as much space on the floor as possible.
 They are not designed to radiate upwards to the above floor or far down, to reach the floor below.
 
 If you want to use such an access point to cover a large area in a garden, you would have to connect a different, external, antenna with a different coverage area.
