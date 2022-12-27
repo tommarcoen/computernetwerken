@@ -40,7 +40,7 @@ See \vref{tab:tp-categories} for an overview of the different categories.
    \centering
    \sffamily
    \begin{tabular}{lrrl}
-   \textbf{cat.} & \textbf{dist. (m)} & \textbf{BW (MHz)} & \textbf{application} \\[1ex]
+   \textbf{cat.} & \textbf{dist. (m)} & \textbf{\textsc{BW} (MHz)} & \textbf{application} \\[1ex]
    3 & 100 & 16 & \abbr{10BASE-T} \\
    4 &     & 20 & Token Ring \\
    5 & 100 & 100 & \abbr{1000BASE-T} \\
@@ -165,7 +165,7 @@ There are different form factors available, including \acs{SFP}, \acs{SFP+} and 
    \begin{subfigure}[b]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{images/sfp.png}
-   \caption{An \acs{SFP} with an LC connector}
+   \caption{An \acs{SFP} with an \acs{LC} connector}
    \label{fig:sfp-lc}
    \end{subfigure}
    \hfill
@@ -179,21 +179,21 @@ There are different form factors available, including \acs{SFP}, \acs{SFP+} and 
    \label{fig:sfp}
 \end{figure}
 
-Nowadays most connectors are LC (as in \vref{fig:sfp}) but in data centres MPO cables (\vref{fig:mpo}) are also used for high-speed connections and for interconnecting patch panels.
-An MPO cable can have up to 72 fibre strands in a cable.
+Nowadays most connectors are \acs{LC} (as in \vref{fig:sfp}) but in data centres \acs{MPO} cables (\vref{fig:mpo}) are also used for high-speed connections and for interconnecting patch panels.
+An \acs{MPO} cable can have up to 72 fibre strands in a cable.
 See also \href{https://www.qsfptek.com/article/fiber-connector-types-lc-sc-fc-st-mtp-mpo}{qsfptek.com} for more information on different fibre optic connectors.
 
 \begin{figure}
    \centering
    \includegraphics[width=\textwidth]{images/mpo.png}
-   \caption{MPO connnector}
+   \caption{\acs{MPO} connnector}
    \label{fig:mpo}
 \end{figure}
 
 \begin{figure}
    \centering
    \includegraphics[width=.5\textwidth]{images/mpo-cassette.png}
-   \caption{MPO cassette}
+   \caption{\acs{MPO} cassette}
    \label{fig:mpo-cassette}
 \end{figure}
 }
@@ -211,7 +211,7 @@ See also \href{https://www.qsfptek.com/article/fiber-connector-types-lc-sc-fc-st
 
 \Paragraph{802.11}
 \mode<article>{
-IEEE 802.11 specifies the set of media access control (MAC) and physical layer (PHY) protocols for implementing wireless local area network (WLAN) computer communication.
+\acs{IEEE} 802.11 specifies the set of \acf{MAC} and physical layer (\abbr{PHY}) protocols for implementing \acf{WLAN} computer communication.
 The standard and amendments provide the basis for wireless network products using the Wi-Fi brand and are the world's most widely used wireless computer networking standards.
 
 \begin{table}
@@ -227,7 +227,7 @@ The standard and amendments provide the basis for wireless network products usin
    802.11n  & 4  &     600 & 2008 & 2.4/5 \\
    802.11ac & 5  &  6\,933 & 2014 & 5 \\
    802.11ax & 6  &  9\,608 & 2019 & 2.4/5 \\
-            & 6E &  9\,608 & 2020 & 2.4/5/6 \\
+            & 6\abbr{E} &  9\,608 & 2020 & 2.4/5/6 \\
    802.11be & 7  & 40\,000 & \emph{t.b.d.} & 2.4/5/6 \\
    \end{tabular}
    \caption{Wi-Fi generations}
@@ -237,8 +237,8 @@ The standard and amendments provide the basis for wireless network products usin
 
 \Paragraph{frequency}
 \mode<article>{
-IEEE 802.11 uses various frequencies including, but not limited to, \SI{2.4}{\giga\hertz}, \SI{5}{\giga\hertz}, \SI{6}{\giga\hertz}, and \SI{60}{\giga\hertz} frequency bands.
-Although IEEE 802.11 specifications list channels that might be used, the radio frequency spectrum availability allowed varies significantly by regulatory domain.
+\acs{IEEE} 802.11 uses various frequencies including \SI{2.4}{\giga\hertz}, \SI{5}{\giga\hertz}, \SI{6}{\giga\hertz}, and \SI{60}{\giga\hertz} frequency bands.
+Although \acs{IEEE} 802.11 specifications list channels that might be used, the radio frequency spectrum availability allowed varies significantly by regulatory domain.
 }
 
 \Paragraph{channel}
@@ -256,8 +256,8 @@ However, when choosing the bandwidth, you have to make sure all devices that mus
 
 \Paragraph{SSID}
 \mode<article>{
-The service set identifier (SSID) defines a service set or extended service set.%
-\footnote{An extended service set (ESS) is a wireless network, created by multiple access points, which appears to users as a single, seamless network, such as a network covering a home or office that is too large for reliable coverage by a single access point.}
+The \ac{SSID} defines a service set or extended service set.%
+\footnote{An \ac{ESS} is a wireless network, created by multiple access points, which appears to users as a single, seamless network, such as a network covering a home or office that is too large for reliable coverage by a single access point.}
 Normally it is broadcast in the clear by stations in beacon packets to announce the presence of a network and seen by users as a wireless network name.
 }
 
@@ -272,18 +272,18 @@ If you want to use such an access point to cover a large area in a garden, you w
 
 \Paragraph{security}
 \mode<article>{
-Wi-Fi security includes Wired Equivalent Privacy (WEP) and Wi-Fi Protected Access (WPA).
-WEP is a notoriously weak security standard: the password it uses can often be cracked in a few minutes with a basic laptop computer and widely available software tools.
+Wi-Fi security includes \ac{WEP} and \ac{WPA}.
+\ac{WEP} is a notoriously weak security standard: the password it uses can often be cracked in a few minutes with a basic laptop computer and widely available software tools.
 
-There are two options available when chosing WPA: personal mode and enterprise mode.
-WPA personal is also referred to as PSK or pre-shared key.
+There are two options available when chosing \ac{WPA}: personal mode and enterprise mode.
+\ac{WPA} personal is also referred to as \acs{PSK} or \acl{PSK}.
 This mode is designed for home and small office networks and does not require an authentication server.
-Instead all users can access the wireless network using a common pre-shared key.
+Instead all users can access the wireless network using a common \acl{PSK}.
 
-WPA enterprise or 802.1X requires a RADIUS server for authentication.
+\ac{WPA} enterprise or \abbr{802.1X} requires a \ac{RADIUS} server for authentication.
 This mode requires a more complicated setup, but provides additional security (e.g.\ protection against dictionary attacks on short passwords).
 Most noticably, it requires users to authenticate to the wireless network using both a username and a password.
 Often the credentials required are the same as the credentials required to access your company computer and thus Windows can authenticate to the wireless network automatically.
 
-Wi-Fi protected setup or WPS is an alternative authentication key distribution method intended to simplify and strengthen the process, but which, as widely implemented, creates a major security hole via WPS PIN recovery.
+\ac{WPS} is an alternative authentication key distribution method intended to simplify and strengthen the process, but which, as widely implemented, creates a major security hole via \ac{WPS} \abbr{PIN} recovery.
 }
