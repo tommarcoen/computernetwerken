@@ -23,7 +23,7 @@ This includes both physical and logical topologies.
 Next we will take a look at the history and evolution of computer networks and we differentiate between 
 local networks and wide-area networks, of which the internet is the best-known example.
 
-We then move on to a more theoretical part of the introduction when we will talk about the networking models and explain what a protocol is, as well as give some examples.
+We then move on to a more theoretical part of the introduction where we will talk about the networking models and explain what a protocol is, as well as give some examples.
 We also cover routing schemes.
 We will ask some questions about how network communication goes and circle back to the network models when we talk about encapsulation.
 Finally, we will talk about network symbols used in literature to create network diagrams.
@@ -34,7 +34,7 @@ Finally, we will talk about network symbols used in literature to create network
 Networks may be characterised by many properties or features, such as physical capacity, organisational scope (\vref{sec:network-ownership}), user authorisation, access rights, and others.
 Another distinct classification method is that of the physical extent or geographic scale.
 
-\paragraph{\gls{LAN}}%local area network (LAN)}
+\paragraph{\gls{LAN}}
 A computer network that interconnects computers within a limited area such as a residence, school, laboratory, office building or university campus (though this is also called a \acl{CAN}).
 
 The term \gls{LAN} can be used both for a single \emph{broadcast domain} (see \vref{sec:routing-schemes,sec:routing}) or local network, similar to a \acs{WLAN} being a single wireless broadcast domain and a `\acs{VLAN}' being a virtual \gls{LAN} defined on a switch or group of switches; but the term `\gls{LAN}' can also mean the group of all of these local networks, forming the complete company or home network.
@@ -42,7 +42,7 @@ In that case, `local' refers to the geographic location (one building) instead o
 
 \paragraph{\gls{WAN}}
 A telecommunications network that extends over a large geographic area.
-Wide area networks are often established with \emph{leased telecommunication circuits}.
+Wide-area networks are often established with \emph{leased telecommunication circuits}.
 These networks are mostly operated by \glspl{ISP}.
 
 \paragraph{\gls{PAN}}
@@ -50,9 +50,9 @@ A computer network for interconnecting electronic devices within an individual p
 One example is your mobile phone pairing wirelessly with your watch and ear buds.
 
 \paragraph{\gls{CAN}}
-A computer network made up of an interconnection of local area networks within a limited geographical area.
+A computer network made up of an interconnection of local-area networks within a limited geographical area.
 The networking equipment (switches, routers) and transmission media (optical fibre, copper plant, cat~5 cabling, etc.) are almost entirely owned by the campus tenant or owner: an enterprise, university, government, etc.
-A campus area network is larger than a local area network but smaller than a \acs{MAN} or \gls{WAN}.
+A campus area network is larger than a local-area network but smaller than a \acs{MAN} or \gls{WAN}.
 
 An example would be the High Tech Campus in Eindhoven.
 The buildings house different companies which are all interconnected using fibre optic cabling owned and maintained by the campus \acs{IT} team.
@@ -60,12 +60,12 @@ The campus also has its own data centres and provides redundant connections to t
 
 \paragraph{\gls{MAN}}
 A computer network that interconnects users with computer resources in a geographic region of the size of a metropolitan area.
-The term \gls{MAN} is applied to the interconnection of local area networks in a city into a single larger network which may then also offer efficient connection to a wide area network.
+The term \gls{MAN} is applied to the interconnection of local-area networks in a city into a single larger network which may then also offer efficient connection to a wide-area network.
 
 \paragraph{\gls{SAN}}
 A computer network which provides access to consolidated, block-level data storage.
 \glspl{SAN} are primarily used to access data storage devices, such as disk arrays and tape libraries from servers so that the devices appear to the operating system as direct-attached storage.
-A \gls{SAN} typically is a dedicated network of storage devices not accessible through the local area network.
+A \gls{SAN} typically is a dedicated network of storage devices not accessible through the local-area network.
 
 
 \section{Network ownership}
@@ -85,7 +85,7 @@ The intranet uses the \gls{IP} and \gls{IP}-based tools such as web browsers and
 The administrative entity limits the use of the intranet to its authorised users.
 Most commonly, an intranet is the internal \gls{LAN} of an organisation.
 A large intranet typically has at least one web server to provide users with organisational information.
-An intranet is also anything behind the router on a local area network.
+An intranet is also anything behind the router on a local-area network.
 
 \paragraph{extranet}
 An extranet is a network that is also under the administrative control of a single organisation but supports a limited connection to a specific external network.
@@ -100,9 +100,9 @@ It is an isolated and heavily firewalled part of a company's intranet.
 \section{Network evolution}
 \label{sec:network-evolution}
 
-Let's briefly examine the evolution of both local area networks and wide area networks.
+Let's briefly examine the evolution of both local-area networks and wide-area networks.
 
-\subsection{Local area networks}
+\subsection{Local-area networks}
 \label{sec:network-evolution-lan}
 
 \paragraph{mainframe (1970)}
@@ -127,7 +127,7 @@ Up to 100~stations can be connected to the cable using vampire taps and share a 
 The system is difficult to install and maintain.
 
 \paragraph{Token Ring (1984)}
-Token Ring is a computer networking technology used to build local area networks.
+Token Ring is a computer networking technology used to build local-area networks.
 It was introduced by IBM in 1984, and standardised in 1989 as \acs{IEEE} 802.5.
 
 It uses a special three-byte frame called a \emph{token} that is passed around a logical ring of workstations or servers.
@@ -136,7 +136,7 @@ This token passing is a channel access method providing fair access for all stat
 Token Ring was a successful technology, particularly in corporate environments, but was gradually eclipsed by the later versions of Ethernet.
 
 \paragraph{thinnet (1985)}
-\abbr{10BASE2} (also known as cheapernet, thin Ethernet, \emph{thinnet}, and \emph{thinwire}) is a variant of Ethernet that uses thin coaxial cable terminated with \acs{BNC} connectors to build a local area network.
+\abbr{10BASE2} (also known as cheapernet, thin Ethernet, \emph{thinnet}, and \emph{thinwire}) is a variant of Ethernet that uses thin coaxial cable terminated with \acs{BNC} connectors to build a local-area network.
 
 During the mid to late 1980s this was the dominant \SI{10}{\mega\bit\per\second} Ethernet standard, but due to the immense demand for high speed networking, the low cost of \mbox{category-5} cable, and the popularity of 802.11 wireless networks, both \abbr{10BASE2} and \abbr{10BASE5} have become increasingly obsolete.
 
@@ -151,7 +151,7 @@ This permitted a number of other companies to produce multi-port switches, inclu
 Ethernet was initially a shared-access medium, but the introduction of the \acs{MAC} bridge began its transformation into its most-common point-to-point form without a collision domain.
 Switches also exist for other types of networks including Fibre Channel, \gls{ATM}, and InfiniBand.
     
-\subsection{Wide area networks}
+\subsection{Wide-area networks}
 \label{sec:network-evoluation-wan}
 
 \paragraph{ARPAnet (1971)}
@@ -166,7 +166,7 @@ Many of the earliest systems on the ARPAnet were \abbr{PDP-11}s, see \vref{fig:t
 \footnote{\href{https://www.truecable.com/blogs/cable-academy/a-brief-history-of-network-technology}{https://www.truecable.com/blogs/cable-academy/a-brief-history-of-network-technology}}
 The \abbr{DECSA} communications server was a communications platform developed by \gls{DEC} based on a \abbr{PDP-11/24}, with the provision for user installable \gls{IO} cards including asynchronous and synchronous modules.
 This product was used as one of the earliest commercial platforms upon which networking products could be built, including \abbr{X.25} gateways, \gls{SNA} gateways, routers, and terminal servers.%
-\footnote{A terminal server connects devices with a serial port to a local are network.}
+\footnote{A terminal server connects devices with a serial port to a local-area network.}
 Ethernet adapters were also available.
 
 \begin{figure}
@@ -412,7 +412,7 @@ See \vref{chap:ethernet} for further details.
 \mode<article>{
 The \acl{ARP} is a communication protocol used for discovering the data link layer address, such as a \acs{MAC} address, associated with a given network layer address, typically an \acs{IP} version~4 address.
 
-Two computers in an office (host~$A$ and host~$B$) are connected to each other in a local area network by Ethernet cables and network switches, with no intervening gateways or routers.
+Two computers in an office (host~$A$ and host~$B$) are connected to each other in a local-area network by Ethernet cables and network switches, with no intervening gateways or routers.
 Host~A has a packet to send to host~$B$.
 Through \acs{DNS}, it determines that host~$B$ has the \acs{IP} address 203.0.113.55.
 
