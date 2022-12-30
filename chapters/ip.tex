@@ -10,7 +10,7 @@ To a computer an \acs{IP} address is just a 32-bit number.
 For example, the number \num{177540347} converts to binary as
 
 \begin{center}
-\lstinline{0000 1010 1001 0101 0000 1100 1111 1011}
+\lstinline{0000 1010}\quad\lstinline{1001 0101}\quad\lstinline{0000 1100}\quad\lstinline{1111 1011}
 \end{center}     
 }
 \slide[\num{177540347}]{0000 1010 1001 0101 0000 1100 1111 1011}
@@ -23,6 +23,12 @@ To make this 32-bit number more manageable to humans, we group the 32 bits into 
     Sizes from 1~to~48 bits have been used.
     For example, the \abbr{PDP-7}, a predecessor of the \abbr{PDP-11}, was an 18-bit machine.
     }
+\begin{center}
+$\underbrace{\mbox{\lstinline{0000 1010}}}_{\mbox{octet 1}}$\quad%
+$\underbrace{\mbox{\lstinline{1001 0101}}}_{\mbox{octet 2}}$\quad%
+$\underbrace{\mbox{\lstinline{0000 1100}}}_{\mbox{octet 3}}$\quad%
+$\underbrace{\mbox{\lstinline{1111 1011}}}_{\mbox{octet 4}}$
+\end{center} 
 }
 
 \Paragraph{dotted decimal}
@@ -35,6 +41,10 @@ We can state this a bit more mathematically.
 Each bit has two possible values, 0 or 1.
 Eight bits then give us $2^8 = 256$ possible combinations or the values from 0 to 255.
 The format of an \acs{IP} address thus is $x_1.x_2.x_3.x_4$ with $x_i \in [0,255]$.
+
+It is important to remember that these \acs{IP} addresses are still just numbers to the computer and thus one \acs{IP} address is either higher or lower than a second address.
+If you add 1 to the address 10.149.12.251, you get the next address, being 10.149.12.252.
+If you add 1 to the address 10.149.12.255, you get the address 10.149.13.0, and adding 1 to the \acs{IP} address 10.149.255.255 gives the address 10.150.0.0.
 }
 \slide{$2^8=256 \quad \Rightarrow x_i \in [0,255]$}
 
@@ -75,9 +85,16 @@ This means that the first 26~bits of the accompanying \acs{IP} address are the n
 
 \Paragraph{network address}
 \mode<article>{
-Each local network requires two special addresses that can not be assigned to hosts.
+Each network requires two special addresses that can not be assigned to hosts.
 The first is the network address.
 It is the first \acs{IP} address in the network, i.e.~the \acs{IP} address where the host part consists of only zeros.
+
+Let's take the \acs{IP} address 198.51.100.13 as an example, using the subnet mask 255.255.255.0.
+As there are 24~ones, the first 24~bits -- or three octets -- of the \acs{IP} address are the network number.
+The last 8~bits of the subnet mask are zero so the last octet of the \acs{IP} address is the host identifier.
+The network address is the very first (lowest) address using this network number.
+In this example, the network address is 198.51.100.0; the first three bytes must be identical for it to be the same network.
+The host part -- the last 8~bits -- must be all zeros to give the lowest possible address.
 }
 
 \Paragraph{broadcast address}
@@ -85,11 +102,15 @@ It is the first \acs{IP} address in the network, i.e.~the \acs{IP} address where
 The second special \acs{IP} address is the broadcast address.
 It is the last \acs{IP} address in the network, i.e.~the \acs{IP} address where the host part consists of only ones.%
 \footnote{Even though I was always told the first address is the network address and the last address is the broadcast address, in fact both the first and the last address once were used as the broadcast address for the network by \href{https://github.com/schoen/unicast-extensions/blob/master/LOWEST.md}{4.2BSD}, an operating system from 1983.}
+
+To continue with the previous example, the broadcast address of this network would be 198.51.100.255.
+Again the network number -- the first three octets -- must remain identical.
+With the host part -- the last octet -- all binary ones, these eight ones give the decimal number~255.
 }
 
 \Paragraph{local broadcast address}
 \mode<article>{
-Every (sub)network has its own broadcast address as the last \acs{IP} address in the range.
+Every network has its own broadcast address as the last \acs{IP} address in the range.
 There is a second broadcast address, 255.255.255.255, which is a link-local broadcast address.
 It can only be used to communicate on the local link as routers do not forward packets with this destination address onto other networks.
 }
@@ -104,7 +125,12 @@ But this is not a requirement and it can be any available address in the network
 
 \Paragraph{loopback address}
 \mode<article>{
-All \acs{IP} addresses starting with 127 are reserved for the loopback address.
+All \acs{IP} addresses starting with 127 are reserved for the loopback address.%
+   \footnote{In \acs{IP} version~6 there is only a single loopback address, namely ::1 or 127 binary zeros followed by a single binary one.}
+When communicating with the loopback address, the computer connects back to itself.
+For example, a web designer could install a web server on his own laptop which serves the website he is developing.
+He can limi the web server to only allow access from the loopback address so that he alone can see the website, not making it available to the rest of the network.
+
 There are people in the industry who want to free up a large chunk of these addresses for public use and only keep the 127.0.0.0/16 range for loopback addresses.%
 \footnote{See \href{https://github.com/schoen/unicast-extensions}{The \acs{IP} version~4 cleanup project} on GitHub.}
 All other \acs{IP} addresses will become publicly available.
@@ -114,30 +140,30 @@ However, this might take a few more years to become a reality.
 \Section{A bit of history}
 \label{sec:ip-history}
 
-\Paragraph[1980]{N.H.H.H}
+\Paragraph[1980]{\abbr{N.H.H.H}}
 \mode<article>{
-At first there were only 256 networks (the first octet) and each network could contain over 16 million hosts.
-With both the 0 and 255 networks reserved, in reality only 254 network could be used.
+At first there were only 256 networks (the first octet) and each network could contain over 16 million hosts (24~bits for the host identifier gives $2^{24}=16777216$ addresses for devices in that network).
+With both the 0 and 255 network reserved, in reality only 254 networks can be used.
 }
 
 \Paragraph[1981]{classful addressing}
 \mode<article>{
-As the internet community realised 254 networks were not enough, they kept the networks that were already assigned to companies and created a new system based on classes.
+As the internet community quickly realised 254 networks were not enough, they kept the networks that were already assigned to companies and created a new system based on classes.
 The first octet of the \acs{IP} address determined that class of \acs{IP} address and the class determined the size of the network, i.e.~which part is used for the network and which part is used for the host address.
 \Vref{tab:classful-addressing} shows the different classes, their subnet mask and the number of hosts per network.
 An \acs{IP} address belongs to a certain class if the first octet falls into the given range.
-For example, the \acs{IP} address 198.51.100.37 falls into the class~C range as $192\le198\le223$ so the first three octets determine the network and the fourth octet identifies the host within the given network.
+For example, the \acs{IP} address 198.51.100.37 falls into the class~c range as $192\le198\le223$. Thus, the first three octets determine the network and the fourth octet identifies the host within the given network.
 }
 \newsavebox{\classful}
 \savebox{\classful}{
    \sffamily
    \begin{tabular}{crllr}
    \textbf{class} & \textbf{range} & \textbf{format} & \textbf{subnet mask} & \textbf{\# addresses} \\[1ex]
-   A & 0--127 & N.H.H.H & 255.0.0.0 & \num{16777216} \\
-   B & 128--191 & N.N.H.H & 255.255.0.0 & \num{65536} \\
-   C & 192--223 & N.N.N.H & 255.255.255.0 & \num{256} \\
-   D & 224--239 & \textit{multicast} & -- & -- \\
-   E & 240--255 & \textit{reserved} & -- & -- \\
+   a & 0--127   & \abbr{N.H.H.H} & 255.0.0.0 & \num{16777216} \\
+   b & 128--191 & \abbr{N.N.H.H} & 255.255.0.0 & \num{65536} \\
+   c & 192--223 & \abbr{N.N.N.H} & 255.255.255.0 & \num{256} \\
+   d & 224--239 & \textit{multicast} & -- & -- \\
+   e & 240--255 & \textit{reserved} & -- & -- \\
    \end{tabular}
 }
 \mode<article>{
