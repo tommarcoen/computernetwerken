@@ -1,10 +1,11 @@
-\documentclass[a4paper,12pt,twoside,british]{memoir}
+\documentclass[a4paper,12pt,oneside,british]{memoir}
 \usepackage[utf8]{inputenc}
 \usepackage{babel}
 \isopage
 \checkandfixthelayout
 \pagestyle{ruled}
-\frenchspacing
+%\frenchspacing
+\raggedbottom
 \usepackage[noamssymb,noamsthm,envcountsect]{beamerarticle}
 \setjobnamebeamerversion{main.presentation}
 
@@ -33,15 +34,5 @@
 \usepackage{csquotes}
 \usepackage[backend=biber]{biblatex}
 \addbibresource{bibliography.bib}
-
-%\usepackage[nomain,acronym,automake,nonumberlist]{glossaries-extra}
-\usepackage[nomain,acronym,automake,stylemods=mcols,style=mcolindex,shortcuts=ac,nonumberlist]{glossaries-extra}
-\setlength{\columnsep}{3em}
-\setabbreviationstyle{long-short-sc}
-\renewcommand*{\glsabbrvscfont}[1]{\textsc{\MakeLowercase{#1}}}
-\makeglossaries
-\loadglsentries{tex/abbreviations}
-\glsdisablehyper
-\newcommand{\abbr}[1]{\textsc{\MakeLowercase{#1}}}
 
 \input{main}

@@ -41,6 +41,16 @@
 \input{tex/theme-syntra-bizz}
 \input{tex/headings}
 
+%\usepackage[nomain,acronym,automake,nonumberlist]{glossaries-extra}
+\usepackage[nomain,acronym,automake,stylemods=mcols,style=mcolindex,shortcuts=ac,nonumberlist]{glossaries-extra}
+\setlength{\columnsep}{3em}
+\setabbreviationstyle{long-short-sc}
+\renewcommand*{\glsabbrvscfont}[1]{\textsc{\MakeLowercase{#1}}}
+\makeglossaries
+\loadglsentries{tex/abbreviations}
+\glsdisablehyper
+\newcommand{\abbr}[1]{\textsc{\MakeLowercase{#1}}}
+
 % Links
 \usepackage{varioref}
 \usepackage{hyperref}

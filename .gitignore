@@ -14,11 +14,13 @@
 *.lof
 *.log
 *.lot
+*.nav
 *.out
 *.pdf
 *.run.xml
 *.snm
 *.toc
+*.vrb
 main.fls
 main.*.nav
 main.*.vrb
