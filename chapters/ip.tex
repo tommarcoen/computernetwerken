@@ -195,11 +195,16 @@ The subnet mask only came to be with the concept of \emph{subnetting} but the ma
 
 \Paragraph[1985]{subnetting}
 \mode<article>{
-A subnetwork or subnet is a logical subdivision of an \acs{IP} network.
-The practice of dividing a network into two or more networks is called subnetting.
-Computers that belong to the same subnet are addressed with an identical most-significant bit-group in their \acs{IP} addresses.
-This results in the logical division of an \acs{IP} address into two fields: the \emph{network number} or \emph{routing prefix} and the \emph{rest field} or \emph{host identifier}.
-The rest field is an identifier for a specific host or network interface.
+%A subnetwork or subnet is a logical subdivision of an \acs{IP} network.
+%The practice of dividing a network into two or more networks is called subnetting.
+%Computers that belong to the same subnet are addressed with an identical most-significant bit-group in their \acs{IP} addresses.
+%This results in the logical division of an \acs{IP} address into two fields: the \emph{network number} or \emph{routing prefix} and the \emph{rest field} or \emph{host identifier}.
+%The rest field is an identifier for a specific host or network interface.
+Subnetting is the process of taking a block of \acs{IP} addresses from \vref{tab:classful-addressing} and dividing it into smaller blocks in order to prevent wasting \acs{IP} addresses.
+For example, the network 14.0.0.0 belongs to class~a and thus has a subnet mask of 255.0.0.0.
+\Cref{tab:classful-addressing} teaches us there are over 16~million \acs{IP} addresses in this network though there is no way anyway would want (or can) build a network this large.
+
+This block of \acs{IP} addresses contains over 16~million addresses, starting wtih 14.0.0.0 and ending with 14.255.255.255.
 }
 
 \Paragraph[1992]{supernetting}
