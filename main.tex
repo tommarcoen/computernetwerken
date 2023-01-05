@@ -41,13 +41,13 @@
 \input{tex/theme-syntra-bizz}
 \input{tex/headings}
 
-%\usepackage[nomain,acronym,automake,nonumberlist]{glossaries-extra}
-\usepackage[nomain,acronym,automake,stylemods=mcols,style=mcolindex,shortcuts=ac,nonumberlist]{glossaries-extra}
+\usepackage[abbreviations,automake,stylemods=mcols,shortcuts=ac,nonumberlist,indexcrossrefs=true]{glossaries-extra}
 \setlength{\columnsep}{3em}
 \setabbreviationstyle{long-short-sc}
 \renewcommand*{\glsabbrvscfont}[1]{\textsc{\MakeLowercase{#1}}}
 \makeglossaries
 \loadglsentries{tex/abbreviations}
+\loadglsentries{tex/glossary}
 \glsdisablehyper
 \newcommand{\abbr}[1]{\textsc{\MakeLowercase{#1}}}
 
@@ -75,10 +75,9 @@
    \frontmatter
    \input{tex/titlepages}
    \clearforchapter
-   \tableofcontents
+   \tableofcontents*
    \input{chapters/preface}
-   \printglossary[abbreviation]
-   %\addcontentsline{toc}{chapter}{List of acronyms}
+   \printglossary[type=abbreviations,style=mcolindex]
    \mainmatter
 }
 \titleslide[an introduction]{Computer networks}
@@ -93,7 +92,10 @@
 \include{chapters/cisco-pt}
 
 \mode<article>{
+\printglossary
 \nocite{*}
+\glsaddall[type=main]
+\setglossarystyle{indexgroup}
 \printbibliography
 }
 \end{document}

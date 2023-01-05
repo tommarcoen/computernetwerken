@@ -34,4 +34,11 @@
 \usepackage[backend=biber]{biblatex}
 \addbibresource{bibliography.bib}
 
+\renewbibmacro*{finentry}{%
+  \iffieldundef{annotation}
+    {\finentry}
+    {\setunit{\finentrypunct\par\vspace{\bibitemsep}\nobreak}
+     \printfield{annotation}%
+     \finentry}}
+
 \input{main}

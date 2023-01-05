@@ -6,7 +6,7 @@
 *.bbl
 *.bcf
 *.blg
-*.glo
+*.gl*
 *.idx
 *.ilg
 *.ind

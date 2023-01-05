@@ -1,8 +1,8 @@
 #!/bin/sh
 pdflatex main-book
-biber main-book
 makeindex main-book
 makeglossaries main-book
+biber main-book
 pdflatex main-book
 pdflatex main-book
 pdflatex main-book
