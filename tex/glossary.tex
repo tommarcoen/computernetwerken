@@ -2,41 +2,49 @@
 % by Behrouz A. Forouzan; published by McGraw-Hill in 2007.
 \newglossaryentry{10BASE2}{
    name = {\abbr{10BASE2}},
+   sort = {0010BASE2},
    description = {The thin coaxial cable implementation of standard Ethernet.}
 }
 
 \newglossaryentry{10BASE5}{
    name = {\abbr{10BASE5}},
+   sort = {0010BASE5},
    description = {The thick coaxial cable implementation of standard Ethernet.}
 }
 
 \newglossaryentry{10BASE-T}{
-   name = {\abbr{10BASE5}},
+   name = {\abbr{10BASE-T}},
+   sort = {0010BASE-T},
    description = {The twisted-pair implementation of standard Ethernet.}
 }
 
 \newglossaryentry{100BASE-TX}{
    name = {\abbr{100BASE-TX}},
+   sort = {0100BASE-TX},
    description = {The two-wire \acs{UTP} implementation of Fast Ethernet.}
 }
 
 \newglossaryentry{1000BASE-LX}{
    name = {\abbr{1000BASE-LX}},
+   sort = {1000BASE-LX},
    description = {The two-wire fibre implementation of Gigabit Ethernet using long-wave lasers.}
 }
 
 \newglossaryentry{1000BASE-SX}{
    name = {\abbr{1000BASE-SX}},
+   sort = {1000BASE-SX},
    description = {The two-wire fibre implementation of Gigabit Ethernet using short-wave lasers.}
 }
 
 \newglossaryentry{1000BASE-T}{
    name = {\abbr{1000BASE-T}},
+   sort = {1000BASE-T},
    description = {The four-wire \acs{UTP} implementation of Gigabit Ethernet.}
 }
 
 \newglossaryentry{AP-gls}{
    name = {\acf{AP}},
+   sort = {access point},
    description = {A central base station in a \acf{BSS}.}
 }
 
@@ -47,11 +55,13 @@
 
 \newglossaryentry{ARP-gls}{
    name = {\acf{ARP}},
+   sort = {ARP},
    description = {A protocol for obtaining the physical (\acs{MAC}) address of a node when the network (\acs{IP}) address is known.}
 }
 
 \newglossaryentry{ARPA-gls}{
    name = {\acf{ARPA}},
+   sort = {ARPA},
    description = {The government agency that funded the ARPAnet.}
 }
 
@@ -68,8 +78,17 @@
    }
 }
 
+\newglossaryentry{baud rate}{
+   name = {baud rate},
+   description = {
+      The number of signal elements transmitted per second.
+      A signal element consists of one or more bits.
+   }
+}
+
 \newglossaryentry{bss-gls}{
    name = {\acf{BSS}},
+   sort = {basic service set},
    description = {The building block of a wireless \acs{LAN} as defined by the \acs{IEEE} 802.11 standard.}
 }
 
@@ -78,8 +97,161 @@
    description ={Binary digit. The smallest unit of data (0 or 1).}
 }
 
+\newglossaryentry{bit rate}{
+   name = {bit rate},
+   description = {The number of bits transmitted per second.}
+}
+
+\newglossaryentry{BOOTP-gls}{
+   name = {\acf{BOOTP}},
+   sort = {bootstrap protocol},
+   description = {
+      The protocol that provides configuration information from a table (file).
+      This protocol is deprecated and has been replaced by \acs{DHCP}.
+   }
+}
+
+\newglossaryentry{broadcast address}{
+   name = {broadcast address},
+   description = {An address that allows transmission of a message to all nodes of a network.}
+}
+
+\newglossaryentry{bus topology}{
+   name = {bus topology},
+   description = {A network topology in which all computers are attached to a shared medium.}
+}
+
+\newglossaryentry{caching}{
+   name = {caching},
+   description = {The storing of information in small, fast memory.}
+}
+
+\newglossaryentry{port address}{
+   name = {port address},
+   description = {In \acs{TCP}/\acs{IP} an integer that identifies a process or application.}
+}
+
+\newglossaryentry{port number}{
+   name = {port number},
+   description = {See \emph{port address}.}
+}
+
+\newglossaryentry{prefix}{
+   name = {prefix},
+   description = {The common part of an address range.}
+}
+
 \newglossaryentry{PXE-gls}{
    name={preboot execution environment},
    description={The \acl{PXE} specification describes a standardized client–server environment that boots a software assembly, retrieved from a network, on \acs{PXE}-enabled clients.
    On the client side it requires only a \acs{PXE}-capable \acf{NIC}, and uses a small set of industry-standard network protocols such as \acs{DHCP} and \acs{TFTP}.}
+}
+
+\newglossaryentry{registrar}{
+   name = {registrar},
+   description = {An authority to register new \acs{DNS} names.}
+}
+
+\newglossaryentry{relay agent}{
+   name = {relay agent},
+   description = {Foor \acs{BOOTP} and \acs{DHCP}, a device -- usually a router -- that can help send local requests to remote servers.   }
+}
+
+\newglossaryentry{root serveR}{
+   name = {root server},
+   description = {
+      In \acs{DNS}, a server whose zone consists of the whole tree.
+      A root server usually does not store any information about domains but delegates its authority to other servers, keeping references to those servers.
+   }
+}
+\newglossaryentry{RTT-gls}{
+   name = {\acf{RTT}},
+   sort = {round-trip time},
+   description = {The time required for a packet to travel from the source to the destination and back again to the source.}
+}
+\newglossaryentry{router}{
+   name = {router},
+   description = {
+      An internetworking device which operates mainly at the third layer of the \acs{OSI} model (network layer).
+      A router connects two or more networks together and forwards packets from one network to another.
+   }
+}
+
+\newglossaryentry{routing table}{
+   name = {routing table},
+   description = {
+      A table containing information a router needs to forward packets to other networks.
+      The information may include the network address, the cost, the address of the next-hop router, and so on.
+   }
+}
+
+\newglossaryentry{subnet mask}{
+   name = {subnet mask},
+   description = {The mask used to separate the network number from the host identifier.}
+}
+
+\newglossaryentry{switch}{
+   name = {switch},
+   description = {
+      A device connecting multiple communication lines together.
+      A switch operates on the second layer of the \acs{OSI} model (the data link layer) but can also operate on higher layers.
+   }
+}
+
+\newglossaryentry{switched Ethernet}{
+   name = {switched Ethernet},
+   description = {An Ethernet in which a switch, replacing the hub, can direct a transmission to its destination.}
+}
+
+\newglossaryentry{three-way handshake}{
+   name = {three-way handshake},
+   description = {A sequence of events for connection establishment consisting of a synchronisation packet sent by the first host, an acknowledgement from the second host which also includes its own syncrhonisation information, and finally the acknowledgment from the first host.}
+}
+
+\newglossaryentry{throughput}{
+   name = {throughtput},
+   description = {The number of bits that can pass through a point in one second.}
+}
+
+\newglossaryentry{TTL-gls}{
+   name = {\acf{TTL}},
+   sort = {time-to-live},
+   description = {The lifetime of a packet.}
+}
+
+\newglossaryentry{unicast routing}{
+   name = {unicast routing},
+   description = {The sending of a packet to just one destination.}
+}
+
+\newglossaryentry{unidirectional antenna}{
+   name = {unidirectional antenna},
+   description = {An antenna that sends and receives signals in one direction.}
+}
+
+\newglossaryentry{VLAN-gls}{
+   name = {\acf{VLAN}},
+   sort = {virtual local area network},
+   description = {A technology that divides a physical \acs{LAN} into virtual workgroups through software methods.}
+}
+\newglossaryentry{VPN-gls}{
+   name = {\acf{VPN}},
+   sort = {virtual private network},
+   description = {A technology that creates a network that is physically public, but virtually private.}
+}
+
+\newglossaryentry{well-known port number}{
+   name = {well-known port number},
+   description = {A port number that identifies a process on the server.}
+}
+
+\newglossaryentry{WAN-gls}{
+   name = {\acf{WAN}},
+   sort = {wide-area network},
+   description = {A network that uses a technology that can span a large geographical distance.}
+}
+
+\newglossaryentry{zone}{
+   name = {zone},
+   description = {In \acs{DNS}, what a server is responsible for or has authority over.}
 }
