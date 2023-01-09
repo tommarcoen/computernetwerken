@@ -1,5 +1,7 @@
 % Most entries are taken from the book "Data communications and networking"
 % by Behrouz A. Forouzan; published by McGraw-Hill in 2007.
+% or Computer networks by Larry L. Peterson and Bruce S. Davie;
+% published by Morgan Kaufmann in 2022.
 \newglossaryentry{10BASE2}{
    name = {\abbr{10BASE2}},
    description = {The thin coaxial cable implementation of standard Ethernet.}
@@ -35,6 +37,16 @@
    description = {The four-wire \acs{UTP} implementation of Gigabit Ethernet.}
 }
 
+\newglossaryentry{802.3}{
+   name = {802.3},
+   description = {\acs{IEEE} Ethernet standard}
+}
+
+\newglossaryentry{802.11}{
+   name = {802.11},
+   description = {\acs{IEEE} wireless network standard}
+}
+
 \newglossaryentry{AP-gls}{
    name = {\acf{AP}},
    description = {A central base station in a \acf{BSS}.}
@@ -52,7 +64,16 @@
 
 \newglossaryentry{ARPA-gls}{
    name = {\acf{ARPA}},
-   description = {The government agency that funded the ARPAnet.}
+   description = {
+      One of the research and development organisations within the Department of Defense.
+      Responsible for funding the ARPAnet as well as the research that led to the development of the \acs{TCP}/\acs{IP} internet.
+      Also known as \abbr{DARPA}, the `D' standing for Defense.
+   }
+}
+
+\newglossaryentry{authentication}{
+   name = {authentication},
+   description = {Security protocol by which two suspicious parties prove to each other that they are whom they claim to be.}
 }
 
 \newglossaryentry{autonegotiation}{
@@ -76,6 +97,44 @@
 \newglossaryentry{bit}{
    name = {bit},
    description ={Binary digit. The smallest unit of data (0 or 1).}
+}
+
+\newglossaryentry{certificate}{
+   name = {certificate},
+   description = {
+      A document digitally signed by one entity that contains the name and public key of another entity.
+      Used to distribute public keys.
+   }
+}
+
+\newglossaryentry{checksum}{
+   name = {checksum},
+   description = {
+      Typically a ones' complement sum over some or all of the bytes of a packet, computed and appended to the packet by the sender.
+      The receiver recomputes the checksum and compares it to the one carried in the message.
+      Checksums are used to detect errors in a packet and may also be used to verify that the packet has been delivered to the correct host.
+      The term \emph{checksum} is also sometimes (imprecisely) used to refer generically to error-detecting codes.
+   }
+}
+
+\newglossaryentry{CIDR-gls}{
+   name = {\acf{CIDR}},
+   description = {
+      A method of aggregating routes that treats a block of contiguous class~c \acs{IP} addresses as a single network.
+   }
+}
+
+\newglossaryentry{client}{
+   name = {client},
+   description = {The requestor of a service in a distributed system.}
+}
+
+\newglossaryentry{CDN-gls}{
+   name = {\acf{CDN}},
+   description = {
+      A collection of surrogate web servers, distributed across the internet, that respond to web \acs{HTTP} requests in place of the server.
+      The goal of widely distributing the surrogate servers is to have a surrogate close the the client, making it possible to respond to requests more quickly.
+   }
 }
 
 \newglossaryentry{PXE-gls}{
