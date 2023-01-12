@@ -131,6 +131,96 @@
 %   description = {The \acf{IP} data unit.}
 %}
 
+\newglossaryentry{default gateway}{
+   name = {default gateway},
+   description = {The router used for default routing.}
+}
+
+\newglossaryentry{default routing}{
+   name = {default routing},
+   description = {A routing method in which a router (the default gateway) is assigned to receive all packets with no match in the routing table.}
+}
+
+\newglossaryentry{distance-vector routing}{
+   name = {distance-vector routing},
+   description = {A routing method in which each router sends its neighbour a list of networks it can reach and the distance to that network.}
+}
+
+\newglossaryentry{dotted-decimal notation}{
+   name = {dotted-decimal notation},
+   description = {A notation devised to make the \acs{IP} address easier to read; each byte is converted to its decimal equivalent and then set off from its neighbour by a dot.}
+}
+
+\newglossaryentry{dynamic routing}{
+   name = {dynamic routing},
+   description = {Routing in which the routing table entries are updated automatically by the routing protocol.}
+}
+
+\newglossaryentry{encapsulation}{
+   name = {encapsulation},
+   description = {The technique in which a data unit from one protocol is placed within the data field portion of the data unit of another protocol.}
+}
+
+\newglossaryentry{end system}{
+   name = {end system},
+   description = {A sender or receiver of data.}
+}
+
+\newglossaryentry{ephemeral port number}{
+   name = {ephemeral port number},
+   description = {
+      A communications endpoint (port) of a transport-layer protocol of the internet protocol suite that is used for only a short period of time for the duration of a communication session.
+      Such short-lived ports are allocated automatically within a predefined range of port numbers by the \acs{IP} stack of an operating system (\vref{tab:ephemeral-ports}).
+      Ephemeral port numbers are typically used for the client-end of a client--server communication.
+   }
+}
+
+\newglossaryentry{extended service set}{
+   name = {extended service set},
+   description = {A wireless \acs{LAN} service, created by two or more \acf{AP}, which appear to users as a single, seamless network.}
+}
+
+\newglossaryentry{extranet}{
+   name = {extranet},
+   description = {A private network that allows authorised access from outside users.}
+}
+
+\newglossaryentry{Fast Ethernet}{
+   name = {Fast Ethernet},
+   description = {Ethernet with a data rate of \SI{100}{\mega\bit\per\second}.}
+}
+
+\newglossaryentry{fast retransmission}{
+   name = {fast restransmission},
+   description = {Retransmission of a segment in \acs{TCP} when three acknowledgments have been received that imply the loss or corruption of that segment.}
+}
+
+\newglossaryentry{fibre-optic cable}{
+   name = {fibre-optic cable},
+   description = {
+      A high-bandwidth transmission medium that carries data signals in the form of pulses of light.
+      It consists of a thin cylinder of glass or plastic, called the core, surrounded by a concentric layer of glass or plastic called the cladding.
+   }
+}
+
+\newglossaryentry{firewall}{
+   name = {firewall},
+   description = {A device (usually a router) installed between the internal network of an organisation and the rest of the internet to provide security.}
+}
+
+\newglossaryentry{frame}{
+   name = {frame},
+   description = {A group of bits representing a block of data.}
+}
+
+\newglossaryentry{frequency}{
+   name = {frequency},
+   description = {
+      The number of cycles per second of a periodic signal.
+      The frequency is measured in hertz (Hz) which is equal to one event per second.
+   }
+}
+
 \newglossaryentry{full-duplex mode}{
    name = {full-duplex mode},
    description = {A transmission mode in which both parties can communicate simultaneously.}
@@ -141,8 +231,18 @@
    description = {A different name for a router.}
 }
 
+\newglossaryentry{GHz}{
+   name = {GHz},
+   description = {gigahertz; \SI{1}{\giga\hertz} = \SI{1e9}{\hertz} or one billion cycles per second.}
+}
+
+\newglossaryentry{Gigabit Ethernet}{
+   name = {Gigabit Ethernet},
+   description = {Ethernet with a data rate of \SI{1000}{\mega\bit\per\second}.}
+}
+
 \newglossaryentry{half-duplex mode}{
-   name = {half-duplex mode}
+   name = {half-duplex mode},
    description  = {
       A transmission mode in which communication can be two-way but not at the same time.
    }
@@ -150,6 +250,14 @@
 \newglossaryentry{host}{
    name = {host},
    description = {A station or node on a network.}
+}
+
+\newglossaryentry{Hz}{
+   name = {Hz},
+   description = {
+      hertz; the unit of frequency in the International System of Units (\acs{SI}).
+      See also \emph{frequency}.
+   }
 }
 
 \newglossaryentry{IPsec}{
@@ -162,9 +270,19 @@
    description = {The physical communication pathway that transfers data from one device to another.}
 }
 
+\newglossaryentry{link-state routing}{
+   name = {link-state routing},
+   description = {A routing method in which each router shares its knowledge of changes in its neighbourhood with all other routers.}
+}
+
 \newglossaryentry{logical address}{
    name = {logical address},
    description = {An address defined in the network layer.}
+}
+
+\newglossaryentry{MHz}{
+   name = {MHz},
+   description = {megahertz; \SI{1}{\mega\hertz} = \SI{1e6}{\hertz} or one million cycles per second.}
 }
 
 \newglossaryentry{MTA-gls2}{
@@ -182,7 +300,6 @@
    name = {\acf{MTA}},
    sort = {message transfer agent},
    description = {An \acs{SMTP} component that transfers the message across the internet.}
-   }
 }
 
 \newglossaryentry{metric}{
@@ -268,7 +385,7 @@
 
 \newglossaryentry{PXE-gls}{
    name={preboot execution environment},
-   description={The \acl{PXE} specification describes a standardized client–server environment that boots a software assembly, retrieved from a network, on \acs{PXE}-enabled clients.
+   description={The \acl{PXE} specification describes a standardised client–server environment that boots a software assembly, retrieved from a network, on \acs{PXE}-enabled clients.
    On the client side it requires only a \acs{PXE}-capable \acf{NIC}, and uses a small set of industry-standard network protocols such as \acs{DHCP} and \acs{TFTP}.}
 }
 
