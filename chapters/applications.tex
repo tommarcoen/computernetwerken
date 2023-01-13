@@ -137,7 +137,7 @@ This can cause problems if .local includes hosts that do not implement \acs{mDNS
 Resolving such conflicts requires network-configuration changes that \acs{mDNS} was designed to avoid.
 }
 
-\Section{E-mail}
+\Section{Email}
 
 \mode<article>{
 Email operates across computer networks, primarily the internet, and also local-area networks.
@@ -160,7 +160,7 @@ User-level email clients typically use \acs{SMTP} only for sending messages to a
 The \acl{POP3} provides access via an \acs{IP} network for a user client application to a mailbox (\emph{maildrop}) maintained on a mail server.
 The protocol supports download and delete operations for messages.
 \acs{POP3} clients connect, retrieve all messages, store them on the client computer, and finally delete them from the server.
-This design of \acs{POP3} and its procedures was driven by the need of users having only temporary internet connections, such as dial-up access, allowing these users to retrieve e-mail when connected, and subsequently to view and manipulate the retrieved messages when offline.
+This design of \acs{POP3} and its procedures was driven by the need of users having only temporary internet connections, such as dial-up access, allowing these users to retrieve email when connected, and subsequently to view and manipulate the retrieved messages when offline.
 
 A \acs{POP3} server listens on well-known port number~110 for service requests.
 Encrypted communication for \acs{POP3} is either requested after protocol initiation, using the \abbr{STLS} command, if supported, or by \acs{POP3S}, which connects to the server using \acs{TLS} or \acs{SSL} on well-known \acs{TCP} port number~995.
