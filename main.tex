@@ -34,7 +34,6 @@
 \usepackage{upgreek}
 \usepackage{amsmath}
 
-
 % TikZ
 \usepackage{tikz}
 \usepackage{pgf-pie}
@@ -92,10 +91,10 @@
 %\chapter{eve-ng}
 
 \mode<article>{
+\glsaddall[type=main]
+\setglossarystyle{index}
 \printglossary
 \nocite{*}
-\glsaddall[type=main]
-\setglossarystyle{indexgroup}
 \printbibliography
 %\printindex
 }
