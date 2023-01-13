@@ -68,11 +68,15 @@ The basic function of \acs{STP} is to prevent bridge loops and the broadcast rad
 \acs{STP} also allows a network design to include backup links providing fault tolerance if an active link fails.
 }
 
+\Paragraph{Flavours of \acs{STP}}
+
 \Paragraph{\acf{LAG}}
 \mode<article>{
 Link aggregation is the combining (aggregating) of multiple network connections in parallel by any of several methods, in order to increase throughput beyond what a single connection could sustain, to provide redundancy in case one of the links should fail, or both.
 A \ac{LAG} is the combined collection of physical ports.
-Other umbrella terms used to describe the concept include trunking, bundling, bonding, channeling or teaming.
+Other umbrella terms used to describe the concept include trunking%
+   \footnote{Not to be confused with \acs{VLAN} trunking which is something entirely different that link aggregation trunking.}%
+, bundling, bonding, channeling or teaming.
 }
 
 \Paragraph{managed switch}
