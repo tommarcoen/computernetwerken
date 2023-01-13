@@ -1,5 +1,7 @@
 % Most entries are taken from the book "Data communications and networking"
 % by Behrouz A. Forouzan; published by McGraw-Hill in 2007.
+% or Computer networks by Larry L. Peterson and Bruce S. Davie;
+% published by Morgan Kaufmann in 2022.
 \newglossaryentry{10BASE2}{
    name = {\abbr{10BASE2}},
    sort = {0010BASE2},
@@ -42,6 +44,18 @@
    description = {The four-wire \acs{UTP} implementation of Gigabit Ethernet.}
 }
 
+\newglossaryentry{802.3}{
+   name = {802.3},
+   sort = {0802.03},
+   description = {\acs{IEEE} Ethernet standard}
+}
+
+\newglossaryentry{802.11}{
+   name = {802.11},
+   sort = {0802.11},
+   description = {\acs{IEEE} wireless network standard}
+}
+
 \newglossaryentry{AP-gls}{
    name = {\acf{AP}},
    sort = {access point},
@@ -55,19 +69,34 @@
 
 \newglossaryentry{ARP-gls}{
    name = {\acf{ARP}},
-   sort = {ARP},
+   sort = {Address Resolution Protocol},
    description = {A protocol for obtaining the physical (\acs{MAC}) address of a node when the network (\acs{IP}) address is known.}
 }
 
 \newglossaryentry{ARPA-gls}{
    name = {\acf{ARPA}},
-   sort = {ARPA},
-   description = {The government agency that funded the ARPAnet.}
+   sort = {advanced research project agency},
+   description = {
+      One of the research and development organisations within the Department of Defense.
+      Responsible for funding the ARPAnet as well as the research that led to the development of the \acs{TCP}/\acs{IP} internet.
+      Also known as \abbr{DARPA}, the `D' standing for Defense.
+   }
+}
+
+\newglossaryentry{authentication}{
+   name = {authentication},
+   description = {Security protocol by which two suspicious parties prove to each other that they are whom they claim to be.}
 }
 
 \newglossaryentry{autonegotiation}{
    name = {autonegotiation},
    description = {A Fast Ethernet feature that allows two devices to negotiate the mode or data rate.}
+}
+
+\newglossaryentry{AS-gls}{
+   name = {\acf{AS}},
+   sort = {autonomous system},
+   description = {A group of networks and routers, subject to a common authority and using the same intradomain routing protocol.}
 }
 
 \newglossaryentry{bandwidth}{
@@ -126,10 +155,89 @@
    description = {The storing of information in small, fast memory.}
 }
 
-%\newglossaryentry{datagram}{
-%   name = {datagram},
-%   description = {The \acf{IP} data unit.}
-%}
+\newglossaryentry{certificate}{
+   name = {certificate},
+   description = {
+      A document digitally signed by one entity that contains the name and public key of another entity.
+      Used to distribute public keys.
+   }
+}
+
+\newglossaryentry{checksum}{
+   name = {checksum},
+   description = {
+      Typically a ones' complement sum over some or all of the bytes of a packet, computed and appended to the packet by the sender.
+      The receiver recomputes the checksum and compares it to the one carried in the message.
+      Checksums are used to detect errors in a packet and may also be used to verify that the packet has been delivered to the correct host.
+      The term \emph{checksum} is also sometimes (imprecisely) used to refer generically to error-detecting codes.
+   }
+}
+
+\newglossaryentry{CIDR-gls}{
+   name = {\acf{CIDR}},
+   sort = {classless interdomain routing},
+   description = {
+      A method of aggregating routes that treats a block of contiguous class~c \acs{IP} addresses as a single network.
+   }
+}
+
+\newglossaryentry{client}{
+   name = {client},
+   description = {The requestor of a service in a distributed system.}
+}
+
+\newglossaryentry{CDN-gls}{
+   name = {\acf{CDN}},
+   sort = {content delivery network},
+   description = {
+      A collection of surrogate web servers, distributed across the internet, that respond to web \acs{HTTP} requests in place of the server.
+      The goal of widely distributing the surrogate servers is to have a surrogate close the the client, making it possible to respond to requests more quickly.
+   }
+}
+
+\newglossaryentry{datagram}{
+   name = {datagram},
+   description = {
+      The basic transmission unit in the internet architecture.
+      A datagram contains all of the inforamtion needed to deliver it to its destination, analogous to a letter in the \abbr{US} postal system.
+      Datagram networks are connectionless.
+   }
+}
+
+\newglossaryentry{distance vector}{
+   name = {distance vector},
+   description = {
+      A lowest-cost-path algorithm used in routing.
+      Each node advertises reachability information and associated costs to its immediate neighbours and uses the updates it recevies to construct its forwarding table.
+      The routing protocol \acs{RIP} uses a distance-vector algorithm.
+      Contrast with \gls{link state}.
+   }
+}
+
+\newglossaryentry{domain}{
+   name = {domain},
+   description = {
+      Can refer either to a context in the hierarchical \acs{DNS} name space (e.g., the `edu' domain) or to a region of the internet that is treated as a single entity for the purpose of hierarchical routing.
+      The latter is equivalent to \gls{AS-gls}.
+   }
+}
+
+\newglossaryentry{DNS-gls}{
+   name = {\acf{DNS}},
+   sort = {domain name system},
+   description = {
+      The distributed naming system of the internet, used to resolve host names into \acs{IP} addresses.
+      The \acs{DNS} is implemented by a hierarchy of name servers.
+   }
+}
+
+\newglossaryentry{encapsulation}{
+   name = {encapsulation},
+   description = {
+      The operation, performed by a lower-level protocol, of attaching a protocol-specific header and/or trailer to a message passed down by a higher-level protocol.
+      As a message travels down the protocol stack, it gathers a sequence of headers, of which the outermost corresponds to the protocol at the bottom of the stack.
+   }
+}
 
 \newglossaryentry{default gateway}{
    name = {default gateway},
@@ -249,7 +357,7 @@
 }
 \newglossaryentry{host}{
    name = {host},
-   description = {A station or node on a network.}
+   description = {A computer attached to one or more networks that supports users and runs application programs.}
 }
 
 \newglossaryentry{Hz}{
@@ -270,9 +378,15 @@
    description = {The physical communication pathway that transfers data from one device to another.}
 }
 
-\newglossaryentry{link-state routing}{
-   name = {link-state routing},
-   description = {A routing method in which each router shares its knowledge of changes in its neighbourhood with all other routers.}
+\newglossaryentry{link state}{
+   name = {link state},
+   description = {
+      A lowest-cost-path algorithm used in routing.
+      Information on directly connected neighbours and current link costs are flooded to all routers;
+      each router uses this information to build a view of the network on which to base forwarding decisions.
+      The \acs{OSPF} routing protocol uses a link-state algorithm.
+      Contrast with \gls{distance vector}.
+   }
 }
 
 \newglossaryentry{logical address}{
@@ -334,7 +448,10 @@
 
 \newglossaryentry{node}{
    name = {node},
-   description = {An addressable communication device (e.g.~a computer or router) on a network.}
+   description = {
+      A generic term used for individual computers that make up a network.
+      Nodes include general-purpose computers, switches, and routers.
+   }
 }
 
 \newglossaryentry{omnidirectional antenna}{
@@ -375,7 +492,7 @@
 
 \newglossaryentry{port number}{
    name = {port number},
-   description = {See \emph{port address}.}
+   description = {See \gls{port address}.}
 }
 
 \newglossaryentry{prefix}{
@@ -399,7 +516,7 @@
    description = {Foor \acs{BOOTP} and \acs{DHCP}, a device -- usually a router -- that can help send local requests to remote servers.   }
 }
 
-\newglossaryentry{root serveR}{
+\newglossaryentry{root server}{
    name = {root server},
    description = {
       In \acs{DNS}, a server whose zone consists of the whole tree.
