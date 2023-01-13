@@ -3,31 +3,41 @@
 
 \Paragraph{\acs{MAC} addresses}
 \mode<article>{
-A \ac{MAC} address is a unique identifier assigned to a \ac{NIC} for use as a network address in communications within a network segment.
-\ac{MAC} addresses are primarily assigned by device manufacturers, and are therefore often referred to as the \emph{burned-in address}, or as a \emph{hardware address}, or \emph{physical address}.
+A \ac{MAC} address is a unique identifier assigned to a \ac{NIC} for use as an address in communications within a network segment.
+\ac{MAC} addresses are primarily assigned by device manufacturers and stored in read-only memory.
+As such they are often referred to as the \emph{burned-in address}, or as a \emph{hardware address}, or \emph{physical address}.
+Nowadays it is very often possible to change the \acs{MAC} adddress used on an interface.
 }
 
 \Paragraph{48 bits}
 \mode<article>{
 A \ac{MAC} address consists of 48~bits, most often displayed as six groups of two hexadecimal digits, separated by hyphens or colons (e.g.~02:\-00:\-33:\-aa:\-bb:\-cc).
-Something the address is displayed as three groups of four hexadecimal digits, separated by dots, e.g. 0200.33aa.bbcc.
+Something the address is displayed as three groups of four hexadecimal digits, separated by dots, e.g. 0200.33aa.bbcc.%
+   \footnote{Note that hexadecimal numbers are not case-sensitive so 4F is equal to 4f.}
 }
 
 \Paragraph{\acf{OUI}}
 \mode<article>{
 The first 24 bits of a \ac{MAC} address identify the vendor or manufacturer of the network card.
-\acp{OUI} are purchased from the \acs{IEEE} registration authority by the vendor.
-They are used to uniquely identify a particular piece of equipment through derived identifiers such as the \ac{MAC} addresses.
+\Acp{OUI} are purchased from the \acs{IEEE} registration authority by the vendor.
+They are used to make sure that -- in theory at least -- every \acs{MAC} address is unique.
 }
 
 \Paragraph{1522 bytes}
 \mode<article>{
-Ethernet frames have a maximum size of 1522~bytes and a minimum frame size of 64~bytes.}
+Ethernet frames have a maximum size of 1522~bytes and a minimum frame size of 64~bytes.
+Twenty-two bytes are used by the Ethernet header (18~bytes) and trailer (4~bytes) so that the encapsulated \acs{IP} packet has a maximum size of 1500~bytes.
+}
+
+\Paragraph{Ethernet header}
+
+\Paragraph{Ethernet trailer}
 
 \Paragraph{jumbo frames} 
 \mode<article>{
 Some implementations of Gigabit Ethernet and other higher-speed variants of Ethernet support larger frames, known as jumbo frames.
 These frames can be up to 9022 bytes in size.
+Jumbo frames are mainly used in data centres as the use of these larger frames require all intermediate devices to support them which is impossible to require from devices on the internet.
 }
 
 
@@ -40,10 +50,10 @@ An Ethernet hub has multiple \ac{IO} ports, in which a signal introduced at the 
 A hub works at the physical layer (layer 1) of the \ac{OSI} model.
 }
 
-\Paragraph{MAC-address table}
+\Paragraph{\acs{MAC}-address table}
 \mode<article>{
-A network switch learns the identities of connected devices and then only forwards data to the port connected to the device to which it is addressed.
-These learnt MAC addresses are stored in the \ac{MAC}-address table.
+A network switch learns the identities of connected devices from incoming frames and then only forwards data to the port connected to the device to which it is addressed.
+These learnt \acs{MAC} addresses are stored in the \ac{MAC}-address table.
 }
 
 \Paragraph{time to live?}
