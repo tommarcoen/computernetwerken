@@ -3,7 +3,7 @@
 
 \Paragraph{\acs{MAC} addresses}
 \mode<article>{
-A \ac{MAC} address is a unique identifier assigned to a \ac{NIC} for use as an address in communications within a network segment.
+A \ac{MAC} address is a unique identifier that is assigned to a \ac{NIC} for use as an address in communication within a network segment.
 \ac{MAC} addresses are primarily assigned by device manufacturers and stored in read-only memory.
 As such they are often referred to as the \emph{burned-in address}, or as a \emph{hardware address}, or \emph{physical address}.
 Nowadays it is very often possible to change the \acs{MAC} adddress used on an interface.
@@ -13,7 +13,7 @@ Nowadays it is very often possible to change the \acs{MAC} adddress used on an i
 \mode<article>{
 A \ac{MAC} address consists of 48~bits, most often displayed as six groups of two hexadecimal digits, separated by hyphens or colons (e.g.~02:\-00:\-33:\-aa:\-bb:\-cc).
 Something the address is displayed as three groups of four hexadecimal digits, separated by dots, e.g. 0200.33aa.bbcc.%
-   \footnote{Note that hexadecimal numbers are not case-sensitive so 4F is equal to 4f.}
+   \footnote{It is important to note that hexadecimal numbers are not case-sensitive, meaning that the value of 4F is equivalent to that of 4f.}
 }
 
 \Paragraph{\acf{OUI}}
@@ -84,54 +84,72 @@ Other umbrella terms used to describe the concept include trunking%
 Managed switches have one or more methods to modify the operation of the switch.
 Common management methods include: a \ac{CLI} accessed via serial console, Telnet or \ac{SSH} (see \vref{chap:applications}), an embedded \ac{SNMP} agent allowing management from a remote console or management station, or a web interface for management from a web browser.
 Examples of configuration changes that one can do from a managed switch include: enabling features such as \ac{STP} or port mirroring, setting port bandwidth, creating or modifying \acp{VLAN}, etc.
-\begin{description}
-\item[\ac{VLAN}]
+
+We will take a quick look at the following features of managed switches:
+\begin{inlinelist}
+\item \aclp{VLAN},
+\item port security and \abbr{802.1X},
+\item \acs{DHCP} snooping, and
+\item \acl{DAI}.
+\end{inlinelist}
+}
+
+\Paragraph{\acs{VLAN}}
+\mode<article>{
    A \acf{VLAN} is any broadcast domain that is partitioned and isolated in a computer network at the data link layer.
    \acp{VLAN} work by applying tags to network frames and handling these tags in networking systems -- creating the appearance and functionality of network traffic that is physically on a single network but acts as if it is split between separate networks.
    In this way, \acp{VLAN} can keep network applications separate despite being connected to the same physical network, and without requiring multiple sets of cabling and networking devices to be deployed.
-\item[port security]
+}
+
+\Paragraph{port security}
+\mode<article>{
    \ac{MAC} \emph{filtering} is a security access control method whereby the \acs{MAC} address assigned to each network card is used to determine access to the network.
    \ac{MAC} filtering on a network permits and denies network access to specific devices through the use of blacklists and whitelists.
    Many devices that support \acs{MAC} filtering do so on a device basis.
    Whitelisted \ac{MAC} addresses are allowed through any port on the device and blacklisted \acs{MAC} addresses are blocked on all ports.
    Other devices, such as Cisco Catalyst switches, support \acs{MAC} filtering on a port-by-port basis.
    This is referred to as port security.
-\item[802.1X]
-   \acs{IEEE} \abbr{802.1X} is an \acs{IEEE} standard for \ac{PNAC}.
-   It provides an authentication mechanism to devices wishing to attach to a \ac{LAN} or \ac{WAN}.
-   
-   \abbr{802.1X} authentication involves three parties: a supplicant, an authenticator, and an authentication server.
-   The supplicant is a client device (such as a laptop) that wishes to attach to the \ac{LAN} or \ac{WAN}.
-   The authenticator is a network device that provides a data link between the client and the network and can allow or block network traffic between the two, such as an Ethernet switch or wireless access point; and the authentication server is typically a trusted server that can receive and respond to requests for network access, and can tell the authenticator if the connection is to be allowed, and various settings that should apply to that client's connection or setting.
-   Authentication servers typically run software supporting the \ac{RADIUS} and \ac{EAP} protocols.
-\item[\ac{DHCP} snooping]
-   \ac{DHCP} snooping is a series of techniques applied to improve the security of a \ac{DHCP} infrastructure.
-   \ac{DHCP} servers allocate \ac{IP} addresses to clients on a \ac{LAN}.
-   \ac{DHCP} snooping can be configured on \ac{LAN} switches to exclude rogue \ac{DHCP} servers and remove malicious or malformed \ac{DHCP} traffic.
-   In addition, information on hosts which have successfully completed a \ac{DHCP} transaction is accrued in a database of bindings which may then be used by other security or accounting features.
-   
-   The \ac{DHCP} snooping feature performs the following activities:
-   \begin{itemize}
-   \item validates \acs{DHCP} messages received from untrusted sources and filters out invalid messages.
-   \item rate-limits \acs{DHCP} traffic both from trusted and untrusted sources.
-   \item builds and maintains the \acs{DHCP} snooping database, which contains information about untrusted hosts with leased \acs{IP} addresses.
-   \item Utilises the \acs{DHCP} snooping binding database to validate subsequent requests from untrusted hosts.
-   \end{itemize}
-\item[\acf{DAI}]
-   \acl{DAI} is a security feature that validates \ac{ARP} packets in a network.
-   \acs{DAI} allows a network administrator to intercept, log, and discard \ac{ARP} packets with invalid \acs{MAC}-address-to-\acs{IP}-address bindings.
-   This capability protects the network from certain `man-in-the-middle' attacks.
-\end{description}
 }
-\slide{\acs{VLAN}}
-\slide{port security}
-\slide{\abbr{802.1X}}
-\slide{\acs{DHCP} snooping}
+
+\Paragraph{\abbr{802.1X}}
+\mode<article>{
+\acs{IEEE} \abbr{802.1X} is an \acs{IEEE} standard for \ac{PNAC}.
+It provides an authentication mechanism to devices wishing to attach to a \ac{LAN} or \ac{WAN}.
+
+\abbr{802.1X} authentication involves three parties: a supplicant, an authenticator, and an authentication server.
+The supplicant is a client device (such as a laptop) that wishes to attach to the \ac{LAN} or \ac{WAN}.
+The authenticator is a network device that provides a data link between the client and the network and can allow or block network traffic between the two, such as an Ethernet switch or wireless access point.
+The authentication server is typically a trusted server that can receive and respond to requests for network access, and can tell the authenticator whether the connection is to be allowed, and various settings that should apply to that client's connection.
+Authentication servers typically run software supporting the \ac{RADIUS} and \ac{EAP} protocols.
+}
+
+\Paragraph{\acs{DHCP} snooping}
+\mode<article>{
+\ac{DHCP} snooping is a series of techniques applied to improve the security of a \ac{DHCP} infrastructure.
+\ac{DHCP} snooping can be configured on \ac{LAN} switches to exclude rogue \ac{DHCP} servers and remove malicious or malformed \ac{DHCP} traffic.
+In addition, information on hosts which have successfully completed a \ac{DHCP} transaction is accrued in a database of bindings which may then be used by other security or accounting features, such as \acl{DAI}.
+
+The \ac{DHCP} snooping feature performs the following activities:
+\begin{itemize}
+\item it validates \acs{DHCP} messages received from untrusted sources and filters out invalid messages.
+\item it rate-limits \acs{DHCP} traffic both from trusted and untrusted sources.
+\item it builds and maintains the \acs{DHCP} snooping database, which contains information about untrusted hosts with leased \acs{IP} addresses.
+\item it utilises the \acs{DHCP} snooping binding database to validate subsequent requests from untrusted hosts.
+\end{itemize}
+}
+
+\Paragraph{\acl{DAI}}
+\mode<article>{
+\Acf{DAI} is a security feature that validates \acs{ARP} packets in a network.
+\Acl{DAI} allows a network administrator to intercept, log, and discard \ac{ARP} packets with invalid \acs{MAC}-address-to-\acs{IP}-address bindings.
+This capability protects the network from certain man-in-the-middle attacks.
+}
 \slide{\acf{DAI}}
 
 \Paragraph{layer 3 switch}
 \mode<article>{
-Engineers learnt to build larger and more complex chips allowing them to introduce more complex logic into the switches.
-Layer~3 switches can route packets in hardware based on \acs{IP} address as if they were routers.
-It is now often more convenient to put a layer 3 switch into your networking combining the functionality of both the router and the switch.
+As engineers continue to advance in their field, they have developed the ability to create larger and more complex chips.
+This advancement allows for the integration of more complex logic into network switches.
+Layer-3 switches, in particular, have the capability to route packets in hardware based on \acs{IP} addresses, effectively functioning as routers.
+As a result, it has become increasingly convenient to implement a layer-3 switch into network infrastructure, as it combines the functionality of both routers and traditional switches.
 }

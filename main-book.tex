@@ -13,7 +13,9 @@
 
 % Lists
 \usepackage{multicol}
-\usepackage{enumitem}
+\usepackage[inline]{enumitem}
+\newlist{inlinelist}{enumerate*}{1}
+\setlist[inlinelist]{label=(\roman*)}
 \firmlists
 \renewcommand*{\descriptionlabel}[1]{\hspace\labelsep\itshape #1 --}
 
