@@ -231,14 +231,6 @@
    }
 }
 
-\newglossaryentry{encapsulation}{
-   name = {encapsulation},
-   description = {
-      The operation, performed by a lower-level protocol, of attaching a protocol-specific header and/or trailer to a message passed down by a higher-level protocol.
-      As a message travels down the protocol stack, it gathers a sequence of headers, of which the outermost corresponds to the protocol at the bottom of the stack.
-   }
-}
-
 \newglossaryentry{default gateway}{
    name = {default gateway},
    description = {The router used for default routing.}
@@ -266,7 +258,10 @@
 
 \newglossaryentry{encapsulation}{
    name = {encapsulation},
-   description = {The technique in which a data unit from one protocol is placed within the data field portion of the data unit of another protocol.}
+   description = {
+      The operation, performed by a lower-level protocol, of attaching a protocol-specific header and/or trailer to a message passed down by a higher-level protocol.
+      As a message travels down the protocol stack, it gathers a sequence of headers, of which the outermost corresponds to the protocol at the bottom of the stack.
+   }
 }
 
 \newglossaryentry{end system}{
