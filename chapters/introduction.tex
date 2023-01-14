@@ -273,26 +273,54 @@ Unicast is the dominant form of message delivery on the internet.
 
 \Paragraph{unicast}
 \mode<article>{
-Unicast is a one-to-one transmission from one point in the network to another point; that is, one sender and one receiver, each identified by a network address.
+Unicast is a one-to-one transmission from one point in the network to another point (\cref{fig:unicast}); that is, one sender and one receiver, each identified by a network address.
+
+\begin{figure}
+\begin{minipage}{.4\textwidth}
+\includegraphics[width=\textwidth]{images/unicast.png}
+\caption{Unicast routing}
+\label{fig:unicast}
+\end{minipage}
+\hfill
+\begin{minipage}{.4\textwidth}
+\includegraphics[width=\textwidth]{images/broadcast.png}
+\caption{Broadcast routing}
+\label{fig:broadcast}
+\end{minipage}
+\end{figure}
 }
 
 \Paragraph{broadcast}
 \mode<article>{
-Broadcasting is a method of transferring a message to all recipients simultaneously.
+Broadcasting is a method of transferring a message to all recipients simultaneously (\cref{fig:broadcast}).
 Broadcasting can be performed as a high-level operation in a program, or it may be a low-level networking operation, for example broadcasting on Ethernet.
 }
 
 \Paragraph{multicast}
 \mode<article>{
-Multicast is group communication where data transmission is addressed to a group of destination computers simultaneously.
+Multicast is group communication where data transmission is addressed to a group of destination computers simultaneously (\cref{fig:multicast}).
 Multicast can be one-to-many or many-to-many distribution.
 }
 
 \Paragraph{anycast}
 \mode<article>{
-Anycast is a network addressing and routing methodology in which a single destination IP address is shared by devices (generally servers) in multiple locations.
+Anycast is a network addressing and routing methodology in which a single destination IP address is shared by devices (generally servers) in multiple locations (\cref{fig:anycast}).
 Routers direct packets addressed to this destination to the location nearest the sender, using their normal decision-making algorithms, typically the lowest number of \gls{BGP} network hops.
 Anycast routing is widely used by \acf{CDN} such as web and \acs{DNS} hosts, to bring their content closer to end users.
+
+\begin{figure}
+   \begin{minipage}{.4\textwidth}
+   \includegraphics[width=\textwidth]{images/multicast.png}
+   \caption{Multicast routing}
+   \label{fig:multicast}
+   \end{minipage}
+   \hfill
+   \begin{minipage}{.4\textwidth}
+   \includegraphics[width=\textwidth]{images/anycast.png}
+   \caption{Anycast routing}
+   \label{fig:anycast}
+   \end{minipage}
+   \end{figure}
 }
 
 \mode<article>{
