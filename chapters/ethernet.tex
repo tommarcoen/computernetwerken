@@ -32,6 +32,9 @@ Twenty-two bytes are used by the Ethernet header (18~bytes) and trailer (4~bytes
 \Paragraph{Ethernet header}
 
 \Paragraph{Ethernet trailer}
+\mode<article>{
+The frame ends with a \acf{FCS}, which is a 32-bit \acf{CRC} used to detect any in-transit corruption of data.
+}
 
 \Paragraph{jumbo frames} 
 \mode<article>{
@@ -68,7 +71,25 @@ The basic function of \acs{STP} is to prevent bridge loops and the broadcast rad
 \acs{STP} also allows a network design to include backup links providing fault tolerance if an active link fails.
 }
 
-\Paragraph{Flavours of \acs{STP}}
+\Paragraph{flavours of \acs{STP}}
+\mode<article>{
+In 2001, the \acs{IEEE} introduced \acf{RSTP} as 802.1w.
+\acs{RSTP} provides significantly faster recovery in response to network changes or failures, introducing new convergence behaviors and bridge port roles to do this.
+\acs{RSTP} was designed to be backwards-compatible with standard \acs{STP}.
+
+\acs{STP} and \acs{RSTP} do not segregate switch ports by \acs{VLAN}.
+However, in Ethernet switched environments where multiple \acsp{VLAN} exist, it is often desirable to create multiple spanning trees so that traffic on different \acsp{VLAN} uses different links.
+Before the \acs{IEEE} published an \acs{STP} standard for \acsp{VLAN}, a number of vendors who sold \acs{VLAN}-capable switches developed their own \acs{STP} versions that were \acs{VLAN} capable.
+Cisco developed, implemented and published the \acf{PVST} proprietary protocol and \acs{PVST+} which uses \abbr{802.1Q} \acs{VLAN} encapsulation.
+Both standards implement a separate spanning tree for every VLAN.
+
+The switch vendor Juniper Networks in turn developed and implemented its \acf{VSTP} to provide compatibility with Cisco's \acs{PVST}, so that the switches from both vendors can be included in one network.
+Cisco also published a proprietary version of \acf{RSTP}.
+It creates a spanning tree for each \acs{VLAN}, just like \acs{PVST}.
+Cisco refers to this as \acf{RPVST}.
+
+% TODO: add information on MST
+}
 
 \Paragraph{\acf{LAG}}
 \mode<article>{
