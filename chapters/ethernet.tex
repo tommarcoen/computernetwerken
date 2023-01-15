@@ -23,6 +23,25 @@ The first 24 bits of a \ac{MAC} address identify the vendor or manufacturer of t
 They are used to make sure that -- in theory at least -- every \acs{MAC} address is unique.
 }
 
+\mode<article>{
+\begin{extrainfo}
+This is not the complete truth about \acs{MAC} addresses as there are two special bits in the \acs{OUI}.
+The last two bits of the first byte have a special meaning.
+The right-most bit indicates a multicast (or broadcast) address when set to one.
+The left-most of those two special bits indicates a locally administered \acs{MAC} address when set to one.
+The term `locally administered' means that the administrator of the machine has manually set the \acs{MAC} address to something -- and it is thus not guaranteed to be globally unique.
+In this case, the first three bytes are not an \acl{OUI}.
+See \cref{fig:mac-format} for the complete picture of a \acs{MAC} address.
+\end{extrainfo}
+
+\begin{figure}
+\centering
+\includegraphics[width=.8\textwidth]{images/mac-address-format.png}
+\caption{The \acs{MAC} address consists of two parts with the first part having two bits with special meaning}
+\label{fig:mac-format}
+\end{figure}
+}
+
 \Paragraph{1522 bytes}
 \mode<article>{
 Ethernet frames have a maximum size of 1522~bytes and a minimum frame size of 64~bytes.
@@ -57,6 +76,10 @@ A hub works at the physical layer (layer 1) of the \ac{OSI} model.
 \mode<article>{
 A network switch learns the identities of connected devices from incoming frames and then only forwards data to the port connected to the device to which it is addressed.
 These learnt \acs{MAC} addresses are stored in the \ac{MAC}-address table.
+
+The \acs{MAC}-address table contains the interface number that the frame came in on, the learnt \acs{MAC} address, the \acs{VLAN} that the frame belongs to, and a timer.
+The timer serves to age out entries that are not used for a specific period of time.
+By default, this timeout is three-hundred seconds on a Cisco switch.
 }
 
 \Paragraph{time to live?}
@@ -122,14 +145,52 @@ We will take a quick look at the following features of managed switches:
    In this way, \acp{VLAN} can keep network applications separate despite being connected to the same physical network, and without requiring multiple sets of cabling and networking devices to be deployed.
 }
 
-\Paragraph{port security}
+\Paragraph{access port}
+\mode<article>{
+An access port is an interface that is assigned to only one \acs{VLAN}.
+Network frames sent and received on this port are not tagged with a \acs{VLAN}.
+This type of interface is used towards end hosts such as printers, laptops, and workstations as they often do not understand \abbr{802.1Q} tags.
+}
+
+
+\Paragraph{trunk port}
+\mode<article>{
+A trunk port is an interface that is assigned to more than one \acs{VLAN}.
+For the switch to be able to assign the network frame to the correct virtual network, all frames must be tagged with the correct \acs{VLAN} number.
+}
+
+\mode<article>{
+\begin{extrainfo}
+\paragraph{\abbr{802.1Q}}
+\abbr{802.1Q} adds a 32-bit field between the source \acs{MAC} address and the ethertype field of the original frame.
+Under \abbr{802.1Q}, the maximum frame size is extended from 1518~bytes to 1522~bytes.
+The minimum frame size remains 64~bytes.
+Two bytes are used for the \acf{TPID}, the other two bytes for \acf{TCI}.
+The \acs{TCI} field is further divided into \acs{PCP}, \acs{DEI}, and \acs{VID}.
+
+The \acl{TPID} is basically just the ethertype field.
+It is a 16-bit field containing the hexadecimal value of 8100 which indicates an \acs{IEEE} \abbr{802.3Q}-tagged frame.
+Receiving devices know that the next two bytes will contain \acs{VLAN} information and the two after that will contain the real ethertype value.
+
+The \acs{PCP} and \acs{DEI} bits are used for quality of service and congestion control.
+The \acl{VID} is a 12-bit field specifying the \acs{VLAN} to which the frame belongs.
+The values of 0 and 4095 (f{}f{}f in hexadecimal) are reserved.
+All other values may be used as \acs{VLAN} identifiers, allowing up to 4094~\acp{VLAN}.
+
+\paragraph{native \acs{VLAN}}
+Should a trunk port receive frames that lack an \abbr{802.3Q} tag, it is considered to belong to the \emph{native} \acs{VLAN} of that trunk port.
+The network administrator can configure which \acs{VLAN} should be considered to be the native \acs{VLAN} for each interface.
+\end{extrainfo}
+}
+
+\Paragraph{\acs{MAC} filtering}
 \mode<article>{
    \ac{MAC} \emph{filtering} is a security access control method whereby the \acs{MAC} address assigned to each network card is used to determine access to the network.
    \ac{MAC} filtering on a network permits and denies network access to specific devices through the use of blacklists and whitelists.
    Many devices that support \acs{MAC} filtering do so on a device basis.
    Whitelisted \ac{MAC} addresses are allowed through any port on the device and blacklisted \acs{MAC} addresses are blocked on all ports.
    Other devices, such as Cisco Catalyst switches, support \acs{MAC} filtering on a port-by-port basis.
-   This is referred to as port security.
+   Cisco refers to \acs{MAC} filtering as port security.
 }
 
 \Paragraph{\abbr{802.1X}}
@@ -141,7 +202,7 @@ It provides an authentication mechanism to devices wishing to attach to a \ac{LA
 The supplicant is a client device (such as a laptop) that wishes to attach to the \ac{LAN} or \ac{WAN}.
 The authenticator is a network device that provides a data link between the client and the network and can allow or block network traffic between the two, such as an Ethernet switch or wireless access point.
 The authentication server is typically a trusted server that can receive and respond to requests for network access, and can tell the authenticator whether the connection is to be allowed, and various settings that should apply to that client's connection.
-Authentication servers typically run software supporting the \ac{RADIUS} and \ac{EAP} protocols.
+Authentication servers typically run software supporting the \ac{RADIUS} protocol and \ac{EAP} framework.
 }
 
 \Paragraph{\acs{DHCP} snooping}
