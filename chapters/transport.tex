@@ -146,7 +146,7 @@ The sending host can send only up to that amount of data before it must wait for
 \begin{figure}
 \centering
 \includegraphics[width=.7\textwidth]{images/flow-control.png}
-\caption{\acs{TCP} flow control}
+\caption{\acs{TCP} flow control using a sliding window}
 \label{fig:flow-control}
 \end{figure}
 }
@@ -163,4 +163,40 @@ Coupled with timers, \acs{TCP} senders and receivers can alter the behavior of t
 This is more generally referred to as \emph{congestion control} and/or \emph{network congestion avoidance}.
 
 Modern implementations of \acs{TCP} contain four intertwined algorithms: \emph{slow start}, congestion avoidance, \emph{fast retransmit}, and \emph{fast recovery} (\acs{RFC}~5681).
+}
+
+\mode<article>{
+\begin{extrainfo}
+\paragraph{slow start}
+% https://www.stackpath.com/edge-academy/what-is-tcp-slow-start/
+\acs{TCP} slow start is an algorithm which balances the speed of a network connection.
+Slow start gradually increases the amount of data transmitted until it finds the network's maximum carrying capacity.
+
+\paragraph{congestion avoidance}
+If a loss event occurs, \acs{TCP} assumes that it is due to network congestion and takes steps to reduce the offered load on the network.
+These measurements depend on the exact \acs{TCP} congestion avoidance algorithm used.
+
+\paragraph{fast retransmit}
+Fast retransmit is an enhancement to \acs{TCP} that reduces the time a sender waits before retransmitting a lost segment.
+A \acs{TCP} sender normally uses a simple timer to recognize lost segments.
+If an acknowledgement is not received for a particular segment within a specified time (a function of the estimated round-trip delay time), the sender will assume the segment was lost in the network, and will retransmit the segment.
+
+Duplicate acknowledgement is the basis for the fast retransmit mechanism. 
+After receiving a packet an acknowledgement is sent for the last in-order byte of data received.
+For an in-order packet, this is effectively the last packet's sequence number plus the current packet's payload length.
+If the next packet in the sequence is lost but a third packet in the sequence is received, then the receiver can only acknowledge the last in-order byte of data, which is the same value as was acknowledged for the first packet.
+The second packet is lost and the third packet is not in order, so the last in-order byte of data remains the same as before.
+Thus a duplicate acknowledgement occurs.
+The sender continues to send packets, and a fourth and fifth packet are received by the receiver.
+Again, the second packet is missing from the sequence, so the last in-order byte has not changed.
+Duplicate acknowledgements are sent for both of these packets.
+
+When a sender receives three duplicate acknowledgements, it can be reasonably confident that the segment carrying the data that followed the last in-order byte specified in the acknowledgment was lost. 
+A sender with fast retransmit will then retransmit this packet immediately without waiting for its timeout.
+On receipt of the retransmitted segment, the receiver can acknowledge the last in-order byte of data received.
+In the above example, this would acknowledge to the end of the payload of the fifth packet.
+There is no need to acknowledge intermediate packets, since \acs{TCP} uses cumulative acknowledgements by default.
+
+\paragraph{fast recovery}\leavevmode
+\end{extrainfo}
 }
