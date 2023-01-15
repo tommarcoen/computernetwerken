@@ -27,11 +27,12 @@
 %\newenvironment{extrainfo}{%
 %  \color{red}\lettrine[lines=2]{\faFloppyO}{a}%
 %}{}
-%\newtcolorbox{extrainfo}{
-%  title = {\faUniversity\quad Extra information},
-%  colframe = BorderColourExtraInfo,
-%  colback = white
-%  }
+\newtcolorbox{extrainfo}{
+   title = {\faUniversity\quad Extra information},
+   colframe = BorderColourExtraInfo,
+   colback = white,
+   breakable = true
+}
 %\newtcolorbox{backgroundinfo}{
 %   title = {\faFloppyO\quad Background information},
 %   colframe = BorderColourBackgroundInfo,
