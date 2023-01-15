@@ -172,7 +172,9 @@ Ethernet adapters were also available.
 \begin{figure}
 \centering
 \includegraphics[width=.5\textwidth]{images/thompson.png}
-\caption{Ken Thompson (sitting) and Dennis Ritchie working on a PDP-11, circa~1970. The picture was taken by Peter Hamer and the line drawing was made by \href{https://www.truecable.com/blogs/cable-academy/a-brief-history-of-network-technology}{truecable.com}.}
+\caption%
+   [Thompson and Ritchie working on a \abbr{PDP-11}]%
+   {Ken Thompson (sitting) and Dennis Ritchie working on a \abbr{PDP-11}, circa~1970. The picture was taken by Peter Hamer and the line drawing was made by \href{https://www.truecable.com/blogs/cable-academy/a-brief-history-of-network-technology}{truecable.com}.}
 \label{fig:thompson}
 \end{figure}
 
@@ -278,13 +280,13 @@ Unicast is a one-to-one transmission from one point in the network to another po
 \begin{figure}
 \begin{minipage}{.4\textwidth}
 \includegraphics[width=\textwidth]{images/unicast.png}
-\caption{Unicast routing}
+\caption[Unicast routing scheme]{Unicast routing}
 \label{fig:unicast}
 \end{minipage}
 \hfill
 \begin{minipage}{.4\textwidth}
 \includegraphics[width=\textwidth]{images/broadcast.png}
-\caption{Broadcast routing}
+\caption[Broadcast routing scheme]{Broadcast routing}
 \label{fig:broadcast}
 \end{minipage}
 \end{figure}
@@ -311,13 +313,13 @@ Anycast routing is widely used by \acf{CDN} such as web and \acs{DNS} hosts, to 
 \begin{figure}
    \begin{minipage}{.4\textwidth}
    \includegraphics[width=\textwidth]{images/multicast.png}
-   \caption{Multicast routing}
+   \caption[Multicast routing scheme]{Multicast routing}
    \label{fig:multicast}
    \end{minipage}
    \hfill
    \begin{minipage}{.4\textwidth}
    \includegraphics[width=\textwidth]{images/anycast.png}
-   \caption{Anycast routing}
+   \caption[Anycast routing scheme]{Anycast routing}
    \label{fig:anycast}
    \end{minipage}
    \end{figure}
@@ -353,7 +355,7 @@ The bottom two layers are good to keep separated as the data link layer contains
 \begin{figure}
 \centering
 \input{images/network-models}
-\caption{The three network models}
+\caption[The \acs{OSI}, \acs{TCP}/\acs{IP}, and hybrid networking models]{The three network models}
 \label{fig:network-models}
 \end{figure}
 }
@@ -400,7 +402,7 @@ That is, the transport layer on the sender's side communicates with the transpor
 \begin{figure}
 \centering
 \input{images/data-encapsulation}
-\caption{%
+\caption[Encapsulation and decapsulation of packets]{%
 Data encapsulation at the source and decapsulation at the destination.
 Each layer adds its own header, but the data link layer also adds a trailer.
 }
