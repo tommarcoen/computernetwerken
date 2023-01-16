@@ -49,6 +49,16 @@ Twenty-two bytes are used by the Ethernet header (18~bytes) and trailer (4~bytes
 }
 
 \Paragraph{Ethernet header}
+\mode<article>{
+The standard length of the Ethernet header is 14~bytes, however, in the case of utilizing a \acs{VLAN} tag, it is extended to 18~bytes.
+It contains the source and destination \acs{MAC} addresses, a field designated for either the \emph{ethertype} or the length of the data payload, and an optional \abbr{802.1Q} tag containg \acs{VLAN} and \acs{CoS} information.
+
+The ethertype field is a two-byte field in the Ethernet header that is used to identify the type of data that is being transmitted in the Ethernet frame.
+It is used to indicate the protocol that is encapsulated in the payload of the Ethernet frame.
+The ethertype field is located immediately after the destination and source \acs{MAC} addresses in the Ethernet header.
+% TODO: Expand on the ethertype and the 802.1Q tag.
+% TODO: Explain the difference between the length and ethertype and how the contents or the length is calculated when not provided.
+}
 
 \Paragraph{Ethernet trailer}
 \mode<article>{
