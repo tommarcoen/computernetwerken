@@ -19,11 +19,12 @@ compile_presentation()
    pdflatex main-presentation &> /dev/null
 }
 
-if [ "$1" == "clean" ]; then
-   git clean -Xf
-elif [ "$1" == "book" ]; then
+if [ "$1" = "clean" ]; then
+   echo "Removing untracked files from the working tree..."
+   git clean -Xf &> /dev/null
+elif [ "$1" = "book" ]; then
    compile_book
-elif [ "$1" == "presentation" ]; then
+elif [ "$1" = "presentation" ]; then
    compile_presentation
 else
    compile_book
