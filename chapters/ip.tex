@@ -480,7 +480,7 @@ A Windows computer takes a random \acs{IP} address from this range when it is co
 \Paragraph{port-based address translation}
 \mode<article>{
 The majority of network address translators map multiple private hosts to one publicly exposed \acs{IP} address.
-In a typical configuration, a local network uses one of the designated private \acs{IP} address subnets (\acs{RFC}~1918).
+In a typical configuration, a local network uses one of the designated private \acs{IP} address subnets (\rfc{1918}).
 A router in that network has a private address of that address space.
 The router is also connected to the internet with a public address, typically assigned by an internet service provider.
 
@@ -492,7 +492,7 @@ All \acs{IP} packets have a source \acs{IP} address and a destination \acs{IP} a
 Typically packets passing from the private network to the public network will have their source address modified, while packets passing from the public network back to the private network will have their destination address modified.
 To avoid ambiguity in how replies are translated, further modifications to the packets are required.
 For \acs{TCP} and \acs{UDP} the port numbers are changed so that the combination of \acs{IP} address and port number on the returned packet can be unambiguously mapped to the corresponding private network destination.
-\acs{RFC}~2663 uses the term \gls{NAPT} for this type of \acs{NAT}.
+\rfc{2663} uses the term \gls{NAPT} for this type of \acs{NAT}.
 Other names include \gls{PAT}, \acs{IP} \emph{masquerading}, \acs{NAT} \emph{overload} and \emph{many-to-one} \acs{NAT}.
 This is the most common type of \acs{NAT} and has become synonymous with the term \acs{NAT} in common usage.
 }

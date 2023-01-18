@@ -67,8 +67,7 @@
   \iffieldundef{annotation}
     {\finentry}
     {\setunit{\finentrypunct\par\vspace{\bibitemsep}\nobreak}
-     %\setlength{\parskip}{0.5\baselineskip plus 2pt}%
-     \printfield{annotation}%\vspace{.5\baselineskip}%
+     \printfield{annotation}%
      \finentry}}
 % Sort by title
 \DeclareSortingScheme{tyn}{
@@ -99,4 +98,7 @@
     \literal{0}
   }
 }
+% RFCs
+\newcommand{\rfc}[1]{\acs{RFC}~\cite{rfc#1}}
+
 \input{main}
