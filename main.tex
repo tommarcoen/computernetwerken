@@ -73,10 +73,12 @@
    \input{tex/titlepages}
    \clearforchapter
    \tableofcontents*
+   \clearforchapter
    \listoffigures
+   \clearforchapter
    \listoftables
    \input{chapters/preface}
-   \printglossary[type=abbreviations,style=mcolindex]
+   \printglossary[type=abbreviations,style=mcolindexgroup]
    \mainmatter
 }
 \titleslide[an introduction]{Computer networks}
@@ -94,7 +96,7 @@
 
 \mode<article>{
 \glsaddall
-\setglossarystyle{index}
+\setglossarystyle{indexgroup}
 \printglossary
 %\nocite{*}
 \printbibliography[notkeyword={RFC}]
