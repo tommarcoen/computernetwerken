@@ -162,7 +162,7 @@ Acknowledgements for data sent, or lack of acknowledgements, are used by senders
 Coupled with timers, \acs{TCP} senders and receivers can alter the behavior of the flow of data.
 This is more generally referred to as \emph{congestion control} and/or \emph{network congestion avoidance}.
 
-Modern implementations of \acs{TCP} contain four intertwined algorithms: \emph{slow start}, congestion avoidance, \emph{fast retransmit}, and \emph{fast recovery} (\acs{RFC}~5681).
+Modern implementations of \acs{TCP} contain four intertwined algorithms: \emph{slow start}, congestion avoidance, \emph{fast retransmit}, and \emph{fast recovery} (\rfc{5681}).
 }
 
 \mode<article>{
@@ -199,4 +199,13 @@ There is no need to acknowledge intermediate packets, since \acs{TCP} uses cumul
 
 \paragraph{fast recovery}\leavevmode
 \end{extrainfo}
+}
+
+\mode<article>{
+\section{Further reading}
+Both \textcite{stevens,comer} are good resources to learn more about how the \acf{TCP} operates.
+Additionally you can take a look at the actual network packets as they are being sent and received on the network.
+This requires a software tool like Wireshark to capture and display the packets.
+To learn how this program works, Chris Greer, a leading expert on packet analysis, recommends \textcite{chappell17,sanders,bock}.
+I own a different book by \citeauthor{chappell17} but I am unfamiliar with these three recommended books.
 }

@@ -150,7 +150,7 @@ Neither the users nor their computers are required to be online simultaneously; 
 \mode<article>{
 The \acl{SMTP} is an internet standard communication protocol for electronic mail transmission.
 Mail servers and other message transfer agents use \acs{SMTP} to send and receive mail messages.
-User-level email clients typically use \acs{SMTP} only for sending messages to a mail server for relaying, and typically submit outgoing email to the mail server on port~587 or~465 per \acs{RFC}~8314.
+User-level email clients typically use \acs{SMTP} only for sending messages to a mail server for relaying, and typically submit outgoing email to the mail server on port~587 or~465 per \rfc{8314}.
 
 \acs{SMTP} servers commonly use the \acf{TCP} on port number~25 (for plaintext) and~587 (for encrypted communications).
 }
@@ -182,4 +182,9 @@ Instead they use cloud solutions like Gmail or Office~365.
 \Paragraph{spam}
 \mode<article>{
 Email spam has steadily grown since the early 1990s, and by 2014 was estimated to account for around ninety percent of total email traffic.
+}
+
+\mode<article>{
+\section{Further reading}
+\textcite{nemeth} explains all applications and protocols covered in this chapter in more detail and provides the details of how to setup name servers and mail servers.
 }

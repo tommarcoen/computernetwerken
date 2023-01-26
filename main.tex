@@ -96,8 +96,9 @@
 \glsaddall
 \setglossarystyle{index}
 \printglossary
-\nocite{*}
-\printbibliography
+%\nocite{*}
+\printbibliography[notkeyword={RFC}]
+\printbibliography[keyword={RFC},title={Requests for comments}]
 %\printindex
 }
 \end{document}
