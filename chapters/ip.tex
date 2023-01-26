@@ -574,7 +574,7 @@ This can happen in one of two ways, either the network administrator manually co
 \mode<article>{
 The \acs{IP} header contains a \gls{TTL} field which indicates how many routers (hops) it can pass before it must be deleted.
 This prevents the data packet from circulating indefinitely.
-As it is an 8-bit field, the maximum value is~255 but a recommended initial value is~64.\footnote{See \acs{RFC}~1700, p.~64.}
+As it is an 8-bit field, the maximum value is~255 but a recommended initial value is~64.\footnote{See \rfc{1700}, p.~64.}
 
 As it does not really signify some time spent in transit, with the development of \acs{IP} version~6, they changed the name of this field to \emph{hop limit} as that is what it really does: limit the number of hops (routers) that a packet can travel.
 }
