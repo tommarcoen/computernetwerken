@@ -4,8 +4,9 @@
 \usepackage[T1]{fontenc}
 %\usepackage{libertinehologopatch}
 \usepackage[supstfm=libertinesups]{superiors}
-\usepackage[mono=false,oldstyle]{libertine}
+\usepackage[mono=false,oldstyle]{libertinus}
 \usepackage{libertinust1math}
+\usepackage{libertinehologopatch}
 \usepackage{microtype}
 \microtypesetup{tracking=smallcaps,letterspace=50}
 \usepackage{textcomp}
@@ -95,6 +96,7 @@
 %\chapter{eve-ng}
 
 \mode<article>{
+\backmatter
 \glsaddall
 \setglossarystyle{indexgroup}
 \printglossary
@@ -105,5 +107,6 @@
     I have listed the \acsp{RFC} only for completeness.}
 \printbibliography[keyword={RFC},title={Requests for comments},prenote=myprenote]
 %\printindex
+\include{tex/colophon}
 }
 \end{document}
