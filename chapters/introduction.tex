@@ -34,22 +34,22 @@ Finally, we will talk about network symbols used in literature to create network
 Networks may be characterised by many properties or features, such as physical capacity, organisational scope (\vref{sec:network-ownership}), user authorisation, access rights, and others.
 Another distinct classification method is that of the physical extent or geographic scale.
 
-\paragraph{\gls{LAN}}
+\paragraph{\gls{LAN}}\index{LAN@\acs{LAN}}
 A computer network that interconnects computers within a limited area such as a residence, school, laboratory, office building or university campus (though this is also called a \acl{CAN}).
 
 The term \gls{LAN} can be used both for a single \emph{broadcast domain} (see \vref{sec:routing-schemes,sec:routing}) or local network, similar to a \acs{WLAN} being a single wireless broadcast domain and a `\acs{VLAN}' being a virtual \gls{LAN} defined on a switch or group of switches; but the term `\gls{LAN}' can also mean the group of all of these local networks, forming the complete company or home network.
 In that case, `local' refers to the geographic location (one building) instead of the physical property of the network (a single broadcast domain).
 
-\paragraph{\gls{WAN}}
+\paragraph{\gls{WAN}}\index{WAN@\acs{WAN}}
 A telecommunications network that extends over a large geographic area.
 Wide-area networks are often established with \emph{leased telecommunication circuits}.
 These networks are mostly operated by \glspl{ISP}.
 
-\paragraph{\gls{PAN}}
+\paragraph{\gls{PAN}}\index{PAN@\acs{PAN}}
 A computer network for interconnecting electronic devices within an individual person's workspace.
 One example is your mobile phone pairing wirelessly with your watch and ear buds.
 
-\paragraph{\gls{CAN}}
+\paragraph{\gls{CAN}}\index{CAN@\acs{CAN}}
 A computer network made up of an interconnection of local-area networks within a limited geographical area.
 The networking equipment (switches, routers) and transmission media (optical fibre, copper plant, cat~5 cabling, etc.) are almost entirely owned by the campus tenant or owner: an enterprise, university, government, etc.
 A \acl{CAN} is larger than a \acl{LAN} but smaller than a \acs{MAN} or \gls{WAN}.
@@ -58,11 +58,11 @@ An example would be the High Tech Campus in Eindhoven.
 The buildings house different companies which are all interconnected using fibre optic cabling owned and maintained by the campus \acs{IT} team.
 The campus also has its own data centres and provides redundant connections to the internet.
 
-\paragraph{\gls{MAN}}
+\paragraph{\gls{MAN}}\index{MAN@\acs{MAN}}
 A computer network that interconnects users with computer resources in a geographic region of the size of a metropolitan area.
 The term \gls{MAN} is applied to the interconnection of local-area networks in a city into a single larger network which may then also offer efficient connection to a wide-area network.
 
-\paragraph{\gls{SAN}}
+\paragraph{\gls{SAN}}\index{SAN@\acs{SAN}}
 A computer network which provides access to consolidated, block-level data storage.
 \glspl{SAN} are primarily used to access data storage devices, such as disk arrays and tape libraries from servers so that the devices appear to the operating system as direct-attached storage.
 A \gls{SAN} typically is a dedicated network of storage devices not accessible through the local-area network.
@@ -71,7 +71,7 @@ A \gls{SAN} typically is a dedicated network of storage devices not accessible t
 \section{Network ownership}
 \label{sec:network-ownership}
 
-\paragraph{internet}
+\paragraph{internet}\index{internet}
 An internetwork is the connection of multiple different computer networks to form a single network.
 
 The internet is the largest example of an internetwork.
@@ -79,7 +79,7 @@ It is a global system of interconnected governmental, academic, corporate, publi
 Participants on the internet use a diverse array of methods of several hundred documented, and often standardised, protocols compatible with the \acl{IP} suite and an addressing system (\acs{IP} addresses).
 Service providers and large enterprises exchange information about the reachability of their address spaces through the \gls{BGP} (see \vref{sec:routing}), forming a redundant worldwide mesh of transmission paths.
 
-\paragraph{intranet}
+\paragraph{intranet}\index{intranet}
 An intranet is a set of networks that are under the control of a single administrative entity.
 The intranet uses the \gls{IP} and \gls{IP}-based tools such as web browsers and file transfer applications.
 The administrative entity limits the use of the intranet to its authorised users.
@@ -87,13 +87,13 @@ Most commonly, an intranet is the internal \gls{LAN} of an organisation.
 A large intranet typically has at least one web server to provide users with organisational information.
 An intranet is also anything behind the router on a local-area network.
 
-\paragraph{extranet}
+\paragraph{extranet}\index{extranet}
 An extranet is a network that is also under the administrative control of a single organisation but supports a limited connection to a specific external network.
 For example, an organisation may provide access to some aspects of its intranet to share data with its business partners or customers.
 These other entities are not necessarily trusted from a security standpoint.
 Network connection to an extranet is often, but not always, implemented via \gls{WAN} technology, such as IPsec \acs{VPN} tunnels.
 
-\paragraph{\gls{DMZ}}
+\paragraph{\gls{DMZ}}\index{DMZ@\acs{DMZ}}
 A \gls{DMZ} is similar to an extranet but where an extranet only provides access to resources for a limited subnet of business partners or customers, services hosted in a \gls{DMZ} are generally accessible by anyone on the internet.
 It is an isolated and heavily firewalled part of a company's intranet.
 
@@ -105,7 +105,7 @@ Let's briefly examine the evolution of both local-area networks and wide-area ne
 \subsection{Local-area networks}
 \label{sec:network-evolution-lan}
 
-\paragraph{mainframe (1970)}
+\paragraph{mainframe (1970)}\index{mainframe}
 By the early 1970s, many mainframes acquired interactive user terminals operating as time-sharing computers, supporting hundreds of users simultaneously along with batch processing.
 Users gained access through keyboard or typewriter terminals and specialised text terminal \gls{CRT} displays with integral keyboards, or later from personal computers equipped with terminal emulation software.
 
@@ -118,7 +118,7 @@ It is a complete protocol stack for interconnecting computers and their resource
 \gls{SNA} describes formats and protocols and is, in itself, not a piece of software.
 The implementation of \gls{SNA} takes the form of various communications packages, most notably \gls{VTAM}, the mainframe software package for \gls{SNA} communications.
     
-\paragraph{thicknet (1980)}
+\paragraph{thicknet (1980)}\index{thicknet}
 % https://en.wikipedia.org/wiki/10BASE5
 \abbr{10BASE5} (also known as thick Ethernet or \emph{thicknet}) was the first commercially available variant of Ethernet.
 The technology was standardised in 1982 as \acs{IEEE} 802.3.
@@ -126,7 +126,7 @@ The technology was standardised in 1982 as \acs{IEEE} 802.3.
 Up to 100~stations can be connected to the cable using vampire taps and share a single collision domain with \SI{10}{\mega\bit\per\second} of bandwidth shared among them.
 The system is difficult to install and maintain.
 
-\paragraph{Token Ring (1984)}
+\paragraph{Token Ring (1984)}\index{Token Ring}
 Token Ring is a computer networking technology used to build local-area networks.
 It was introduced by IBM in 1984, and standardised in 1989 as \acs{IEEE} 802.5.
 
@@ -135,12 +135,14 @@ This token passing is a channel access method providing fair access for all stat
 
 Token Ring was a successful technology, particularly in corporate environments, but was gradually eclipsed by the later versions of Ethernet.
 
-\paragraph{thinnet (1985)}
+\paragraph{thinnet (1985)}\index{thinnet}
 \abbr{10BASE2} (also known as cheapernet, thin Ethernet, \emph{thinnet}, and \emph{thinwire}) is a variant of Ethernet that uses thin coaxial cable terminated with \acs{BNC} connectors to build a local-area network.
 
 During the mid to late 1980s this was the dominant \SI{10}{\mega\bit\per\second} Ethernet standard, but due to the immense demand for high speed networking, the low cost of \mbox{category-5} cable, and the popularity of 802.11 wireless networks, both \abbr{10BASE2} and \abbr{10BASE5} have become increasingly obsolete.
 
-\paragraph{Ethernet switches (1985)}
+\paragraph{Ethernet switches (1985)}%
+\index{Ethernet!switch}%
+\index{switch}
 % https://en.wikipedia.org/wiki/Network_switch
 Ethernet switches are the most common form of network switch.
 The first \acs{MAC} bridge was invented in 1983 by Mark Kempf, an engineer in the Networking Advanced Development group of \gls{DEC}.
@@ -200,7 +202,8 @@ Initially created to link researchers to the \gls{NSF}-funded supercomputing cen
 The \acl{NSF} permitted only government agencies and universities to use the network until 1989 when the first commercial \acl{ISP} emerged.
 By 1991, the \acs{NSF} removed access restrictions and the commercial \acs{ISP} business grew rapidly.
 
-\paragraph{Internet (1991)}
+\paragraph{internet (1991)}%
+\index{internet}
 The internet consists of many commercial \aclp{ISP}, \glspl{IXP}, \glspl{CDN}, commercial companies\ldots
 
 \paragraph{IPsec virtual private networks (1995)}
