@@ -82,9 +82,21 @@ Since a typical category~5 cable contains 4~pairs, it can support two \abbr{100B
 \mode<article>{
 An Ethernet crossover cable is a crossover cable for Ethernet used to connect computing devices together directly.
 It is most often used to connect two devices of the same type, e.g. two computers (via their network interface controllers) or two switches to each other.
-By contrast, \emph{straight through} patch cables are used to connect devices of different types, such as a computer to a network switch.
+By contrast, \emph{straight-through} patch cables are used to connect devices of different types, such as a computer to a network switch.
 Intentionally crossed wiring in the crossover cable connects the transmit signals at one end to the receive signals at the other end.
-Many network devices today support auto \acs{MDI-X} (aka `auto crossover') capability, wherein a patch cable can be used in place of a crossover cable, or vice versa, and the receive and transmit signals are reconfigured automatically within the device to yield a working connection.
+Many network devices today support auto-\acs{MDI-X} (aka auto-crossover) capability, wherein a patch cable can be used in place of a crossover cable, or vice versa, and the receive and transmit signals are reconfigured automatically within the device to yield a working connection.
+
+To make a straight-through patch cable, either use the order defined by \abbr{T568A} on both ends of the cable, or the order defined by \abbr{T568B}.
+To create a crossover patch cable, use \abbr{T568A} on one side and \abbr{T568B} on the other.
+
+\begin{figure}
+\centering
+\includegraphics[width=.7\textwidth]{images/t568.jpeg}
+\caption{The \abbr{T568} standard for twisted-pair cabling}
+\label{fig:t568}
+\end{figure}
+
+% TODO: explain (with a drawing?) that pair 1/3 is used for sending and the other for receiving data.
 }
 
 \Paragraph{Gigabit Ethernet}
@@ -113,17 +125,25 @@ Using Cat.~8 twisted pair cabling it is possible to go up to \SI{40}{\giga\bit\p
 Higher speeds or longer lengths require fibre optic cables to be used.
 }
 
-\Paragraph{direct-attach copper}
+\Paragraph{\acl{DAC}}
 \mode<article>{
-This is a copper 10~Gigabit Ethernet cable which comes in either an active or passive twinax (twinaxial) cable assembly and connects directly into an \acs{SFP+} housing.
+A \acf{DAC} cable is a copper 10~Gigabit Ethernet cable which comes in either an active or passive twinax (twinaxial) cable assembly and connects directly into an \acs{SFP+} housing (\vref{fig:dac}).
 \abbr{40GBASE-CR4} and \abbr{100GBASE-CR10} physical layers using \SI{7}{\metre} twin-axial cable are being developed as part of the 100~Gbit Ethernet specifications by the \acs{IEEE}.
+
+\begin{figure}
+\centering
+\includegraphics[width=.7\textwidth]{images/dac-cable.jpeg}
+\caption{A direct-attach copper cable}
+\label{fig:dac}
+\end{figure}
 }
 
 \Paragraph{optical fibre}
 \mode<article>{
 An optical fibre is a flexible, transparent fibre made by drawing glass (silica) or plastic to a diameter slightly thicker than that of a human hair.
 Fibres are used instead of metal wires because signals travel along them with less loss; in addition, fibres are immune to electromagnetic interference, a problem from which metal wires suffer.
-
+The concept of a direct-attech copper cable also exist with optical cables.
+These are then called \acf{AOC}.
 
 \begin{table}
    \caption{Fibre optic categories}
@@ -245,6 +265,13 @@ Although \acs{IEEE} 802.11 specifications list channels that might be used, the 
 \mode<article>{
 The \SI{2.4}{\giga\hertz} frequency supports eleven channels in the United States and thirteen channels in Europe and most of the world.
 The \SI{5}{\giga\hertz} frequency supports over fifty channels, depending on the bandwidth used.
+
+\begin{figure}
+\centering
+\includegraphics[width=.7\textwidth]{images/wifi-channels.png}
+\caption{Non-overlapping wireless channels in the \SI{2.4}{\giga\hertz}-range}
+\label{fig:wifi-channels}
+\end{figure}
 }
 
 \Paragraph{bandwidth}
@@ -286,4 +313,9 @@ Most noticably, it requires users to authenticate to the wireless network using 
 Often the credentials required are the same as the credentials required to access your company computer and thus Windows can authenticate to the wireless network automatically.
 
 \ac{WPS} is an alternative authentication key distribution method intended to simplify and strengthen the process, but which, as widely implemented, creates a major security hole via \ac{WPS} \abbr{PIN} recovery.
+}
+
+\mode<article>{
+\section{Further reading}
+\textcite{oliviero} covers cables in quite a bit of detail and \textcite{coleman} covers wireless networks.
 }

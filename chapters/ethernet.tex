@@ -37,7 +37,7 @@ See \cref{fig:mac-format} for the complete picture of a \acs{MAC} address.
 \begin{figure}
 \centering
 \includegraphics[width=.8\textwidth]{images/mac-address-format.png}
-\caption{The \acs{MAC} address consists of two parts with the first part having two bits with special meaning}
+\caption[The format of a \acs{MAC} address]{The \acs{MAC} address consists of two parts with the first part having two bits with special meaning}
 \label{fig:mac-format}
 \end{figure}
 }
@@ -253,4 +253,11 @@ As engineers continue to advance in their field, they have developed the ability
 This advancement allows for the integration of more complex logic into network switches.
 Layer-3 switches, in particular, have the capability to route packets in hardware based on \acs{IP} addresses, effectively functioning as routers.
 As a result, it has become increasingly convenient to implement a layer-3 switch into network infrastructure, as it combines the functionality of both routers and traditional switches.
+}
+
+\mode<article>{
+\section{Further reading}
+\textcite{lammle-ccna} is my go-to book for \acs{CCNA}-level topics such as the \acf{STP} and its variants or \acfp{LAG}.
+For more -- and I do mean \emph{a lot} more -- details on \abbr{802.1X} and \acf{NAC}, I would go to \textcite{woland}.
+Its coauthor (McNamara) even has the nickname the \acs{ISE} queen with \acs{ISE} standing for Cisco's \acl{ISE}, an identity-based \acs{NAC} and policy-enforcement system.
 }

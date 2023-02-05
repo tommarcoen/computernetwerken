@@ -44,34 +44,54 @@
    description = {The four-wire \acs{UTP} implementation of Gigabit Ethernet.}
 }
 
+\newglossaryentry{127.0.0.1}{
+   name = {127.0.0.1},
+   sort = {0127.001},
+   description = {
+      The \acs{IP} loopback address used for testing.
+      Packets sent to this address are processed by the local protocol software stack without ever being sent across a network.
+   }
+}
+
+\newglossaryentry{576}{
+   name = {576},
+   description = {The minimum datagram size all hosts and routers must handle.}
+}
+
 \newglossaryentry{802.1Q}{
    name = {\abbr{802.1Q}},
    sort = {0802.01Q},
-   description = {\acs{IEEE} standard\ldots COMPLETE THIS}
+   description = {
+      The \acs{IEEE} standard for \aclp{VLAN} on an 802.3 Ethernet network.
+      The standard defines a system of \acs{VLAN} tagging for Ethernet frames and the accompanying procedures to be used by bridges and switches in handling such frames.
+   }
 }
 
 \newglossaryentry{802.1w}{
    name = {802.1w},
    sort = {0802.01w},
-   description = {\acs{IEEE} standard\ldots COMPLETE THIS}
+   description = {The \acs{IEEE} standard for the \acf{RSTP}.}
 }
 
 \newglossaryentry{802.1X}{
    name = {\abbr{802.1X}},
    sort = {0802.01X},
-   description = {\acs{IEEE} standard\ldots COMPLETE THIS}
+   description = {
+      The \acs{IEEE} standard for \acf{PNAC}.
+      It defines the encapsulation of the \acf{EAP} over wired \acs{IEEE} 802.3 networks and over 802.11 wireless networks, which is known as \acf{EAPOL}.
+   }
 }
 
 \newglossaryentry{802.3}{
    name = {802.3},
    sort = {0802.03},
-   description = {\acs{IEEE} Ethernet standard}
+   description = {The \acs{IEEE} standard for Ethernet.}
 }
 
 \newglossaryentry{802.11}{
    name = {802.11},
    sort = {0802.11},
-   description = {\acs{IEEE} wireless network standard}
+   description = {The \acs{IEEE} 802.11 technology, more commonly referred to as Wi-Fi, is a standard technology for providing \acf{LAN} communications using \acfp{RF}.}
 }
 
 \newglossaryentry{AP-gls}{
@@ -81,8 +101,30 @@
 }
 
 \newglossaryentry{ACK-gls}{
-   name = {acknowledgment (\abbr{ACK})},
-   description = {A response sent by the receiver to indicate the succesful receipt of data.}
+   name = {acknowledgement (\abbr{ACK})},
+   description = {
+      A response sent by the receiver to indicate the succesful receipt of data.
+      Acknowledgements may be implemented at any level including the physical level (using voltage on one or more wires to coordinate transfer), at the link level  (to indicate succesful transmission across a single hardware link), or at higher levels (e.g., to allow an application program at the final destination to respond to an application program at the source).
+   }
+}
+
+\newglossaryentry{active open}{
+   name = {active open},
+   description = {The operation that a client performs to establish a \acs{TCP} connection with a server at a known address.}
+}
+
+\newglossaryentry{address}{
+   name = {address},
+   description = {An integer value used to identify a particular computer that must appear in each packet sent to the computer.}
+}
+
+\newglossaryentry{address resolution}{
+   name = {address resolution},
+   description = {
+      Conversion of a protocol address into a corresponding physical address (e.g., conversion of an \acs{IP} address into an Ethernet address).
+      Depending on the underlying network, resolution may require broadcasting on a local network.
+      See \acs{ARP}.
+   }
 }
 
 \newglossaryentry{ARP-gls}{
@@ -168,6 +210,25 @@
    }
 }
 
+\newglossaryentry{BGP-gls}{
+   name = {\acf{BGP}},
+   sort = {border gateway},
+   description = {
+      The major exterior gateway routing protocol used in the internet.
+      Four major versions of \acs{BGP} have appeared, with \acs{BGP}-4 being the current version.
+   }
+}
+
+\newglossaryentry{bridge}{
+   name = {bridge},
+   description = {
+      A computer that connects two or more networks and forwards packets among them.
+      Bridges operate at the data link layer.
+      Bridges differ from repeaters -- which operate at the physical layer -- because bridges store and forware complete packets, while repeaters forward all electrical signals, including noise.
+      Bridges differ from routers because bridges use physical (\acs{MAC}) addresses, while routers use network (\acs{IP}) addresses.
+   }
+}
+
 \newglossaryentry{broadcast address}{
    name = {broadcast address},
    description = {An address that allows transmission of a message to all nodes of a network.}
@@ -181,6 +242,11 @@
 \newglossaryentry{caching}{
    name = {caching},
    description = {The storing of information in small, fast memory.}
+}
+
+\newglossaryentry{category 5 cable}{
+   name = {category 5 cable},
+   description = {A standard for wiring that is used with twisted pair Ethernet.}
 }
 
 \newglossaryentry{certificate}{
@@ -212,7 +278,7 @@
 \newglossaryentry{CoS-gls}{
    name = {\acf{CoS}},
    sort = {class of service},
-   description = {???}
+   description = {See \acf{QOS}.}
 }
 
 \newglossaryentry{client}{
@@ -240,6 +306,22 @@
       The basic transmission unit in the internet architecture.
       A datagram contains all of the inforamtion needed to deliver it to its destination, analogous to a letter in the \abbr{US} postal system.
       Datagram networks are connectionless.
+   }
+}
+
+\newglossaryentry{default route}{
+   name = {default route},
+   description = {
+      A single entry in a list of routes that covers all destinations which are not included explicitly.
+      The routing tables in most routers and hosts contain an entry for a default route.
+   }
+}
+
+\newglossaryentry{delay}{
+   name = {delay},
+   description = {
+      One of the two primary measures of a network.
+      Delay refers to the difference between the time a bit of data is injected into a network and the time the bit exits.
    }
 }
 
@@ -334,7 +416,7 @@
 
 \newglossaryentry{fast retransmission}{
    name = {fast restransmission},
-   description = {Retransmission of a segment in \acs{TCP} when three acknowledgments have been received that imply the loss or corruption of that segment.}
+   description = {Retransmission of a segment in \acs{TCP} when three acknowledgements have been received that imply the loss or corruption of that segment.}
 }
 
 \newglossaryentry{fibre-optic cable}{
@@ -430,6 +512,12 @@
    description = {An address defined in the network layer.}
 }
 
+\newglossaryentry{loopback address}{
+   name = {loopback address},
+   description = {See \emph{127.0.0.1}.},
+   see = {127.0.0.1}
+}
+
 \newglossaryentry{MHz}{
    name = {MHz},
    description = {megahertz; \SI{1}{\mega\hertz} = \SI{1e6}{\hertz} or one million cycles per second.}
@@ -437,7 +525,7 @@
 
 \newglossaryentry{MTA-gls2}{
    name = {mail transfer agent},
-   description = {See \acf{MTA}.}
+   description = {See \emph{\acf{MTA}}.}
 }
 
 \newglossaryentry{MTU-gls}{
@@ -528,7 +616,7 @@
 
 \newglossaryentry{port number}{
    name = {port number},
-   description = {See \gls{port address}.}
+   description = {See \emph{port address}.}
 }
 
 \newglossaryentry{prefix}{
@@ -542,6 +630,15 @@
    On the client side it requires only a \acs{PXE}-capable \acf{NIC}, and uses a small set of industry-standard network protocols such as \acs{DHCP} and \acs{TFTP}.}
 }
 
+\newglossaryentry{QoS-gls}{
+   name = {\acf{QOS}},
+   sort = {quality},
+   description = {
+      Bounds on the loss, delay, jitter, and minimum throughput that a network guarantees to deliver.
+      Some proponents argue that \acs{QOS} is necessary for real-time traffic.
+   }
+}
+
 \newglossaryentry{registrar}{
    name = {registrar},
    description = {An authority to register new \acs{DNS} names.}
@@ -550,6 +647,21 @@
 \newglossaryentry{relay agent}{
    name = {relay agent},
    description = {Foor \acs{BOOTP} and \acs{DHCP}, a device -- usually a router -- that can help send local requests to remote servers.   }
+}
+
+\newglossaryentry{repeater}{
+   name = {repeater},
+   description = {
+      A hardware device that extends a \acs{LAN}.
+      A repeater copies eletrical signals from one physical network to another.
+      They are no longer popular in \acfp{LAN} but are still used extensibly in sea cables to cover the extremely long distances.
+   }
+}
+
+\newglossaryentry{RFC-gls}{
+   name = {\acf{RFC}},
+   sort = {request for},
+   description = {The name of a series of notes that contain surveys, measurements, ideas, techniques, and observations, as well as proposed and accepted \acs{TCP}/\acs{IP} protocol standards.}
 }
 
 \newglossaryentry{root server}{
@@ -564,6 +676,15 @@
    sort = {round-trip time},
    description = {The time required for a packet to travel from the source to the destination and back again to the source.}
 }
+
+\newglossaryentry{route}{
+   name = {route},
+   description = {
+      In general, a route is the path that network traffic takes from its source to its destination.
+      In a \acs{TCP}/\acs{IP} internet, each \acs{IP} datagram is routed independently; routes can change dynamically.
+   }
+}
+
 \newglossaryentry{router}{
    name = {router},
    description = {
@@ -605,7 +726,7 @@
 
 \newglossaryentry{three-way handshake}{
    name = {three-way handshake},
-   description = {A sequence of events for connection establishment consisting of a synchronisation packet sent by the first host, an acknowledgement from the second host which also includes its own syncrhonisation information, and finally the acknowledgment from the first host.}
+   description = {A sequence of events for connection establishment consisting of a synchronisation packet sent by the first host, an acknowledgement from the second host which also includes its own syncrhonisation information, and finally the acknowledgement from the first host.}
 }
 
 \newglossaryentry{throughput}{

@@ -310,7 +310,7 @@ In December 1998, \acs{IP} version~6 became a draft standard for the \gls{IETF},
 \begin{figure}
    \centering
    \usebox\subnettingOne
-   \caption{With subnetting you can divide a block of 256~\acs{IP} addresses into four smaller blocks of 64~addresses each}
+   \caption[Dividing a block of \acs{IP} addresses in four equal parts]{With subnetting you can divide a block of 256~\acs{IP} addresses into four smaller blocks of 64~addresses each}
    \label{fig:subnetting}
 \end{figure}
 }
@@ -348,7 +348,7 @@ In December 1998, \acs{IP} version~6 became a draft standard for the \gls{IETF},
 \begin{figure}
    \centering
    \usebox\subnettingTwo
-   \caption{When using variable-length subnet masks you can further divide a subnet into smaller segments}
+   \caption[With \acs{VLSM} you can divide an \acs{IP} block in unequal parts]{When using \acfp{VLSM} you can further divide a subnet into smaller segments}
    \label{fig:vlsm}
 \end{figure}
 }
@@ -480,7 +480,7 @@ A Windows computer takes a random \acs{IP} address from this range when it is co
 \Paragraph{port-based address translation}
 \mode<article>{
 The majority of network address translators map multiple private hosts to one publicly exposed \acs{IP} address.
-In a typical configuration, a local network uses one of the designated private \acs{IP} address subnets (\acs{RFC}~1918).
+In a typical configuration, a local network uses one of the designated private \acs{IP} address subnets (\rfc{1918}).
 A router in that network has a private address of that address space.
 The router is also connected to the internet with a public address, typically assigned by an internet service provider.
 
@@ -492,7 +492,7 @@ All \acs{IP} packets have a source \acs{IP} address and a destination \acs{IP} a
 Typically packets passing from the private network to the public network will have their source address modified, while packets passing from the public network back to the private network will have their destination address modified.
 To avoid ambiguity in how replies are translated, further modifications to the packets are required.
 For \acs{TCP} and \acs{UDP} the port numbers are changed so that the combination of \acs{IP} address and port number on the returned packet can be unambiguously mapped to the corresponding private network destination.
-\acs{RFC}~2663 uses the term \gls{NAPT} for this type of \acs{NAT}.
+\rfc{2663} uses the term \gls{NAPT} for this type of \acs{NAT}.
 Other names include \gls{PAT}, \acs{IP} \emph{masquerading}, \acs{NAT} \emph{overload} and \emph{many-to-one} \acs{NAT}.
 This is the most common type of \acs{NAT} and has become synonymous with the term \acs{NAT} in common usage.
 }
@@ -574,7 +574,7 @@ This can happen in one of two ways, either the network administrator manually co
 \mode<article>{
 The \acs{IP} header contains a \gls{TTL} field which indicates how many routers (hops) it can pass before it must be deleted.
 This prevents the data packet from circulating indefinitely.
-As it is an 8-bit field, the maximum value is~255 but a recommended initial value is~64.\footnote{See \acs{RFC}~1700, p.~64.}
+As it is an 8-bit field, the maximum value is~255 but a recommended initial value is~64.\footnote{See \rfc{1700}, p.~64.}
 
 As it does not really signify some time spent in transit, with the development of \acs{IP} version~6, they changed the name of this field to \emph{hop limit} as that is what it really does: limit the number of hops (routers) that a packet can travel.
 }
@@ -650,7 +650,7 @@ Most \acs{OSPF} implementation use a cost value based on the bandwidth of the li
 \begin{figure}
    \centering
    \input{images/metric}
-   \caption{A router can learn a prefix from several other routers. The metric decides the best route.}
+   \caption[The metric decides the best route in a network]{A router can learn a prefix from several other routers. The metric decides the best route.}
    \label{fig:metric}
 \end{figure}
 }
@@ -738,4 +738,13 @@ A basic \acs{BGP} configuration is relatively simple but it can quickly become e
 
 Contrary to normal routing protocols which serve to make all networks known within the entire internetwork, \acs{BGP} aims to limit reachability and focusses on \emph{policies}.
 You can tweak the protocol so that you can exactly control the path a packet has to travel through the network to reach its destination.
+}
+
+
+\mode<article>{
+\section{Further reading}
+\textcite{lammle-ccna,lammle-comptia} are both good reasons to continue from here.
+They both explain \acs{IP} addresses, subnetting, \acs{DHCP}, and routing in more detail.
+Another great resource is \textcite{stevens} but this masterpiece is probably a bit too in-depth.
+\textcite{doyle} is another classic focussing on routing protocols such as \acs{RIP}, \acs{OSPF}, and \acs{IS-IS} while the second volume covers \acs{BGP}.
 }

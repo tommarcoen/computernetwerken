@@ -1,15 +1,15 @@
-\documentclass[a4paper,12pt,oneside,british]{memoir}
+\documentclass[a4paper,12pt,british]{memoir}
 \usepackage[utf8]{inputenc}
 \usepackage{babel}
 \isopage
 \checkandfixthelayout
 \pagestyle{ruled}
-\raggedbottom
+%\raggedbottom
 \usepackage[noamssymb,noamsthm,envcountsect]{beamerarticle}
 \setjobnamebeamerversion{main.presentation}
 
-\setfloatlocations{figure}{hbp}
-\setfloatlocations{table}{htp}
+\setfloatlocations{figure}{hbtp}
+\setfloatlocations{table}{htbp}
 
 % Lists
 \usepackage{multicol}
@@ -19,11 +19,14 @@
 \firmlists
 \renewcommand*{\descriptionlabel}[1]{\hspace\labelsep\itshape #1 --}
 
+% Epigraphcs and quotes
+\setlength{\epigraphwidth}{.6\textwidth}
+
 % Extra and background information boxes
 \usepackage[most]{tcolorbox}
 \usepackage{fontawesome}
-\usepackage{manfnt}
-\usepackage{lettrine}
+%\usepackage{manfnt}
+%\usepackage{lettrine}
 %\newenvironment{extrainfo}{%
 %  \color{red}\lettrine[lines=2]{\faFloppyO}{a}%
 %}{}
@@ -53,8 +56,15 @@
 \setkeys{Gin}{width=.75\textwidth} % from the graphicx package
 
 \usepackage{csquotes}
-\usepackage[backend=biber]{biblatex}
-\addbibresource{bibliography.bib}
+\usepackage[backend=biber,style=reading,citestyle=authoryear,entrykey=false,sorting=tyn]{biblatex}
+\DeclareFieldFormat{annotation}{\textsc{description}\addcolon\space #1}
+\renewbibmacro*{entryhead:full}{%
+  \printfield{labeltitle}%
+  \hfill
+  \printfield{usera}}
+\renewcommand{\bibannotationprefix}{annotation-}
+\addbibresource{bib/bibliography.bib}
+\addbibresource{bib/rfc.bib}
 % Display the "annotation" field in the bibliography
 \renewbibmacro*{finentry}{%
   \iffieldundef{annotation}
@@ -62,5 +72,36 @@
     {\setunit{\finentrypunct\par\vspace{\bibitemsep}\nobreak}
      \printfield{annotation}%
      \finentry}}
+% Sort by title
+\DeclareSortingScheme{tyn}{
+  \sort{
+    \field{presort}
+  }
+  \sort[final]{
+    \field{sortkey}
+  }
+  \sort{
+    \field{sorttitle}
+    \field{title}
+  }
+  \sort{
+    \field{sortyear}
+    \field{year}
+  }
+  \sort{
+    \field{sortname}
+    \field{author}
+    \field{editor}
+    \field{translator}
+    \field{sorttitle}
+    \field{title}
+  }
+  \sort{
+    \field{volume}
+    \literal{0}
+  }
+}
+% RFCs
+\newcommand{\rfc}[1]{\acs{RFC}~\cite{rfc#1}}
 
 \input{main}

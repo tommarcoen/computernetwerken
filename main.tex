@@ -4,13 +4,14 @@
 \usepackage[T1]{fontenc}
 %\usepackage{libertinehologopatch}
 \usepackage[supstfm=libertinesups]{superiors}
-\usepackage[mono=false,oldstyle]{libertine}
+\usepackage[mono=false,oldstyle]{libertinus}
+%\usepackage[varqu,varl]{inconsolata}
+\usepackage[scaled=1.05]{zlmtt}
 \usepackage{libertinust1math}
+\usepackage{libertinehologopatch}
 \usepackage{microtype}
 \microtypesetup{tracking=smallcaps,letterspace=50}
 \usepackage{textcomp}
-%\usepackage[varqu,varl]{inconsolata}
-\usepackage[scaled=1.05]{zlmtt}
 \usepackage{fnpct}
 
 
@@ -73,8 +74,12 @@
    \input{tex/titlepages}
    \clearforchapter
    \tableofcontents*
+   \clearforchapter
+   \listoffigures
+   \clearforchapter
+   \listoftables
    \input{chapters/preface}
-   \printglossary[type=abbreviations,style=mcolindex]
+   \printglossary[type=abbreviations,style=mcolindexgroup]
    \mainmatter
 }
 \titleslide[an introduction]{Computer networks}
@@ -91,11 +96,17 @@
 %\chapter{eve-ng}
 
 \mode<article>{
+\backmatter
 \glsaddall
-\setglossarystyle{index}
+\setglossarystyle{indexgroup}
 \printglossary
-\nocite{*}
-\printbibliography
+%\nocite{*}
+\printbibliography[notkeyword={RFC}]
+\defbibnote{myprenote}{%
+    Requests for comments are quite often way too advanced and dry, they sometimes can provide quite useful details.
+    I have listed the \acsp{RFC} only for completeness.}
+\printbibliography[keyword={RFC},title={Requests for comments},prenote=myprenote]
 %\printindex
+\include{tex/colophon}
 }
 \end{document}
