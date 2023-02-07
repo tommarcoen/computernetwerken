@@ -3,8 +3,9 @@
 compile_book()
 {
    echo "Building the book..."
+   ./make.sh clean
    pdflatex main-book &> /dev/null
-   makeindex main-book &>/dev/null
+   #makeindex main-book &>/dev/null
    makeglossaries main-book &> /dev/null
    biber main-book &> /dev/null
    pdflatex main-book &> /dev/null
