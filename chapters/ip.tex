@@ -17,12 +17,14 @@ For example, the number \num{177540347} converts to binary as
 
 \Paragraph{four octets}
 \mode<article>{
+   \index{octet}
 To make this 32-bit number more manageable to humans, we group the 32 bits into four sets of eight bits, called \emph{octets}.%
-\footnote{Currently all bytes are also eight bits so the words octet and byte are interchangeable.
-    However, the size of the byte has historically been hardware-dependent and no definitive standards existed that mandated the size.
-    Sizes from 1~to~48 bits have been used.
-    For example, the \abbr{PDP-7}, a predecessor of the \abbr{PDP-11}, was an 18-bit machine.
-    }
+\footnote{%
+   Currently all bytes are also eight bits so the words octet and byte are interchangeable.
+   However, the size of the byte has historically been hardware-dependent and no definitive standards existed that mandated the size.
+   Sizes from 1~to~48 bits have been used.
+   For example, the \abbr{PDP-7}, a predecessor of the \abbr{PDP-11}, was an 18-bit machine.\index{PDP-07@\abbr{PDP-7}}\index{PDP-11@\abbr{PDP-11}}
+}
 \begin{center}
 $\underbrace{\mbox{\lstinline{0000 1010}}}_{\mbox{octet 1}}$\quad%
 $\underbrace{\mbox{\lstinline{1001 0101}}}_{\mbox{octet 2}}$\quad%
@@ -33,6 +35,7 @@ $\underbrace{\mbox{\lstinline{1111 1011}}}_{\mbox{octet 4}}$
 
 \Paragraph{dotted decimal}
 \mode<article>{
+   \index{dotted decimal}
 We then convert these octets into decimal and separate the four octets with a dot.
 This turns the number \num{117540347} into the more human-friendly format 10.149.12.251.
 Because each decimal number is in fact an octet (eight bits), the biggest number is \texttt{1111 1111} or 255 in decimal.
@@ -58,17 +61,21 @@ While a street address is structured as country, city, street, and house number,
 \mode<article>{
 Each \acs{IP} address consists of two parts.
 The first, left, part uniquely identifies the local network to which the address belongs.
-This is the network part or \emph{network number}.
+This is the network part or \emph{network number}.%
+   \index{network number}
 All computers attached to the same local network need an \acs{IP} address with the same network number.
 }
 
 \Paragraph{host part}
 \mode<article>{
-The \emph{host identifier} is the second part, on the right of the network number, which uniquely identifies the node on the network.
+The \emph{host identifier}%
+   \index{host identifier}
+is the second part, on the right of the network number, which uniquely identifies the node on the network.
 }
 
 \Paragraph{subnet mask}
 \mode<article>{
+   \index{subnet mask}
 The subnet mask is also a 32-bit number consisting of two parts.
 Starting from the left, there is a set of ones for the network part of the \acs{IP} address.
 This is followed by a set of zeros for the host part.
@@ -85,6 +92,7 @@ This means that the first 26~bits of the accompanying \acs{IP} address are the n
 
 \Paragraph{network address}
 \mode<article>{
+   \index{network address}
 Each network requires two special addresses that can not be assigned to hosts.
 The first is the network address.
 It is the first \acs{IP} address in the network, i.e.~the \acs{IP} address where the host part consists of only zeros.
@@ -99,6 +107,7 @@ The host part -- the last 8~bits -- must be all zeros to give the lowest possibl
 
 \Paragraph{broadcast address}
 \mode<article>{
+   \index{broadcast address}
 The second special \acs{IP} address is the broadcast address.
 It is the last \acs{IP} address in the network, i.e.~the \acs{IP} address where the host part consists of only ones.%
 \footnote{Even though I was always told the first address is the network address and the last address is the broadcast address, in fact both the first and the last address once were used as the broadcast address for the network by \href{https://github.com/schoen/unicast-extensions/blob/master/LOWEST.md}{4.2BSD}, an operating system from 1983.}
@@ -110,6 +119,7 @@ With the host part -- the last octet -- all binary ones, these eight ones give t
 
 \Paragraph{local broadcast address}
 \mode<article>{
+   \index{broadcast address!local}
 Every network has its own broadcast address as the last \acs{IP} address in the range.
 There is a second broadcast address, 255.255.255.255, which is a link-local broadcast address.
 It can only be used to communicate on the local link as routers do not forward packets with this destination address onto other networks.
@@ -117,6 +127,7 @@ It can only be used to communicate on the local link as routers do not forward p
 
 \Paragraph{default gateway}
 \mode<article>{
+   \index{default gateway}
 The default gateway is not a special address.
 It is just the \acs{IP} address of the router that connects your local network to the other networks.
 Most of the time it is either the first \emph{available} \acs{IP} address in the network or the last.
@@ -125,6 +136,7 @@ But this is not a requirement and it can be any available address in the network
 
 \Paragraph{loopback address}
 \mode<article>{
+   \index{loopback address}
 All \acs{IP} addresses starting with 127 are reserved for the loopback address.%
    \footnote{In \acs{IP} version~6 there is only a single loopback address, namely ::1 or 127 binary zeros followed by a single binary one.}
 When communicating with the loopback address, the computer connects back to itself.
@@ -148,6 +160,7 @@ With both the 0 and 255 network reserved, in reality only 254 networks can be us
 
 \Paragraph[1981]{classful addressing}
 \mode<article>{
+   \index{classful addressing}
 As the internet community quickly realised 254 networks were not enough, they kept the networks that were already assigned to companies and created a new system based on classes.
 The first octet of the \acs{IP} address determined that class of \acs{IP} address and the class determined the size of the network, i.e.~which part is used for the network and which part is used for the host address.
 \Vref{tab:classful-addressing} shows the different classes, their subnet mask and the number of hosts per network.
@@ -195,6 +208,7 @@ The subnet mask only came to be with the concept of \emph{subnetting} but the ma
 
 \Paragraph[1985]{subnetting}
 \mode<article>{
+   \index{subnetting}
 %A subnetwork or subnet is a logical subdivision of an \acs{IP} network.
 %The practice of dividing a network into two or more networks is called subnetting.
 %Computers that belong to the same subnet are addressed with an identical most-significant bit-group in their \acs{IP} addresses.
@@ -209,6 +223,7 @@ This block of \acs{IP} addresses contains over 16~million addresses, starting wt
 
 \Paragraph[1992]{supernetting}
 \mode<article>{
+   \index{supernetting}
 A supernetwork, or supernet, is an \acs{IP} network that is formed by combination of multiple networks (or subnets) into a larger network.
 The new routing prefix for the combined network represents the constituent networks in a single routing table entry.
 The process of forming a supernet is called supernetting, \emph{prefix aggregation}, \emph{route aggregation}, or \emph{route summarisation}.
@@ -270,6 +285,7 @@ However, this supernet includes all the other networks as well, from 198.16.0.0 
 
 \Paragraph[1993]{\acf{CIDR}}
 \mode<article>{
+   \iacs{CIDR}
 \Acl{CIDR} is a method for allocating \acs{IP} addresses and for \acs{IP} routing.
 The \gls{IETF} introduced \acs{CIDR} to replace the previous classful network addressing architecture on the internet.
 Its goal was to slow the growth of routing tables on routers across the internet, and to help slow the rapid exhaustion of \acs{IP} version~4 addresses.
@@ -277,6 +293,7 @@ Its goal was to slow the growth of routing tables on routers across the internet
 
 \Paragraph[1998]{\acs{IP} version 6}
 \mode<article>{
+   \index{IP@\acs{IP}!version~6}
 \acs{IP} version~6 was developed by the \gls{IETF} to deal with the long-anticipated problem of \acs{IP} version~4 address exhaustion, and is intended to replace \acs{IP} version~4.
 In December 1998, \acs{IP} version~6 became a draft standard for the \gls{IETF}, which subsequently ratified it as an internet standard on 14 July 2017.
 }
@@ -363,11 +380,13 @@ In December 1998, \acs{IP} version~6 became a draft standard for the \gls{IETF},
 
 \Paragraph{prefix}
 \mode<article>{
+   \index{prefix}
 The network prefix is the first part of the \acs{IP} address, identifying the network.
 }
 
 \Paragraph{prefix length}
 \mode<article>{
+   \index{prefix!length}
 The prefix length is the size of the prefix in number of bits.
 It translates directly to the subnet mask.
 The prefix length is the number of ones in the subnet mask.
@@ -376,12 +395,14 @@ The prefix length is the number of ones in the subnet mask.
 
 \Paragraph{Why do we need subnetting?}
 \mode<article>{
+   \index{subnetting}
 We are the network administrators of a small company.
 We have a couple (50) of desktop computers for the employees, as well as a few (10) servers.
 We contact \acs{RIPE} \acs{NCC}%
     \footnote{\gls{RIPE} \gls{NCC} is the \gls{RIR} for Europe, the Middle East and parts of central Asia. As a \gls{RIR}, it oversees the allocation and registration of internet number resources such as \acs{IP} addresses and autonomous system numbers.}
 and tell them we need sixty \acs{IP} addresses, plus some extra just in case we will grow and need more computers.
-Since a class~c address range contains 256~\acs{IP} addresses, \gls{RIPE} will give us one such range, e.g.~198.51.100.0/24.
+Since a class~c address range contains 256~\acs{IP} addresses, \gls{RIPE} will give us one such range, e.g.~198.51.100.0/24.%
+   \iacs{RIPE}
 
 Now we have a problem.
 We have plenty of \acs{IP} addresses but we need two separate networks.
@@ -399,6 +420,7 @@ Remember that these different classes are just made-up methods of determining wh
 
 \Paragraph{simplifies \acs{IP} address configuration}
 \mode<article>{
+   \iacs{DHCP}
 Without the \gls{DHCP} you would have to contact a network administrator every morning at work when you power on your laptop and want to connect it to the (wireless) network.
 Back at home or at a friend's place you need to change the \acs{IP} settings again, including which \acs{DNS} servers to use.
 This requires huge lists with available \acs{IP} addresses which are being updated constantly with newly available \acs{IP} addresses -- should you remember to contact your network administrator before leaving work -- or available \acs{IP} addresses becoming unavailable as people come in to work every morning.
@@ -406,8 +428,9 @@ This requires huge lists with available \acs{IP} addresses which are being updat
 
 \Paragraph{\acs{DORA}}
 \mode<article>{
+   \index{DHCP@\acs{DHCP}!DORA@\acs{DORA}}
 \gls{DHCP} operations fall into four phases: server discovery, \acs{IP} address lease offer, lease request, and lease acknowledgement.
-These stages (see \vref{fig:dora}) are often abbreviated as \acs{DORA} for discovery, offer, request, and acknowledgement.
+These stages (see \vref{fig:dora}) are often abbreviated as \acs{DORA} for \acl{DORA}.
 
 \begin{figure}
     \centering
@@ -427,6 +450,7 @@ These stages (see \vref{fig:dora}) are often abbreviated as \acs{DORA} for disco
 
 \Paragraph{lease time}
 \mode<article>{
+   \index{DHCP@\acs{DHCP}!lease time}
 When the server offers the client an \acs{IP} address, it does this for a specific lease time.
 After this time expires, the client must relinquish the given \acs{IP} address.
 To prevent the client from getting disconnected from the network while it requests a new \acs{IP} address, it can refresh the lease on its current \acs{IP} address midway the lease period.
@@ -440,6 +464,7 @@ It cannot use the \acs{IP} address for the remaining four hours but must send a 
 
 \Paragraph{\acs{DHCP} relay}
 \mode<article>{
+   \index{DHCP@\acs{DHCP}!relay}
 As it is impractical to configure a \acs{DHCP} server on each network, routers can be configured to act as \acs{DHCP} relays, forwarding the broadcast messages as unicast to a remote \acs{DHCP} server.
 }
 
@@ -450,6 +475,10 @@ As it is impractical to configure a \acs{DHCP} server on each network, routers c
 \Paragraph{private \acs{IP} space}
 \mode<article>{
 There is nothing special about `private' \acs{IP} addresses.
+   \index{IP address@\acs{IP} address!private}
+   \index{IP address@\acs{IP} address!public}
+   \index{internet}
+   \iacs{ISP}
 They are not treated any different from `public' \acs{IP} addresses by routers or end hosts.
 The only difference is that they \emph{should} not be routed on the public internet.
 This means that \acl{ISP} should block packets with a private \acs{IP} address as either the source or the destination address.
@@ -472,13 +501,16 @@ These include:
 \end{multicols}
 
 The address range 169.254.0.0/16 is a special case.
-These are defined as `link-local' addresses which cannot be forwarded by a router.
-Microsoft uses these addresses as \acp{APIPA}.
+These are defined as `link-local' addresses which cannot be forwarded by a router.%
+   \index{IP address@\acs{IP} address!link-local}
+Microsoft uses these addresses as \acp{APIPA}.%
+   \index{IP address@\acs{IP} address!APIPA@\acs{APIPA}}
 A Windows computer takes a random \acs{IP} address from this range when it is configured to receive an \acs{IP} address from a \acs{DHCP} server but it receives no responses from any \acs{DHCP} server.
 }
 
 \Paragraph{port-based address translation}
 \mode<article>{
+   \iacs{NAT}
 The majority of network address translators map multiple private hosts to one publicly exposed \acs{IP} address.
 In a typical configuration, a local network uses one of the designated private \acs{IP} address subnets (\rfc{1918}).
 A router in that network has a private address of that address space.
@@ -495,16 +527,23 @@ For \acs{TCP} and \acs{UDP} the port numbers are changed so that the combination
 \rfc{2663} uses the term \gls{NAPT} for this type of \acs{NAT}.
 Other names include \gls{PAT}, \acs{IP} \emph{masquerading}, \acs{NAT} \emph{overload} and \emph{many-to-one} \acs{NAT}.
 This is the most common type of \acs{NAT} and has become synonymous with the term \acs{NAT} in common usage.
+   \index{IP masquerading@\acs{IP} masquerading}
+   \index{NAT@\acs{NAT}!overload}
+   \index{NAT@\acs{NAT}!many-to-one}
+   \iacs{PAT}
 }
 
 \Paragraph{pool of public addresses}
 \mode<article>{
+   \index{NAT@\acs{NAT}!pool}
 It is possible to use multiple public \acs{IP} addresses to translate the private \acs{IP} address into.
 When this is used in combination with port-based address translation, it allows for multiple thousands of private hosts to communicate on the internet.
 }
 
 \Paragraph{one-to-one translation}
 \mode<article>{
+   \index{NAT@\acs{NAT}!static}
+   \index{NAT@\acs{NAT}!one-to-one}
 This method is most often used to translate a range of private \acs{IP} addresses into a different range of private \acs{IP} addresses.
 This is often needed when two companies with overlapping \acs{IP} address space connect their networks together.
 }
@@ -514,6 +553,8 @@ This is often needed when two companies with overlapping \acs{IP} address space 
 
 \Paragraph{What is a router?}
 \mode<article>{
+   \index{router}
+   \index{packet!forwarding}
 A router is really just a specialised computer that \emph{forwards} packets it receives but which are not destined for itself.
 A computer can also be configured to function as a router by turning on this option (\vref{lst:freebsd-enable-routing,lst:rhel-enable-routing}).
 }
@@ -539,7 +580,8 @@ A computer can also be configured to function as a router by turning on this opt
 \noindent
 \usebox\lstrouterTwo
 
-When a router receives a packet with a destination \acs{IP} address which does not belong to any of the router's interfaces, the router looks up the \acs{IP} address in its \emph{routing table} and forwards the packet out the given interface.
+When a router receives a packet with a destination \acs{IP} address which does not belong to any of the router's interfaces, the router looks up the \acs{IP} address in its \emph{routing table} and forwards the packet out the given interface.%
+   \index{routing table}
 }
 \newsavebox{\lstrouterThree}
 \begin{lrbox}{\lstrouterThree}
@@ -563,6 +605,7 @@ Destination     Gateway         Genmask         Iface
 Routers only know about the networks they directly connect to.
 They must thus learn about distant networks.
 This can happen in one of two ways, either the network administrator manually configures the router to forward a certain prefix to some other router (the \emph{next-hop} router) or the routers in a network can use a \emph{dynamic routing protocol} to teach each other about the networks they know and how to reach them.
+   \index{router!next-hop}
 }
 
 \slide{routing table}
@@ -572,6 +615,7 @@ This can happen in one of two ways, either the network administrator manually co
 
 \Paragraph{\acl{TTL}}
 \mode<article>{
+   \iacs{TTL}
 The \acs{IP} header contains a \gls{TTL} field which indicates how many routers (hops) it can pass before it must be deleted.
 This prevents the data packet from circulating indefinitely.
 As it is an 8-bit field, the maximum value is~255 but a recommended initial value is~64.\footnote{See \rfc{1700}, p.~64.}
@@ -582,6 +626,8 @@ As it does not really signify some time spent in transit, with the development o
 
 \Paragraph{fragmentation}
 \mode<article>{
+   \index{fragmentation}
+   \iacs{MTU}
 Different physical media have different maximum frame sizes.
 For example, Ethernet has a maximum frame size of 1518~bytes or a \gls{MTU} of 1500~bytes, which is the frame size minus the header length.
 Token Ring has a much larger \gls{MTU} of 4464~bytes, \gls{ATM} and \abbr{X.25} have much smaller \acp{MTU} of 48~and 576~bytes respectively.
@@ -590,25 +636,31 @@ When a router connects an Ethernet segment to an \gls{ATM} circuit, it must \emp
 Once fragmented, routers do not reassemble the pieces back together as they might take different paths through the network and are not guaranteed to arrive in the correct order.
 The end host is responsible for piecing all fragments back together.
 
-Another example when fragmentation is being used, is in the communication between a data centre and campus network as the former often uses jumbo frames (9000~bytes) while the latter uses normal Ethernet frames which have a maximum size of 1500~bytes.
+Another example when fragmentation is being used, is in the communication between a data centre and campus network as the former often uses jumbo frames (9000~bytes) while the latter uses normal Ethernet frames which have a maximum size of 1500~bytes.%
+   \index{frame!jumbo}
+   \index{data centre}
 
 Finally, you will also encounter fragmentation on IPsec \aclp{VPN} where the maximum transmission unit is slightly smaller than the normal 1500~bytes.
+   \index{VPN@\acs{VPN}!IPsec!fragmentation}
 }
 
 \Paragraph{broadcast domain}
 \mode<article>{
+   \index{broadcast domain}
 A \emph{broadcast domain} is that part of the network to which a broadcast messages propagates.
 One of the functions of a router is to stop broadcasts, not forwarding the to other parts of the network.
 }
 
 \Paragraph{static routing}
 \mode<article>{
+   \index{static routing}
 Static routing is a form of routing that occurs when a router uses a manually-configured routing entry, rather than information from dynamic routing traffic.
 In many cases, static routes are manually configured by a network administrator by adding in entries into a routing table, though this may not always be the case.
 Unlike dynamic routing, static routes are fixed and do not change if the network is changed or reconfigured.
 Static routing and dynamic routing are not mutually exclusive.
 Both dynamic routing and static routing are usually used on a router to maximise routing efficiency and to provide backups in case dynamic routing information fails to be exchanged.
 Static routing can also be used in \emph{stub networks},%
+index{stub network}%
 \footnote{%
 A stub network is a (part of a) network with only one way to reach the rest of the network.
 It thus does not need detailed knowledge about the network but can usually route all traffic using a single default route pointing to the exit point.
@@ -619,6 +671,8 @@ or to provide a gateway of last resort.
 
 \Paragraph{dynamic routing protocols}
 \mode<article>{
+   \index{routing protocol!distance-vector}
+   \index{routing protocol!link-state}
 \begin{description}
 \item[distance-vector]
 A distance-vector routing protocol is like putting signposts on every crossroads with the router being the crossroads.
@@ -633,6 +687,7 @@ Once the entire map has been drawn, each router can calculate the best path to r
 
 \Paragraph{metric}
 \mode<article>{
+   \index{metric}
 When we take a look at \vref{fig:metric}, we see that router $R_4$ connects to the network 192.0.2.0/24.
 It advertises this to routers $R_2$ and $R_3$ which in turn both advertise this network to router $R_1$.
 Router $R_1$ now knows two paths to reach the destination network 192.0.2.0/24, once via $R_2$ and once via $R_3$.
@@ -657,6 +712,7 @@ Most \acs{OSPF} implementation use a cost value based on the bandwidth of the li
 
 \Paragraph{administrative distance}
 \mode<article>{
+   \index{administrative distance}
 The \emph{metric} indicates the preference of a single route learnt from different routers using the same routing protocol.
 It is however also possible for a router to learn a route from different routing protocols.
 The \emph{administrative distance} gives the preference or credibility of a routing protocol over another.
@@ -666,15 +722,21 @@ As lower values are preferred, when a router running both \acs{RIP} and \acs{OSP
 
 \Paragraph{\acf{RIP}}
 \mode<article>{
-The \acl{RIP} is an example of a distance-vector routing protocol using the \emph{hop count} or the number of routers to count how good a given path is.
+The \acl{RIP} is an example of a distance-vector routing protocol using the \emph{hop count} or the number of routers to count how good a given path is.%
+   \index{metric!hop count}
 It is a very simple protocol useful in smaller networks.
 The protocol is not suitable for larger networks because of its slow \emph{convergence time} and its tendency to propagate good information slowly and negative information quickly.
+   \index{convergence time}
 }
 
 \Paragraph{route poisoning}
 \mode<article>{
+   \index{route poisoning}
 % source: https://www.geeksforgeeks.org/route-poisoning-and-count-to-infinity-problem-in-routing/
-The main issue with distance-vector routing protocols is routing loops. This routing loop in the network causes the count-to-infinity problem.
+The main issue with distance-vector routing protocols is routing loops.%
+   \index{routing loop}
+This routing loop in the network causes the count-to-infinity problem.%
+   \index{count-to-infinity}
 Routing loops usually occur when an interface goes down or two routers send updates at the same time.
 
 Route poisoning helps to alleviate this problem by advertising the route back to its source with a metric of infinity.
@@ -683,14 +745,17 @@ This ensures that the router originally advertising the prefix can never use its
 
 \Paragraph{split horizon}
 \mode<article>{
-Split horizon is another method to prevent routing loops from occuring.
+   \index{split horizon}
+Split horizon is another method to prevent routing loops from occuring.%
+   \index{routing loop}
 This time, instead of advertising the routes back with a metric of infinity, we simple do not advertise the route back to where we learned it from.
 This method is not as good as using route poisoning to prevent routing loops.
-Logically you can use both both methods. Either you use neither method, or you use one or the other.
+Logically you can not use both both methods. Either you use neither method, or you use one or the other.
 }
 
 \Paragraph{hold-down timer}
 \mode<article>{
+   \index{hold-down timer}
 Hold down works by having each router start a timer when they first receive information about a network that is unreachable.
 Until the timer expires, the router will discard any subsequent route messages that indicate the route is in fact reachable.
 It can solve the case where multiple routers are connected indirectly.
@@ -699,6 +764,7 @@ There are realistic scenarios where split horizon and split horizon with poisone
 
 \Paragraph{\acf{EIGRP}}
 \mode<article>{
+   \iacs{EIGRP}
 The \acl{EIGRP} was a Cisco proprietary protocol which has been made publicly available in 2013 but has not been implemented by other vendors.
 
 While \acs{RIP} and \acs{OSPF} have a very simple metric, \acs{EIGRP} has a rather complex one.
@@ -726,12 +792,16 @@ Finally, when $k_5=0$, instead of the entire equation to become zero, this facto
 
 \Paragraph{\acf{OSPF}}
 \mode<article>{
+   \iacs{OSPF}
 The \acl{OSPF} protocol is a link-state routing protocol suitable for small network all the way up to massive service provider networks.
 % TODO: expand on this paragraph
 }
 
 \Paragraph{\acf{BGP}}
 \mode<article>{
+   \iacs{BGP}
+   \index{routing protocol!path-vector}
+   \index{autonomous system}
 The \acl{BGP} is neither a distance-vector nor a link-state routing protocol.
 It is the only \emph{path-vector} routing protocol and it is used to interconnect different \emph{autonomous systems}, meaning it can be used to interconnect networks operated by different organisations.
 A basic \acs{BGP} configuration is relatively simple but it can quickly become extremely complex.
