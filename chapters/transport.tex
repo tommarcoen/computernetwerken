@@ -6,6 +6,7 @@
 
 \Paragraph{port numbers}
 \mode<article>{
+   \index{port number}
 In computer networking, a port is a communication endpoint.
 At the software level, within an operating system, a port is a logical construct that identifies a specific process or a type of network service.
 A port is identified for each transport protocol and address combination by a 16-bit unsigned number, known as the \emph{port number}.
@@ -15,6 +16,8 @@ It completes the destination or the originating network address of a message.
 Specific port numbers are reserved to identify specific services so that an arriving packet can be easily forwarded to a running application.
 For this purpose, port numbers lower than 1024 identify the historically most commonly used services and are called the \emph{well-known port numbers}.
 Higher-numbered ports are available for general use by applications and are known as \emph{ephemeral ports}.
+   \index{port number!well-known}
+   \index{port number!ephemeral}
 
 \Vref{tab:port-numbers} lists a few well-known port numbers while \vref{tab:ephemeral-ports} lists the range of ephemeral port numbers used by some operating systems.
 
@@ -57,6 +60,7 @@ Higher-numbered ports are available for general use by applications and are know
 
 \Paragraph{checksum}
 \mode<article>{
+   \index{checksum}
 A checksum is a small-sized block of data derived from another block of digital data for the purpose of detecting errors that may have been introduced during its transmission or storage.
 By themselves, checksums are often used to verify data integrity but are not relied upon to verify data authenticity.
 }
@@ -86,14 +90,16 @@ It uses a combination of \emph{sequence numbers} and \emph{acknowledgements} to 
 
 \Paragraph{three-way handshake}
 \mode<article>{
+   \index{three-way handshake}
 Before a client attempts to connect with a server, the server must first bind to and listen at a port to open it up for connections: this is called a passive open.
-Once the passive open is established, a client may establish a connection by initiating an active open using the three-way handshake.
+Once the passive open is established, a client may establish a connection by initiating an active open using the three-way handshake.%
+   \index{TCP@\acs{TCP}!passive open}
 \begin{description}
 \item[\abbr{SYN}]
 The active open is performed by the client sending a \abbr{SYN} to the server.
 The client sets the segment's sequence number to a random value $A$.%
     \footnote{%
-        The WireShark capture in \cref{tab:tcp-handshake} gives a sequence number of zero.
+        The Wireshark\index{Wireshark} capture in \cref{tab:tcp-handshake} gives a sequence number of zero.
         This is because of WireShark option called `Relative sequence numbers' which lets the numbers start from zero to make them more easy to read by humans.
         It does this by subtracting the initial value $A$ in the \abbr{SYN} packet from the value in all subsequent packets sent by the client and subtracting the initial value $B$ from all subsequent packets sent by the server.
         }
@@ -105,8 +111,8 @@ Finally, the client sends an \abbr{ACK} back to the server.
 The sequence number is set to the received acknowledgement value i.e. $A+1$, and the acknowledgement number is set to one more than the received sequence number i.e. $B+1$.
 \end{description}
 Steps 1 and 2 establish and acknowledge the sequence number for one direction.
-Steps~2 and~3 establish and acknowledge the sequence number for the other direction.
-Following the completion of these steps, both the client and server have received acknowledgements and a full-duplex communication is established.
+Steps~2 and~3 establish and acknowledge the sequence number for the reverse direction.
+Following the completion of these steps, both the client and server have received acknowledgements and a full-duplex (\acs{FDX}) communication is established.
 
 \begin{table}
 \centering
@@ -117,7 +123,7 @@ Following the completion of these steps, both the client and server have receive
 2 & 203.0.113.80 & 10.0.0.1 & 443 $\rightarrow$ 53501 [\abbr{SYN}, \abbr{ACK}] seq $=0$ ack $=1$ \dots\\
 3 & 10.0.0.1 & 203.0.113.80 & 53501 $\rightarrow$ 443 [\abbr{ACK}] seq $=1$ ack $=1$ \ldots\\
 \end{tabular}
-\caption{A few fields that WireShark shows about a three-way handshake}
+\caption{A few fields that Wireshark shows about a three-way handshake}
 \label{tab:tcp-handshake}
 \end{table}
 }
@@ -129,15 +135,22 @@ The sequence number identifies the order of the bytes sent from each computer so
 The sequence number of the first byte is chosen by the transmitter for the first packet, which is flagged \abbr{SYN}.
 This number can be arbitrary, and should, in fact, be unpredictable to defend against \ac{TCP} sequence prediction attacks.
 
-Acknowledgements (\abbr{ACK}) are sent with a sequence number by the receiver of data to tell the sender that data has been received to the specified byte.
+% TODO: rephrase
+Acknowledgements (\abbr{ACK}) are sent with a sequence number by the receiver of the data to tell the sender that data has been received to the specified byte.
 Acknowledgements do not imply that the data has been delivered to the application, they merely signify that it is now the receiver's responsibility to deliver the data.
 
 Reliability is achieved by the sender detecting lost data and retransmitting it.
-\ac{TCP} uses two primary techniques to identify loss: \acf{RTO} and duplicate cumulative acknowledgements.
+\ac{TCP} uses two primary techniques to identify loss: \acf{RTO} and duplicate cumulative acknowledgements.%
+   \index{retransmission timeout}
+
+% TODO: explain RTO briefly
 }
 
 \Paragraph{flow control}
 \mode<article>{
+   \index{TCP@\acs{TCP}!flow control}
+   \index{TCP@\acs{TCP}!sliding window}
+   \index{TCP@\acs{TCP}!receive window}
 \acs{TCP} uses a \emph{sliding window} flow control protocol.
 In each \acs{TCP} segment, the receiver specifies in the \emph{receive window} field the amount of additionally received data (in bytes) that it is willing to buffer for the connection.
 The sending host can send only up to that amount of data before it must wait for an acknowledgement and receive window update from the receiving host.
@@ -153,6 +166,7 @@ The sending host can send only up to that amount of data before it must wait for
 
 \Paragraph{congestion control}
 \mode<article>{
+   \index{TCP@\acs{TCP}!congestion control}
 The final main aspect of \acs{TCP} is congestion control.
 \acs{TCP} uses a number of mechanisms to achieve high performance and avoid congestion collapse, where network performance can fall by several orders of magnitude.
 These mechanisms control the rate of data entering the network, keeping the data flow below a rate that would trigger collapse.
@@ -168,20 +182,24 @@ Modern implementations of \acs{TCP} contain four intertwined algorithms: \emph{s
 \mode<article>{
 \begin{extrainfo}
 \paragraph{slow start}
+   \index{TCP@\acs{TCP}!slow start}
 % https://www.stackpath.com/edge-academy/what-is-tcp-slow-start/
 \acs{TCP} slow start is an algorithm which balances the speed of a network connection.
 Slow start gradually increases the amount of data transmitted until it finds the network's maximum carrying capacity.
 
 \paragraph{congestion avoidance}
+   \index{TCP@\acs{TCP}!congestion avoidance}
 If a loss event occurs, \acs{TCP} assumes that it is due to network congestion and takes steps to reduce the offered load on the network.
 These measurements depend on the exact \acs{TCP} congestion avoidance algorithm used.
 
 \paragraph{fast retransmit}
+   \index{TCP@\acs{TCP}!fast retransmit}
 Fast retransmit is an enhancement to \acs{TCP} that reduces the time a sender waits before retransmitting a lost segment.
 A \acs{TCP} sender normally uses a simple timer to recognize lost segments.
 If an acknowledgement is not received for a particular segment within a specified time (a function of the estimated round-trip delay time), the sender will assume the segment was lost in the network, and will retransmit the segment.
 
-Duplicate acknowledgement is the basis for the fast retransmit mechanism. 
+Duplicate acknowledgement is the basis for the fast retransmit mechanism.
+   \index{TCP@\acs{TCP}!duplicate acknowledgement}
 After receiving a packet an acknowledgement is sent for the last in-order byte of data received.
 For an in-order packet, this is effectively the last packet's sequence number plus the current packet's payload length.
 If the next packet in the sequence is lost but a third packet in the sequence is received, then the receiver can only acknowledge the last in-order byte of data, which is the same value as was acknowledged for the first packet.
@@ -198,6 +216,8 @@ In the above example, this would acknowledge to the end of the payload of the fi
 There is no need to acknowledge intermediate packets, since \acs{TCP} uses cumulative acknowledgements by default.
 
 \paragraph{fast recovery}\leavevmode
+   \index{TCP@\acs{TCP}!fast recovery}
+% TODO
 \end{extrainfo}
 }
 
@@ -205,7 +225,8 @@ There is no need to acknowledge intermediate packets, since \acs{TCP} uses cumul
 \section{Further reading}
 Both \textcite{stevens,comer} are good resources to learn more about how the \acf{TCP} operates.
 Additionally you can take a look at the actual network packets as they are being sent and received on the network.
-This requires a software tool like Wireshark to capture and display the packets.
+This requires a software tool like Wireshark to capture and display the packets.%
+   \index{Wireshark}
 To learn how this program works, Chris Greer, a leading expert on packet analysis, recommends \textcite{chappell17,sanders,bock}.
 I own a different book by \citeauthor{chappell17} but I am unfamiliar with these three recommended books.
 }
