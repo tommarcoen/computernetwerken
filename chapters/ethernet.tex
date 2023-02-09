@@ -193,13 +193,15 @@ We will take a quick look at the following features of managed switches:
 
 \Paragraph{\acs{VLAN}}
 \mode<article>{
-   A \acf{VLAN} is any broadcast domain that is partitioned and isolated in a computer network at the data link layer.
-   \acp{VLAN} work by applying tags to network frames and handling these tags in networking systems -- creating the appearance and functionality of network traffic that is physically on a single network but acts as if it is split between separate networks.
-   In this way, \acp{VLAN} can keep network applications separate despite being connected to the same physical network, and without requiring multiple sets of cabling and networking devices to be deployed.
+      \iacs{VLAN}
+A \acf{VLAN} is any broadcast domain that is partitioned and isolated in a computer network at the data link layer.
+\acp{VLAN} work by applying tags to network frames and handling these tags in networking systems -- creating the appearance and functionality of network traffic that is physically on a single network but acts as if it is split between separate networks.
+In this way, \acp{VLAN} can keep network applications separate despite being connected to the same physical network, and without requiring multiple sets of cabling and networking devices to be deployed.
 }
 
 \Paragraph{access port}
 \mode<article>{
+   \index{access port}
 An access port is an interface that is assigned to only one \acs{VLAN}.
 Network frames sent and received on this port are not tagged with a \acs{VLAN}.
 This type of interface is used towards end hosts such as printers, laptops, and workstations as they often do not understand \abbr{802.1Q} tags.
@@ -208,6 +210,7 @@ This type of interface is used towards end hosts such as printers, laptops, and 
 
 \Paragraph{trunk port}
 \mode<article>{
+   \index{trunk port}
 A trunk port is an interface that is assigned to more than one \acs{VLAN}.
 For the switch to be able to assign the network frame to the correct virtual network, all frames must be tagged with the correct \acs{VLAN} number.
 }
