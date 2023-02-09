@@ -3,7 +3,9 @@
 
 \Paragraph{\acs{MAC} addresses}
 \mode<article>{
+   \index{MAC address@\acs{MAC} address}
 A \ac{MAC} address is a unique identifier that is assigned to a \ac{NIC} for use as an address in communication within a network segment.
+   \iacs{NIC}
 \ac{MAC} addresses are primarily assigned by device manufacturers and stored in read-only memory.
 As such they are often referred to as the \emph{burned-in address}, or as a \emph{hardware address}, or \emph{physical address}.
 Nowadays it is very often possible to change the \acs{MAC} adddress used on an interface.
@@ -18,8 +20,10 @@ Something the address is displayed as three groups of four hexadecimal digits, s
 
 \Paragraph{\acf{OUI}}
 \mode<article>{
+   \iacs{OUI}
 The first 24 bits of a \ac{MAC} address identify the vendor or manufacturer of the network card.
 \Acp{OUI} are purchased from the \acs{IEEE} registration authority by the vendor.
+   \iacs{IEEE}
 They are used to make sure that -- in theory at least -- every \acs{MAC} address is unique.
 }
 
@@ -44,32 +48,55 @@ See \cref{fig:mac-format} for the complete picture of a \acs{MAC} address.
 
 \Paragraph{1522 bytes}
 \mode<article>{
+   \index{frame!size}
+   \iacs{MTU}
 Ethernet frames have a maximum size of 1522~bytes and a minimum frame size of 64~bytes.
 Twenty-two bytes are used by the Ethernet header (18~bytes) and trailer (4~bytes) so that the encapsulated \acs{IP} packet has a maximum size of 1500~bytes.
 }
 
 \Paragraph{Ethernet header}
 \mode<article>{
+   \index{Ethernet!header}
 The standard length of the Ethernet header is 14~bytes, however, in the case of utilizing a \acs{VLAN} tag, it is extended to 18~bytes.
 It contains the source and destination \acs{MAC} addresses, a field designated for either the \emph{ethertype} or the length of the data payload, and an optional \abbr{802.1Q} tag containg \acs{VLAN} and \acs{CoS} information.
 
 The ethertype field is a two-byte field in the Ethernet header that is used to identify the type of data that is being transmitted in the Ethernet frame.
+   \index{ethertype}
 It is used to indicate the protocol that is encapsulated in the payload of the Ethernet frame.
 The ethertype field is located immediately after the destination and source \acs{MAC} addresses in the Ethernet header.
 % TODO: Expand on the ethertype and the 802.1Q tag.
 % TODO: Explain the difference between the length and ethertype and how the contents or the length is calculated when not provided.
+
+
+\begin{figure}
+   \centering
+   TODO: Ethernet frame
+   \caption{An Ethernet frame}
+   \label{fig:ethernet-frame}
+\end{figure}
+
 }
 
 \Paragraph{Ethernet trailer}
 \mode<article>{
+   \index{Ethernet!trailer}
+   \iacs{FCS}
+   \iacs{CRC}
 The frame ends with a \acf{FCS}, which is a 32-bit \acf{CRC} used to detect any in-transit corruption of data.
+
+\begin{extrainfo}
+% TODO: Explain what a CRC and how it works.
+\end{extrainfo}
 }
 
 \Paragraph{jumbo frames} 
 \mode<article>{
+   \index{frame!jumbo}
+   \index{frame!size}
 Some implementations of Gigabit Ethernet and other higher-speed variants of Ethernet support larger frames, known as jumbo frames.
 These frames can be up to 9022 bytes in size.
 Jumbo frames are mainly used in data centres as the use of these larger frames require all intermediate devices to support them which is impossible to require from devices on the internet.
+   \index{data centre}
 }
 
 
@@ -78,12 +105,15 @@ Jumbo frames are mainly used in data centres as the use of these larger frames r
 
 \Paragraph{hub}
 \mode<article>{
+   \index{hub}
 An Ethernet hub has multiple \ac{IO} ports, in which a signal introduced at the input of any port appears at the output of every port except the original incoming.
 A hub works at the physical layer (layer 1) of the \ac{OSI} model.
+% TODO: mention something about HDX here
 }
 
 \Paragraph{collision domain}
 \mode<article>{
+   \index{collision domain}
 A collision domain is a network segment connected by a shared medium or through repeaters where simultaneous data transmissions collide with one another.
 The collision domain applies particularly in wireless networks, but also affected early versions of Ethernet.
 A network collision occurs when more than one device attempts to send a packet on a network segment at the same time.
@@ -93,6 +123,8 @@ Devices outside the collision domain do not have collisions with those inside.
 
 \Paragraph{\acs{MAC}-address table}
 \mode<article>{
+   \index{MAC-address table@\acs{MAC}-address table}
+   \index{swithc}
 A network switch learns the identities of connected devices from incoming frames and then only forwards data to the port connected to the device to which it is addressed.
 These learnt \acs{MAC} addresses are stored in the \ac{MAC}-address table.
 
@@ -103,11 +135,13 @@ By default, this timeout is three-hundred seconds on a Cisco switch.
 
 \Paragraph{time to live?}
 \mode<article>{
+   \index{network loop}
 Ethernet has no \acl{TTL} field so when a loop gets created in the network, the frames will keep traversing the network, bringing the entire network down.
 }
 
 \Paragraph{\acf{STP}}
 \mode<article>{
+   \iacs{STP}
 The \acl{STP} is a network protocol that builds a loop-free logical topology for Ethernet networks.
 The basic function of \acs{STP} is to prevent bridge loops and the broadcast radiation that results from them.
 \acs{STP} also allows a network design to include backup links providing fault tolerance if an active link fails.
