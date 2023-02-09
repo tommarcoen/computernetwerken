@@ -21,6 +21,7 @@
 *.snm
 *.toc
 *.vrb
+*.xsim
 main.fls
 main.*.nav
 main.*.vrb
