@@ -5,6 +5,8 @@
 
 \Paragraph{Telnet}
 \mode<article>{
+   \index{Telnet}
+   \index{terminal!virtual}
 Telnet is an application protocol used on a network to provide a bidirectional interactive text-oriented communication facility using a virtual terminal connection.
 Telnet was developed in 1969.
 The name stands for `teletype network.'
@@ -15,6 +17,7 @@ However, because of serious security concerns -- it sends all data, including pa
 
 \Paragraph{\acs{SSH}}
 \mode<article>{
+   \iacs{SSH}
 The \acf{SSH} protocol is a cryptographic network protocol for operating network services securely over an unsecured network.
 Its most notable applications are remote login and command-line execution.
 
@@ -28,6 +31,7 @@ In Windows 10 version 1709, an official Win32 port of OpenSSH is available.
 
 \Paragraph{\acs{FTP}}
 \mode<article>{
+   \iacs{FTP}
 The \acf{FTP} is a standard communication protocol used for the transfer of computer files from a server to a client on a computer network.
 \acs{FTP} is built on a client–server model architecture using separate control and data connections between the client and the server.
 \acs{FTP} users may authenticate themselves with a clear-text sign-in protocol, normally in the form of a username and password, but can connect anonymously if the server is configured to allow it.
@@ -46,6 +50,7 @@ In this mode, the client uses the control connection to send a \abbr{PASV} comma
 
 \Paragraph{\acs{TFTP}}
 \mode<article>{
+   \iacs{TFTP}
 \acf{TFTP} is a simple file transfer protocol which allows a client to get a file from or put a file onto a remote host.
 One of its primary uses is in the early stages of nodes booting from a local-area network.
 \acs{TFTP} has been used for this application because it is very simple to implement.
@@ -53,10 +58,18 @@ One of its primary uses is in the early stages of nodes booting from a local-are
 Due to its simple design, \acs{TFTP} can be easily implemented by code with a small memory footprint.
 It is therefore the protocol of choice for the initial stages of any network booting strategy like \acs{BOOTP}, \acs{PXE}, \acs{BSDP}, etc., when targeting from highly resourced computers to very low resourced \ac{SBC} and \ac{SOC}.
 It is also used to transfer firmware images and configuration files to network appliances like routers, firewalls, \acs{IP} phones, etc.
+   \iacs{BOOTP}
+   \iacs{PXE}
+   \iacs{BSDP}
+   \iacs{SBC}
+   \iacs{SOC}
 }
 
 \Paragraph{\acs{FTPS}}
 \mode<article>{
+   \iacs{FTPS}
+   \iacs{SSL}
+   \iacs{TLS}
 \ac{FTPS} (also known \acs{FTP}-\acs{SSL}) is an extension to the commonly used \acf{FTP} that adds support for the \acf{TLS} and, formerly, the \acf{SSL} cryptographic protocols.
 
 Because \acs{FTP} uses a dynamic secondary port (for data channels), many firewalls were designed to snoop \acs{FTP} control messages in order to determine which secondary data connections they need to allow.
@@ -67,6 +80,9 @@ This problem can be solved with the use of a limited range of ports for data and
 
 \Paragraph{\acs{SFTP}}
 \mode<article>{
+   \iacs{SFTP}
+   \iacs{SSH}
+   \iacs{IETF}
 The \acl{SFTP} is a network protocol that provides file access, file transfer, and file management over any reliable data stream.
 It was designed by the \acs{IETF} as an extension of the \acf{SSH} protocol version~2.0 to provide secure file transfer capabilities.
 
@@ -78,6 +94,7 @@ This protocol assumes that it is run over a secure channel, such as \acs{SSH}, t
 \Section{\acl{DNS}}
 
 \mode<article>{
+   \iacs{DNS}
 The \acf{DNS} is the hierarchical and decentralised naming system used to identify computers reachable through the internet or other \acs{IP} networks.
 The resource records contained in the \acs{DNS} associate domain names with other forms of information.
 These are most commonly used to map human-friendly domain names to the numerical \acs{IP} addresses computers need to locate services and devices using the underlying network protocols, but have been extended over time to perform many other functions as well.
@@ -86,11 +103,13 @@ The \acl{DNS} has been an essential component of the functionality of the intern
 
 \Paragraph{authoritative server}
 \mode<article>{
+   \index{DNS@\acs{DNS}!authoritative server}
 An authoritative name server is a name server that only gives answers to \acs{DNS} queries from data that has been configured by an original source, for example, the domain administrator or by dynamic \acs{DNS} methods, in contrast to answers obtained via a query to another name server that only maintains a cache of data.
 }
 
 \Paragraph{resolver}
 \mode<article>{
+   \index{DNS@\acs{DNS}!resolver}
 The client side of the \acs{DNS} is called a \acs{DNS} resolver.
 A resolver is responsible for initiating and sequencing the queries that ultimately lead to a full resolution (translation) of the resource sought, e.g., translation of a domain name into an \acs{IP} address.
 \acs{DNS} resolvers are classified by a variety of query methods, such as \emph{recursive}, \emph{non-recursive}, and \emph{iterative}.
@@ -109,6 +128,7 @@ For example, a possible resolution of www.ex\-am\-ple.com would query a global r
 
 \Paragraph{address resolution}
 \mode<article>{
+   \index{name resolution}
 The process of address resolution is shown in \vref{fig:dns}.
 The computer in the top left corner wants to acccess the server `example.com.'
 The client computer queries its local \acs{DNS} resolver using a recursive query (step~1) for the \acs{IP} address of example.com.
@@ -127,10 +147,12 @@ After the client receives the \acs{IP} address from the resolver (step~8) it can
 
 \Paragraph{\acs{mDNS}}
 \mode<article>{
+   \iacs{mDNS}
 When a \acl{mDNS} client needs to resolve a hostname, it sends an \acs{IP} multicast query message that asks the host having that name to identify itself.
 That target machine then multicasts a message that includes its \acs{IP} address.
 All machines in that subnet can then use that information to update their \acs{mDNS} caches.
 Any host can relinquish its claim to a name by sending a response packet with a \acf{TTL} equal to zero.
+   \iacs{TTL}
 
 By default, \acs{mDNS} exclusively resolves hostnames ending with the `.local' top-level domain.
 This can cause problems if .local includes hosts that do not implement \acs{mDNS} but that can be found via a conventional unicast \acs{DNS} server.
@@ -140,6 +162,7 @@ Resolving such conflicts requires network configuration changes that \acs{mDNS} 
 \Section{Email}
 
 \mode<article>{
+   \index{email}
 Email operates across computer networks, primarily the internet, and also local-area networks.
 Today's email systems are based on a store-and-forward model.
 Email servers accept, forward, deliver, and store messages.
@@ -148,6 +171,7 @@ Neither the users nor their computers are required to be online simultaneously; 
 
 \Paragraph{\acs{SMTP}}
 \mode<article>{
+   \iacs{SMTP}
 The \acl{SMTP} is an internet standard communication protocol for electronic mail transmission.
 Mail servers and other message transfer agents use \acs{SMTP} to send and receive mail messages.
 User-level email clients typically use \acs{SMTP} only for sending messages to a mail server for relaying, and typically submit outgoing email to the mail server on port~587 or~465 per \rfc{8314}.
@@ -157,6 +181,7 @@ User-level email clients typically use \acs{SMTP} only for sending messages to a
 
 \Paragraph{\acs{POP3}}
 \mode<article>{
+   \iacs{POP3}
 The \acl{POP3} provides access via an \acs{IP} network for a user client application to a mailbox (\emph{maildrop}) maintained on a mail server.
 The protocol supports download and delete operations for messages.
 \acs{POP3} clients connect, retrieve all messages, store them on the client computer, and finally delete them from the server.
@@ -168,6 +193,7 @@ Encrypted communication for \acs{POP3} is either requested after protocol initia
 
 \Paragraph{\acs{IMAP}}
 \mode<article>{
+   \iacs{IMAP}
 The \acl{IMAP} was designed with the goal of permitting complete management of an email box by multiple email clients, therefore clients generally leave messages on the server until the user explicitly deletes them.
 An \acs{IMAP} server typically listens on port number~143.
 \acs{IMAP} over \acs{SSL}/\acs{TLS} (\acs{IMAPS}) is assigned the port number~993.
@@ -175,12 +201,14 @@ An \acs{IMAP} server typically listens on port number~143.
 
 \Paragraph{webmail}
 \mode<article>{
+   \index{webmail}
 Companies no longer host their own email servers using Postfix or Microsoft Exchange.
 Instead they use cloud solutions like Gmail or Office~365.
 }
 
 \Paragraph{spam}
 \mode<article>{
+   \index{spam}
 Email spam, or \acf{UBE}, refers to the sending of unwanted or irrelevant emails to a large number of recipients.
 These emails are often commercial in nature, and are sent in an attempt to promote products or services.
 Email spam has steadily grown since the early 1990s, and by 2014 was estimated to account for around ninety percent of total email traffic.
