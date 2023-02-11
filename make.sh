@@ -29,7 +29,6 @@ if [ "$1" = "clean" ]; then
 elif [ "$1" = "book" ]; then
    make_clean
    compile_book
-   make_clean
 elif [ "$1" = "presentation" ]; then
    make_clean
    compile_presentation
