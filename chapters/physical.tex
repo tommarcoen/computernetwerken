@@ -6,16 +6,20 @@
 
 \Paragraph{twisted pair}
 \mode<article>{
-   \index{twisted pair}
+   \index{network cable!twisted pair}
 Twisted pair cabling is a type of wiring in which two conductors of a single circuit are twisted together for the purposes of improving electromagnetic compatibility.
 Compared to a single conductor or an untwisted balanced pair, a twisted pair reduces electromagnetic radiation from the pair and crosstalk between neighbouring pairs and improves rejection of external \ac{EMI}.
 It was invented by Alexander Graham Bell.
+   \iacs{EMI}
 }
 
 \Paragraph{shielded vs unshielded}
 \mode<article>{
 For additional noise immunity, twisted-pair cabling may be shielded.
 Cable with shielding is known as \ac{ShTP} and without as \ac{UTP}.
+   \index{network cable!shielded}
+   \index{network cable!unshielded}
+   
 
 Common shield construction types include \emph{individual} shielding (\abbr{U/\-FTP}) with aluminium foil for each twisted pair or quad.
 This type of shielding helps prevent \ac{EMI} from entering or exiting individual pairs and also protects neighbouring pairs from crosstalk.
@@ -28,6 +32,7 @@ This type of shielding helps prevent \ac{EMI} from entering or exiting the cable
 
 \Paragraph{categories}
 \mode<article>{
+   \index{network cable!twisted pair!categories}
 There are different categories of twisted pair cabling.
 Each category must adhere to a different standard and stringent specifications for crosstalk and system noise.
 These standard specify the maximum distance a cable must be able to cover, the bandwidth, and the required shielding.
@@ -58,6 +63,8 @@ See \vref{tab:tp-categories} for an overview of the different categories.
 
 \Paragraph{\acs{RJ45}}
 \mode<article>{
+   \index{connectors!RJ45@\acs{RJ45}}
+   \index{connectors!8P8C@\acs{8P8C}}
 The connector used for network cables is actually called an \acs{8P8C} connector but everyone knows it as a \acs{RJ45} connector.
 A completely plastic connector is used for unshielded cabling while a metalic version exists for shield cabling.
 
@@ -72,6 +79,9 @@ A completely plastic connector is used for unshielded cabling while a metalic ve
 
 \Paragraph{Fast Ethernet}
 \mode<article>{
+   \index{Ethernet!Fast}
+   \index{100BASE-TX@\abbr{100BASE-TX}}
+   \index{full duplex}
 \abbr{100BASE-TX} is the predominant form of Fast Ethernet, and runs over two wire-pairs inside a category~5 or above cable.
 Each network segment can have a maximum cabling distance of \SI{100}{\metre}.
 One pair is used for each direction, providing full-duplex operation with \SI{100}{\mega\bit\per\second} of throughput in each direction.
@@ -81,12 +91,14 @@ Since a typical category~5 cable contains 4~pairs, it can support two \abbr{100B
 
 \Paragraph{crossover cable}
 \mode<article>{
-   \index{crossover cable}
-An Ethernet crossover cable is a crossover cable for Ethernet used to connect computing devices together directly.
+   \index{network cable!crossover}
+   \index{network cable!straight-through}
+An Ethernet crossover cable is a cable used to connect computing devices directly together.
 It is most often used to connect two devices of the same type, e.g. two computers (via their network interface controllers) or two switches to each other.
 By contrast, \emph{straight-through} patch cables are used to connect devices of different types, such as a computer to a network switch.
 Intentionally crossed wiring in the crossover cable connects the transmit signals at one end to the receive signals at the other end.
 Many network devices today support auto-\acs{MDI-X} (aka auto-crossover) capability, wherein a patch cable can be used in place of a crossover cable, or vice versa, and the receive and transmit signals are reconfigured automatically within the device to yield a working connection.
+   \iacs{MDI-X}
 
 To make a straight-through patch cable, either use the order defined by \abbr{T568A} on both ends of the cable, or the order defined by \abbr{T568B}.
 To create a crossover patch cable, use \abbr{T568A} on one side and \abbr{T568B} on the other.
@@ -103,6 +115,7 @@ To create a crossover patch cable, use \abbr{T568A} on one side and \abbr{T568B}
 
 \Paragraph{Gigabit Ethernet}
 \mode<article>{
+   \index{Ethernet!Gigabit}
 In computer networking, Gigabit Ethernet (GbE or 1~GigE) is the term applied to transmitting Ethernet frames at a rate of a gigabit per second.
 The most popular variant \abbr{1000BASE-T} is defined by the \acs{IEEE} 802.3ab standard.
 It came into use in 1999, and has replaced Fast Ethernet in wired local networks due to its considerable speed improvement over Fast Ethernet, as well as its use of cables and equipment that are widely available, economical, and similar to previous standards.
@@ -113,6 +126,7 @@ In a departure from both \abbr{10BASE-T} and \abbr{100BASE-TX}, \abbr{1000BASE-T
 
 \Paragraph{auto \acs{MDI-X}}
 \mode<article>{
+   \iacs{MDI-X}
 Auto \acs{MDI-X} (aka `auto crossover') automatically detects the required cable connection type and configures the connection appropriately, removing the need for crossover cables to interconnect switches or connecting \acsp{PC} peer-to-peer.
 As long as it is enabled on either end of a link, either type of cable can be used.
 For auto \acs{MDI-X} to operate correctly, the data rate on the interface and duplex setting must be set to `auto.'
@@ -129,6 +143,8 @@ Higher speeds or longer lengths require fibre optic cables to be used.
 
 \Paragraph{\acl{DAC}}
 \mode<article>{
+   \index{network cable!direct-attach copper}
+   \index{network cable!twinaxial}
 A \acf{DAC} cable is a copper 10~Gigabit Ethernet cable which comes in either an active or passive twinax (twinaxial) cable assembly and connects directly into an \acs{SFP+} housing (\vref{fig:dac}).
 \abbr{40GBASE-CR4} and \abbr{100GBASE-CR10} physical layers using \SI{7}{\metre} twin-axial cable are being developed as part of the 100~Gbit Ethernet specifications by the \acs{IEEE}.
 
@@ -142,6 +158,7 @@ A \acf{DAC} cable is a copper 10~Gigabit Ethernet cable which comes in either an
 
 \Paragraph{optical fibre}
 \mode<article>{
+   \index{network cable!optical fibre}
 An optical fibre is a flexible, transparent fibre made by drawing glass (silica) or plastic to a diameter slightly thicker than that of a human hair.
 Fibres are used instead of metal wires because signals travel along them with less loss; in addition, fibres are immune to electromagnetic interference, a problem from which metal wires suffer.
 The concept of a direct-attech copper cable also exist with optical cables.
@@ -166,12 +183,14 @@ These are then called \acf{AOC}.
 
 \Paragraph{single-mode}
 \mode<article>{
+   \index{network cable!SMF@\acs{SMF}}
 In fibre-optic communication, a \ac{SMF}, also known as fundamental- or mono-mode, is an optical fibre designed to carry only a single mode of light -- the transverse mode.
 Waves can have the same mode but have different frequencies. This is the case in single-mode fibres, where we can have waves with different frequencies, but of the same mode, which means that they are distributed in space in the same way, and that gives us a single ray of light.
 }
 
 \Paragraph{multi-mode}
 \mode<article>{
+   \index{network cable!mMF@\acs{MMF}}
 Multi-mode optical fibre is a type of optical fibre mostly used for communication over short distances, such as within a building or on a campus.
 Multi-mode links can be used for data rates up to \SI{100}{\giga\bit\per\second}.
 Multi-mode fibre has a fairly large core diameter that enables multiple light modes to be propagated and limits the maximum length of a transmission link because of modal dispersion.
@@ -179,6 +198,10 @@ Multi-mode fibre has a fairly large core diameter that enables multiple light mo
 
 \Paragraph{transceivers}
 \mode<article>{
+   \index{transceiver}
+   \iacs{SFP}
+   \iacs{SFP+}
+   \iacs{QSFP}
 As there are so many different options regarding transceivers depending on bandwidth, distance and the use of lasers or \acsp{LED}, network equipment does not have built-in transceivers.
 It is more convenient to have a modular system where you can plug in the transceiver you need.
 There are different form factors available, including \acs{SFP}, \acs{SFP+} and \acs{QSFP}.
@@ -204,6 +227,9 @@ There are different form factors available, including \acs{SFP}, \acs{SFP+} and 
 Nowadays most connectors are \acs{LC} (as in \vref{fig:sfp}) but in data centres \acs{MPO} cables (\vref{fig:mpo}) are also used for high-speed connections and for interconnecting patch panels.
 An \acs{MPO} cable can have up to 72 fibre strands in a cable.
 See also \href{https://www.qsfptek.com/article/fiber-connector-types-lc-sc-fc-st-mtp-mpo}{qsfptek.com} for more information on different fibre optic connectors.
+   \index{connectors!LC@\acs{LC}}
+   \index{connectors!MPO@\acs{MPO}}
+   \index{network cable!MPO@\acs{MPO}}
 
 \begin{figure}
    \centering
@@ -233,7 +259,11 @@ See also \href{https://www.qsfptek.com/article/fiber-connector-types-lc-sc-fc-st
 
 \Paragraph{802.11}
 \mode<article>{
-\acs{IEEE} 802.11 specifies the set of \acf{MAC} and physical layer (\abbr{PHY}) protocols for implementing \acf{WLAN} computer communication.
+   \index{802.11}
+   \iacs{WLAN}
+   \index{Wi-Fi}
+\acs{IEEE} 802.11 specifies the set of %\acf{MAC}
+data link and physical layer protocols for implementing \acf{WLAN} computer communication.
 The standard and amendments provide the basis for wireless network products using the Wi-Fi brand and are the world's most widely used wireless computer networking standards.
 
 \begin{table}
@@ -259,12 +289,14 @@ The standard and amendments provide the basis for wireless network products usin
 
 \Paragraph{frequency}
 \mode<article>{
+   \index{frequency}
 \acs{IEEE} 802.11 uses various frequencies including \SI{2.4}{\giga\hertz}, \SI{5}{\giga\hertz}, \SI{6}{\giga\hertz}, and \SI{60}{\giga\hertz} frequency bands.
 Although \acs{IEEE} 802.11 specifications list channels that might be used, the radio frequency spectrum availability allowed varies significantly by regulatory domain.
 }
 
 \Paragraph{channel}
 \mode<article>{
+   \index{channel}
 The \SI{2.4}{\giga\hertz} frequency supports eleven channels in the United States and thirteen channels in Europe and most of the world.
 The \SI{5}{\giga\hertz} frequency supports over fifty channels, depending on the bandwidth used.
 
@@ -278,6 +310,7 @@ The \SI{5}{\giga\hertz} frequency supports over fifty channels, depending on the
 
 \Paragraph{bandwidth}
 \mode<article>{
+   \index{bandwidth}
 The bandwidth is one of the determinants of the capacity of a given communication channel.
 Using a wireless channel with a bandwidth of \SI{40}{\mega\hertz} results in bigger speeds than a bandwidth of \SI{20}{\mega\hertz}.
 However, when choosing the bandwidth, you have to make sure all devices that must connect to the wireless network do support this higher bandwidth.
@@ -285,6 +318,9 @@ However, when choosing the bandwidth, you have to make sure all devices that mus
 
 \Paragraph{SSID}
 \mode<article>{
+   \iacs{SSID}
+   \iacs{ESS}
+   \index{service set (wireless)}
 The \ac{SSID} defines a service set or extended service set.%
 \footnote{An \ac{ESS} is a wireless network, created by multiple access points, which appears to users as a single, seamless network, such as a network covering a home or office that is too large for reliable coverage by a single access point.}
 Normally it is broadcast in the clear by stations in beacon packets to announce the presence of a network and seen by users as a wireless network name.
@@ -292,6 +328,7 @@ Normally it is broadcast in the clear by stations in beacon packets to announce 
 
 \Paragraph{antennas}
 \mode<article>{
+   \index{antenna}
 Professional access points are designed to be mounted upside down on the ceiling.
 They radiate down into the room for a few metres and try to cover as much space on the floor as possible.
 They are not designed to radiate upwards to the above floor or far down, to reach the floor below.
@@ -301,20 +338,27 @@ If you want to use such an access point to cover a large area in a garden, you w
 
 \Paragraph{security}
 \mode<article>{
+   \index{security (wireless)}
+   \iacs{WEP}
+   \iacs{WPA}
 Wi-Fi security includes \ac{WEP} and \ac{WPA}.
 \ac{WEP} is a notoriously weak security standard: the password it uses can often be cracked in a few minutes with a basic laptop computer and widely available software tools.
 
 There are two options available when chosing \ac{WPA}: personal mode and enterprise mode.
 \ac{WPA} personal is also referred to as \acs{PSK} or \acl{PSK}.
+   \iacs{PSK}
 This mode is designed for home and small office networks and does not require an authentication server.
 Instead all users can access the wireless network using a common \acl{PSK}.
 
 \ac{WPA} enterprise or \abbr{802.1X} requires a \ac{RADIUS} server for authentication.
+   \iacs{RADIUS}
+   \iacs{NAC}
 This mode requires a more complicated setup, but provides additional security (e.g.\ protection against dictionary attacks on short passwords).
 Most noticably, it requires users to authenticate to the wireless network using both a username and a password.
 Often the credentials required are the same as the credentials required to access your company computer and thus Windows can authenticate to the wireless network automatically.
 
 \ac{WPS} is an alternative authentication key distribution method intended to simplify and strengthen the process, but which, as widely implemented, creates a major security hole via \ac{WPS} \abbr{PIN} recovery.
+   \iacs{WPS}
 }
 
 \mode<article>{

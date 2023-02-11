@@ -9,7 +9,6 @@ compile_book()
 {
    echo "Building the book..."
    pdflatex main-book
-   pdflatex main-book
    makeindex main-book
    makeglossaries main-book
    biber main-book
@@ -30,6 +29,7 @@ if [ "$1" = "clean" ]; then
 elif [ "$1" = "book" ]; then
    make_clean
    compile_book
+   make_clean
 elif [ "$1" = "presentation" ]; then
    make_clean
    compile_presentation

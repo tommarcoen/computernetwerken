@@ -74,8 +74,8 @@
 \begin{document}
 
 \mode<article>{
-   \frontmatter
    \input{tex/titlepages}
+   \frontmatter
    \clearforchapter
    \tableofcontents*
    \clearforchapter
@@ -112,7 +112,8 @@
 \printbibliography[keyword={RFC},title={Requests for comments},prenote=myprenote]
 \clearforchapter
 \input{tex/index-references}
-\markboth{\indexname}{\textsc{\indexname}}
+%\markboth{\indexname}{\textsc{\indexname}}
+\markboth{\indexname}{\indexname}
 \printindex
 \include{tex/colophon}
 }
