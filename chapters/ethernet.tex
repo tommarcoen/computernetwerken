@@ -108,9 +108,12 @@ Jumbo frames are mainly used in data centres as the use of these larger frames r
 \mode<article>{
    \index{hub}
    \index{half duplex}
-An Ethernet hub has multiple \ac{IO} ports, in which a signal introduced at the input of any port appears at the output of every port except the original incoming.
+An Ethernet hub has multiple \ac{IO} ports, in which a signal introduced at the input of any port appears at the output of every other port.
 A hub works at the physical layer (layer 1) of the \ac{OSI} model.
-% TODO: mention something about HDX here
+Because hubs are nothing more than physical interconnections between the cables, when two or more hosts transmit at the same time, their messages become garbled.
+A collision occurs.
+This means that all devices interconnected to each other through the hub form a single collision domain.
+The network forms a half-duplex system.
 }
 
 \Paragraph{collision domain}
