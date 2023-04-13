@@ -136,7 +136,8 @@ The sequence number of the first byte is chosen by the transmitter for the first
 This number can be arbitrary, and should, in fact, be unpredictable to defend against \ac{TCP} sequence prediction attacks.
 
 % TODO: rephrase
-Acknowledgements (\abbr{ACK}) are sent with a sequence number by the receiver of the data to tell the sender that data has been received to the specified byte.
+%Acknowledgements (\abbr{ACK}) are sent with a sequence number by the receiver of the data to tell the sender that data has been received to the specified byte.
+When the receiver sends an acknowledgement (\abbr{ACK}) the sequence number indicates till which byte the data has been received.
 Acknowledgements do not imply that the data has been delivered to the application, they merely signify that it is now the receiver's responsibility to deliver the data.
 
 Reliability is achieved by the sender detecting lost data and retransmitting it.
