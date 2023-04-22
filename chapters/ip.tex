@@ -468,6 +468,11 @@ It cannot use the \acs{IP} address for the remaining four hours but must send a 
 As it is impractical to configure a \acs{DHCP} server on each network, routers can be configured to act as \acs{DHCP} relays, forwarding the broadcast messages as unicast to a remote \acs{DHCP} server.
 }
 
+\Paragraph{reservations}
+A \acs{DHCP} server can be configured such to always provide the same client (\acs{MAC} address) the same \acs{IP} address.
+This way the client practically has a fixed \acs{IP} address, as if configured manually on the device itself.
+But you keep the \acs{IP} address configuration on a central location.
+
 \Section{\Acl{NAT}}
 \label{sec:nat}
 
