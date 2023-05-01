@@ -84,6 +84,14 @@ This means that the first 24 bits -- or first three octets -- indicate the netwo
 This means there can be up to $2^8=256$ hosts in the network.
 }
 
+\Paragraph{prefix length}
+\mode<article>{
+   \index{prefix!length}
+The prefix length is the size of the prefix in number of bits.
+It translates directly to the subnet mask.
+The prefix length is the number of ones in the subnet mask.
+}
+
 \mode<article>{
 A second example could be 255.255.255.192.
 Converting these octets to binary gives us 26 consecutive ones followed by 6 zeros.
@@ -104,6 +112,15 @@ The network address is the very first (lowest) address using this network number
 In this example, the network address is 198.51.100.0; the first three bytes must be identical for it to be the same network.
 The host part -- the last 8~bits -- must be all zeros to give the lowest possible address.
 }
+
+
+\Paragraph{prefix}
+\mode<article>{
+   \index{prefix}
+The network prefix is the first part of the \acs{IP} address, identifying the network.
+The term is often used interchangeably with \emph{network address} but technically the prefix is only the network part.
+}
+
 
 \Paragraph{broadcast address}
 \mode<article>{
@@ -377,22 +394,6 @@ In December 1998, \acs{IP} version~6 became a draft standard for the \gls{IETF},
 \end{frame}
 }
 
-
-\Paragraph{prefix}
-\mode<article>{
-   \index{prefix}
-The network prefix is the first part of the \acs{IP} address, identifying the network.
-}
-
-\Paragraph{prefix length}
-\mode<article>{
-   \index{prefix!length}
-The prefix length is the size of the prefix in number of bits.
-It translates directly to the subnet mask.
-The prefix length is the number of ones in the subnet mask.
-}
-
-
 \Paragraph{Why do we need subnetting?}
 \mode<article>{
    \index{subnetting}
@@ -469,9 +470,14 @@ As it is impractical to configure a \acs{DHCP} server on each network, routers c
 }
 
 \Paragraph{reservations}
+\mode<article>{
 A \acs{DHCP} server can be configured such to always provide the same client (\acs{MAC} address) the same \acs{IP} address.
 This way the client practically has a fixed \acs{IP} address, as if configured manually on the device itself.
 But you keep the \acs{IP} address configuration on a central location.
+}
+
+
+
 
 \Section{\Acl{NAT}}
 \label{sec:nat}
@@ -490,6 +496,7 @@ This means that \acl{ISP} should block packets with a private \acs{IP} address a
 
 There are several blocks of private \acs{IP} addresses which can be used internally by organisations without having to ask for permission to do so.
 These include:
+% TODO: order the IP ranges and seperate them in two: RFC 1918 and the rest
 \begin{multicols}{3}
 \raggedcolumns
 \begin{itemize}
@@ -545,6 +552,7 @@ It is possible to use multiple public \acs{IP} addresses to translate the privat
 When this is used in combination with port-based address translation, it allows for multiple thousands of private hosts to communicate on the internet.
 }
 
+% TODO: either explain more, or delete?
 \Paragraph{one-to-one translation}
 \mode<article>{
    \index{NAT@\acs{NAT}!static}
@@ -715,6 +723,12 @@ Most \acs{OSPF} implementation use a cost value based on the bandwidth of the li
 \end{figure}
 }
 
+\Paragraph{equal-cost multi-path routing}
+\mode<article>{
+   \iacs{ECMP}
+   \index{load balancing!network}
+}
+
 \Paragraph{administrative distance}
 \mode<article>{
    \index{administrative distance}
@@ -819,7 +833,7 @@ You can tweak the protocol so that you can exactly control the path a packet has
 
 \mode<article>{
 \section{Further reading}
-\textcite{lammle-ccna,lammle-comptia} are both good reasons to continue from here.
+\textcite{lammle-ccna,lammle-comptia} are both good resources to continue from here.
 They both explain \acs{IP} addresses, subnetting, \acs{DHCP}, and routing in more detail.
 Another great resource is \textcite{stevens} but this masterpiece is probably a bit too in-depth.
 \textcite{doyle} is another classic focussing on routing protocols such as \acs{RIP}, \acs{OSPF}, and \acs{IS-IS} while the second volume covers \acs{BGP}.
