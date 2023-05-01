@@ -20,20 +20,27 @@ Higher-numbered ports are available for general use by applications and are know
    \index{port number!ephemeral}
 
 \Vref{tab:port-numbers} lists a few well-known port numbers while \vref{tab:ephemeral-ports} lists the range of ephemeral port numbers used by some operating systems.
+Note that, although both \acs{UDP} and \acs{TCP} use port numbers and they both look identical, they are both distinct.
+One application can use \acs{UDP} port~500 while another application can use \acs{TCP} port~500.
+Since the protocol is different, the ports are different as well and one application will not receive network packets destined for the other application.
+
+In practice when a company requested a port number for use by its application, it was given both the \acs{UDP} and the \acs{TCP} port number.
+This turned out to be realy convenient as \acs{DNS} started out using only \acs{UDP} but now also uses \acs{TCP}.\iacs{DNS}
+As it was given both \acs{UDP}/53 and \acs{TCP}/53, it can use the same port number for both protocols.
 
 \begin{table}
     \centering
     \begin{minipage}{.7\textwidth}
     \centering
     \sffamily
-    \begin{tabular}{rl@{\hspace{2cm}}rl}
+    \begin{tabular}{ll@{\hspace{2cm}}ll}
     \textbf{port} & \textbf{application} & \textbf{port} & \textbf{application} \\[1ex]
-     22 & \acs{SSH}           & 110 & \acs{POP3} \\
-     25 & \acs{SMTP}          & 123 & \acs{NTP} \\
-     53 & \acs{DNS}           & 143 & \acs{IMAP} \\
-     67 & \acs{DHCP} (server) & 443 & \acs{HTTPS} \\
-     68 & \acs{DHCP} (client) & 445 & \acs{SMB} file shares \\
-     80 & \acs{HTTP}          & 666 & Doom\footnote{Doom is the first online first-person shooter game.}\\
+     \acs{TCP}/22 & \acs{SSH}           & \acs{TCP}/110 & \acs{POP3} \\
+     \acs{TCP}/25 & \acs{SMTP}          & \acs{UDP}/123 & \acs{NTP} \\
+     \acs{UDP}/53 & \acs{DNS}           & \acs{TCP}/143 & \acs{IMAP} \\
+     \acs{UDP}/67 & \acs{DHCP} (server) & \acs{TCP}/443 & \acs{HTTPS} \\
+     \acs{UDP}/68 & \acs{DHCP} (client) & \acs{TCP}/445 & \acs{SMB} file shares \\
+     \acs{TCP}/80 & \acs{HTTP}          & \acs{UDP}/666 & Doom\footnote{Doom is the first online first-person shooter game.}\\
     \end{tabular}
     \end{minipage}
     \caption{A few well-known ports}
