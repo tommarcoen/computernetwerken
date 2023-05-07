@@ -479,7 +479,7 @@ But you keep the \acs{IP} address configuration on a central location.
 
 
 
-\Section{\Acl{NAT}}
+\Section{\acl{NAT}}
 \label{sec:nat}
 
 
@@ -501,23 +501,32 @@ These include:
 \raggedcolumns
 \begin{itemize}
 \item 10.0.0.0/8
+\item 100.64.0.0/10
 \item 169.254.0.0/16
 \item 172.16.0.0/12
-\item 192.168.0.0/16
-\item 100.64.0.0/10
 \item 192.0.2.0/24
+\item 192.168.0.0/16
 \item 198.18.0.0/15
 \item 198.51.100.0/24
 \item 203.0.113.0/24
 \end{itemize}
 \end{multicols}
 
+The ranges 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16 were introduced as private IP ranges to enable \acf{NAT}.
+The ranges 192.0.2.0/24, 198.51.100.0/24, and 203.0.113.0/24 have been reserved for documentation purposes but can be used internally within an organisation.
+The range 100.64.0.0/10 was added in 2012 for use in carrier-grade \ac{NAT} scenarios (\rfc{6598}):
+
+\begin{quote}
+Shared-address space is distinct from \rfc{1918} private-address space because it is intended for use on service-provider networks.
+However, it may be used in a manner similar to \rfc{1918} private-address space on routing equipment that is able to do address translation across router interfaces when the addresses are identical on two different interfaces.
+\end{quote}
+
 The address range 169.254.0.0/16 is a special case.
-These are defined as `link-local' addresses which cannot be forwarded by a router.%
+These are defined as `link-local' addresses and must not be forwarded by a router as these addresses are not guaranteed to be unique beyond their network segment.%
    \index{IP address@\acs{IP} address!link-local}
-Microsoft uses these addresses as \acp{APIPA}.%
+Microsoft names this range \acp{APIPA}.%
    \index{IP address@\acs{IP} address!APIPA@\acs{APIPA}}
-A Windows computer takes a random \acs{IP} address from this range when it is configured to receive an \acs{IP} address from a \acs{DHCP} server but it receives no responses from any \acs{DHCP} server.
+A \acs{DHCP}\iacs{DHCP} client takes a random \acs{IP} address from this range when it receives no responses from any \acs{DHCP} server.
 }
 
 \Paragraph{port-based address translation}
@@ -560,6 +569,19 @@ When this is used in combination with port-based address translation, it allows 
 This method is most often used to translate a range of private \acs{IP} addresses into a different range of private \acs{IP} addresses.
 This is often needed when two companies with overlapping \acs{IP} address space connect their networks together.
 }
+
+
+\Section{\acl{ICMP}}
+\label{sec:icmp}
+
+\mode<article>{
+The \acf{ICMP} is a supporting protocol in the internet protocol suite.
+It is used by network devices, including routers, to send error messages and operational information indicating success or failure when communicating with another \acs{IP} address, for example, an error is indicated when a requested service is not available or that a host or router could not be reached.
+}
+% TODO
+
+\Paragraph{path \acs{MTU} discovery}
+% TODO
 
 \Section{Routing}
 \label{sec:routing}

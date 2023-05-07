@@ -261,8 +261,11 @@
 
 \newglossaryentry{channel access method}{
    name = {channel access method},
-   description = {}
-   % TODO
+   description = {
+      A channel access method or \emph{multiple access method} allows more than two terminals connected to the same transmission medium to transmit over it and to share its capacity.
+      A channel access method is based on multiplexing, that allows several data streams or signals to share the same communication channel or transmission medium.
+      In this context, multiplexing is provided by the physical layer.
+   }
 }
 
 \newglossaryentry{checksum}{
@@ -320,6 +323,15 @@
       The basic transmission unit in the internet architecture.
       A datagram contains all of the inforamtion needed to deliver it to its destination, analogous to a letter in the \abbr{US} postal system.
       Datagram networks are connectionless.
+   }
+}
+
+\newglossaryentry{DDoS-gls}{
+   name = {\acf{DDoS}},
+   sort = {distribute denial-of-service},
+   description = {
+      A \ac{DDoS} attack is a cyber-attack in which the perpetrator seeks to make a machine or network resource unavailable to its intended users by temporarily or indefinitely disrupting services of a host connected to a network.
+      Denial of service is typically accomplished by flooding the targeted machine or resource with superfluous requests in an attempt to overload systems and prevent some or all legitimate requests from being fulfilled.
    }
 }
 
@@ -503,6 +515,16 @@
 \newglossaryentry{IPsec}{
    name = {IPsec},
    description = {A collection of protocols designed by the \acs{IETF} to provide security for a packet carried over the internet.}
+}
+
+\newglossaryentry{leased line}{
+   name = {leased line},
+   description = {
+      A leased line is a private telecommunications circuit between two or more locations provided according to a commercial contract.
+      Unlike traditional telephone lines in the \ac{PSTN} leased lines are generally not switched circuits, and therefore do not have an associated telephone number.
+      Each side of the line is permanently connected, always active and dedicated to the other.
+      Leased lines can be used for telephone, internet, or other data communication services.
+   }
 }
 
 \newglossaryentry{link}{
@@ -764,6 +786,15 @@
 \newglossaryentry{throughput}{
    name = {throughput},
    description = {The number of bits that can pass through a point in one second.}
+}
+
+\newglossaryentry{token}{
+   name = {token},
+   description = {
+      A token is a special type of frame used in logical ring topologies such as Token Ring.
+      When no station is sending a frame, this special token frame circles the loop.
+      The token is repeated from station to station until arriving at a station that needs to send data. 
+   }
 }
 
 \newglossaryentry{TTL-gls}{

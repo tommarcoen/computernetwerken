@@ -208,7 +208,7 @@ Link aggregation is the combining (aggregating) of multiple network connections 
 A \ac{LAG} is the combined collection of physical ports.
 Other umbrella terms used to describe the concept include trunking%
    \footnote{Not to be confused with \acs{VLAN} trunking which is something entirely different that link aggregation trunking.}%
-, bundling, bonding, channeling or teaming.
+, bundling, bonding, channeling, ether-channel or teaming.
 }
 
 \Paragraph{switch stack}
@@ -292,6 +292,18 @@ The network administrator can configure which \acs{VLAN} should be considered to
 \end{extrainfo}
 }
 
+
+\Paragraph{layer-3 switch}
+\mode<article>{
+   \index{switch!layer-3}
+   \index{switch!multi-layer switch}
+As engineers continue to advance in their field, they have developed the ability to create larger and more complex chips.
+This advancement allows for the integration of more complex logic into network switches.
+Layer-3 switches in particular have the capability to route packets in hardware based on \acs{IP} addresses, effectively functioning as routers.
+As a result, it has become increasingly convenient to implement a layer-3 switch into network infrastructure, as it combines the functionality of both routers and traditional switches.
+}
+
+
 \Paragraph{\acs{MAC} filtering}
 \mode<article>{
    \index{MAC filtering@\acs{MAC} filtering}
@@ -348,17 +360,6 @@ The \ac{DHCP} snooping feature performs the following activities:
    \iacs{ARP}
 \Acl{DAI} allows a network administrator to intercept, log, and discard \ac{ARP} packets with invalid \acs{MAC}-address-to-\acs{IP}-address bindings.
 This capability protects the network from certain man-in-the-middle attacks.
-}
-\slide{\acf{DAI}}
-
-\Paragraph{layer-3 switch}
-\mode<article>{
-   \index{switch!layer-3}
-   \index{switch!multi-layer switch}
-As engineers continue to advance in their field, they have developed the ability to create larger and more complex chips.
-This advancement allows for the integration of more complex logic into network switches.
-Layer-3 switches in particular have the capability to route packets in hardware based on \acs{IP} addresses, effectively functioning as routers.
-As a result, it has become increasingly convenient to implement a layer-3 switch into network infrastructure, as it combines the functionality of both routers and traditional switches.
 }
 
 \mode<article>{

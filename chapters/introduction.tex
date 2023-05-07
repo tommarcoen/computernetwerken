@@ -27,6 +27,9 @@ We also cover routing schemes.
 We will ask some questions about how network communication goes and circle back to the network models when we talk about encapsulation.
 Finally, we will talk about network symbols used in literature to create network diagrams.
 
+
+
+
 \section{Network size}
 \label{sec:network-size}
 
@@ -34,14 +37,16 @@ Networks may be characterised by many properties or features, such as physical c
 Another distinct classification method is that of the physical extent or geographic scale.
 
 \paragraph{\gls{LAN}}\iacs{LAN}
-A computer network that interconnects computers within a limited area such as a residence, school, laboratory, office building or university campus (though this is also called a \acl{CAN}).
+A computer network that interconnects computers within a limited area such as a residence, school, laboratory, or office building.
 
 The term \gls{LAN} can be used both for a single \emph{broadcast domain} (see \vref{sec:routing-schemes,sec:routing}) or local network, similar to a \acs{WLAN} being a single wireless broadcast domain and a `\acs{VLAN}' being a virtual \gls{LAN} defined on a switch or group of switches; but the term `\gls{LAN}' can also mean the group of all of these local networks, forming the complete company or home network.
 In that case, `local' refers to the geographic location (one building) instead of the physical property of the network (a single broadcast domain).
 
 \paragraph{\gls{WAN}}\iacs{WAN}
+   \index{telecommunication circuit}
+   \index{leased line}
 A telecommunications network that extends over a large geographic area.
-Wide-area networks are often established with \emph{leased telecommunication circuits}.\index{telecommunication circuit}
+Wide-area networks are often established with \emph{leased telecommunication circuits}.
 These networks are mostly operated by \glspl{ISP}.
 
 \paragraph{\gls{PAN}}\iacs{PAN}
@@ -54,7 +59,7 @@ The networking equipment (switches, routers) and transmission media (optical fib
 A \acl{CAN} is larger than a \acl{LAN} but smaller than a \acs{MAN} or \gls{WAN}.
 
 An example would be the High Tech Campus in Eindhoven.\index{High Tech Campus}
-The buildings house different companies which are all interconnected using fibre optic cabling owned and maintained by the campus \acs{IT} team.
+The buildings house different companies which are all interconnected using fibre optic cabling owned and maintained by the campus' \acs{IT} team.
 The campus also has its own data centres and provides redundant connections to the internet.
 
 \paragraph{\gls{MAN}}%
@@ -70,7 +75,10 @@ A \gls{SAN} typically is a dedicated network of storage devices not accessible t
 
 % TODO: add an `extra information' paragraph about a NAS and the difference between NAS and SAN.
    \iacs{NAS}
-\Gls{NAS} is file-level storage such as Windows file shares using the \acs{SMB} protocol and is not the same as a \acs{SAN}.
+\Gls{NAS} is file-level storage such as Windows file shares using the \acs{SMB} protocol and is thus not the same as a \acs{SAN}.
+
+
+
 
 \section{Network ownership}
 \label{sec:network-ownership}
@@ -102,6 +110,67 @@ Network connection to an extranet is often, but not always, implemented via \gls
 \paragraph{\gls{DMZ}}\iacs{DMZ}
 A \gls{DMZ} is similar to an extranet but where an extranet only provides access to resources for a limited subnet of business partners or customers, services hosted in a \gls{DMZ} are generally accessible by anyone on the internet.
 It is an isolated and heavily firewalled part of a company's intranet.
+
+
+\Section{Network topologies}
+\label{sec:network-topologies}
+
+\mode<article>{
+The network \emph{topology} is the arrangement of the elements (links, nodes, etc.) of a communication network.
+It can be used to define or describe the arrangement of various types of telecommunication networks, including computer networks.
+
+Network topology is the topological structure of a network and may be depicted physically or logically.
+The physical topology describes how the components are physically connected together, while the logical topology illustrates how data flows within a network.
+Distances between nodes, physical interconnections, transmission rates, or signal types may differ between two different networks, yet their logical topologies may be identical.
+A network’s physical topology is a particular concern of the physical layer of the \gls{OSI} model (\vref{sec:network-models}).
+}
+
+
+\Paragraph{point-to-point}
+\mode<article>{
+The simplest method of connecting two devices together in a network is to directly connect them together using a cable for transfering data.
+This could be a network cable but can also be a serial or parallel cable.
+}
+
+\Paragraph{ring}
+\mode<article>{
+   \index{topology (network)!ring}
+Each node connects to exactly two other nodes, forming a single continuous pathway for signals through each node -- a ring.
+Data travels from node to node, with each node along the way handling every packet.
+
+Token Ring is an example of a \gls{LAN} technology that uses a logical ring topology.
+The physical topology of a Token Ring network is a star as the devices are interconnected using a \ac{MAU}, a device similar to an Ethernet network switch.
+The Telenet backbone is an example of interconnecting physical ring structures though the logical structure is a mesh of point-to-point links.
+}
+
+\Paragraph{bus}
+\mode<article>{
+   \index{topology (network)!bus}
+Nodes are directly connected to a common \emph{half-duplex}%
+   \index{half duplex}%
+\footnote{A half-duplex (\abbr{HDX}) system provides communication in both directions, but only one direction at a time, not simultaneously in both directions.}
+link called a bus.
+An example of a physical bus structure, would be the old Ethernet networks using coaxial cable.
+Connecting devices together using cat.~5-cable and a hub, results in a logical bus structure even though the physical structure is a star.
+}
+
+\Paragraph{star}
+\mode<article>{
+   \index{topology (network)!star}
+Every host is connected to a central hub.
+In its simplest form, one central hub acts as a conduit to transmit messages.
+The star network is one of the most common computer network topologies.
+}
+
+\Paragraph{mesh}
+\mode<article>{
+   \index{topology (network)!mesh}
+The infrastructure nodes connect directly, dynamically and non-hi\-er\-ar\-chi\-cal\-ly to as many other nodes as possible and cooperate with one another to efficiently route data to and from clients.
+A \emph{full} mesh is a network where every node has a connection to every other node.
+A \emph{partial} mesh is a network where some of the connects of a full mesh are missing.
+}
+
+
 
 \section{Network evolution}
 \label{sec:network-evolution}
@@ -147,7 +216,7 @@ The system is difficult to install and maintain.
 Token Ring is a computer networking technology used to build local-area networks.
 It was introduced by IBM in 1984, and standardised in 1989 as \acs{IEEE} 802.5.
 
-It uses a special three-byte frame called a token that is passed around a logical ring of workstations or servers.
+It uses a special three-byte frame called a \emph{token} that is passed around a logical ring of workstations or servers.
 This token passing is a channel access method providing fair access for all stations, and eliminating the collisions of contention-based access methods.
 
 Token Ring was a successful technology, particularly in corporate environments, but was gradually eclipsed by the later versions of Ethernet.
@@ -189,7 +258,9 @@ Switches also exist for other types of networks including Fibre Channel, \gls{AT
 The ARPAnet or Advanced Research Projects Agency network was the first wide-area packet-switched network with distributed control and one of the first networks to implement the \acs{TCP}/\acs{IP} protocol suite.
 Both technologies became the technical foundation of the internet.
 The first four nodes were designated as a testbed for developing and debugging the 1822 protocol, which was a major undertaking.
-While they were connected electronically in 1969, network applications were not possible until the \gls{NCP} was implemented in 1970 enabling the first two host-host protocols, remote login (Telnet) and file transfer (\acs{FTP}) which were specified and implemented between 1969 and 1973.
+While they were connected electronically in 1969, network applications were not possible until the \gls{NCP}%
+   \footnote{\acs{NCP} is the predecessor to \acs{TCP}.}
+was implemented in 1970 enabling the first two host-to-host protocols, remote login (Telnet) and file transfer (\acs{FTP}) which were specified and implemented between 1969 and 1973.
 The network was declared operational in 1971.
 Network traffic began to grow once email was established at the majority of sites by around 1973.
 
@@ -215,6 +286,7 @@ Ethernet adapters were also available.
 Is is one of the oldest packet-switching communication protocols available; it was developed several years before \gls{IP} version~4 (1981) and the \gls{OSI} reference model (1984).
 The protocol suite is designed as three conceptual layers, which correspond closely to the lower three layers of the seven-layer \gls{OSI} model.
 It also supports functionality not found in the \gls{OSI} network layer.
+% TODO: such as?
 
 \paragraph{Minitel (1984)}
    \index{Minitel}%
@@ -242,7 +314,8 @@ By 1991, the \acs{NSF} removed access restrictions and the commercial \acs{ISP} 
    \iacs{ISP}%
    \iacs{IXP}%
    \iacs{CDN}
-The internet consists of many commercial \aclp{ISP}, \glspl{IXP}, \glspl{CDN}, commercial companies\ldots
+The internet is a network interconnecting other networks in a partial mesh topology.
+It consists of many \aclp{ISP}, \glspl{IXP}, \glspl{CDN}, companies, and other organisations.
 
 \paragraph{IPsec virtual private networks (1995)}%
    \index{VPN@\acs{VPN}!IPsec}%
@@ -259,65 +332,9 @@ In March 2006 Amazon introduced its Simple Storage Service (\abbr{S3}), followed
 These products pioneered the usage of server virtualisation to deliver IaaS at a cheaper and on-demand pricing basis.
 
 \paragraph{YouTube (2005)}
-YouTube was launched on February 14, 2005 and was the beginning of ubiquitous video and massive amounts of user-generated content.
+Google launched YouTube on February 14, 2005 and was the beginning of ubiquitous video and massive amounts of user-generated content.
 
 
-}
-
-\Section{Network topologies}
-\label{sec:network-topologies}
-
-\mode<article>{
-The network \emph{topology} is the arrangement of the elements (links, nodes, etc.) of a communication network.
-It can be used to define or describe the arrangement of various types of telecommunication networks, including computer networks.
-
-Network topology is the topological structure of a network and may be depicted physically or logically.
-The physical topology describes how the components are physically connected together, while the logical topology illustrates how data flows within a network.
-Distances between nodes, physical interconnections, transmission rates, or signal types may differ between two different networks, yet their logical topologies may be identical.
-A network’s physical topology is a particular concern of the physical layer of the \gls{OSI} model (\vref{sec:network-models}).
-}
-
-
-\Paragraph{point-to-point}
-\mode<article>{
-The most simple method of connecting two devices together in a network is to directly connec them together using a cable cable of transfering data.
-}
-
-\Paragraph{ring}
-\mode<article>{
-   \index{topology (network)!ring}
-Each node connects to exactly two other nodes, forming a single continuous pathway for signals through each node -- a ring.
-Data travels from node to node, with each node along the way handling every packet.
-
-Token Ring is an example of a \gls{LAN} technology that uses a physical and logical ring topology.
-The Telenet backbone is an example of interconnecting physical ring structures though the logical structure is a mesh of point-to-point links.
-}
-
-\Paragraph{bus}
-\mode<article>{
-   \index{topology (network)!bus}
-Nodes are directly connected to a common \emph{half-duplex}%
-   \index{half duplex}%
-\footnote{A half-duplex (\abbr{HDX}) system provides communication in both directions, but only one direction at a time, not simultaneously in both directions.}
-link called a bus.
-An example of a physical bus structure, would be the old Ethernet networks using coaxial cable.
-Connecting devices together using cat.~5-cable and a hub, results in a logical bus structure even though the physical structure is a star.
-}
-
-\Paragraph{star}
-\mode<article>{
-   \index{topology (network)!star}
-Every host is connected to a central hub.
-In its simplest form, one central hub acts as a conduit to transmit messages.
-The star network is one of the most common computer network topologies.
-}
-
-\Paragraph{mesh}
-\mode<article>{
-   \index{topology (network)!mesh}
-The infrastructure nodes connect directly, dynamically and non-hi\-er\-ar\-chi\-cal\-ly to as many other nodes as possible and cooperate with one another to efficiently route data to and from clients.
-A \emph{full} mesh is a network where every node has a connection to every other node.
-A \emph{partial} mesh is a network where some of the connects of a full mesh are missing.
 }
 
 
@@ -370,6 +387,10 @@ Anycast is a network addressing and routing methodology in which a single destin
 Routers direct packets addressed to this destination to the location nearest the sender, using their normal decision-making algorithms, typically the lowest number of \gls{BGP} network hops.
 Anycast routing is widely used by \acf{CDN} such as web and \acs{DNS} hosts, to bring their content closer to end users.
 
+It can also be used to distribute \ac{DDoS} attacks and reduce their effectiveness.
+As traffic is routed to the closest node, a process over which the attacker has no control, the \ac{DDoS} traffic flow will be distributed amongst the closest nodes.
+Thus, not all nodes might be affected. 
+
 \begin{figure}
    \begin{minipage}{.4\textwidth}
    \includegraphics[width=\textwidth]{images/multicast.png}
@@ -412,7 +433,7 @@ The \acl{IP} suite predates the \gls{OSI} model, a more comprehensive reference 
       \index{network model!hybrid}
 \textcite[53]{comer}, \textcite[129]{kozierok}, \textcite[70]{tanenbaum}, and others use a hybrid, five-layer model, which I also prefer to use.
 The upper layers (session, presentation, and application) are not important for a network engineer, nor are they clearly separated.
-The bottom two layers are good to keep separated as the data link layer contains Ethernet switches and is the territory of the network engineer, while the physical layer is the responsibility of the people doing the cabling.
+It is advisable to keep the bottom two layers separate. The data link layer comprises Ethernet switches, and it falls under the domain of network engineers, whereas the physical layer is the responsibility of network cabling technicicans.
 }
 
 \mode<article>{
@@ -454,6 +475,7 @@ This means that, depending on the protocol in use, we will have to \emph{fragmen
 \mode<article>{
 Data can get corrupted or lost in transit.
 Different protocols will deal differently with these issues.
+Ethernet (\vref{chap:ethernet}) only has an error detection code while \acf{TCP} (\vref{sec:tcp}) garanties correct delivery of data.
 }
 
 \Section{Encapsulation}
@@ -461,7 +483,7 @@ Different protocols will deal differently with these issues.
 
 \mode<article>{
 \Vref{fig:encapsulation} shows the five layers of the hybrid model and the different headers (and trailer) which get added by each layer.
-When data gets send from a host on the left to a host on the right, the application passes the data to the operating system's kernel to be sent on the network.
+When data gets send from the host on the left to the host on the right, the application passes the data to the operating system's kernel to be sent on the network.
 For each layer of the protocol stack a header gets added so that the corresponding layer on the receiver's side knows what the data is for.
 That is, the transport layer on the sender's side communicates with the transport layer on the receiver's side and the network layer on the sender's side communicates with the corresponding layer on the receiver's side.
 
@@ -483,12 +505,12 @@ a packet and the data link header and trailer is called a \emph{frame}.
 
 \Paragraph{port numbers}
 \mode<article>{
-The segment header at the transport layer adds port numbers which indicate which application the data is destined for.
+The segment header at the transport layer adds port numbers to indicate which application the data is destined for and which application the data came from.
 }
 
 \Paragraph{\acs{IP} addresses}
 \mode<article>{
-The packet header at the network layer adds \acs{IP} addresses indicating which host the data is destined for.
+The packet header at the network layer adds \acs{IP} addresses indicating which host the data is destined for and which host it came from.
 }
 
 \Paragraph{\acf{DNS}}
