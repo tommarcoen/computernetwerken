@@ -64,9 +64,20 @@ The ethertype field is a two-byte field in the Ethernet header that is used to i
    \index{ethertype}
 It is used to indicate the protocol that is encapsulated in the payload of the Ethernet frame.
 The ethertype field is located immediately after the destination and source \acs{MAC} addresses in the Ethernet header.
-% TODO: Expand on the ethertype and the 802.1Q tag.
-% TODO: Explain the difference between the length and ethertype and how the contents or the length is calculated when not provided.
 
+\begin{extrainfo}
+The life of a network engineer is not this easy.
+There exist several types of Ethernet frames.
+The Ethernet version 2 frame -- or \acs{DIX} frame, is the most common type in use today.
+It uses the ethertype field as described above.
+But there also exist \acf{LLC} frames where these two bytes do not indicate the type of the upper-layer packet, but indicate the length of the payload or upper-layer packet.
+
+When the length is given, the driver must determine the protocol by looking into the frame's content.
+When the protocol is given, the length must be calculated by counting the bytes received on the wire.
+\end{extrainfo}
+
+\Paragraph{802.1Q tag}
+% TODO: Expand on the ethertype and the 802.1Q tag.
 
 %\begin{figure}
 %   \centering
@@ -74,7 +85,6 @@ The ethertype field is located immediately after the destination and source \acs
 %   \caption{An Ethernet frame}
 %   \label{fig:ethernet-frame}
 %\end{figure}
-
 }
 
 \Paragraph{Ethernet trailer}
@@ -84,9 +94,12 @@ The ethertype field is located immediately after the destination and source \acs
    \iacs{CRC}
 The frame ends with a \acf{FCS}, which is a 32-bit \acf{CRC} used to detect any in-transit corruption of data.
 
-%\begin{extrainfo}
-% TODO: Explain what a CRC and how it works.
-%\end{extrainfo}
+\begin{extrainfo}
+A \acf{CRC} is an error-detecting code commonly used in digital networks and storage devices to detect accidental changes to digital data.
+Blocks of data entering these systems get a short check value attached, based on the remainder of a polynomial division of their contents.
+On retrieval, the calculation is repeated and, in the event the check values do not match, corrective action can be taken against data corruption.
+A \acs{CRC} can be used for error correction.
+\end{extrainfo}
 }
 
 \Paragraph{jumbo frames} 
@@ -129,19 +142,19 @@ Devices outside the collision domain do not have collisions with those inside.
 \Paragraph{switch}
 \mode<article>{
    \index{switch}
-   % TODO
+   % TODO: switch
 }
 
 \Paragraph{buffers}
 \mode<article>{
    \index{buffer}
-   % TODO
+   % TODO: buffers
 }
 
 \Paragraph{store-and-forward}
 \mode<article>{
    \index{store-and-forward}
-   % TODO
+   % TODO: store-and-forward
 }
 
 \Paragraph{\acs{MAC}-address table}

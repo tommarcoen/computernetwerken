@@ -495,22 +495,28 @@ The only difference is that they \emph{should} not be routed on the public inter
 This means that \acl{ISP} should block packets with a private \acs{IP} address as either the source or the destination address.
 
 There are several blocks of private \acs{IP} addresses which can be used internally by organisations without having to ask for permission to do so.
-These include:
-% TODO: order the IP ranges and seperate them in two: RFC 1918 and the rest
+These include the \rfc{1918} addresses
 \begin{multicols}{3}
 \raggedcolumns
 \begin{itemize}
-\item 10.0.0.0/8
+\item 10.0.0.0/8,
+\item 172.16.0.0/12, and;
+\item 192.168.0.0/16
+\end{itemize}
+\end{multicols}
+but also these lesser-known address ranges:
+\begin{multicols}{3}
+\raggedcolumns
+\begin{itemize}
 \item 100.64.0.0/10
 \item 169.254.0.0/16
-\item 172.16.0.0/12
 \item 192.0.2.0/24
-\item 192.168.0.0/16
 \item 198.18.0.0/15
 \item 198.51.100.0/24
 \item 203.0.113.0/24
 \end{itemize}
 \end{multicols}
+These are private address ranges set aside for carrier-grade \acs{NAT}, documentation purposes, link-local addressing, and test setups.
 
 The ranges 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16 were introduced as private IP ranges to enable \acf{NAT}.
 The ranges 192.0.2.0/24, 198.51.100.0/24, and 203.0.113.0/24 have been reserved for documentation purposes but can be used internally within an organisation.
@@ -613,7 +619,7 @@ Receiving this reply tells us two things:
 }
 
 \Paragraph{path \acs{MTU} discovery}
-% TODO
+% TODO: PMTUD
 
 \Section{Routing}
 \label{sec:routing}
@@ -868,7 +874,6 @@ Finally, when $k_5=0$, instead of the entire equation to become zero, this facto
    \iacs{OSPF}
 The \acl{OSPF} protocol is a link-state routing protocol suitable for small network all the way up to massive service provider networks.
 It can scale to very large networks because of the introduction of a concept called \emph{areas}, used to divide the entire network into smaller, more manageable parts.
-% TODO: expand on this paragraph
 }
 
 \Paragraph{\acf{BGP}}
