@@ -142,8 +142,6 @@ The sequence number identifies the order of the bytes sent from each computer so
 The sequence number of the first byte is chosen by the transmitter for the first packet, which is flagged \abbr{SYN}.
 This number can be arbitrary, and should, in fact, be unpredictable to defend against \ac{TCP} sequence prediction attacks.
 
-% TODO: rephrase
-%Acknowledgements (\abbr{ACK}) are sent with a sequence number by the receiver of the data to tell the sender that data has been received to the specified byte.
 When the receiver sends an acknowledgement (\abbr{ACK}) the sequence number indicates till which byte the data has been received.
 Acknowledgements do not imply that the data has been delivered to the application, they merely signify that it is now the receiver's responsibility to deliver the data.
 
@@ -225,13 +223,13 @@ There is no need to acknowledge intermediate packets, since \acs{TCP} uses cumul
 
 \paragraph{fast recovery}\leavevmode
    \index{TCP@\acs{TCP}!fast recovery}
-% TODO
+% TODO: TCP fast recovery
 \end{extrainfo}
 }
 
 
 \Section{Load balancing}
-% TODO
+% TODO: load balancing
 
 \mode<article>{
 \section{Further reading}
