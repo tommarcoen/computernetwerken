@@ -479,7 +479,7 @@ But you keep the \acs{IP} address configuration on a central location.
 
 
 
-\Section{\acl{NAT}}
+\Section{\Acl{NAT}}
 \label{sec:nat}
 
 
@@ -571,14 +571,46 @@ This is often needed when two companies with overlapping \acs{IP} address space 
 }
 
 
-\Section{\acl{ICMP}}
+\Section{\Acl{ICMP}}
 \label{sec:icmp}
 
 \mode<article>{
 The \acf{ICMP} is a supporting protocol in the internet protocol suite.
 It is used by network devices, including routers, to send error messages and operational information indicating success or failure when communicating with another \acs{IP} address, for example, an error is indicated when a requested service is not available or that a host or router could not be reached.
+
+The program \cmd{ping} uses \acs{ICMP} to detect whether the destination is reachable and alive.
+It sends out an \acs{ICMP} echo request (\cref{tab:icmp}) and expects to receive an \acs{ICMP} echo reply from the destination.
+Receiving this reply tells us two things:
+\begin{itemize}
+\item
+   the destination host is turned on and connected to the network as it was able to receive our message and reply to it;
+\item
+   the network between our computer and the destination is working as all the devices in the middle were able to send our request to the destination as well as send its reply back to us.
+\end{itemize}
+
+% TODO: complete this section
+
+\begin{table}
+\sffamily
+\centering
+\begin{tabular}{rrl}
+\textbf{type} & \textbf{code} & \textbf{description} \\[1ex]
+ 0 &  0 & echo reply \\
+ 3 &  0 & destination network unreachable \\
+ 3 &  1 & destination host unreachable \\
+ 3 &  2 & destination protocol unreachable \\
+ 3 &  3 & destination port unreachable \\
+ 3 &  4 & fragmentation needed but \abbr{DF}-bit set \\
+ 3 & 13 & communication administratively prohibited \\
+ 5 &  0 & redirect datagram for the network \\
+ 5 &  1 & redirect datagram for the host \\
+ 8 &  0 & echo request \\
+11 &  0 & \acs{TTL} expired in transit \\
+\end{tabular}
+\caption{Most common \acs{ICMP} types and codes}
+\label{tab:icmp}
+\end{table}
 }
-% TODO
 
 \Paragraph{path \acs{MTU} discovery}
 % TODO
