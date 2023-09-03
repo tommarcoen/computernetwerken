@@ -1,5 +1,11 @@
+# @default_files = ('main-book.tex', 'main-presentation.tex');
+@default_files = ('a4.tex', 'a5.tex', 'main-presentation.tex');
+
+# Output directly to PDF (5 = XeLaTeX)
 $pdf_mode = 1;
-@default_files = ('main-book.tex', 'main-presentation.tex');
+$emulate_aux = 1;
+$aux_dir = 'aux/';
+$ENV{'TEXINPUTS'}='./tex//:' . $ENV{'TEXINPUTS'};
 
 add_cus_dep( 'acn', 'acr', 0, 'makeglossaries' );
 add_cus_dep( 'glo', 'gls', 0, 'makeglossaries' );
