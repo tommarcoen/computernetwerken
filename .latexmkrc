@@ -1,5 +1,5 @@
-# @default_files = ('main-book.tex', 'main-presentation.tex');
-@default_files = ('a4.tex', 'a5.tex', 'main-presentation.tex');
+@default_files = ('main-book.tex', 'main-presentation.tex');
+#@default_files = ('a4.tex', 'a5.tex', 'main-presentation.tex');
 
 # Output directly to PDF (5 = XeLaTeX)
 $pdf_mode = 1;

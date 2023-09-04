@@ -1,0 +1,42 @@
+% Fonts
+\usepackage[T1]{fontenc}
+\usepackage[supstfm=libertinesups]{superiors}
+\usepackage[mono=false]{libertinus}
+\usepackage{libertinust1math}
+\usepackage{libertinehologopatch}
+\usepackage{microtype}
+\microtypesetup{tracking=smallcaps,letterspace=50}
+\usepackage{textcomp}
+\usepackage{fnpct}
+\usepackage[scaled=1.05]{zlmtt}
+\useosf
+
+% Listings
+\usepackage{listings}
+\lstset{
+    basicstyle       = \ttfamily\small,
+    numbers          = left,
+    numberstyle      = \tiny,
+    xleftmargin      = 1em,
+    numbersep        = .75em,
+    columns          = fullflexible,
+    breaklines       = true,
+    keepspaces       = true,
+    breakindent      = 1em,
+    frame            = tb,
+    framerule        = .8pt,
+    rulecolor        = \color{listingrulecolor}
+}
+\usepackage[per-mode=symbol]{siunitx}
+\usepackage{bm}
+\usepackage{upgreek}
+\usepackage{amsmath}
+
+% TikZ
+\usepackage{tikz}
+\usepackage{pgf-pie}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+
+\input{tex/theme-syntra-bizz}
+%\input{tex/headings}

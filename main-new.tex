@@ -1,0 +1,34 @@
+\title{Computer networks}
+\def\subtitle{A brief introduction}
+\author{Tom Marcoen}
+\date{2021--2024}
+
+\input{tex/preamble}
+
+\begin{document}
+
+   % Change the default mode to 'article'.
+   \mode<article>
+
+   \input{tex/titlepages}
+
+   \frontmatter
+   \clearforchapter
+   \tableofcontents*
+   \clearforchapter
+   \listoffigures
+   \clearforchapter
+   \listoftables
+   \input{chapters/preface}
+   \printglossary[type=abbreviations,style=mcolindexgroup]
+   
+
+   \mainmatter
+   \chapter{test}
+   Hello world
+
+   \mode<presentation>{This is a test.}
+
+   Here is another test.
+
+\end{document}

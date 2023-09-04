@@ -1,20 +1,25 @@
-\documentclass[a4paper,12pt,british]{memoir}
-%\usepackage{multiaudience}
-%\SetNewAudience{teacher}
-%\SetNewAudience{student}
-\usepackage[utf8]{inputenc}
-\usepackage{babel}
-\isopage
-\checkandfixthelayout
-\pagestyle{ruled}
-\chapterstyle{wilsondob}
-\setsecheadstyle{\Large\memRTLraggedright}
-%\raggedbottom
 \usepackage[noamssymb,noamsthm,envcountsect]{beamerarticle}
-\setjobnamebeamerversion{main.presentation}
 
+\pagestyle{ruled}
+
+% Italic chapter titles, non-bold, to the right of the page.
+\chapterstyle{wilsondob}
+
+% Remove bold from section headers to better match the chapter style.
+\setsecheadstyle{\Large\memRTLraggedright}
+
+% Figures and tables
 \setfloatlocations{figure}{hbtp}
 \setfloatlocations{table}{htbp}
+\usepackage{caption}
+\captionsetup{
+    font={small,sf},
+    labelfont={sc,color=labelcolor},
+    labelsep=endash
+    }
+\captionsetup[table]{position=above}
+\captionsetup[figure]{position=below}
+\usepackage{subcaption}
 
 % Lists
 \usepackage{multicol}
@@ -30,34 +35,21 @@
 % Extra and background information boxes
 \usepackage[most]{tcolorbox}
 \usepackage{fontawesome}
-%\usepackage{manfnt}
-%\usepackage{lettrine}
-%\newenvironment{extrainfo}{%
-%  \color{red}\lettrine[lines=2]{\faFloppyO}{a}%
-%}{}
 \newtcolorbox{extrainfo}{
    title = {\faUniversity\quad Extra information},
    colframe = BorderColourExtraInfo,
    colback = white,
    breakable = true
 }
-%\newtcolorbox{backgroundinfo}{
-%   title = {\faFloppyO\quad Background information},
-%   colframe = BorderColourBackgroundInfo,
-%   colback = white
-%   }
-  
-% Figures and tables
-\usepackage{caption}
-\captionsetup{
-    font={small,sf},
-    labelfont={sc,color=labelcolor},
-    labelsep=endash
-    }
-\captionsetup[table]{position=above}
-\captionsetup[figure]{position=below}
-\usepackage{subcaption}
 
+% RFCs
+\newcommand{\rfc}[1]{\acs{RFC}~\cite{rfc#1}}
+
+% Small caps
+\newcommand{\abbr}[1]{\textsc{\MakeLowercase{#1}}} % Old
+\newcommand{\SC}[1]{\textsc{\MakeLowercase{#1}}}   % New
+
+% Bibliography
 \usepackage{csquotes}
 \usepackage[backend=biber,style=reading,citestyle=authoryear,entrykey=false,sorting=tyn]{biblatex}
 \DeclareFieldFormat{annotation}{\textsc{description}\addcolon\space #1}
@@ -104,11 +96,29 @@
     \literal{0}
   }
 }
-% RFCs
-\newcommand{\rfc}[1]{\acs{RFC}~\cite{rfc#1}}
 
+% Index
 \usepackage[xindy]{imakeidx}
-%\indexsetup{othercode=\small}
 \makeindex[intoc,columns=2]
+\newcommand{\iacs}[1]{\index{#1@\acs{#1}}}
+\newcommand{\iacl}[1]{\index{\acl{#1}}}
 
-\input{main}
+% Glossaries
+\usepackage[abbreviations,automake,stylemods=mcols,shortcuts=ac,nonumberlist,indexcrossrefs=true]{glossaries-extra}
+\setlength{\columnsep}{3em}
+\setabbreviationstyle{long-short-sc}
+\renewcommand*{\glsabbrvscfont}[1]{\abbr{#1}}
+\makeglossaries
+\loadglsentries{tex/abbreviations}
+\loadglsentries{tex/glossary}
+\glsdisablehyper
+
+% Links
+\usepackage{varioref}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\urlstyle{rm}
+\hypersetup{colorlinks=true,allcolors=linkcolor,linktocpage}
+\creflabelformat{equation}{#2\textup{#1}#3} % remove the brackets from an equation reference, i.e. "eq. 2.1" instead of "eq. (2.1)"
+
+\input{main-new}
