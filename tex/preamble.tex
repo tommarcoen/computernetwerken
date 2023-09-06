@@ -1,19 +1,56 @@
 \usepackage[utf8]{inputenc}
+\usepackage{babel}
+\usepackage{multicol}
+\setlength{\columnsep}{3em}
 
-% Fonts
-\usepackage[T1]{fontenc}
-\usepackage[supstfm=libertinesups]{superiors}
-\usepackage[mono=false]{libertinus}
-\usepackage{libertinust1math}
-\usepackage{libertinehologopatch}
-\usepackage{microtype}
-\microtypesetup{tracking=smallcaps,letterspace=50}
-\usepackage{textcomp}
-\usepackage{fnpct}
-\usepackage[scaled=1.05]{zlmtt}
-\useosf
+\input{colourscheme-syntra}
+\usepackage{tufte}
 
-% Listings
+
+
+% ============================================================
+% Mathematics
+% ============================================================
+
+\usepackage[per-mode=symbol]{siunitx}
+\usepackage{bm}
+\usepackage{upgreek}
+\usepackage{amsmath}
+
+
+
+% ============================================================
+% Graphics
+% ============================================================
+
+\usepackage{tikz}
+\usepackage{pgf-pie}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+
+
+
+% ============================================================
+% Abbreviations and glossaries
+% ============================================================
+
+\usepackage[abbreviations,automake,stylemods=mcols,shortcuts=ac,nonumberlist,indexcrossrefs=true]{glossaries-extra}
+\newcommand{\SC}[1]{\textsc{\MakeLowercase{#1}}}
+\newcommand{\iacs}[1]{\index{#1@\acs{#1}}}
+\newcommand{\iacl}[1]{\index{\acl{#1}}}
+\setabbreviationstyle{long-short-sc}
+\renewcommand*{\glsabbrvscfont}[1]{\SC{#1}}
+\makeglossaries
+\loadglsentries{tex/abbreviations}
+\loadglsentries{tex/glossary}
+\glsdisablehyper
+
+
+
+% ============================================================
+% Code listings and monospaced fonts
+% ============================================================
+
 \usepackage{listings}
 \lstset{
     basicstyle       = \ttfamily\small,
@@ -27,18 +64,18 @@
     breakindent      = 1em,
     frame            = tb,
     framerule        = .8pt,
-    rulecolor        = \color{listingrulecolor}
+    rulecolor        = \color{listingrulecolour}
 }
-\usepackage[per-mode=symbol]{siunitx}
-\usepackage{bm}
-\usepackage{upgreek}
-\usepackage{amsmath}
 
-% TikZ
-\usepackage{tikz}
-\usepackage{pgf-pie}
-\usetikzlibrary{arrows}
-\usetikzlibrary{calc}
 
-\input{tex/theme-syntra-bizz}
-%\input{tex/headings}
+
+% ============================================================
+% References and links
+% ============================================================
+
+\usepackage{varioref}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\urlstyle{rm}
+\hypersetup{colorlinks=true,allcolors=linkcolour,linktocpage}
+\creflabelformat{equation}{#2\textup{#1}#3} % remove the brackets from an equation reference, i.e. "eq. 2.1" instead of "eq. (2.1)"

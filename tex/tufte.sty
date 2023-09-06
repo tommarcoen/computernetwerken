@@ -1,0 +1,117 @@
+\ProvidesPackage{tufte}[2023/09/05 Modified Tufte book layout]
+
+
+
+% ============================================================
+% Fonts
+%
+% ETbb is Edward Tufte's Bembo font. This entire block is
+% taken from the documentation of that package.
+% ============================================================
+
+\usepackage[p,osf,sups]{ETbb}          % osf in text, tabular lining figures in math
+\usepackage[scaled=.95,type1]{cabin}   % sans serif in style of Gill Sans
+\usepackage[varqu,varl]{zi4}           % inconsolata typewriter
+\usepackage[T1]{fontenc}               % LY1 also works
+\usepackage[libertine,vvarbb]{newtxmath}
+\usepackage[cal=boondoxo,bb=boondox,frak=boondox]{mathalfa}
+
+
+
+% ============================================================
+% Text block
+%
+% These lengths are taken from the tufte-latex package.
+% ============================================================
+
+% Page margins
+\settypeblocksize{49\baselineskip}{107mm}{*}
+\setlrmargins{24.8mm}{*}{*}
+\setulmargins{27.4mm}{*}{*}
+
+% Marginal notes and captions
+\setmarginnotes{8.2mm}{49.4mm}{2\baselineskip}
+\sidecapmargin{outer}
+\setsidecappos{t}
+\setsidecaps{8.2mm}{49.4mm}
+
+% Header and footer
+\setheadfoot{\baselineskip}{2\baselineskip}
+\setheaderspaces{*}{2\baselineskip}{2}
+
+\checkandfixthelayout[lines]
+% The following line ensures the wide margin is always on the right.
+% BUG: This does not work in combination with the Companion page style.
+%\setlength{\evensidemargin}{\oddsidemargin}
+
+%
+\pagestyle{companion}
+\footnotesinmargin
+
+% Paragraphs
+\usepackage{microtype}
+\microtypesetup{tracking=smallcaps,letterspace=50}
+\linespread{1.07}
+\setlength{\parindent}{2.5em}
+
+% Lists
+\usepackage[inline]{enumitem}
+\newlist{inlinelist}{enumerate*}{1}
+\setlist[inlinelist]{label=(\roman*)}
+\firmlists
+\renewcommand*{\descriptionlabel}[1]{\hspace\labelsep\itshape #1 --}
+
+% A few useful lengths
+\newlength{\@tufte@overhang}
+\setlength{\@tufte@overhang}{\marginparsep}
+\addtolength{\@tufte@overhang}{\marginparwidth}
+\newlength{\@tufte@fullwidth}
+\setlength{\@tufte@fullwidth}{\textwidth}
+\addtolength{\@tufte@fullwidth}{\@tufte@overhang}
+
+% Full-page-width area
+\newenvironment{fullwidth}
+    {\begin{adjustwidth*}{}{-\@tufte@overhang}}
+    {\end{adjustwidth*}}
+
+
+
+% ============================================================
+% Section styles
+% ============================================================
+
+% Chapter
+\chapterstyle{companion}
+\renewcommand*{\chapnamefont}{\normalfont\itshape\large}
+\renewcommand*{\chapnumfont}{\normalfont\itshape\large}
+\renewcommand*{\chaptitlefont}{\normalfont\Huge\scshape}
+
+% Sections
+\setsecheadstyle{\normalfont\large}
+\setsubsecheadstyle{\normalfont\itshape\large}
+%\setparaheadstyle{\normalfont\scshape\MakeTextLowercase\color{paragraphcolour}}
+
+
+
+% ============================================================
+% Floats
+%
+% There are three ways of making a float:
+% - a small float in the margin (marginfigure and
+%   margintable),
+% - a normal-sized float in the text block (figure and table),
+% - a large float spanning the entire width of the page
+%   (figure* and table*).
+% The first is provided by memoir, the second can be made
+% using a sidecaption environment, but the third is a problem
+% for memoir. So I stole the code from tufte-book.
+% ============================================================
+
+% Default float placement
+\setfloatlocations{figure}{hbtp}
+\setfloatlocations{table}{htbp}
+
+% Caption style
+\captionnamefont{\footnotesize}
+\captiontitlefont{\footnotesize}
+\setfloatadjustment{margintable}{\small\centering}
