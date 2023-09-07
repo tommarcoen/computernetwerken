@@ -5,4 +5,14 @@
 
 \begin{document}
 \include{chapters/ip}
+\appendix
+\include{chapters/dhcp-extract}
+
+\backmatter
+% Bibliography
+\printbibliography[notkeyword={RFC}]
+\defbibnote{myprenote}{%
+    Although \aclp{RFC} are quite often way too advanced and dry, they sometimes can provide quite useful details.
+    I have listed the \acsp{RFC} only for completeness.}
+\printbibliography[keyword={RFC},title={Requests for comments},prenote=myprenote]
 \end{document}

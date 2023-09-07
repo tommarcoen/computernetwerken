@@ -1,0 +1,102 @@
+\chapter{Extract from `The \acs{DHCP} handbook'}
+\label{chap:dhcp-extract}
+
+The following text is taken from the first chapter of \textcite{droms}.
+It is provided solely as illustration to the life of a network administatore before there was \acs{DHCP}.
+
+\section{Configuring devices on a network}
+Any network administrator using \acs{TCP}/\IP\ can testify that manually configuring computers attached to a network is a time-consuming and error-prone process.
+Indeed, at almost any site -- regardless of whether \acs{DHCP} is in use -- the address assignment and configuration process is automated in some way.
+
+One of the authors of this book, Ted Lemon, worked as a network administrator at the \acf{DEC} campus in Palo Alto, California, before \acs{DHCP} was available to simplify the tasks of address management and configuration.
+The \acs{DEC} campus used a central \IP\ address administration system, which was based on a single list, or \emph{host table}, of computers, \IP\ addresses, and \acf{DNS} names for the entire network.
+
+To help introduce you to the tasks that a \acs{DHCP} server performs, this section describes, from Ted's perspective, what network administrators did before \acs{DHCP} became widely available.
+As part of the network administration task, we network administrators updated the host table with new computers as they were added to the network and changed the entries for computers as their names and addresses changed.
+Periodically, we ran a shell script on the host table to update the \acs{DNS} server database.
+We configured individual computers manually, from the entries in the host table, by physically walking up to each computer and entering the configuration information.
+Users had a variety of questions about connecting their computers to the campus network.
+Usually, they wanted to know what \IP\ address they could use for their computers.
+To respond to such questions, we asked the following:
+\begin{itemize}
+\item
+   Who are you?
+\item
+   Is this a new device, or was it connected to the network before?
+\item
+   What is the device's old \IP\ address?
+\item
+   Where do you need to install this device?
+\item
+   In what department do you work?
+\end{itemize}
+
+\subsection{\IP\ address allocation}
+After we obtained this information, we decided whether to give the user an \IP\ address.
+It was usually easy to make this decision; if the user was an employee or a contractor working in a \acs{DEC} Palo Alto building, we gave the user an address.
+Next, we decided what \IP\ address to assign to the user.
+To do this, we had to know what network segments were present at the site, which segment or segments were available in the user's office, and how those network segments were configured.
+
+If we supported a single network segment with a single \IP\ subnet, answering these questions would have been simple, and everyone would have been allocated addresses from that subnet.
+However, the \acs{DEC} Palo Alto campus network consisted of many network segments, routed together through a backbone network.
+Thus, it was a bit more difficult to assign \IP\ addresses.
+In essence, each network administrator had to remember which network segments were available in which buildings, on which floors, and, in some cases, in which offices.
+If we remembered incorrectly, the address might have been allocated from the wrong subnet or the address might have already been assigned to another device, and we would have to perform the process again.
+
+After we determined the network segment to which the user's computer would be attached, we determined whether any \IP\ addresses were available on it and chose one for the user.
+If no \IP\ addresses were available on the segment -- and this was often the case -- we examined the host table for addresses that appeared to be no longer in use.
+Occasionally, we configured a new network segment and moved some devices to it to expand the pool of available addresses.
+
+\subsection{Configuration information}
+In addition to choosing an \IP\ address on the correct subnet, we also provided the user with additional information about the network, which usually consisted of the following:
+\begin{itemize}
+\item
+   The addresses of the default routers for the network segment to which the device was to be connected.
+\item
+   The addresses of primary and secondary domain name servers that the device would use.
+\item
+   The subnet mask and broadcast address.
+\end{itemize}
+
+If the device needed specific network services that were not used by all devices on the network, we also informed the user how to access those services and programmed that information into the device.
+For example, we manually configured a diskless \acf{NFS} client's \acs{NFS} mount information, and we usually gave different information to each diskless \acs{NFS} client.
+
+\subsection{Configuring network devices}
+In general, we got network configuration information into devices in two ways:
+\begin{itemize}
+\item
+   When configuring a knowledgeable user's machine, we gave the information directly to that user; thus, it took a minute or two to configure a machine over the phone or via a single e-mail message exchange.
+\item
+   For users who could not configure their own machines, we had to determine where the user was, walk to that user's station (possibly in a different building), log in as root, type the necessary information, restart the machine, and then verify that it worked correctly.
+\end{itemize}
+
+\subsection{Moving devices to different network segments}
+From time to time, a user would move from one office to another, or a user's machine would move from a lab into an office.
+If the network segment (or segments) to which the user's devices were attached was not available in the new location, we would de-allocate the \IP\ addresses previously assigned to those devices and allocate new addresses to the devices on the network segment (or segments) available in the new location.
+
+\subsection{Moving or adding network services}
+As organizations within \acs{DEC} Palo Alto grew, it was not uncommon for us to add new facilities such as printers, name servers, and \acf{NTP} servers to the network and then manually configure the address for each client.
+Because we did not always have time to modify the configurations of existing functioning clients, we disseminated information about new network services when new machines were installed or when users complained that, for example, they couldn't access the printers closest to their cubicles.
+
+\subsection{Renumbering the network}
+As the organization grew, we restructured the network.
+On one occasion, the entire \acs{DEC} corporate network number changed from class~b (128.45.0.0) to class~a (16.0.0.0) addressing.
+This necessitated changing the \IP\ address of every network device on the Palo Alto campus -- more than \numprint{1000} computers.
+Because we did not have an automatic configuration mechanism, network administrators had to renumber the machines, a process that consisted of walking to every machine and manually changing its \IP\ address.
+Because people worked odd hours at \acs{DEC} Palo Alto, we often forced people out of the buildings as we updated the machines.
+We then waited for users to report problems.
+This indicated which machines had not been renumbered correctly.
+
+\subsection{Reclaiming disused \IP\ addresses}
+Machines for which we allocated \IP\ addresses eventually failed, moved out of our jurisdiction, or were reassigned to different users and reinstalled, at which time the machines lost their old identities.
+When we were aware of these transitions, we easily updated our records and reclaimed the \IP\ addresses belonging to such machines.
+However, if transfers occurred without our knowledge, we were not aware that these \IP\ addresses were no longer in use.
+
+In such cases, we had no reliable way to determine whether an \IP\ address was no longer in use.
+Although we often used the ping command (that is, the \acs{ICMP} echo request/reply protocol) to determine whether an address was still in use.
+Unfortunately, if there was no response to such a test, this indicated only that the address was not in use at that moment.
+The address could have been configured in a device that was powered off.
+We eventually found ways of handling this problem.
+First, we tried to locate the person who owned the device for which the \IP\ address was allocated.
+If we couldn't find the owner of the device, we sent a ping to a suspect \IP\ address periodically for about a month, and if we did not receive a response during that period, we reclaimed the address.
+Occasionally, someone would power up a device that had been disused for a few months, and the new device to which the old device's \IP\ address was assigned would start behaving erratically.

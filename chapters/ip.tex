@@ -210,12 +210,15 @@ For example, the \acs{IP} address 198.51.100.37 falls into the class~c range as 
 \begin{sidecaption}{Classful addressing (1981)}[tab:classful-addressing]
 \centering
 \begin{tabular}{crllr}
-\textbf{class} & \textbf{range} & \textbf{format} & \textbf{subnet mask} & \textbf{\# addresses} \\[1ex]
+%\toprule
+class & {range} & {format} & {subnet mask} & {\# addresses} \\
+\midrule
 a & 0--127   & \SC{N.H.H.H} & 255.0.0.0 & \numprint{16777216} \\
 b & 128--191 & \SC{N.N.H.H} & 255.255.0.0 & \numprint{65536} \\
 c & 192--223 & \SC{N.N.N.H} & 255.255.255.0 & \numprint{256} \\
 d & 224--239 & \textit{multicast} & -- & -- \\
 e & 240--255 & \textit{reserved} & -- & -- \\
+%\bottomrule
 \end{tabular}
 \end{sidecaption}
 \end{table}
@@ -266,7 +269,7 @@ The third row displays the subnet mask in binary format.
 \begin{tabular}{@{}l@{\qquad}l@{}}
 \color{spot1} 1100 0110 . 0001 001\color{spot2} 0 . 0000 0000 . 0000 0000 & 198.18.0.0/16 \\
 \color{spot1} 1100 0110 . 0001 001\color{spot2} 1 . 0000 0000 . 0000 0000 & 198.19.0.0/16 \\
-\hline
+\midrule
 \textcolor{spot1}{1111 1111 . 1111 111}0 . 0000 0000 . 0000 0000 & 255.254.0.0 \\
 \end{tabular}
 \end{center}
@@ -300,7 +303,7 @@ However, this supernet includes all the other networks as well, from 198.16.0.0 
 \textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{101} . 0000 0000 . 0000 0000 & 198.21.0.0/16 \\
 \textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{110} . 0000 0000 . 0000 0000 & 198.22.0.0/16 \\
 \textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{111} . 0000 0000 . 0000 0000 & 198.23.0.0/16 \\
-\hline
+\midrule
 1111 1111 . 1111 1111 . 0000 0000 . 0000 0000 & 255.255.0.0 \\
 1111 1111 . 1111 1000 . 0000 0000 . 0000 0000 & 255.248.0.0 \\
 \end{tabular}
@@ -374,17 +377,24 @@ Suppose we have the range 198.19.0.0/16 which includes the \numprint{65536} \IP\
    In this case the first three octets ($3\times8=24$) must match exactly.
 \end{itemize}
 The difficulty lies in the fact that \IP\ addresses are actually binary numbers and not decimal numbers as in the previous example.
-We thus do not have to jump from a `/16' to a `/24' but can use any value in between.
+We thus do not have to jump from a `/16' to a `/24' but can use any value in between.%
+   \footnote{%
+      It is good to understand how subnetting works \emph{under the hood} but just as engineers and mathematicians use calculators in the real world -- just to be safe -- we too can use subnet calculators.
+      You can find many good ones online and you can even install \texttt{sipcalc} and \texttt{ipcalc} on a Linux machine or MacOS computer if you prefer to use the command line.
+      One such online calculator can be found on \href{https://www.calculator.net/ip-subnet-calculator.html}{calculator.net}.
+   }
 
-Let's now take an example where we split the network in the middle of an octet.
+Now take an example where we split the network in the middle of an octet.
 We start with the network 198.51.100.0/24 and want to divide it into four smaller subnetworks.%
    \footnote{%
       It is \emph{very} important to note that we must always and everywhere use multiples of two as we are in reality using a binary number system.
    }
-
-
-
-% TODO: at least attempt to explain subnetting
+There are several ways we can approach this problem.
+Let's jump into the deep and tackle the problem using the binary information.
+We are faced with 24~fixed bits due tot he prefix length of the range that was given to us.
+Since we need to split this range into four smaller ranges, we need to allocate two additional bits (as two bits give us four possible configurations: 00, 01, 10, and 11).
+The new prefix length will thus be $26=24+2$.
+This leaves us with $6=32-26$ bits for the host identifier allowing for $2^6=64$ \IP\ addresses per subnet and 62 usable addresses as two addresses are reserved for the network and broadcast addresses.
 
 \begin{figure}
 \begin{sidecaption}%
@@ -410,6 +420,16 @@ We start with the network 198.51.100.0/24 and want to divide it into four smalle
 \end{sidecaption}
 \end{figure}
 
+Let's start with the range 192.168.0.0/24.
+The host part is eight bits in size so the range contains 256 \IP\ addresses.
+Every time we add a bit to the network part, we split the range in two and thus half the number of available addresses per subnet.
+If we change the prefix length to 25, we get two subnets each containing 128~addresses.
+If we change the prefix length to 26, each of these two subnets gets halved again, all four parts containing 64~addresses.
+When we make the prefix length 27~bits, we get eight subnets of 32~addresses each.
+
+As you can see in \vref{fig:vlsm} you can take one subnet and divide it further into smaller parts.
+In this case one of the four networks has been split again.
+This is called \acf{VLSM}.
 
 \begin{figure}
 \begin{sidecaption}%
@@ -452,6 +472,7 @@ Now we have a problem.
 We have plenty of \acs{IP} addresses but we need two separate networks.
 Or perhaps we need three or even four.
 Maybe we want to isolate the public internet-facing servers from the private servers that should not be reachable from the internet.
+We have received plenty of addresses, it is up to us to decide how to group them and to determine how large each network must be.
 
 Remember that these different classes are just made-up methods of determining which part of the \acs{IP} address is the network number and which part is the host identifier.
 \acs{IP} addresses themselves are just 32-bit numbers so we can group them any way we like.
@@ -465,7 +486,11 @@ Remember that these different classes are just made-up methods of determining wh
    \iacs{DHCP}
 Without the \gls{DHCP} you would have to contact a network administrator every morning at work when you power on your laptop and want to connect it to the (wireless) network.
 Back at home or at a friend's place you need to change the \acs{IP} settings again, including which \acs{DNS} servers to use.
-This requires huge lists with available \acs{IP} addresses which are being updated constantly with newly available \acs{IP} addresses -- should you remember to contact your network administrator before leaving work -- or available \acs{IP} addresses becoming unavailable as people come in to work every morning.
+This requires huge lists with available \acs{IP} addresses which are being updated constantly with newly available \acs{IP} addresses -- should you remember to contact your network administrator before leaving work -- or available \acs{IP} addresses becoming unavailable as people come in to work every morning.%
+   \footnote{%
+      The first chapter of \textcite[3-7]{droms} gives a look in the life of a network administrator in the days when there was no \acs{DHCP} yet.
+      I copied it to \vref{chap:dhcp-extract}.
+   }
 
 \paragraph{\acs{DORA}}
    \index{DHCP@\acs{DHCP}!DORA@\acs{DORA}}
@@ -473,10 +498,10 @@ This requires huge lists with available \acs{IP} addresses which are being updat
 These stages (see \vref{fig:dora}) are often abbreviated as \acs{DORA} for \acl{DORA}.
 
 \begin{figure}
-    \centering
-    \input{images/dora.tex}
-    \caption{The foure stages of acquiring an \acs{IP} address from a \acs{DHCP} server}
-    \label{fig:dora}
+\begin{sidecaption}{The foure stages of acquiring an \acs{IP} address from a \acs{DHCP} server}[fig:dora]
+\centering
+\input{images/dora.tex}
+\end{sidecaption}
 \end{figure}
 
 \paragraph{lease time}
@@ -493,7 +518,9 @@ It cannot use the \acs{IP} address for the remaining four hours but must send a 
 
 \paragraph{\acs{DHCP} relay}
    \index{DHCP@\acs{DHCP}!relay}
-As it is impractical to configure a \acs{DHCP} server on each network, routers can be configured to act as \acs{DHCP} relays, forwarding the broadcast messages as unicast to a remote \acs{DHCP} server.
+As it is impractical to configure a \acs{DHCP} server on each network, routers can be configured to act as \acs{DHCP} relays, forwarding the broadcast messages%
+   \footnote{TODO: explain why \acs{DHCP} uses broadcast messages.}
+as unicast to a remote \acs{DHCP} server.
 
 \paragraph{reservations}
 A \acs{DHCP} server can be configured such to always provide the same client (\acs{MAC} address) the same \acs{IP} address.
@@ -518,28 +545,20 @@ The only difference is that they \emph{should} not be routed on the public inter
 This means that \acl{ISP} should block packets with a private \acs{IP} address as either the source or the destination address.
 
 There are several blocks of private \acs{IP} addresses which can be used internally by organisations without having to ask for permission to do so.
-These include the \rfc{1918} addresses
-\begin{multicols}{3}
+\begin{multicols}{2}
 \raggedcolumns
 \begin{itemize}
-\item 10.0.0.0/8,
-\item 172.16.0.0/12, and;
-\item 192.168.0.0/16
-\end{itemize}
-\end{multicols}
-but also these lesser-known address ranges:
-\begin{multicols}{3}
-\raggedcolumns
-\begin{itemize}
+\item 10.0.0.0/8
 \item 100.64.0.0/10
 \item 169.254.0.0/16
+\item 172.16.0.0/12
 \item 192.0.2.0/24
+\item 192.168.0.0/16
 \item 198.18.0.0/15
 \item 198.51.100.0/24
 \item 203.0.113.0/24
 \end{itemize}
 \end{multicols}
-These are private address ranges set aside for carrier-grade \acs{NAT}, documentation purposes, link-local addressing, and test setups.
 
 The ranges 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16 were introduced as private IP ranges to enable \acf{NAT}.
 The ranges 192.0.2.0/24, 198.51.100.0/24, and 203.0.113.0/24 have been reserved for documentation purposes but can be used internally within an organisation.
