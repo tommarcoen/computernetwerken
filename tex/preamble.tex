@@ -12,6 +12,7 @@
 % Mathematics
 % ============================================================
 
+\usepackage{numprint}
 \usepackage[per-mode=symbol]{siunitx}
 \usepackage{bm}
 \usepackage{upgreek}
@@ -45,6 +46,11 @@
 \loadglsentries{tex/glossary}
 \glsdisablehyper
 
+% Common abbreviations
+\newcommand{\IP}{\acs{IP}}
+\newcommand{\IPfour}{\acs{IP} version~4}
+\newcommand{\IPsix}{\acs{IP} version~6}
+
 
 
 % ============================================================
@@ -70,6 +76,15 @@
 
 
 % ============================================================
+% Citations
+% ============================================================
+
+% RFCs
+\newcommand{\rfc}[1]{\acs{RFC}~\cite{rfc#1}}
+
+
+
+% ============================================================
 % References and links
 % ============================================================
 
@@ -79,3 +94,6 @@
 \urlstyle{rm}
 \hypersetup{colorlinks=true,allcolors=linkcolour,linktocpage}
 \creflabelformat{equation}{#2\textup{#1}#3} % remove the brackets from an equation reference, i.e. "eq. 2.1" instead of "eq. (2.1)"
+
+
+

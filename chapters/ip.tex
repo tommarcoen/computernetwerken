@@ -2,14 +2,15 @@
 \label{chap:ip}
 
 \section{\acs{IP} addresses}
-\label{sec:ip-address}
+\label{sec:ip-addresses}
    
 \paragraph{32 bits}
-To a computer an \acs{IP} address is just a 32-bit number.
-For example, the number \num{177540347} converts to binary as
-
+An \acs{IP} version~4 address is a 32-bit number meaning the computer uses 32~bits or four octets to store the \acs{IP} version~4 address in memory.
+What these four octets mean, depends on how we want to interpret them.
+For example, the following 32~bits can be interpreted as the number \numprint{1113945185}.%
+   \footnote{You can also interpret these four octets as the string `Beta' when using the \acs{ASCII} character table for the conversion.}
 \begin{center}
-\lstinline{0000 1010}\quad\lstinline{1001 0101}\quad\lstinline{0000 1100}\quad\lstinline{1111 1011}
+\lstinline{0100 0010}\quad\lstinline{0110 0101}\quad\lstinline{0111 0100}\quad\lstinline{0110 0001}
 \end{center}     
 
 \paragraph{four octets}
@@ -22,22 +23,24 @@ To make this 32-bit number more manageable to humans, we group the 32 bits into 
    For example, the \SC{PDP-7}, a predecessor of the \SC{PDP-11}, was an 18-bit machine.\index{PDP-07@\SC{PDP-7}}\index{PDP-11@\SC{PDP-11}}
 }
 \begin{center}
-$\underbrace{\mbox{\lstinline{0000 1010}}}_{\mbox{octet 1}}$\quad%
-$\underbrace{\mbox{\lstinline{1001 0101}}}_{\mbox{octet 2}}$\quad%
-$\underbrace{\mbox{\lstinline{0000 1100}}}_{\mbox{octet 3}}$\quad%
-$\underbrace{\mbox{\lstinline{1111 1011}}}_{\mbox{octet 4}}$
+$\underbrace{\mbox{\lstinline{0100 0010}}}_{\mbox{octet 1}}$\quad%
+$\underbrace{\mbox{\lstinline{0110 0101}}}_{\mbox{octet 2}}$\quad%
+$\underbrace{\mbox{\lstinline{0111 0100}}}_{\mbox{octet 3}}$\quad%
+$\underbrace{\mbox{\lstinline{0110 0001}}}_{\mbox{octet 4}}$
 \end{center} 
 
 \paragraph{dotted decimal}
    \index{dotted decimal}
 We then convert these octets into decimal and separate the four octets with a dot.
-This turns the number \num{117540347} into the more human-friendly format 10.149.12.251.
-Because each decimal number is in fact an octet (eight bits), the biggest number is \texttt{1111 1111} or 255 in decimal.
-
-We can state this a bit more mathematically.
-Each bit has two possible values, 0 or 1.
-Eight bits then give us $2^8 = 256$ possible combinations or the values from 0 to 255.
-The format of an \acs{IP} address thus is $x_1.x_2.x_3.x_4$ with $x_i \in [0,255]$.
+This turns the number \numprint{1113945185} into the more human-friendly format 66.101.116.97.
+Each of these four numbers is an octet (eight bits) to the computer.
+The lowest value is 0 when all bits are zero and the highest possible value is 255 when all eight bits are set to one.%
+   \footnote{%
+      We can use a bit of mathematics here.
+      Each bit has two possible values, 0 or 1.
+      Eight bits then give us $2^8 = 256$ possible combinations or the values from 0 to 255.
+      The format of an \acs{IP} address thus is $x_1.x_2.x_3.x_4$ with $x_i \in [0,255]$.
+   }
 
 It is important to remember that these \acs{IP} addresses are still just numbers to the computer and thus one \acs{IP} address is either higher or lower than a second address.
 If you add 1 to the address 10.149.12.251, you get the next address, being 10.149.12.252.
@@ -54,6 +57,17 @@ This is the network part or \emph{network number}.%
    \index{network number}
 All computers attached to the same local network need an \acs{IP} address with the same network number.
 
+\begin{margintable}
+\begin{tabular}{rl@{.}r}
+\textcolor{spot5}{\acs{IP} address} & \textcolor{spot1}{192.0} & \textcolor{spot2}{2.7} \\
+\textcolor{spot5}{subnet mask}      & 255.255                  & 0.0                    \\
+\textcolor{spot5}{network number}   & \textcolor{spot1}{192.0} &                        \\
+\textcolor{spot5}{host identifier}  &                          & \textcolor{spot2}{2.7} \\
+\end{tabular}
+\caption{The subnet mask determines where to split the \acs{IP} address into its network number and host identifier}
+\label{tab:network-host-part}
+\end{margintable}
+
 \paragraph{host part}
 The \emph{host identifier}%
    \index{host identifier}
@@ -64,16 +78,40 @@ is the second part, on the right of the network number, which uniquely identifie
 The subnet mask is also a 32-bit number consisting of two parts.
 Starting from the left, there is a set of ones for the network part of the \acs{IP} address.
 This is followed by a set of zeros for the host part.
-For example, the subnet mask 255.255.255.0 consists of 24 ones followed by 8 zeros.
+For example, the subnet mask 255.255.255.0 consists of 24 ones followed by eight zeros.
 This means that the first 24 bits -- or first three octets -- indicate the network, while the last 8 bits are used to uniquely identify hosts within the network.
 This means there can be up to $2^8=256$ hosts in the network.
+\Vref{tab:network-host-part} uses a subnet mask with 16 ones and 16 zeros.
+This allows for a total of $2^{16}=65536$ hosts in that network.
+
+\begin{margintable}
+\begin{tabular}{
+   r
+   p{5mm}@{ }
+   p{4mm}@{ }
+   p{4mm}@{ }
+   p{4mm}@{ }
+   p{3mm}@{ }
+   p{3mm}@{ }
+   p{3mm}@{ }
+   p{3mm}@{ }
+}
+value & 128 & 64 & 32 & 16 & 8 & 4 & 2 & 1 \\
+\midrule
+  255 &   1 &  1 &  1 &  1 & 1 & 1 & 1 & 1 \\
+   99 &   0 &  1 &  1 &  0 & 0 & 0 & 1 & 1 \\
+   61 &   0 &  0 &  1 &  1 & 1 & 1 & 0 & 1 \\
+\end{tabular}
+\caption{A few decimal numbers and their binary representation}
+\end{margintable}
 
 \paragraph{prefix length}
    \index{prefix!length}
 The prefix length is the size of the prefix in number of bits.
 It translates directly to the subnet mask.
 The prefix length is the number of ones in the subnet mask.
-
+The subnet mask 255.255.255.0 contains 24 ones followed by eight zeros.
+The prefix length thus is 24.
 A second example could be 255.255.255.192.
 Converting these octets to binary gives us 26 consecutive ones followed by 6 zeros.
 This means that the first 26~bits of the accompanying \acs{IP} address are the network number and the last six bits are the host identifier.
@@ -83,6 +121,17 @@ This means that the first 26~bits of the accompanying \acs{IP} address are the n
 Each network requires two special addresses that can not be assigned to hosts.
 The first is the network address.
 It is the first \acs{IP} address in the network, i.e.~the \acs{IP} address where the host part consists of only zeros.
+
+\begin{margintable}
+\begin{tabular}{rl@{.}r}
+\textcolor{spot5}{\acs{IP} address}  & \textcolor{spot1}{198.51.100}  & 13 \\
+\textcolor{spot5}{subnet mask}       & 255.255.255 &  0 \\
+\textcolor{spot5}{network addr.}     & \textcolor{spot1}{198.51.100}  & \textcolor{spot2}{0}   \\
+\textcolor{spot5}{broadcast addr.}   & \textcolor{spot1}{198.51.100}  & \textcolor{spot2}{255} \\
+\end{tabular}
+\caption{The network address is the first address, the broadcast address is the last address}
+\label{tab:network-broadcast-address}
+\end{margintable}
 
 Let's take the \acs{IP} address 198.51.100.13 as an example, using the subnet mask 255.255.255.0.
 As there are 24~ones, the first 24~bits -- or three octets -- of the \acs{IP} address are the network number.
@@ -101,9 +150,12 @@ The term is often used interchangeably with \emph{network address} but technical
    \index{broadcast address}
 The second special \acs{IP} address is the broadcast address.
 It is the last \acs{IP} address in the network, i.e.~the \acs{IP} address where the host part consists of only ones.%
-\footnote{Even though I was always told the first address is the network address and the last address is the broadcast address, in fact both the first and the last address once were used as the broadcast address for the network by \href{https://github.com/schoen/unicast-extensions/blob/master/LOWEST.md}{4.2BSD}, an operating system from 1983.}
+\footnote{%
+   Even though I was always told the first address is the network address and the last address is the broadcast address, in fact both the first and the last address once were used as the broadcast address for the network by \href{https://github.com/schoen/unicast-extensions/blob/master/LOWEST.md}{4.2\SC{BSD}}, an operating system from 1983.
+   This makes sense as the broadcast address has a practical purpose -- to reach every host in the given network -- while the network address is not used for anything.
+}
 
-To continue with the previous example, the broadcast address of this network would be 198.51.100.255.
+To continue with the previous example, the broadcast address of this network would be 198.51.100.255 (\vref{tab:network-broadcast-address}).
 Again the network number -- the first three octets -- must remain identical.
 With the host part -- the last octet -- all binary ones, these eight ones give the decimal number~255.
 
@@ -111,33 +163,39 @@ With the host part -- the last octet -- all binary ones, these eight ones give t
    \index{broadcast address!local}
 Every network has its own broadcast address as the last \acs{IP} address in the range.
 There is a second broadcast address, 255.255.255.255, which is a link-local broadcast address.
-It can only be used to communicate on the local link as routers do not forward packets with this destination address onto other networks.
+It can only be used to communicate on the local network as routers do not forward packets with this destination address onto other networks.
 
 \paragraph{default gateway}
    \index{default gateway}
 The default gateway is not a special address.
 It is just the \acs{IP} address of the router that connects your local network to the other networks.
-Most of the time it is either the first \emph{available} \acs{IP} address in the network or the last.
+Most of the time it is either the first \emph{available}
+\acs{IP} address in the network or the last.%
+   \footnote{As the first and last addresses are reserved as the network and broadcast addresses, the first available address would be 198.51.100.1 and the last available address would be 198.51.100.254.}
 But this is not a requirement and it can be any available address in the network.
 
 \paragraph{loopback address}
    \index{loopback address}
-All \acs{IP} addresses starting with 127 are reserved for the loopback address.%
+All \acs{IP} addresses starting with 127 are reserved as loopback address.%
    \footnote{In \acs{IP} version~6 there is only a single loopback address, namely ::1 or 127 binary zeros followed by a single binary one.}
 When communicating with the loopback address, the computer connects back to itself.
 For example, a web designer could install a web server on his own laptop which serves the website he is developing.
-He can limi the web server to only allow access from the loopback address so that he alone can see the website, not making it available to the rest of the network.
+He can limit the web server to only allow access from the loopback address so that he alone can see the website, not making it available to the rest of the network.
+
+A production web server might have both a web server and a database application installed.
+The web server will listen on a public \acs{IP} address and accept incoming requests from everywhere while the database application will only listen on the loopback address.
+Nobody should access the database directly accept for the web server software running on the local machine.
 
 There are people in the industry who want to free up a large chunk of these addresses for public use and only keep the 127.0.0.0/16 range for loopback addresses.%
 \footnote{See \href{https://github.com/schoen/unicast-extensions}{The \acs{IP} version~4 cleanup project} on GitHub.}
 All other \acs{IP} addresses will become publicly available.
-However, this might take a few more years to become a reality.
+However, this might take a few more years to become a reality, if it will happen at all.
 
 \section{A bit of history}
 \label{sec:ip-history}
 
 \paragraph[1980]{\SC{N.H.H.H}}
-At first there were only 256 networks (the first octet) and each network could contain over 16 million hosts (24~bits for the host identifier gives $2^{24}=16777216$ addresses for devices in that network).
+At first there were only 256 networks (the first octet) and each network could contain over 16 million hosts (24~bits for the host identifier gives $2^{24}$ or \numprint{16777216} addresses for devices in that network).
 With both the 0 and 255 network reserved, in reality only 254 networks can be used.
 
 \paragraph[1981]{classful addressing}
@@ -148,24 +206,18 @@ The first octet of the \acs{IP} address determined that class of \acs{IP} addres
 An \acs{IP} address belongs to a certain class if the first octet falls into the given range.
 For example, the \acs{IP} address 198.51.100.37 falls into the class~c range as $192\le198\le223$. Thus, the first three octets determine the network and the fourth octet identifies the host within the given network.
 
-\newsavebox{\classful}
-\savebox{\classful}{
-   \sffamily
-   \begin{tabular}{crllr}
-   \textbf{class} & \textbf{range} & \textbf{format} & \textbf{subnet mask} & \textbf{\# addresses} \\[1ex]
-   a & 0--127   & \SC{N.H.H.H} & 255.0.0.0 & \num{16777216} \\
-   b & 128--191 & \SC{N.N.H.H} & 255.255.0.0 & \num{65536} \\
-   c & 192--223 & \SC{N.N.N.H} & 255.255.255.0 & \num{256} \\
-   d & 224--239 & \textit{multicast} & -- & -- \\
-   e & 240--255 & \textit{reserved} & -- & -- \\
-   \end{tabular}
-}
 \begin{table}
-   \caption{Classful addressing (1981)}
-   \label{tab:classful-addressing}
-   \centering
-   \sffamily
-   \usebox\classful
+\begin{sidecaption}{Classful addressing (1981)}[tab:classful-addressing]
+\centering
+\begin{tabular}{crllr}
+\textbf{class} & \textbf{range} & \textbf{format} & \textbf{subnet mask} & \textbf{\# addresses} \\[1ex]
+a & 0--127   & \SC{N.H.H.H} & 255.0.0.0 & \numprint{16777216} \\
+b & 128--191 & \SC{N.N.H.H} & 255.255.0.0 & \numprint{65536} \\
+c & 192--223 & \SC{N.N.N.H} & 255.255.255.0 & \numprint{256} \\
+d & 224--239 & \textit{multicast} & -- & -- \\
+e & 240--255 & \textit{reserved} & -- & -- \\
+\end{tabular}
+\end{sidecaption}
 \end{table}
 
 This can be gathered from the third (format) and fourth (subnet mask) columns.
@@ -186,67 +238,71 @@ The subnet mask only came to be with the concept of \emph{subnetting} but the ma
 %The rest field is an identifier for a specific host or network interface.
 Subnetting is the process of taking a block of \acs{IP} addresses from \vref{tab:classful-addressing} and dividing it into smaller blocks in order to prevent wasting \acs{IP} addresses.
 For example, the network 14.0.0.0 belongs to class~a and thus has a subnet mask of 255.0.0.0.
-\Cref{tab:classful-addressing} teaches us there are over 16~million \acs{IP} addresses in this network though there is no way anyway would want (or can) build a network this large.
-
-This block of \acs{IP} addresses contains over 16~million addresses, starting wtih 14.0.0.0 and ending with 14.255.255.255.
+\Cref{tab:classful-addressing} teaches us there are over 16~million \acs{IP} addresses%
+   \footnote{%
+      The first address is 14.0.0.0 and the last address is 14.255.255.255.
+      When we convert both \acs{IP} addresses back to a single large 32-bit number, we get \numprint{234881024} and \numprint{251658239}.
+      The difference between these numbers is about 16~million or exactly $2^24$.
+   }
+in this network though there is no way anyone would want (or can) build a network this large.
+We will discuss subnetting in detail in \vref{sec:ip-subnetting}.
 
 \paragraph{supernetting (1992)}
    \index{supernetting}
-A supernetwork, or supernet, is an \acs{IP} network that is formed by combination of multiple networks (or subnets) into a larger network.
+A supernetwork, or supernet, is an \acs{IP} network that is formed by combining multiple networks (or subnets) into a larger network.
 The new routing prefix for the combined network represents the constituent networks in a single routing table entry.
 The process of forming a supernet is called supernetting, \emph{prefix aggregation}, \emph{route aggregation}, or \emph{route summarisation}.
 
 This basically means that the classes from \vref{tab:classful-addressing} no longer exist.
 Every network needs a subnet mask that can have anywhere from one to thirty two bits allocated to the network number.
-See \vref{sec:subnetting} for the details.
+See \vref{sec:ip-subnetting} for the details.
 
 Let's take a look at two examples.
 In the first example, we group the networks 198.18.0.0/16 and 198.19.0.0/16 into the supernet 198.18.0.0/15.
 The third row displays the subnet mask in binary format.
 
 \begin{center}
-\sffamily
-\begin{tabular}{c|c@{\qquad}l}
-\color{spot1} 1100 0110 . 0001 001\color{spot2} 0 & . 0000 0000 . 0000 0000 & 198.18.0.0/16 \\
-\color{spot1} 1100 0110 . 0001 001\color{spot2} 1 & . 0000 0000 . 0000 0000 & 198.19.0.0/16 \\
+\tosfstyle
+\begin{tabular}{@{}l@{\qquad}l@{}}
+\color{spot1} 1100 0110 . 0001 001\color{spot2} 0 . 0000 0000 . 0000 0000 & 198.18.0.0/16 \\
+\color{spot1} 1100 0110 . 0001 001\color{spot2} 1 . 0000 0000 . 0000 0000 & 198.19.0.0/16 \\
 \hline
-1111 1111 . 1111 1111 & . 0000 0000 . 0000 0000 & 255.255.0.0 \\
-1111 1111 . 1111 1110 & . 0000 0000 . 0000 0000 & 255.254.0.0 \\
+\textcolor{spot1}{1111 1111 . 1111 111}0 . 0000 0000 . 0000 0000 & 255.254.0.0 \\
 \end{tabular}
 \end{center}
 
+Both networks have a prefix length of 16 bits meaning the network part or network number is the first sixteen bits.
+These are unique for both networks, the second octet is 18 versus 19.
+We can also see this in the binary form as the sixteenth bit from the left (in \textcolor{spot2}{magenta}) is different for both networks.
 
-We can clearly see that the two networks are unique as the sixteenth bit from the left (in \textcolor{spot2}{magenta}) is different for both networks.
-We can also see that the first fifteen bits (in \textcolor{spot1}{some kind of green}) are identical for both networks.
+As the first fifteen bits (in \textcolor{spot1}{some kind of green}) are identical for both networks we can group both networks into a single supernet.
+We keep the value for these fifteen bits and fill up with zeros till we have a total of 32~bits.
+If we then group these 32 bits in four octets and write it is dotted decimal notation, we get the prefix 198.18.0.0 with the a prefix length of 15.
+The prefix length of 15 translates into a subnet mask of 255.254.0.0.
 
-
-With \emph{supernetting} you can group both networks using one network address.
-Write down the identical bits in decimal.
-This gives us 198.18.0.0.
-Now create a custom subnet mask indicating how many bits are shared between both networks.
-As there are fifteen bits shared, this gives us 255.\textbf{254}.0.0.
-
-For the second example, take 198.19.0.0/16 and 198.20.0.0/16, displayed in bold in the table below.
+\newthought{For the second example}, take 198.19.0.0/16 and 198.20.0.0/16, displayed in the middle in the table below.
 When we want to combine both networks in a supernet, we must take together the identical bits on the left and turn all the hosts bits to zero (to make the network address).
-There are only thirteen bits identical. The last three bits differ.
+There are only thirteen identical bits. The last three bits differ.
 Thus this supernet would be 198.16.0.0 with a subnet mask of 255.248.0.0.
 However, this supernet includes all the other networks as well, from 198.16.0.0 to 198.23.0.0 as all these networks share the same thirteen leftmost bits.
 
 
+
+
 \begin{center}
-\sffamily
-\begin{tabular}{c|cl}
-\color{spot1} 1100 0110 . 0001 0\color{spot2} 000 & . 0000 0000 . 0000 0000 & 198.16.0.0/16 \\
-\color{spot1} 1100 0110 . 0001 0\color{spot2} 001 & . 0000 0000 . 0000 0000 & 198.17.0.0/16 \\
-\color{spot1} 1100 0110 . 0001 0\color{spot2} 010 & . 0000 0000 . 0000 0000 & 198.18.0.0/16 \\
-\bfseries\color{spot1} 1100 0110 . 0001 0\bfseries\color{spot2} 011 & \bfseries . 0000 0000 . 0000 0000 & \bfseries198.19.0.0/16 \\
-\bfseries\color{spot1} 1100 0110 . 0001 0\bfseries\color{spot2} 100 & \bfseries . 0000 0000 . 0000 0000 & \bfseries 198.20.0.0/16 \\
-\color{spot1} 1100 0110 . 0001 0\color{spot2} 101 & . 0000 0000 . 0000 0000 & 198.21.0.0/16 \\
-\color{spot1} 1100 0110 . 0001 0\color{spot2} 110 & . 0000 0000 . 0000 0000 & 198.22.0.0/16 \\
-\color{spot1} 1100 0110 . 0001 0\color{spot2} 111 & . 0000 0000 . 0000 0000 & 198.23.0.0/16 \\
+\tosfstyle
+\begin{tabular}{@{}ll@{}}
+\textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{000} . 0000 0000 . 0000 0000 & 198.16.0.0/16 \\
+\textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{001} . 0000 0000 . 0000 0000 & 198.17.0.0/16 \\
+\textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{010} . 0000 0000 . 0000 0000 & 198.18.0.0/16 \\
+\textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{011} . 0000 0000 . 0000 0000 & 198.19.0.0/16 \\
+\textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{100} . 0000 0000 . 0000 0000 & 198.20.0.0/16 \\
+\textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{101} . 0000 0000 . 0000 0000 & 198.21.0.0/16 \\
+\textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{110} . 0000 0000 . 0000 0000 & 198.22.0.0/16 \\
+\textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{111} . 0000 0000 . 0000 0000 & 198.23.0.0/16 \\
 \hline
-1111 1111 . 1111 1111 & . 0000 0000 . 0000 0000 & 255.255.0.0 \\
-1111 1111 . 1111 1000 & . 0000 0000 . 0000 0000 & 255.248.0.0 \\
+1111 1111 . 1111 1111 . 0000 0000 . 0000 0000 & 255.255.0.0 \\
+1111 1111 . 1111 1000 . 0000 0000 . 0000 0000 & 255.248.0.0 \\
 \end{tabular}
 \end{center}
 
@@ -255,20 +311,87 @@ However, this supernet includes all the other networks as well, from 198.16.0.0 
 \Acl{CIDR} is a method for allocating \acs{IP} addresses and for \acs{IP} routing.
 The \gls{IETF} introduced \acs{CIDR} to replace the previous classful network addressing architecture on the internet.
 Its goal was to slow the growth of routing tables on routers across the internet, and to help slow the rapid exhaustion of \acs{IP} version~4 addresses.
+It is basically the application of subnetting and supernetting.
 
 \paragraph{\acs{IP} version 6 (1998)}
    \index{IP version 6@\acs{IP} version~6}
 \acs{IP} version~6 was developed by the \gls{IETF} to deal with the long-anticipated problem of \acs{IP} version~4 address exhaustion, and is intended to replace \acs{IP} version~4.
 In December 1998, \acs{IP} version~6 became a draft standard for the \gls{IETF}, which subsequently ratified it as an internet standard on 14 July 2017.
 
+\acs{IP} version~6 uses 128~bits to store the address instead of the 32~bits used by \acs{IP} version~4.
+As every additionanl bit doubles the amount of addresses, the growth is exponential and 128~bits gives us an enormous amount of addresses.%
+   \footnote{%
+      Every grain of sand on Earth can have trillions of unique \acs{IP} version~6 addresses.
+      In fact, every atom on the surface of the earth can be assigned an address and we would still have addresses to spare.
+   }
+It is not feasible to write these large addresses using decimal notation so \acs{IP} version~6 addresses are written using the hexadecimal number system.
+An example of such an address is \SC{2001:ef45:4db9:ae02:0023:ba3b:ae10:0de3}, not exactly easy to remember.
+
+In this course I will not cover \acs{IP} version~6.
+There are a few reasons why this is the case.
+\begin{itemize}
+\item
+   In Europe the shortage of \acs{IP} version~4 addresses is not being felt yet.
+   Contrary to African and Asian countries Europe and North America have quite a big share of \acs{IP} version~4 addresses.
+\item
+   Not all hardware fully support \acs{IP} version~6 yet so even should we want to roll out \acs{IP} version~6 company-wide we would not have the same feature set available as when using \acs{IP} version~4.
+\item
+   Even though \acs{IP} version~6 development started over twenty years ago, they still not have made up their mind on what they want it to look like and standard continue to change.
+\end{itemize}
+
+
 
 \section{Subnetting}
-\label{sec:subnetting}
+\label{sec:ip-subnetting}
+
+Now it is time to delve deeper into how subnetting works and how we can use it to save precious \acs{IP} version~4 addresses.
+Let's start with explaining the prefix and prefix length by using decimal numbers.
+They are used to indicate a \emph{range} of numbers or \acs{IP} addresses.
+Suppose we want to indicate the range 200--299 or, to put it in words, every three-digit number where the left-most digit is a two.
+We could write this down as 200/1:
+\begin{itemize}
+\item
+   The `/1' indicates that the first digit must be fixed.
+   This first digit is the \emph{prefix} (the number is fixed and it comes at the front: pre).
+\item
+   The last two digits can be anything and the resulting number will still fall within the range 200--299.
+\item
+   When we use the sub range 240/2 this entire range (240--249) falls within the larger range.
+   In this case the first two digits must match exactly with `24.'
+\end{itemize}
+
+\newthought{With \IP\ addresses} it works mostly the same.
+Suppose we have the range 198.19.0.0/16 which includes the \numprint{65536} \IP\ addresses from 198.19.0.0 to 198.19.255.255.
+\begin{itemize}
+\item
+   The `/16' indicates that the first sixteen \emph{bits} must be fixed.
+   The prefix is thus 198.19 or 198.19.0.0 if we pad on the right with zeros.
+\item
+   The last two octets can be anything.
+   This gives us a total of $2^{16}$ or \numprint{65536} possible \IP\ addresses which fall in this range.
+\item
+   When we use a subnet, e.g.~198.19.43.0/24 this entire range (198.19.43.0 to 198.19.43.255) falls within the larger range.
+   In this case the first three octets ($3\times8=24$) must match exactly.
+\end{itemize}
+The difficulty lies in the fact that \IP\ addresses are actually binary numbers and not decimal numbers as in the previous example.
+We thus do not have to jump from a `/16' to a `/24' but can use any value in between.
+
+Let's now take an example where we split the network in the middle of an octet.
+We start with the network 198.51.100.0/24 and want to divide it into four smaller subnetworks.%
+   \footnote{%
+      It is \emph{very} important to note that we must always and everywhere use multiples of two as we are in reality using a binary number system.
+   }
+
+
 
 % TODO: at least attempt to explain subnetting
 
-\newsavebox{\subnettingOne}
-\savebox{\subnettingOne}{
+\begin{figure}
+\begin{sidecaption}%
+   [Dividing a block of \acs{IP} addresses in four equal parts]%
+   {With subnetting you can divide a block of 256~\acs{IP} addresses into four smaller blocks of 64~addresses each}%
+   [fig:subnetting]
+\centering
 \begin{tikzpicture}
    \draw[white] (0,-35mm) -- (0,35mm);
    \draw[white] (-56mm,0) -- (56mm,0);
@@ -284,17 +407,16 @@ In December 1998, \acs{IP} version~6 became a draft standard for the \gls{IETF},
          64/{\small 198.51.100.128/26},
          64/{\small 198.51.100.192/26}}
 \end{tikzpicture}
-}
-
-\begin{figure}
-   \centering
-   \usebox\subnettingOne
-   \caption[Dividing a block of \acs{IP} addresses in four equal parts]{With subnetting you can divide a block of 256~\acs{IP} addresses into four smaller blocks of 64~addresses each}
-   \label{fig:subnetting}
+\end{sidecaption}
 \end{figure}
 
-\newsavebox{\subnettingTwo}
-\savebox{\subnettingTwo}{
+
+\begin{figure}
+\begin{sidecaption}%
+   [With \acs{VLSM} you can divide an \acs{IP} block in unequal parts]%
+   {When using \acfp{VLSM} you can further divide a subnet into smaller segments}%
+   [fig:vlsm]
+\centering
 \begin{tikzpicture}
    \draw[white] (0,-35mm) -- (0,35mm);
    \draw[white] (-56mm,0) -- (56mm,0);
@@ -312,12 +434,7 @@ In December 1998, \acs{IP} version~6 became a draft standard for the \gls{IETF},
          32/{\small 198.51.100.160/27},
          64/{\small 198.51.100.192/26}}
 \end{tikzpicture}
-
-\begin{figure}
-   \centering
-   \usebox\subnettingTwo
-   \caption[With \acs{VLSM} you can divide an \acs{IP} block in unequal parts]{When using \acfp{VLSM} you can further divide a subnet into smaller segments}
-   \label{fig:vlsm}
+\end{sidecaption}
 \end{figure}
 
 
@@ -341,7 +458,7 @@ Remember that these different classes are just made-up methods of determining wh
 
 
 \section{\acl{DHCP}}
-\label{sec:dhcp}
+\label{sec:ip-dhcp}
 
 
 \paragraph{simplifies \acs{IP} address configuration}
@@ -387,7 +504,7 @@ But you keep the \acs{IP} address configuration on a central location.
 
 
 \section{\Acl{NAT}}
-\label{sec:nat}
+\label{sec:ip-nat}
 
 
 \paragraph{private \acs{IP} space}
@@ -476,7 +593,7 @@ This method is most often used to translate a range of private \acs{IP} addresse
 This is often needed when two companies with overlapping \acs{IP} address space connect their networks together.
 
 \section{\Acl{ICMP}}
-\label{sec:icmp}
+\label{sec:ip-icmp}
 
 The \acf{ICMP} is a supporting protocol in the internet protocol suite.
 It is used by network devices, including routers, to send error messages and operational information indicating success or failure when communicating with another \acs{IP} address, for example, an error is indicated when a requested service is not available or that a host or router could not be reached.
@@ -518,7 +635,7 @@ Receiving this reply tells us two things:
 % TODO: PMTUD
 
 \section{Routing}
-\label{sec:routing}
+\label{sec:ip-routing}
 
 \paragraph{What is a router?}
    \index{router}
@@ -571,11 +688,6 @@ Routers only know about the networks they directly connect to.
 They must thus learn about distant networks.
 This can happen in one of two ways, either the network administrator manually configures the router to forward a certain prefix to some other router (the \emph{next-hop} router) or the routers in a network can use a \emph{dynamic routing protocol} to teach each other about the networks they know and how to reach them.
    \index{router!next-hop}
-
-\slide{routing table}
-%\begin{frame}[fragile]
-%\usebox\lstrouterThree
-%\end{frame}
 
 \paragraph{\acl{TTL}}
    \iacs{TTL}
@@ -748,7 +860,37 @@ A basic \acs{BGP} configuration is relatively simple but it can quickly become e
 Contrary to normal routing protocols which serve to make all networks known within the entire internetwork, \acs{BGP} aims to limit reachability and focusses on \emph{policies}.
 You can tweak the protocol so that you can exactly control the path a packet has to travel through the network to reach its destination.
 
+
+
+\section{Exercises}
+\label{sec:ip-exercises}
+\subsection{Subnetting}
+\begin{enumerate}
+\item
+   Given the network 100.65.0.0/16, give the network address, broadcast address, and the first and last available \IP\ addresses.
+\item
+   Given the network 198.19.0.0/24, give the network address, broadcast address, and the first and last available \IP\ addresses.
+\item
+   Given the network 203.0.113.32/27, give the network address, broadcast address, and the first and last available \IP\ addresses.
+\item
+   How many available or usable \IP\ addresses are there in the network 192.168.12.128/25?
+\item
+   Given the \IP\ range 192.0.2.64/26, split this range up into four smaller blocks.
+   Give the network and broadcast address for each of these four subnetworks.
+\end{enumerate}
+
+\subsection{Cisco Packet Tracer}
+\begin{enumerate}[resume]
+\item
+   Create a small network with a router, a switch and two computers.
+   Configure the router's interface with the \IP\ address 192.168.0.1/26 and configure a \acs{DHCP} server so that the computers automatically get an \IP\ address when they power on.
+   One computer should always get the \IP\ address 192.168.0.7.
+\end{enumerate}
+
+
+
 \section{Further reading}
+\label{sec:ip-reading}
 \textcite{lammle-ccna,lammle-comptia} are both good resources to continue from here.
 They both explain \acs{IP} addresses, subnetting, \acs{DHCP}, and routing in more detail.
 Another great resource is \textcite{stevens} but this masterpiece is probably a bit too in-depth.
