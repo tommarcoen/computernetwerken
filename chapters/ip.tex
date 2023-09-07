@@ -312,14 +312,14 @@ However, this supernet includes all the other networks as well, from 198.16.0.0 
 \paragraph{\acf{CIDR} (1993)}
    \iacs{CIDR}
 \Acl{CIDR} is a method for allocating \acs{IP} addresses and for \acs{IP} routing.
-The \gls{IETF} introduced \acs{CIDR} to replace the previous classful network addressing architecture on the internet.
-Its goal was to slow the growth of routing tables on routers across the internet, and to help slow the rapid exhaustion of \acs{IP} version~4 addresses.
+The \gls{IETF} introduced \acs{CIDR} to replace the previous classful network addressing architecture on the Internet.
+Its goal was to slow the growth of routing tables on routers across the Internet, and to help slow the rapid exhaustion of \acs{IP} version~4 addresses.
 It is basically the application of subnetting and supernetting.
 
-\paragraph{\acs{IP} version 6 (1998)}
+\paragraph{\acs{IP} version 6 (1995)}
    \index{IP version 6@\acs{IP} version~6}
 \acs{IP} version~6 was developed by the \gls{IETF} to deal with the long-anticipated problem of \acs{IP} version~4 address exhaustion, and is intended to replace \acs{IP} version~4.
-In December 1998, \acs{IP} version~6 became a draft standard for the \gls{IETF}, which subsequently ratified it as an internet standard on 14 July 2017.
+In December 1995, \rfc{1883} was published, specifying \IPsix.
 
 \acs{IP} version~6 uses 128~bits to store the address instead of the 32~bits used by \acs{IP} version~4.
 As every additionanl bit doubles the amount of addresses, the growth is exponential and 128~bits gives us an enormous amount of addresses.%
@@ -471,7 +471,7 @@ Since a class~c address range contains 256~\acs{IP} addresses, \gls{RIPE} will g
 Now we have a problem.
 We have plenty of \acs{IP} addresses but we need two separate networks.
 Or perhaps we need three or even four.
-Maybe we want to isolate the public internet-facing servers from the private servers that should not be reachable from the internet.
+Maybe we want to isolate the public internet-facing servers from the private servers that should not be reachable from the Internet.
 We have received plenty of addresses, it is up to us to decide how to group them and to determine how large each network must be.
 
 Remember that these different classes are just made-up methods of determining which part of the \acs{IP} address is the network number and which part is the host identifier.
@@ -580,11 +580,10 @@ A \acs{DHCP}\iacs{DHCP} client takes a random \acs{IP} address from this range w
    \iacs{NAT}
 The majority of network address translators map multiple private hosts to one publicly exposed \acs{IP} address.
 In a typical configuration, a local network uses one of the designated private \acs{IP} address subnets (\rfc{1918}).
-A router in that network has a private address of that address space.
-The router is also connected to the internet with a public address, typically assigned by an internet service provider.
+One or more routers sit at the border of this private network connecting it to the public Internet.
 
-As traffic passes from the local network to the internet, the source address in each packet is translated on the fly from a private address to the public address.
-The router tracks basic data about each active connection (particularly the destination address and port).
+As traffic passes from the local network to the Internet, the source address in each packet is translated on the fly from its private address to the public address of the router.
+The router tracks basic metadata about each active connection (particularly the destination address and port).
 When a reply returns to the router, it uses the connection tracking data it stored during the outbound phase to determine the private address on the internal network to which to forward the reply.
 
 All \acs{IP} packets have a source \acs{IP} address and a destination \acs{IP} address.
@@ -602,7 +601,7 @@ This is the most common type of \acs{NAT} and has become synonymous with the ter
 \paragraph{pool of public addresses}
    \index{NAT@\acs{NAT}!pool}
 It is possible to use multiple public \acs{IP} addresses to translate the private \acs{IP} address into.
-When this is used in combination with port-based address translation, it allows for multiple thousands of private hosts to communicate on the internet.
+When this is used in combination with port-based address translation, it allows for multiple thousands of private hosts to communicate on the Internet.
 
 % TODO: either explain more, or delete?
 \paragraph{one-to-one translation}
@@ -610,6 +609,9 @@ When this is used in combination with port-based address translation, it allows 
    \index{NAT@\acs{NAT}!one-to-one}
 This method is most often used to translate a range of private \acs{IP} addresses into a different range of private \acs{IP} addresses.
 This is often needed when two companies with overlapping \acs{IP} address space connect their networks together.
+
+
+
 
 \section{\Acl{ICMP}}
 \label{sec:ip-icmp}
@@ -627,13 +629,12 @@ Receiving this reply tells us two things:
    the network between our computer and the destination is working as all the devices in the middle were able to send our request to the destination as well as send its reply back to us.
 \end{itemize}
 
-% TODO: complete this section
-
 \begin{table}
-\sffamily
+\begin{sidecaption}{Most common \acs{ICMP} types and codes}[tab:icmp]
 \centering
 \begin{tabular}{rrl}
-\textbf{type} & \textbf{code} & \textbf{description} \\[1ex]
+{type} & {code} & {description} \\
+\midrule
  0 &  0 & echo reply \\
  3 &  0 & destination network unreachable \\
  3 &  1 & destination host unreachable \\
@@ -646,12 +647,34 @@ Receiving this reply tells us two things:
  8 &  0 & echo request \\
 11 &  0 & \acs{TTL} expired in transit \\
 \end{tabular}
-\caption{Most common \acs{ICMP} types and codes}
-\label{tab:icmp}
+\end{sidecaption}
 \end{table}
+
+If we do not receive a reply from the end host it can be because of one or more issue in the network.
+\begin{itemize}
+\item
+   The end host could be turned off, have a firewall configured which prohibits sending or receiving \acs{ICMP} messages, or have an incorrect gateway configured so that the reply cannot reach us.
+\item
+   A network firewall in the path between source and destination can prevent the \acs{ICMP} query from reaching the destination.
+   It could also prevent the reply form reaching us.
+\item
+   The destination network could be unknown to one of the routers in the path preventing the query from reaching its destination.
+   Our own network could also be unknown to one of the routers in the path preventing the reply from reaching us.
+\end{itemize}
+More troubleshooting is needed to determine the exact problem or problems so that they can get fixed.
+A good place to start would be to use the program \cmd{traceroute} (on Windows it is called \cmd{tracert}).
+
+% TODO: complete this section
+
 
 \paragraph{path \acs{MTU} discovery}
 % TODO: PMTUD
+
+
+
+\section{\acs{IP} header}
+
+
 
 \section{Routing}
 \label{sec:ip-routing}
@@ -913,4 +936,5 @@ You can tweak the protocol so that you can exactly control the path a packet has
 \textcite{lammle-ccna,lammle-comptia} are both good resources to continue from here.
 They both explain \acs{IP} addresses, subnetting, \acs{DHCP}, and routing in more detail.
 Another great resource is \textcite{stevens} but this masterpiece is probably a bit too in-depth.
-\textcite{doyle} is another classic focussing on routing protocols such as \acs{RIP}, \acs{OSPF}, and \acs{IS-IS} while the second volume covers \acs{BGP}.
+\textcite{doyle} is another classic.
+The first volume focusses on the routing protocols \acs{RIP}, \acs{OSPF}, and \acs{IS-IS} while the second volume covers \acs{BGP}.
