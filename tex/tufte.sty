@@ -38,15 +38,22 @@
 % Header and footer
 \setheadfoot{\baselineskip}{2\baselineskip}
 \setheaderspaces{*}{2\baselineskip}{2}
+\copypagestyle{tufte}{companion}
+\makeheadrule{tufte}{\headwidth}{0pt}
+\makepsmarks{tufte}{%
+    \nouppercaseheads
+    \createmark{chapter}{both}{nonumber}{}{}
+    \createmark{section}{right}{nonumber}{}{}
+}
+\makeevenhead{tufte}{\normalfont\scshape\thepage\quad\leftmark}{}{}
+\makeoddhead{tufte}{}{}{\normalfont\scshape\rightmark\quad\thepage}
+\pagestyle{tufte}
+\footnotesinmargin
 
 \checkandfixthelayout[lines]
 % The following line ensures the wide margin is always on the right.
 % BUG: This does not work in combination with the Companion page style.
 %\setlength{\evensidemargin}{\oddsidemargin}
-
-%
-\pagestyle{companion}
-\footnotesinmargin
 
 % Paragraphs
 \usepackage{microtype}
@@ -54,12 +61,23 @@
 \linespread{1.07}
 \setlength{\parindent}{2.5em}
 
+% A new thought...
+\newskip\tufteskipamount
+\tufteskipamount=1.0\baselineskip plus 0.5ex minus 0.2ex
+\newcommand{\tufteskip}{\vspace\tufteskipamount}
+\newcommand{\tuftebreak}{\par\ifdim\lastskip<\tufteskipamount
+    \removelastskip\penalty-100\tufteskip\fi}
+\providecommand\newthought[1]{%
+    \tuftebreak
+    \noindent\textsc{#1}%
+}
+
 % Lists
 \usepackage[inline]{enumitem}
 \newlist{inlinelist}{enumerate*}{1}
 \setlist[inlinelist]{label=(\roman*)}
 \firmlists
-\renewcommand*{\descriptionlabel}[1]{\hspace\labelsep\itshape #1 --}
+\renewcommand*{\descriptionlabel}[1]{\hspace\labelsep\normalfont\itshape #1 --}
 
 % A few useful lengths
 \newlength{\@tufte@overhang}
@@ -89,8 +107,8 @@
 % Sections
 \setsecheadstyle{\normalfont\large}
 \setsubsecheadstyle{\normalfont\itshape\large}
-%\setparaheadstyle{\normalfont\scshape\MakeTextLowercase\color{paragraphcolour}}
-
+\setparaheadstyle{\normalfont\color{paragraphcolor}\scshape\MakeTextLowercase}
+% BUG: why does the colour not work?
 
 
 % ============================================================
@@ -115,3 +133,9 @@
 \captionnamefont{\footnotesize}
 \captiontitlefont{\footnotesize}
 \setfloatadjustment{margintable}{\small\centering}
+
+% ============================================================
+% Bibliography
+% ============================================================
+
+\RequirePackage{biblatex}
