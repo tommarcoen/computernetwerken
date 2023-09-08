@@ -673,8 +673,42 @@ A good place to start would be to use the program \cmd{traceroute} (on Windows i
 
 
 \section{\acs{IP} header}
+Before we delve into the second major topic, \IP\ routing, let's first take a look at the \IPfour\ packet header.
 
+\begin{figure}
+\begin{sidecaption}{The \IPfour\ packet header}[fig:ipv4-header]
+\begin{bytefield}{32}
+\bitheader{0,3,4,7,8,13-15,16,18,19,31}\\
+\bitbox{4}{version}
+\bitbox{4}{\SC{IHL}}
+\bitbox{6}{\SC{DSCP}}
+\bitbox{2}{\small\SC{ECN}}
+\bitbox{16}{total length} \\
+\bitbox{16}{identification}
+\bitbox{3}{flags}
+\bitbox{13}{fragment offset} \\
+\bitbox{8}{\acs{TTL}}
+\bitbox{8}{protocol}
+\bitbox{16}{checksum} \\
+\wordbox{1}{source \IP\ address} \\
+\wordbox{1}{destination \IP\ address} \\
+\wordbox[tlr]{1}{options}\\
+\skippedwords \\
+\wordbox[blr]{1}{}\\
+\end{bytefield}
+\end{sidecaption}
+\end{figure}
 
+Most fields are not important to us but a few are.
+\begin{description}
+\item[source \IP\ address]
+   The \IP\ address of the end host sending the packet.
+\item[destination \IP\ address]
+   The \IP\ address of the end host to which we want to send the packet.
+\item[\acf{TTL}]
+\item[protocol]
+\item[checksum]
+\end{description}
 
 \section{Routing}
 \label{sec:ip-routing}
