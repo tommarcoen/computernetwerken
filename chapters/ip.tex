@@ -400,17 +400,18 @@ This leaves us with $6=32-26$ bits for the host identifier allowing for $2^6=64$
 \begin{sidecaption}%
    [Dividing a block of \acs{IP} addresses in four equal parts]%
    {With subnetting you can divide a block of 256~\acs{IP} addresses into four smaller blocks of 64~addresses each}%
-   [fig:subnetting]
+   {}[fig:subnetting]
 \centering
 \begin{tikzpicture}
    \draw[white] (0,-35mm) -- (0,35mm);
    \draw[white] (-56mm,0) -- (56mm,0);
    \pie[sum = auto,
-         color = {
-            spot1,
-            spot1!66,
-            spot2,
-            spot3!20
+        radius = 2,
+        color = {
+           spot1,
+           spot1!66,
+           spot2,
+           spot3!20
          }
       ]{64/{\small 198.51.100.0/26},
          64/{\small 198.51.100.64/26},
@@ -434,26 +435,9 @@ This is called \acf{VLSM}.
 \begin{figure}
 \begin{sidecaption}%
    [With \acs{VLSM} you can divide an \acs{IP} block in unequal parts]%
-   {When using \acfp{VLSM} you can further divide a subnet into smaller segments}%
+   {When using \acs{VLSM} you can further divide a subnet into smaller segments}%
    [fig:vlsm]
-\centering
-\begin{tikzpicture}
-   \draw[white] (0,-35mm) -- (0,35mm);
-   \draw[white] (-56mm,0) -- (56mm,0);
-   \pie[sum = auto,
-         color = {
-            spot1,
-            spot1!66,
-            spot2,
-            spot3!40,
-            spot3!20
-         }
-      ]{64/{\small 198.51.100.0/26},
-         64/{\small 198.51.100.64/26},
-         32/{\small 198.51.100.128/27},
-         32/{\small 198.51.100.160/27},
-         64/{\small 198.51.100.192/26}}
-\end{tikzpicture}
+\includegraphics[width=\textwidth]{images/ip/vlsm.pdf}
 \end{sidecaption}
 \end{figure}
 
@@ -500,7 +484,7 @@ These stages (see \vref{fig:dora}) are often abbreviated as \acs{DORA} for \acl{
 \begin{figure}
 \begin{sidecaption}{The foure stages of acquiring an \acs{IP} address from a \acs{DHCP} server}[fig:dora]
 \centering
-\input{images/dora.tex}
+\input{images/ip/dora.tex}
 \end{sidecaption}
 \end{figure}
 
@@ -519,7 +503,7 @@ It cannot use the \acs{IP} address for the remaining four hours but must send a 
 \paragraph{\acs{DHCP} relay}
    \index{DHCP@\acs{DHCP}!relay}
 As it is impractical to configure a \acs{DHCP} server on each network, routers can be configured to act as \acs{DHCP} relays, forwarding the broadcast messages%
-   \footnote{TODO: explain why \acs{DHCP} uses broadcast messages.}
+   \fxwarning{Explain why \acs{DHCP} uses broadcast messages.}
 as unicast to a remote \acs{DHCP} server.
 
 \paragraph{reservations}
@@ -664,11 +648,11 @@ If we do not receive a reply from the end host it can be because of one or more 
 More troubleshooting is needed to determine the exact problem or problems so that they can get fixed.
 A good place to start would be to use the program \cmd{traceroute} (on Windows it is called \cmd{tracert}).
 
-% TODO: complete this section
+\fxwarning{Complete this section.}
 
 
 \paragraph{path \acs{MTU} discovery}
-% TODO: PMTUD
+\fxwarning{Complete this section.}
 
 
 
@@ -706,9 +690,34 @@ Most fields are not important to us but a few are.
 \item[destination \IP\ address]
    The \IP\ address of the end host to which we want to send the packet.
 \item[\acf{TTL}]
+   The source puts a value (0-255) in this 8-bit field and every router forwarding the packet first decrements this value by one.
+   When the number reaches zero, the packet is discarded.
+   This is a simple method to prevent loops in the network where packets travel endlessly in a circle between two or more routers.
 \item[protocol]
+   The value in this 8-bit determines the contents of the packet.
+   This value tells the operating system receiving the packet from the network to which higher-level protocol to send the data.
 \item[checksum]
+   A checksum of the header is calculated and stored in this field.
+   The receiver calculates the checksums and compares it to this value.
+   If both values are the same, the receiver can assume the data to be correct.
+   If both checksums differ, the packet has been corrupted in transit and is discarded.
 \end{description}
+
+\begin{margintable}
+\begin{tabular}{rl}
+ 1 & \acs{ICMP}  \\
+ 6 & \acs{TCP}   \\
+17 & \acs{UDP}   \\
+47 & \acs{GRE}   \\
+50 & \acs{ESP}   \\
+51 & \acs{AH}    \\
+88 & \acs{EIGRP} \\
+89 & \acs{OSPF}  \\
+\end{tabular}
+\caption{A few important \IP\ protocol values.}
+\end{margintable}
+
+\fxwarning{Write a few paragraphs on \IP\ header options.}
 
 \section{Routing}
 \label{sec:ip-routing}
@@ -719,25 +728,24 @@ Most fields are not important to us but a few are.
 A router is really just a specialised computer that \emph{forwards} packets it receives but which are not destined for itself.
 A computer can also be configured to function as a router by turning on this option (\vref{lst:freebsd-enable-routing,lst:rhel-enable-routing}).
 
-\newsavebox{\lstrouterOne}
-\newsavebox{\lstrouterTwo}
-\begin{lrbox}{\lstrouterOne}
-\begin{lstlisting}[caption={Enable routing on a FreeBSD host},label={lst:freebsd-enable-routing}]
+%[caption={Enable routing on a FreeBSD host},label={lst:freebsd-enable-routing}]
+\begin{fltlisting}[h!]
+\begin{sidecaption}{Enable routing on a FreeBSD host}[lst:freebsd-enable-routing]
+\begin{lstlisting}
 # sysrc gateway_enable="YES"
 # sysctl net.inet.ip.forwarding=1
 \end{lstlisting}
-\end{lrbox}
-\begin{lrbox}{\lstrouterTwo}
-\begin{lstlisting}[caption={Enable routing on a \acs{RHEL} host},label={lst:rhel-enable-routing}]
+\end{sidecaption}
+\end{fltlisting}
+
+\begin{fltlisting}[h!]
+\begin{sidecaption}{Enable routing on a \acs{RHEL} host}[lst:rhel-enable-routing]
+\begin{lstlisting}
 # echo "net.ipv44.ip_forward=1" >> /etc/sysctl.conf
 # echo 1 > /proc/sys/net/ipv4/ip_forward
 \end{lstlisting}
-\end{lrbox}
-\noindent
-\usebox\lstrouterOne
-
-\noindent
-\usebox\lstrouterTwo
+\end{sidecaption}
+\end{fltlisting}
 
 When a router receives a packet with a destination \acs{IP} address which does not belong to any of the router's interfaces, the router looks up the \acs{IP} address in its \emph{routing table} and forwards the packet out the given interface.%
    \index{routing table}
@@ -805,7 +813,7 @@ Unlike dynamic routing, static routes are fixed and do not change if the network
 Static routing and dynamic routing are not mutually exclusive.
 Both dynamic routing and static routing are usually used on a router to maximise routing efficiency and to provide backups in case dynamic routing information fails to be exchanged.
 Static routing can also be used in \emph{stub networks},%
-index{stub network}%
+\index{stub network}%
 \footnote{%
 A stub network is a (part of a) network with only one way to reach the rest of the network.
 It thus does not need detailed knowledge about the network but can usually route all traffic using a single default route pointing to the exit point.
@@ -843,7 +851,7 @@ Most \acs{OSPF} implementation use a cost value based on the bandwidth of the li
 
 \begin{figure}
    \centering
-   \input{images/metric}
+   \input{images/ip/metric}
    \caption[The metric decides the best route in a network]{A router can learn a prefix from several other routers. The metric decides the best route.}
    \label{fig:metric}
 \end{figure}

@@ -5,6 +5,10 @@
 
 \input{colourscheme-syntra}
 \usepackage{tufte}
+\usepackage{fixme}
+\fxusetheme{color}
+%\fxloadtargetlayouts{color}
+%\fxsetup{targetlayout=color}
 
 
 
@@ -24,6 +28,7 @@
 % Graphics
 % ============================================================
 
+\usepackage[final]{graphicx}
 \usepackage{tikz}
 \usepackage{pgf-pie}
 \usetikzlibrary{arrows}
@@ -57,7 +62,7 @@
 % Code listings and monospaced fonts
 % ============================================================
 
-\usepackage{listings}
+\usepackage[final]{listings}
 \lstset{
     basicstyle       = \ttfamily\small,
     numbers          = left,
@@ -72,6 +77,7 @@
     framerule        = .8pt,
     rulecolor        = \color{listingrulecolour}
 }
+\newfloat[chapter]{fltlisting}{lol}{Listing}
 
 \usepackage{bytefield}
 
