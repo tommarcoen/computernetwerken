@@ -6,6 +6,10 @@
 \input{colourscheme-syntra}
 \usepackage{tufte}
 \usepackage{fixme}
+% pretend we're in book.cls
+\makeatletter
+\let\@lox@prtc\@lox@prtc@book
+\makeatother
 \fxusetheme{color}
 
 
@@ -78,6 +82,21 @@
 \newfloat[chapter]{fltlisting}{lol}{Listing}
 
 \usepackage{bytefield}
+
+
+
+% ============================================================
+% Additional information or background information
+% ============================================================
+
+\usepackage[most]{tcolorbox}
+\usepackage{fontawesome}
+\newtcolorbox{extrainfo}{
+   title = {\faUniversity\quad Extra information},
+   colframe = BorderColourExtraInfo,
+   colback = white,
+   breakable = true
+}
 
 
 
