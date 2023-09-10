@@ -1,0 +1,31 @@
+\documentclass[crop,tikz]{standalone}
+\input{../../tex/colourscheme-syntra}
+\begin{document}
+\tikzset{network node/.style={
+    inner sep=0mm,
+    thick,
+    text=spot3!80,
+    draw=spot3!80,
+    fill=white,
+    minimum size=10mm}}
+\tikzset{network node circle/.style={
+    network node,
+    circle}}
+
+\begin{tikzpicture}
+\node[network node circle] (R1) at (0,0) {$R_1$};
+\node[network node circle] (R2) at (3,1) {$R_2$};
+\node[network node circle] (R3) at (3,-1) {$R_3$};
+\node[network node circle] (R4) at (6,0) {$R_4$};
+\node (lan) at (8,0) [label=right:192.0.2.0/24] {};
+\node (s1) at (8,-1) {};
+\node (s2) at (8,1) {};
+\fill (lan) circle [radius=2pt];
+\draw (s1) circle [radius=2pt,outer sep=0pt];
+\draw (s2) circle [radius=2pt];
+
+\draw (R1) -- (R2) -- (R4) -- (R3) -- (R1);
+\draw (R4) -- (lan.center);
+\draw (s1) -- (s2);
+\end{tikzpicture}
+\end{document}

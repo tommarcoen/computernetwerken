@@ -400,24 +400,8 @@ This leaves us with $6=32-26$ bits for the host identifier allowing for $2^6=64$
 \begin{sidecaption}%
    [Dividing a block of \acs{IP} addresses in four equal parts]%
    {With subnetting you can divide a block of 256~\acs{IP} addresses into four smaller blocks of 64~addresses each}%
-   {}[fig:subnetting]
-\centering
-\begin{tikzpicture}
-   \draw[white] (0,-35mm) -- (0,35mm);
-   \draw[white] (-56mm,0) -- (56mm,0);
-   \pie[sum = auto,
-        radius = 2,
-        color = {
-           spot1,
-           spot1!66,
-           spot2,
-           spot3!20
-         }
-      ]{64/{\small 198.51.100.0/26},
-         64/{\small 198.51.100.64/26},
-         64/{\small 198.51.100.128/26},
-         64/{\small 198.51.100.192/26}}
-\end{tikzpicture}
+   [fig:subnetting]
+\includegraphics[width=\textwidth]{images/ip/subnetting.pdf}
 \end{sidecaption}
 \end{figure}
 
@@ -652,6 +636,8 @@ A good place to start would be to use the program \cmd{traceroute} (on Windows i
 
 
 \paragraph{path \acs{MTU} discovery}
+
+See also \emph{time-to-live} on p.~\pageref{par:ip-ttl} and \emph{fragmentation} on p.~\pageref{par:ip-fragmentation}.
 \fxwarning{Complete this section.}
 
 
@@ -661,12 +647,13 @@ Before we delve into the second major topic, \IP\ routing, let's first take a lo
 
 \begin{figure}
 \begin{sidecaption}{The \IPfour\ packet header}[fig:ipv4-header]
+\centering
 \begin{bytefield}{32}
 \bitheader{0,3,4,7,8,13-15,16,18,19,31}\\
 \bitbox{4}{version}
 \bitbox{4}{\SC{IHL}}
 \bitbox{6}{\SC{DSCP}}
-\bitbox{2}{\small\SC{ECN}}
+\bitbox{2}{\footnotesize\SC{ECN}}
 \bitbox{16}{total length} \\
 \bitbox{16}{identification}
 \bitbox{3}{flags}
@@ -717,7 +704,14 @@ Most fields are not important to us but a few are.
 \caption{A few important \IP\ protocol values.}
 \end{margintable}
 
-\fxwarning{Write a few paragraphs on \IP\ header options.}
+\IPfour\ options are not often used and some can even be dangerous.
+Many networks are configured to drop packets with either the \emph{Loose source and record route} option or the \emph{Strict source and record route} option.
+
+In \IPsix\ options are implemented as extensions.
+For example the IPsec \acf{AH} and \acf{ESP} headers are implemented as \IPsix\ extension headers.
+   \index{VPN@\acs{VPN}!IPsec}
+Fragmentation is also implemented using an extension header although \IPsix\ packets are not supposed to be fragmented.
+
 
 \section{Routing}
 \label{sec:ip-routing}
@@ -728,7 +722,7 @@ Most fields are not important to us but a few are.
 A router is really just a specialised computer that \emph{forwards} packets it receives but which are not destined for itself.
 A computer can also be configured to function as a router by turning on this option (\vref{lst:freebsd-enable-routing,lst:rhel-enable-routing}).
 
-%[caption={Enable routing on a FreeBSD host},label={lst:freebsd-enable-routing}]
+
 \begin{fltlisting}[h!]
 \begin{sidecaption}{Enable routing on a FreeBSD host}[lst:freebsd-enable-routing]
 \begin{lstlisting}
@@ -747,12 +741,14 @@ A computer can also be configured to function as a router by turning on this opt
 \end{sidecaption}
 \end{fltlisting}
 
+\fxwarning{These new listings don't play nice with \textbackslash{}vref.}
+
 When a router receives a packet with a destination \acs{IP} address which does not belong to any of the router's interfaces, the router looks up the \acs{IP} address in its \emph{routing table} and forwards the packet out the given interface.%
    \index{routing table}
 
-\newsavebox{\lstrouterThree}
-\begin{lrbox}{\lstrouterThree}
-\begin{lstlisting}[caption={The routing table on a linux machine},label={fig:routing-table}]
+\begin{fltlisting}[h!]
+\begin{sidecaption}{The routing table on a linux machine}[fig:routing-table]
+\begin{lstlisting}
 [doyle] ~ $ netstat -rn
 Kernel \acs{IP} routing table
 Destination     Gateway         Genmask         Iface
@@ -764,16 +760,23 @@ Destination     Gateway         Genmask         Iface
 192.168.16.0    0.0.0.0         255.255.255.0   eth2
 0.0.0.0         172.21.3.1      0.0.0.0         eth0
 \end{lstlisting}
-\end{lrbox}
-\noindent
-\usebox\lstrouterThree
+\end{sidecaption}
+\end{fltlisting}
 
 Routers only know about the networks they directly connect to.
 They must thus learn about distant networks.
 This can happen in one of two ways, either the network administrator manually configures the router to forward a certain prefix to some other router (the \emph{next-hop} router) or the routers in a network can use a \emph{dynamic routing protocol} to teach each other about the networks they know and how to reach them.
    \index{router!next-hop}
 
+\begin{marginfigure}
+\noindent
+\fxwarning[layout=inline]{Insert a figure here.}
+\caption{Router $R_1$ knows about networks~1 and~2, but not about network~3.}
+\label{fig:ip-local-networks}
+\end{marginfigure}
+
 \paragraph{\acl{TTL}}
+\label{par:ip-ttl}
    \iacs{TTL}
 The \acs{IP} header contains a \gls{TTL} field which indicates how many routers (hops) it can pass before it must be deleted.
 This prevents the data packet from circulating indefinitely.
@@ -783,6 +786,7 @@ As it does not really signify some time spent in transit, with the development o
 
 
 \paragraph{fragmentation}
+\label{par:ip-fragmentation}
    \index{fragmentation}
    \iacs{MTU}
 Different physical media have different maximum frame sizes.
@@ -793,7 +797,7 @@ When a router connects an Ethernet segment to an \gls{ATM} circuit, it must \emp
 Once fragmented, routers do not reassemble the pieces back together as they might take different paths through the network and are not guaranteed to arrive in the correct order.
 The end host is responsible for piecing all fragments back together.
 
-Another example when fragmentation is being used, is in the communication between a data centre and campus network as the former often uses jumbo frames (9000~bytes) while the latter uses normal Ethernet frames which have a maximum size of 1500~bytes.%
+Another example when fragmentation is being used, is in the communication between a data centre and campus network as the former often uses jumbo frames (an \acs{MTU} of 9000~bytes) while the latter uses normal Ethernet frames which have an \acs{MTU} of 1500~bytes.%
    \index{frame!jumbo}
    \index{data centre}
 
@@ -850,23 +854,31 @@ Most \acs{OSPF} implementation use a cost value based on the bandwidth of the li
 \acs{EIGRP} uses a very complex formula to determine the metric, see \vref{eqn:eigrp-metric}.
 
 \begin{figure}
-   \centering
-   \input{images/ip/metric}
-   \caption[The metric decides the best route in a network]{A router can learn a prefix from several other routers. The metric decides the best route.}
-   \label{fig:metric}
+\begin{sidecaption}[The metric decides the best route in a network]{A router can learn a prefix from several other routers. The metric decides the best route.}[fig:metric]
+\centering
+\includegraphics[width=\textwidth]{images/ip/metric.pdf}
+\end{sidecaption}
 \end{figure}
+
 
 \paragraph{equal-cost multi-path routing}
    \iacs{ECMP}
    \index{load balancing!network}
+If both $R_2$ and $R_3$ advertise the same metric towards $R_1$ both paths are equally good and $R_1$ \emph{load balances} traffic over both paths.
+The router uses an algorithm to send roughly fifty percent of packets via $R_2$ and the other fifty percent via~$R_3$.
 
 \paragraph{administrative distance}
    \index{administrative distance}
-The \emph{metric} indicates the preference of a single route learnt from different routers using the same routing protocol.
+The \emph{metric} indicates the preference of a single route learnt from different routers via the same routing protocol.
 It is however also possible for a router to learn a route from different routing protocols.
 The \emph{administrative distance} gives the preference or credibility of a routing protocol over another.
 For example, on Cisco routers the administrative distance or credibility of \acs{RIP} is~110 while the administrative distance of \acs{OSPF} is~90.
-As lower values are preferred, when a router running both \acs{RIP} and \acs{OSPF} learn about the same route from both protocols, it will prefer the route learnt from \acs{OSPF} over the route learnt from \acs{RIP}.
+As lower values are preferred, when a router running both \acs{RIP} and \acs{OSPF} learn about the same route from both protocols, it will prefer the route learnt from \acs{OSPF} over the route learnt from \acs{RIP}.%
+   \footnote{%
+      The administrative distance is -- as the name implies -- a purely administrative value, meaning the network administrator chooses which routing protocol to prefer over the other.
+      However, as a best practice a network should only use a single routing protocol.
+      It is not good to combine several routing protocols as the network then becomes needlessly complex and error prone.
+   }
 
 \paragraph{\acf{RIP}}
 The \acl{RIP} is an example of a distance-vector routing protocol using the \emph{hop count} or the number of routers to count how good a given path is.%
@@ -879,8 +891,10 @@ The protocol is not suitable for larger networks because of its slow \emph{conve
    \index{route poisoning}
 % source: https://www.geeksforgeeks.org/route-poisoning-and-count-to-infinity-problem-in-routing/
 The main issue with distance-vector routing protocols is routing loops.%
+   \fxwarning{Briefly explain routing loops.}
    \index{routing loop}
 This routing loop in the network causes the count-to-infinity problem.%
+   \fxwarning{Briefly explain the count-to-infinity problem.}
    \index{count-to-infinity}
 Routing loops usually occur when an interface goes down or two routers send updates at the same time.
 
@@ -897,10 +911,11 @@ Logically you can not use both both methods. Either you use neither method, or y
 
 \paragraph{hold-down timer}
    \index{hold-down timer}
-Hold down works by having each router start a timer when they first receive information about a network that is unreachable.
+When a router receives a routing update advertising a network to be unreachable, it starts a hold-down timer.
 Until the timer expires, the router will discard any subsequent route messages that indicate the route is in fact reachable.
 It can solve the case where multiple routers are connected indirectly.
-There are realistic scenarios where split horizon and split horizon with poisoned reverse can do nothing.
+There are realistic scenarios where split horizon and split horizon with poisoned reverse can do nothing.%
+\fxwarning{This is very vague.}
 
 \paragraph{\acf{EIGRP}}
    \iacs{EIGRP}
@@ -913,7 +928,13 @@ m = \left[\left(k_1 B_m  + k_2 \frac{B_m}{256-L} + k_3 D_s\right) \times \frac{k
 \label{eqn:eigrp-metric}
 \end{equation}
 with $B_m$ being the minimum bandwidth along the path to the destination, $D_s$ being the total delay along the path, $L$ and $R$ being the load an the reliability of the link respectively, taken over a five-minute interval.
-The five $k$ values are user-configurable weights to each part of the equation.
+The five $k$ values are user-configurable weights to each part of the equation.%
+   \footnote{%
+      My advice is to change these $k$ values to exclude the bandwidth from the equation.
+      Altering the bandwidth value also changes the calculations for \acs{QOS} among other things while the delay value is used only by \acs{EIGRP}.
+      This will result in more readable metrics and it will be easier to tune \acs{EIGRP} without interfering with other services on the router.
+      See the exercises on how to do this.
+   }
 
 As if \cref{eqn:eigrp-metric} is not complex enough, there are a few important caveats.
 The minimum bandwidth $B_m$ is calculated by dividing a reference bandwidth of \SI{1e7}{\bit\per\second} by the smallest configured bandwidth on the interfaces along the path.
@@ -922,6 +943,20 @@ It does not take into account the actual bandwidth of an interface, but the sett
 The total delay also is not measured along the path but fixed values are used depending on the interface type.
 A serial interface always has a default delay of \SI{20000}{\micro\second} while a Gigabit Ethernet interface has a default delay of \SI{10}{\micro\second}, regardless of the length of the cable.
 Both settings are user configurable.
+The value $D_s$ is measured in tens of microseconds so for a serial interface the value 2000 would be used instead of \numprint{20000}.
+
+\begin{margintable}
+\begin{tabular}{lr}
+serial   & {20000} \\
+\SC{T1}  & {20000} \\
+Ethernet & 1000  \\
+FastE    & 100   \\
+GigE     & 10    \\
+10GigE   & 10    \\
+\end{tabular}
+\caption{Default delay values per interface type}
+\label{tab:ip-intf-delay}
+\end{margintable}
 
 If load an reliability are used in the computation -- which by default they are not -- the initial values are set during peer establishment and do not change dynamically with the router.
 These values are a remnant of an older version of the protocol where they did change with every update to reflect the live status of the network.
@@ -932,6 +967,28 @@ Finally, when $k_5=0$, instead of the entire equation to become zero, this facto
    \iacs{OSPF}
 The \acl{OSPF} protocol is a link-state routing protocol suitable for small network all the way up to massive service provider networks.
 It can scale to very large networks because of the introduction of a concept called \emph{areas}, used to divide the entire network into smaller, more manageable parts.
+
+The \acs{OSPF} metric $m$ is calculated by summing all costs along the path with the cost being a reference bandwidth devided by the actual bandwidth $B_i$ of the link.
+
+\begin{margintable}
+\begin{tabular}{lr}
+\SC{T1}  & 64      \\
+Ethernet & 10      \\
+FastE    & 1       \\
+GigE     & 1       \\
+10GigE   & 1       \\
+\end{tabular}
+\caption{Default \acs{OSPF} cost values per interface type}
+\label{tab:ip-ospf-cost}
+\end{margintable}
+
+\begin{equation}
+m = \sum_i\frac{10^8}{B_i}
+\end{equation}
+
+As you can see in \vref{tab:ip-ospf-cost} \acs{OSPF} by default cannot differentiate between a FastEthernet link at \SI{100}{\mega\bit\per\second} or a 10GigE link, while it clearly should!
+Thus it is very important that you change the refence bandwidth on \emph{all} your routers in the network to a value higher than your highest network link (see the exercises)).
+
 
 \paragraph{\acf{BGP}}
    \iacs{BGP}
@@ -948,6 +1005,8 @@ You can tweak the protocol so that you can exactly control the path a packet has
 
 \section{Exercises}
 \label{sec:ip-exercises}
+\fxwarning{I should probably differentiate between review questions for the theory course, guided exercises for the extra hands-on course and practice questions for students to do at home.}
+
 \subsection{Subnetting}
 \begin{enumerate}
 \item
@@ -959,6 +1018,7 @@ You can tweak the protocol so that you can exactly control the path a packet has
 \item
    How many available or usable \IP\ addresses are there in the network 192.168.12.128/25?
 \item
+\label{ex:ip-ospf-ref-bw}
    Given the \IP\ range 192.0.2.64/26, split this range up into four smaller blocks.
    Give the network and broadcast address for each of these four subnetworks.
 \end{enumerate}
@@ -969,6 +1029,14 @@ You can tweak the protocol so that you can exactly control the path a packet has
    Create a small network with a router, a switch and two computers.
    Configure the router's interface with the \IP\ address 192.168.0.1/26 and configure a \acs{DHCP} server so that the computers automatically get an \IP\ address when they power on.
    One computer should always get the \IP\ address 192.168.0.7.
+\item
+   Set up a small network with a few routers and configure \acs{EIGRP} as the routing protocol between them.
+\item
+   Change the $k$ values so that only the interface delay is used to calculate the metric.
+\item
+   Set up a small network with a few routers and configure \acs{OSPF} as the routing protocol between them.
+\item
+   Change the reference bandwidth for \acs{OSPF} to match \SI{100}{\giga\bit\per\second}.
 \end{enumerate}
 
 

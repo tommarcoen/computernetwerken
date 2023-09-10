@@ -1,0 +1,21 @@
+\documentclass[crop,tikz]{standalone}
+\usepackage{pgf-pie}
+\input{../../tex/colourscheme-syntra}
+\begin{document}
+\begin{tikzpicture}
+   \draw[white] (0,-35mm) -- (0,35mm);
+   \draw[white] (-56mm,0) -- (56mm,0);
+   \pie[sum = auto,
+        radius = 2,
+        color = {
+           spot1,
+           spot1!66,
+           spot2,
+           spot3!20
+         }
+      ]{64/{\small 198.51.100.0/26},
+         64/{\small 198.51.100.64/26},
+         64/{\small 198.51.100.128/26},
+         64/{\small 198.51.100.192/26}}
+\end{tikzpicture}
+\end{document}
