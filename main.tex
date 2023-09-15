@@ -101,6 +101,7 @@
 
 \mode<article>{
 \backmatter
+\makeoddhead{ruled}{}{}{\scshape\rightmark}
 \glsaddall
 \setglossarystyle{indexgroup}
 \printglossary
@@ -112,8 +113,6 @@
 \printbibliography[keyword={RFC},title={Requests for comments},prenote=myprenote]
 \input{tex/index-references} % Cannot appear on the same page as \printindex thus it must appear before \clearforchapter
 \clearforchapter
-%\markboth{\indexname}{\textsc{\indexname}}
-\markboth{\indexname}{\indexname}
 \printindex
 \include{tex/colophon}
 }
