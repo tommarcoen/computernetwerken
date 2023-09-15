@@ -28,3 +28,4 @@ main.*.nav
 main.*.vrb
 main.fdb_latexmk
 main.synctex.gz
+*.synctex
