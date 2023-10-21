@@ -31,6 +31,7 @@
 % ============================================================
 
 \usepackage[final]{graphicx}
+\usepackage{subcaption}
 \usepackage{tikz}
 \usepackage{pgf-pie}
 \usetikzlibrary{arrows}
@@ -97,6 +98,12 @@
    colback = white,
    breakable = true
 }
+\usepackage{tabto}
+\def\marginsymbol{\protect\marginsymbolhelper}
+\def\marginsymbolhelper{\tabto*{-8.2mm}\makebox[0cm]{\faUniversity}\tabto*{\TabPrevPos}}
+\newcommand{\extrap}[1]{\paragraph{#1\marginsymbol}}
+\newcommand{\extrat}[1]{\newthought{#1\marginsymbol}}
+
 
 
 
@@ -116,11 +123,11 @@
 % References and links
 % ============================================================
 
-\usepackage{varioref}
+\usepackage[nospace]{varioref}
 \usepackage{hyperref}
 \usepackage{cleveref}
 \urlstyle{rm}
-\hypersetup{colorlinks=true,allcolors=linkcolour,linktocpage}
+\hypersetup{colorlinks=true,allcolors=black,linktocpage,final}
 \creflabelformat{equation}{#2\textup{#1}#3} % remove the brackets from an equation reference, i.e. "eq. 2.1" instead of "eq. (2.1)"
 
 

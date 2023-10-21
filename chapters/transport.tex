@@ -89,6 +89,14 @@ It just sends data and forgets about it.
 Should the application require reliability, it itself is responsible for this function.
 This lack of reliability makes \ac{UDP} a very fast protocol.
 
+
+
+
+
+
+
+
+
 \section{\acl{TCP}}
 \label{sec:tcp}
 
@@ -105,6 +113,13 @@ It uses a combination of \emph{sequence numbers} and \emph{acknowledgements} to 
 Before a client attempts to connect with a server, the server must first bind to and listen at a port to open it up for connections: this is called a passive open.
 Once the passive open is established, a client may establish a connection by initiating an active open using the three-way handshake.%
    \index{TCP@\acs{TCP}!passive open}
+
+\begin{marginfigure}
+\fxwarning[layout=inline]{Create or steal this image.}
+\caption{The three-way handshake}
+\label{fig:transport-three-way-handshake}
+\end{marginfigure}
+
 \begin{description}
 \item[\SC{SYN}]
 The active open is performed by the client sending a \SC{SYN} to the server.
@@ -127,12 +142,12 @@ Following the completion of these steps, both the client and server have receive
 
 \begin{table}
 \centering
-\sffamily
 \begin{tabular}{rlll}
-\textbf{\#} & \textbf{source} & \textbf{destination} & \textbf{info} \\[1ex]
-1 & 10.0.0.1 & 203.0.113.80 & 53501 $\rightarrow$ 443 [\SC{SYN}] seq $=0$ win $=64240$ \dots\\
-2 & 203.0.113.80 & 10.0.0.1 & 443 $\rightarrow$ 53501 [\SC{SYN}, \SC{ACK}] seq $=0$ ack $=1$ \dots\\
-3 & 10.0.0.1 & 203.0.113.80 & 53501 $\rightarrow$ 443 [\SC{ACK}] seq $=1$ ack $=1$ \ldots\\
+{\#} & {source} & {destination} & {info} \\
+\midrule
+1 & 10.0.0.1 & 203.0.113.80 & 53501 $\rightarrow$ 443 [\SC{SYN}] seq=0 win=64240 \dots\\
+2 & 203.0.113.80 & 10.0.0.1 & 443 $\rightarrow$ 53501 [\SC{SYN}, \SC{ACK}] seq=0 ack=1 \dots\\
+3 & 10.0.0.1 & 203.0.113.80 & 53501 $\rightarrow$ 443 [\SC{ACK}] seq=1 ack=1 \ldots\\
 \end{tabular}
 \caption{A few fields that Wireshark shows about a three-way handshake}
 \label{tab:tcp-handshake}
@@ -151,7 +166,9 @@ Reliability is achieved by the sender detecting lost data and retransmitting it.
 \ac{TCP} uses two primary techniques to identify loss: \acf{RTO} and duplicate cumulative acknowledgements.%
    \index{retransmission timeout}
 
-% TODO: explain RTO briefly
+\fxwarning{Explain RTO briefly}
+
+\fxwarning{You cannot leave the audience hanging like this. Either explain both or tell them where/when it will be explained. I cannot quickly find the explanation myself in this text.}
 
 \paragraph{flow control}
    \index{TCP@\acs{TCP}!flow control}
@@ -182,19 +199,19 @@ This is more generally referred to as \emph{congestion control} and/or \emph{net
 
 Modern implementations of \acs{TCP} contain four intertwined algorithms: \emph{slow start}, congestion avoidance, \emph{fast retransmit}, and \emph{fast recovery} (\rfc{5681}).
 
-\begin{extrainfo}
-\paragraph{slow start}
+
+\extrap{slow start}
    \index{TCP@\acs{TCP}!slow start}
 % https://www.stackpath.com/edge-academy/what-is-tcp-slow-start/
 \acs{TCP} slow start is an algorithm which balances the speed of a network connection.
 Slow start gradually increases the amount of data transmitted until it finds the network's maximum carrying capacity.
 
-\paragraph{congestion avoidance}
+\extrap{congestion avoidance}
    \index{TCP@\acs{TCP}!congestion avoidance}
 If a loss event occurs, \acs{TCP} assumes that it is due to network congestion and takes steps to reduce the offered load on the network.
 These measurements depend on the exact \acs{TCP} congestion avoidance algorithm used.
 
-\paragraph{fast retransmit}
+\extrap{fast retransmit}
    \index{TCP@\acs{TCP}!fast retransmit}
 Fast retransmit is an enhancement to \acs{TCP} that reduces the time a sender waits before retransmitting a lost segment.
 A \acs{TCP} sender normally uses a simple timer to recognize lost segments.
@@ -217,14 +234,32 @@ On receipt of the retransmitted segment, the receiver can acknowledge the last i
 In the above example, this would acknowledge to the end of the payload of the fifth packet.
 There is no need to acknowledge intermediate packets, since \acs{TCP} uses cumulative acknowledgements by default.
 
-\paragraph{fast recovery}\leavevmode
+\extrap{fast recovery}
    \index{TCP@\acs{TCP}!fast recovery}
-% TODO: TCP fast recovery
-\end{extrainfo}
+\fxwarning{Write something about \acs{TCP} fast recovery.}
+
 
 
 \section{Load balancing}
-% TODO: load balancing
+\fxwarning{Write something about load balancing.}
+Load balancing is the process of distributing a set of tasks over a set of resources (computing units), with the aim of making their overall processing more efficient.
+
+
+\section{Review questions}
+\label{sec:transport-review-qu}
+
+
+
+\section{Guided exercises}
+\label{sec:transport-guided-ex}
+
+
+
+\section{Practice questions}
+\label{sec:transport-practice-qu}
+
+
+
 
 \section{Further reading}
 Both \textcite{stevens,comer} are good resources to learn more about how the \acf{TCP} operates.
