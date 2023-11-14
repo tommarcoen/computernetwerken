@@ -7,6 +7,12 @@
 
 \frontmatter
 \tableofcontents*
+\clearforchapter
+\listoffigures
+\clearforchapter
+\listoftables
+\include{chapters/preface}
+\printglossary[type=abbreviations,style=mcolindexgroup]
 
 \mainmatter
 \include{chapters/introduction}
@@ -19,11 +25,20 @@
 \include{chapters/dhcp-extract}
 
 \backmatter
+% Glossary
+\glsaddall
+\setglossarystyle{indexgroup}
+\printglossary
 % Bibliography
 \printbibliography[notkeyword={RFC}]
 \defbibnote{myprenote}{%
     Although \aclp{RFC} are quite often way too advanced and dry, they sometimes can provide quite useful details.
     I have listed the \acsp{RFC} only for completeness.}
 \printbibliography[keyword={RFC},title={Requests for comments},prenote=myprenote]
+% Index
+\input{tex/index-references} % Cannot appear on the same page as \printindex thus it must appear before \clearforchapter
+\clearforchapter
+\printindex
+% Fix-mes
 \listoffixmes
 \end{document}

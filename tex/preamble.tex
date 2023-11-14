@@ -108,7 +108,7 @@
 
 
 % ============================================================
-% Citations
+% Citations and index
 % ============================================================
 
 \addbibresource{bib/bibliography.bib}
@@ -116,6 +116,11 @@
 
 % RFCs
 \newcommand{\rfc}[1]{\acs{RFC}~\cite{rfc#1}}
+
+% Index
+\usepackage[xindy]{imakeidx}
+\indexsetup{headers={\indexname}{\indexname}}
+\makeindex[intoc,columns=2]
 
 
 

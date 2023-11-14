@@ -56,7 +56,7 @@ One example is your mobile phone pairing wirelessly with your watch and ear buds
 
 \paragraph{\gls{CAN}}\iacs{CAN}
 A computer network made up of an interconnection of local-area networks within a limited geographical area.
-The networking equipment (switches, routers) and transmission media (optical fibre, copper plant, cat~5 cabling, etc.) are almost entirely owned by the campus tenant or owner: an enterprise, university, government, etc.
+The networking equipment (switches, routers) and transmission media (optical fibre, copper plant, category~5 cabling, etc.) are almost entirely owned by the campus tenant or owner: an enterprise, university, government, etc.
 A \acl{CAN} is larger than a \acl{LAN} but smaller than a \acs{MAN} or \gls{WAN}.
 
 An example would be the High Tech Campus in Eindhoven.\index{High Tech Campus}
@@ -148,7 +148,7 @@ Nodes are directly connected to a common \emph{half-duplex}%
 \footnote{A half-duplex (\SC{HDX}) system provides communication in both directions, but only one direction at a time, not simultaneously in both directions.}
 link called a bus.
 An example of a physical bus structure, would be the old Ethernet networks using coaxial cable.
-Connecting devices together using cat.~5-cable and a hub, results in a logical bus structure even though the physical structure is a star.
+Connecting devices together using category~5-cable and a hub, results in a logical bus structure even though the physical structure is a star.
 
 \paragraph{star}
    \index{topology (network)!star}
@@ -223,7 +223,7 @@ Token Ring was a successful technology, particularly in corporate environments, 
    \index{connectors!BNC@\acs{BNC}}
 \SC{10BASE2} (also known as cheapernet, thin Ethernet, \emph{thinnet}, and \emph{thinwire}) is a variant of Ethernet that uses thin coaxial cable terminated with \acs{BNC} connectors to build a local-area network.
 
-During the mid to late 1980s this was the dominant \SI{10}{\mega\bit\per\second} Ethernet standard, but due to the immense demand for high speed networking, the low cost of \mbox{category-5} cable, and the popularity of 802.11 wireless networks, both \SC{10BASE2} and \SC{10BASE5} have become increasingly obsolete.
+During the mid to late 1980s this was the dominant \SI{10}{\mega\bit\per\second} Ethernet standard, but due to the immense demand for high speed networking, the low cost of category~5 cable, and the popularity of 802.11 wireless networks, both \SC{10BASE2} and \SC{10BASE5} have become increasingly obsolete.
 
 \paragraph{Ethernet switches (1985)}%
    \index{switch (Ethernet)}%
@@ -258,8 +258,8 @@ was implemented in 1970 enabling the first two host-to-host protocols, remote lo
 The network was declared operational in 1971.
 Network traffic began to grow once email was established at the majority of sites by around 1973.
 
-Many of the earliest systems on the ARPAnet were \SC{PDP-11}s, see \vref{fig:thompson}.%
-\footnote{\href{https://www.truecable.com/blogs/cable-academy/a-brief-history-of-network-technology}{https://www.truecable.com/blogs/cable-academy/a-brief-history-of-network-technology}}
+Many of the earliest systems on the ARPAnet were \SC{PDP-11}s, see \vref{fig:thompson}.
+%\footnote{\href{https://www.truecable.com/blogs/cable-academy/a-brief-history-of-network-technology}{https://www.truecable.com/blogs/cable-academy/a-brief-history-of-network-technology}}
 The \SC{DECSA} communications server was a communications platform developed by \gls{DEC} based on a \SC{PDP-11/24}, with the provision for user installable \gls{IO} cards including asynchronous and synchronous modules.
 This product was used as one of the earliest commercial platforms upon which networking products could be built, including \SC{X.25} gateways, \gls{SNA} gateways, routers, and terminal servers.%
 \footnote{A terminal server connects devices with a serial port to a local-area network.}
@@ -287,7 +287,7 @@ It also supports functionality not found in the \gls{OSI} network layer.
    \index{Minitel}%
    \index{terminal}%
    \index{modem}
-In the early 1980s the French launched the Minitel project, an ambitious plan to bring data networking into everyone’s home.
+In the early 1980s the French launched the Minitel project, an ambitious plan to bring data networking into everyone's home.
 Sponsored by the French government, the Minitel system consisted of a public packet-switched network, Minitel servers, and inexpensive terminals with built-in low-speed modems.
 The Minitel became a huge success in 1984 when the French government gave away a free Minitel terminal to each French household that wanted one.
 Minitel sites included free sites -- such as a telephone directory site -- as well as private sites, which collected a usage-based fee from each user.
@@ -341,32 +341,49 @@ Unicast is the dominant form of message delivery on the internet.
    \index{routing scheme!unicast}
 Unicast is a one-to-one transmission from one point in the network to another point (\cref{fig:unicast}); that is, one sender and one receiver, each identified by a network address.
 
-\begin{figure}
-\begin{minipage}{.4\textwidth}
+
+\begin{marginfigure}
 \includegraphics[width=\textwidth]{images/introduction/unicast.png}
 \caption[Unicast routing scheme]{Unicast routing}
 \label{fig:unicast}
-\end{minipage}
-\hfill
-\begin{minipage}{.4\textwidth}
-\includegraphics[width=\textwidth]{images/introduction/broadcast.png}
-\caption[Broadcast routing scheme]{Broadcast routing}
-\label{fig:broadcast}
-\end{minipage}
-\end{figure}
+\end{marginfigure}
 
+% \begin{figure}
+% \begin{minipage}{.4\textwidth}
+% \includegraphics[width=\textwidth]{images/introduction/unicast.png}
+% \caption[Unicast routing scheme]{Unicast routing}
+% \label{fig:unicast}
+% \end{minipage}
+% \hfill
+% \begin{minipage}{.4\textwidth}
+% \includegraphics[width=\textwidth]{images/introduction/broadcast.png}
+% \caption[Broadcast routing scheme]{Broadcast routing}
+% \label{fig:broadcast}
+% \end{minipage}
+% \end{figure}
 
 \paragraph{broadcast}
    \index{routing scheme!broadcast}
 Broadcasting is a method of transferring a message to all recipients simultaneously (\cref{fig:broadcast}).
 Broadcasting can be performed as a high-level operation in a program, or it may be a low-level networking operation, for example broadcasting on Ethernet.
 
+\begin{marginfigure}
+\includegraphics[width=\textwidth]{images/introduction/broadcast.png}
+\caption[Broadcast routing scheme]{Broadcast routing}
+\label{fig:broadcast}
+\end{marginfigure}
+   
 
 \paragraph{multicast}
    \index{routing scheme!multicast}
 Multicast is group communication where data transmission is addressed to a group of destination computers simultaneously (\cref{fig:multicast}).
 Multicast can be one-to-many or many-to-many distribution.
 
+\begin{marginfigure}
+\includegraphics[width=\textwidth]{images/introduction/multicast.png}
+\caption[Multicast routing scheme]{Multicast routing}
+\label{fig:multicast}
+\end{marginfigure}
 
 \paragraph{anycast}
    \index{routing scheme!anycast}
@@ -379,19 +396,25 @@ It can also be used to distribute \ac{DDoS} attacks and reduce their effectivene
 As traffic is routed to the closest node, a process over which the attacker has no control, the \ac{DDoS} traffic flow will be distributed amongst the closest nodes.
 Thus, not all nodes might be affected. 
 
-\begin{figure}
-\begin{minipage}{.4\textwidth}
-\includegraphics[width=\textwidth]{images/introduction/multicast.png}
-\caption[Multicast routing scheme]{Multicast routing}
-\label{fig:multicast}
-\end{minipage}
-\hfill
-\begin{minipage}{.4\textwidth}
+%\begin{figure}
+%\begin{minipage}{.4\textwidth}
+%\includegraphics[width=\textwidth]{images/introduction/multicast.png}
+%\caption[Multicast routing scheme]{Multicast routing}
+%\label{fig:multicast}
+%\end{minipage}
+%\hfill
+%\begin{minipage}{.4\textwidth}
+%\includegraphics[width=\textwidth]{images/introduction/anycast.png}
+%\caption[Anycast routing scheme]{Anycast routing}
+%\label{fig:anycast}
+%\end{minipage}
+%\end{figure}
+
+\begin{marginfigure}
 \includegraphics[width=\textwidth]{images/introduction/anycast.png}
 \caption[Anycast routing scheme]{Anycast routing}
 \label{fig:anycast}
-\end{minipage}
-\end{figure}
+\end{marginfigure}
 
 
 In this course we will only cover unicast and broadcast.
@@ -441,7 +464,7 @@ We will use \emph{port numbers} (see \vref{chap:transport}) to indicate which ap
 
 
 \paragraph{How to send a lot of data?}
-   \acs{MTU}
+   \iacs{MTU}
    \index{fragmentation}
 Not all protocols allow us to send the same amount of data.
 For example, Ethernet limits the packet size to 1522~bytes while \gls{ATM} had a limit of 53~bytes per packet.
@@ -463,8 +486,10 @@ For each layer of the protocol stack a header gets added so that the correspondi
 That is, the transport layer on the sender's side communicates with the transport layer on the receiver's side and the network layer on the sender's side communicates with the corresponding layer on the receiver's side.
 
 \begin{figure}
+\begin{fullwidth}
 \centering
 \input{images/introduction/data-encapsulation}
+\end{fullwidth}
 \caption[Encapsulation and decapsulation of packets]{%
 Data encapsulation at the source and decapsulation at the destination.
 Each layer adds its own header, but the data link layer also adds a trailer.
@@ -542,7 +567,7 @@ The network and transport layers are host-to-host.
 
 \Cref{fig:data-flow} is a bit misleading in this way.
 Although the routers check the \acs{IP} addresses of the network layer header, the header does not change significantly.
-See \vref{sec:nat} for an example of a router that changes the \acs{IP} addresses in the header.
+See \vref{sec:ip-nat} for an example of a router that changes the \acs{IP} addresses in the header.
 
 
 \section{Network icons}
