@@ -1,0 +1,55 @@
+\tikzstyle{box}=[
+    minimum width=25mm,
+    minimum height=8mm,
+    font=\small\sffamily,
+    text=black,
+    node distance=8mm
+]
+\tikzstyle{upper}=[
+    box,
+    draw=spot4,
+    fill=spot4!20
+]
+\tikzstyle{middle}=[
+    box,
+    draw=spot1,
+    fill=spot1!20
+]
+\tikzstyle{lower}=[
+    box,
+    draw=spot2,
+    fill=spot2!20
+]
+
+\begin{tikzpicture}
+
+% OSI model
+\node[upper]  (OSI7) [label=left:7.]               {application};
+\node[upper]  (OSI6) [label=left:6.,below of=OSI7] {presentation};
+\node[upper]  (OSI5) [label=left:5.,below of=OSI6] {session};
+\node[middle] (OSI4) [label=left:4.,below of=OSI5] {transport};
+\node[middle] (OSI3) [label=left:3.,below of=OSI4] {network};
+\node[lower]  (OSI2) [label=left:2.,below of=OSI3] {data link};
+\node[lower]  (OSI1) [label=left:1.,below of=OSI2] {physical};
+\node         (OSI)  [below of=OSI1,node distance=12mm,minimum height=16mm]               {\small(\textsc{a}) OSI model};
+
+% TCP/IP model
+\node[upper]  (TCPIP4) [label=left:4.,right of=OSI6,%
+                    node distance=35mm,minimum height=24mm]  {application};
+\node[middle] (TCPIP3) [label=left:3.,below of=TCPIP4,
+                    node distance=16mm]                      {transport};
+\node[middle] (TCPIP2) [label=left:2.,below of=TCPIP3]       {internet};
+\node[lower]  (TCPIP1) [label=left:1.,below of=TCPIP2,
+                    node distance=12mm,minimum height=16mm]  {link};
+\node         (TCPIP)  [below of=TCPIP1,node distance=16mm,minimum height=16mm]  {\small(\textsc{b}) TCP/IP model};
+
+% hybrid model
+\node[upper]  (hybrid5) [label=left:5.,right of=TCPIP4,
+                    node distance=35mm,minimum height=24mm]  {application};
+\node[middle] (hybrid4) [label=left:3.,below of=hybrid5,
+                    node distance=16mm]                      {transport};
+\node[middle] (hybrid3) [label=left:2.,below of=hybrid4]     {network};
+\node[lower]  (hybrid2) [label=left:2.,below of=hybrid3]     {data link};
+\node[lower]  (hybrid1) [label=left:1.,below of=hybrid2]     {physical};
+\node         (hybrid)  [below of=hybrid1,node distance=12mm,minimum height=16mm]               {\small(\textsc{c}) hybrid model};
+\end{tikzpicture}
