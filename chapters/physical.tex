@@ -69,12 +69,12 @@ See \vref{tab:tp-categories} for an overview of the different categories.
 The connector used for network cables is actually called an \acs{8P8C} connector but everyone knows it as an \acs{RJ45} connector.
 A completely plastic connector is used for unshielded cabling while a metalic version exists for shield cabling.
 
-\begin{figure}
+\begin{marginfigure}
    \centering
-   \includegraphics[width=.5\textwidth]{images/physical/8p8c.png}
+   \includegraphics[width=\textwidth]{images/physical/8p8c.png}
    \caption{Two plastic \acs{RJ45} connectors used with unshielded cabling}
    \label{fig:rj45}
-\end{figure}
+\end{marginfigure}
 
 \paragraph{Fast Ethernet}
    \index{Ethernet!Fast}
@@ -361,6 +361,18 @@ The \acs{WLAN} controller automatically handles the configuration of wireless ac
 It centralizes wireless network infrastructure and handles bandwidth allocation to the \aclp{AP}.
 Before the use of \acsp{WLC} were widespread, \aclp{AP} had to handle connections individually, leading to unstable data links and poor connections.
 The use of a \acs{WLC} solves this problem.
+
+
+\section{Review questions}
+\begin{enumerate}
+\item What would be the port capacity of a single port on a 48-port Gigabit Ethernet switch?
+   \begin{enumerate}
+      \item \SI{48}{\giga\bit\per\second}
+      \item \SI{10}{\mega\bit\per\second}
+      \item \SI{1000}{\mega\bit\per\second}
+      \item \SI{100}{\mega\bit\per\second}
+   \end{enumerate}
+\end{enumerate}
 
 \section{Further reading}
 \textcite{oliviero} covers cables in quite a bit of detail and \textcite{coleman} covers wireless networks.

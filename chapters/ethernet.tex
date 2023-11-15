@@ -273,7 +273,7 @@ The \acs{TCI} field is further divided into \acs{PCP}, \acs{DEI}, and \acs{VID}.
 % TODO: include an image of the VLAN tag
 
 The \acl{TPID} is basically just the ethertype field.
-It is a 16-bit field containing the hexadecimal value of 8100 which indicates an \acs{IEEE} \SC{802.3Q}-tagged frame.
+It is a 16-bit field containing the hexadecimal value of 8100 which indicates an \acs{IEEE} \SC{802.1Q}-tagged frame.
 Receiving devices know that the next two bytes will contain \acs{VLAN} information and the two after that will contain the real ethertype value.
 
 The \acs{PCP} and \acs{DEI} bits are used for quality of service and congestion control.
@@ -283,7 +283,7 @@ All other values may be used as \acs{VLAN} identifiers, allowing up to 4094~\acp
 
 \extrap{native \acs{VLAN}}
    \index{VLAN@\acs{VLAN}!native}
-Should a trunk port receive frames that lack an \SC{802.3Q} tag, it is considered to belong to the \emph{native} \acs{VLAN} of that trunk port.
+Should a trunk port receive frames that lack an \SC{802.1Q} tag, it is considered to belong to the \emph{native} \acs{VLAN} of that trunk port.
 The network administrator can configure which \acs{VLAN} should be considered to be the native \acs{VLAN} for each interface.
 
 
@@ -352,10 +352,74 @@ This capability protects the network from certain man-in-the-middle attacks.
 
 
 \section{Review questions}
+\label{sec:ethernet-review-questions}
+\begin{enumerate}
+\item Which vendors do these \acs{MAC} addresses belong to?
+   \begin{itemize}
+   \item 9457.a5e3.4f9b
+   \item 0000.0c07.ac0a
+   \item 0050.5684.c1f5
+   \item 001a.e278.cf02
+   \item 5cb9.01e2.0349
+   \end{itemize}
+   %\item Which of these \acs{MAC} addresses is a multicast address? Which is a made-up address?
+   %   \begin{itemize}
+   %   \item 
+\item
+   An Ethernet switch has buil the \acs{MAC} address table shown below.
+   What action will the switch take when it receives a frame with the source address 0000.3d1f.1103 and the destination address 0000.3d1f.1101?
+   \begin{center}
+   \begin{tabular}{lr}
+   address & interface \\
+   \midrule
+   0000.3d1f.1101 & 3 \\
+   0000.3d1f.1102 & 4 \\
+   0000.3d1f.1103 & 1 \\
+   \end{tabular}
+   \end{center}
+   \begin{enumerate}
+   \item Forward the frame out all interfaces.
+   \item Forward the frame out all interfaces except interface~3.
+   \item Discard the frame.
+   \item Forward the frame out interface~1.
+   \item Forward the frame out interface~2.
+   \item Forward the frame out interface~3.
+   \end{enumerate}
+\item
+   What mechanism is used to achieve the separation between different \acsp{VLAN} as they cross a trunk link?
+   \begin{enumerate}
+      \item \acs{VLAN} tagging using the 802.1\SC{Q} protocol
+      \item \acs{VLAN} tagging using the 802.1p protocol
+      \item \acs{VLAN} multiplexing
+      \item \acs{VLAN} set as a native \acs{VLAN}
+   \end{enumerate}
+\item
+   A switch that uses \acs{MAC} addresses to forward frames operates at which layer of the \acs{OSI} model?
+   \begin{enumerate}
+      \item layer 1
+      \item layer 2
+      \item layer 3
+      \item layer 4
+   \end{enumerate}
+\item
+   Which of the following best describes the mapping between \acsp{VLAN} and \IP\ subnets in a modern switched network?
+   \begin{enumerate}
+      \item one \IP\ subnet to many \acsp{VLAN}
+      \item one \acs{VLAN} to many \IP\ subnets
+      \item two \IP\ subnets to one \acs{VLAN}
+      \item two \acsp{VLAN} to one \IP\ subnet
+      \item one \IP\ subnet to one \acs{VLAN}
+      \item varies with the brand and model of switch
+   \end{enumerate}
+\end{enumerate}
+
+
 
 \section{Guided exercises}
+\label{sec:ethernet-guided-exercises}
 
 \section{Practice questions}
+\label{sec:ethernet-practice-questions}
 
 \section{Further reading}
 \textcite{lammle-ccna} is my go-to book for \acs{CCNA}-level topics such as the \acf{STP} and its variants or \acfp{LAG}.

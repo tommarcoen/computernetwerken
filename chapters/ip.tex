@@ -917,9 +917,9 @@ It can solve the case where multiple routers are connected indirectly.
 There are realistic scenarios where split horizon and split horizon with poisoned reverse can do nothing.%
 \fxwarning{This is very vague.}
 
-\paragraph{\acf{EIGRP}}
+\paragraph{\acl{EIGRP}}
    \iacs{EIGRP}
-The \acl{EIGRP} was a Cisco proprietary protocol which has been made publicly available in 2013 but has not been implemented by other vendors.
+The \acf{EIGRP} was a Cisco proprietary protocol which has been made publicly available in 2013 but has not been implemented by other vendors.
 
 While \acs{RIP} and \acs{OSPF} have a very simple metric, \acs{EIGRP} has a rather complex one.
 The metric $m$ is calculated as such:
@@ -987,7 +987,7 @@ m = \sum_i\frac{10^8}{B_i}
 \end{equation}
 
 As you can see in \vref{tab:ip-ospf-cost} \acs{OSPF} by default cannot differentiate between a FastEthernet link at \SI{100}{\mega\bit\per\second} or a 10GigE link, while it clearly should!
-Thus it is very important that you change the refence bandwidth on \emph{all} your routers in the network to a value higher than your highest network link (see the exercises)).
+Thus it is very important that you change the refence bandwidth on \emph{all} your routers in the network to a value higher than your highest network link (see the practice questions).
 
 
 \paragraph{\acf{BGP}}
@@ -1003,11 +1003,10 @@ You can tweak the protocol so that you can exactly control the path a packet has
 
 
 
-\section{Exercises}
-\label{sec:ip-exercises}
+\section{Review questions}
+\label{sec:ip-review-questions}
 \fxwarning{I should probably differentiate between review questions for the theory course, guided exercises for the extra hands-on course and practice questions for students to do at home.}
 
-\subsection{Subnetting}
 \begin{enumerate}
 \item
    Given the network 100.65.0.0/16, give the network address, broadcast address, and the first and last available \IP\ addresses.
@@ -1018,13 +1017,16 @@ You can tweak the protocol so that you can exactly control the path a packet has
 \item
    How many available or usable \IP\ addresses are there in the network 192.168.12.128/25?
 \item
-\label{ex:ip-ospf-ref-bw}
    Given the \IP\ range 192.0.2.64/26, split this range up into four smaller blocks.
    Give the network and broadcast address for each of these four subnetworks.
 \end{enumerate}
 
-\subsection{Cisco Packet Tracer}
-\begin{enumerate}[resume]
+\section{Guided exercises}
+\label{sec:ip-guided-exercises}
+
+\section{Practice questions}
+\label{sec:ip-practice-questions}
+\begin{enumerate}
 \item
    Create a small network with a router, a switch and two computers.
    Configure the router's interface with the \IP\ address 192.168.0.1/26 and configure a \acs{DHCP} server so that the computers automatically get an \IP\ address when they power on.
@@ -1035,7 +1037,8 @@ You can tweak the protocol so that you can exactly control the path a packet has
    Change the $k$ values so that only the interface delay is used to calculate the metric.
 \item
    Set up a small network with a few routers and configure \acs{OSPF} as the routing protocol between them.
-\item
+\item   
+\label{ex:ip-ospf-ref-bw}
    Change the reference bandwidth for \acs{OSPF} to match \SI{100}{\giga\bit\per\second}.
 \end{enumerate}
 
