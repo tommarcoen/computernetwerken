@@ -30,7 +30,8 @@
     minimum size=8mm,
     inner sep=0mm
 ]
-\begin{tikzpicture}
+\begin{scaletikzpicturetowidth}{\textwidth}
+\begin{tikzpicture}[scale=\tikzscale]
 
 % two network stacks
 \node[layer] (a1)               {application};
@@ -66,3 +67,4 @@
                          node[packet header,left of=dd,node distance=10mm] (hd1) {t} node[packet header,left of=dd,node distance=18mm] (hd2) {n} node[packet header,left of=dd,node distance=26mm] (hd3) {d} node[packet header,right of=dd,node distance=10mm] (td) {d}
                          (d2);
 \end{tikzpicture}
+\end{scaletikzpicturetowidth}

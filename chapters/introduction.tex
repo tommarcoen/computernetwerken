@@ -70,7 +70,7 @@ The term \gls{MAN} is applied to the interconnection of local-area networks in a
 
 \paragraph{\gls{SAN}}%
    \iacs{SAN}
-A computer network which provides access to consolidated, block-level data storage.%
+A computer network that provides access to consolidated, block-level data storage.%
    \footnote{This term does not belong is this list as it says nothing about the size of the network but all about its purpose; the network exists to support storage traffic.}
 \glspl{SAN} are primarily used to access data storage devices, such as disk arrays and tape libraries from servers so that the devices appear to the operating system as direct-attached storage.
 A \gls{SAN} typically is a dedicated network of storage devices not accessible through the local-area network.
@@ -267,7 +267,7 @@ Ethernet adapters were also available.
 
 \begin{figure}
 \centering
-\includegraphics[width=.5\textwidth]{images/introduction/thompson.png}
+\includegraphics[width=\textwidth]{images/introduction/thompson.png}
 \caption%
    [Thompson and Ritchie working on a \SC{PDP-11}]%
    {Ken Thompson (sitting) and Dennis Ritchie working on a \SC{PDP-11}, circa~1970. The picture was taken by Peter Hamer and the line drawing was made by \href{https://www.truecable.com/blogs/cable-academy/a-brief-history-of-network-technology}{truecable.com}.}
@@ -486,10 +486,8 @@ For each layer of the protocol stack a header gets added so that the correspondi
 That is, the transport layer on the sender's side communicates with the transport layer on the receiver's side and the network layer on the sender's side communicates with the corresponding layer on the receiver's side.
 
 \begin{figure}
-\begin{fullwidth}
 \centering
 \input{images/introduction/data-encapsulation}
-\end{fullwidth}
 \caption[Encapsulation and decapsulation of packets]{%
 Data encapsulation at the source and decapsulation at the destination.
 Each layer adds its own header, but the data link layer also adds a trailer.
