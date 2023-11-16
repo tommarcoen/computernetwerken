@@ -240,6 +240,31 @@ There is no need to acknowledge intermediate packets, since \acs{TCP} uses cumul
 
 
 
+\section[Other transport protocols]{Other transport protocols\protect\marginsymbol}
+
+\acs{TCP} and \acs{UDP} are not the only protocols that operate at the transport layer.
+The \acf{SCTP} is a protocol used in telecommunications and supports multihoming.
+
+\SC{QUIC}%
+   \footnote{The name was initially proposed as the acronym for \emph{quick \acs{UDP} Internet connections} but the \acs{IETF}'s use of the word is not an acronym.}
+is a general-purpose transport layer protocol initially designed by Jim Roskind at Google.
+\SC{QUIC} aims to be nearly equivalent to a \acs{TCP} connection but with much-reduced latency.
+It does this primarily through two changes that rely on the understanding of the behaviour of \acs{HTTP} traffic.
+
+The first change is to greatly reduce overhead during connection setup.
+As most \acs{HTTP} connections will demand \acs{TLS}, \SC{QUIC} makes the exchange of setup keys and supported protocols part of the initial handshake process.
+When a client opens a connection, the response packet includes the data needed for future packets to use encryption.
+This eliminates the need to set up the \acs{TCP} connection and then negotiate the security protocol via additional packets.
+Other protocols can be serviced in the same way, combining multiple steps into a single request-response pair.
+This data can then be used both for following requests in the initial setup, as well as future requests that would otherwise be negotiated as separate connections.
+
+The second change is to use \acs{UDP} rather than \acs{TCP} as its basis, which does not include loss recovery.
+Instead, each \SC{QUIC} stream is separately flow controlled and lost data is retransmitted at the level of \SC{QUIC}, not \acs{UDP}.
+This means that if an error occurs in one stream the protocol stack can continue servicing other streams independently.
+This can be very useful in improving performance on error-prone links, as in most cases considerable additional data may be received before \acs{TCP} notices a packet is missing or broken, and all of this data is blocked or even flushed while the error is corrected.
+In \SC{QUIC}, this data is free to be processed while the single multiplexed stream is repaired.
+
+
 \section{Load balancing}
 \fxwarning{Write something about load balancing.}
 Load balancing is the process of distributing a set of tasks over a set of resources (computing units), with the aim of making their overall processing more efficient.
@@ -253,6 +278,31 @@ Load balancing is the process of distributing a set of tasks over a set of resou
    A computer wants to set up a secure \acs{HTTP} connection with a web server.
    What are the source and destination port numbers?
    Will this connection use \acs{TCP} or \acs{UDP}?
+\item
+   A receiving host has failed to receive all of the segments that it should acknowledge.
+   What can the host do to improve the reliability of this communication session?
+   \begin{enumerate}
+   \item Send a different source port number.
+   \item Restart the virtual circuit.
+   \item Decrease the sequence number.
+   \item Decrease the window size.
+   \end{enumerate}
+\item What is the purpose of flow control?
+   \begin{enumerate}
+   \item To ensure that data is retransmitted if an acknowledgement is not received.
+   \item To reassemble segments in the correct order at the destination device.
+   \item To provide a means for the receiver to govern the amount of data sent by the sender.
+   \item To regulate the size of each segment.
+   \end{enumerate}
+\item
+   Which layer 4 protocol is used for an \acs{SSH} connection?
+   \begin{enumerate}
+   \item \IP
+   \item \acs{TCP}
+   \item \acs{TCP}/\acs{IP}
+   \item \acs{UDP}
+   \item \acs{ICMP}
+   \end{enumerate}
 \end{enumerate}
 
 
@@ -263,7 +313,12 @@ Load balancing is the process of distributing a set of tasks over a set of resou
 
 \section{Practice questions}
 \label{sec:transport-practice-qu}
-
+\begin{enumerate}
+\item
+   Use Wireshark to make a capture of a \acs{TCP} session and observe the three-way handshake.
+\item
+   Capture a few three-way handshakes for different protocols (e.g.~an \acs{HTTP} session, an \acs{SSH} session and an \acs{FTP} session) and compare the different \acs{TCP} options used.
+\end{enumerate}
 
 
 
