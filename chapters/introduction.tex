@@ -266,12 +266,13 @@ This product was used as one of the earliest commercial platforms upon which net
 Ethernet adapters were also available.
 
 \begin{figure}
+\begin{sidecaption}%
+   [Thompson and Ritchie working on a \SC{PDP-11}]%
+   {Ken Thompson (sitting) and Dennis Ritchie working on a \SC{PDP-11}, circa~1970. The picture was taken by Peter Hamer and the line drawing was made by \href{https://www.truecable.com/blogs/cable-academy/a-brief-history-of-network-technology}{truecable.com}.}%
+   [fig:thompson]
 \centering
 \includegraphics[width=\textwidth]{images/introduction/thompson.png}
-\caption%
-   [Thompson and Ritchie working on a \SC{PDP-11}]%
-   {Ken Thompson (sitting) and Dennis Ritchie working on a \SC{PDP-11}, circa~1970. The picture was taken by Peter Hamer and the line drawing was made by \href{https://www.truecable.com/blogs/cable-academy/a-brief-history-of-network-technology}{truecable.com}.}
-\label{fig:thompson}
+\end{sidecaption}
 \end{figure}
 
 \paragraph{\SC{X.25} (1976)}%
@@ -444,10 +445,13 @@ It is advisable to keep the bottom two layers separate. The data link layer comp
 
 
 \begin{figure}
+\begin{sidecaption}%
+   [The \acs{OSI}, \acs{TCP}/\acs{IP}, and hybrid networking models]%
+   {The three network models}%
+   [fig:network-models]
 \centering
 \input{images/introduction/network-models}
-\caption[The \acs{OSI}, \acs{TCP}/\acs{IP}, and hybrid networking models]{The three network models}
-\label{fig:network-models}
+\end{sidecaption}
 \end{figure}
 
 
@@ -486,13 +490,15 @@ For each layer of the protocol stack a header gets added so that the correspondi
 That is, the transport layer on the sender's side communicates with the transport layer on the receiver's side and the network layer on the sender's side communicates with the corresponding layer on the receiver's side.
 
 \begin{figure}
+\begin{sidecaption}%
+   [Encapsulation and decapsulation of packets]{%
+   Data encapsulation at the source and decapsulation at the destination.
+   Each layer adds its own header, but the data link layer also adds a trailer.
+   }%
+   [fig:encapsulation]
 \centering
 \input{images/introduction/data-encapsulation}
-\caption[Encapsulation and decapsulation of packets]{%
-Data encapsulation at the source and decapsulation at the destination.
-Each layer adds its own header, but the data link layer also adds a trailer.
-}
-\label{fig:encapsulation}
+\end{sidecaption}
 \end{figure}
 
 The data combined with the transport layer header is called a \emph{segment};
@@ -556,10 +562,12 @@ The network and transport layers are host-to-host.
 
 
 \begin{figure}
+\begin{sidecaption}%
+   {Encapsulation and data flow in the network}
+   [fig:data-flow]
 \centering
 \input{images/introduction/data-flow}
-\caption{Encapsulation and data flow in the network}
-\label{fig:data-flow}
+\end{sidecaption}
 \end{figure}
 
 
@@ -575,6 +583,7 @@ See \vref{sec:ip-nat} for an example of a router that changes the \acs{IP} addre
 Many different variants exist for these icons, depending on taste or function (e.g.~a core switch versus an access switch).
 There are more icons available for devices such as wireless \acs{LAN} controllers, acccess points, load balancers, and many more.
 \begin{figure}
+\begin{sidecaption}{Network icons for a router, a switch, and a firewall}[fig:icons]
    \centering
    \begin{subfigure}[b]{18mm}
    \includegraphics[width=\textwidth]{images/introduction/router.jpg}
@@ -593,8 +602,7 @@ There are more icons available for devices such as wireless \acs{LAN} controller
    \caption{firewall}
    \label{fig:icon-firewall}
    \end{subfigure}
-   \caption{Network icons for a router, a switch, and a firewall}
-   \label{fig:icons}
+\end{sidecaption}
 \end{figure}
 
 If you want to see visually very pleasing diagrams take a look at \url{https://networkdiagram101.com/}.

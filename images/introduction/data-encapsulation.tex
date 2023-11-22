@@ -1,22 +1,23 @@
 \tikzstyle{layer}=[
-    minimum width=25mm,
+    minimum width=20mm,
     minimum height=8mm,
     inner sep=0mm,
-    font=\small\sffamily,
+    font=\small,
     text=black,
     node distance=12mm,
     draw=spot1,
     fill=spot1!20
 ]
 \tikzstyle{arrow}=[->,>=stealth',semithick]
-\tikzstyle{red arrow}=[arrow,very thick,spot2]
+\tikzstyle{red arrow}=[arrow,<->,very thick,spot2]
 \tikzstyle{packet data}=[
     rectangle,
     draw=spot4,
     fill=spot4!20,
     text=black,
+    font=\small,
     thin,
-    minimum height=8mm,
+    minimum height=7mm,
     minimum width=12mm,
     inner sep=0mm
 ]
@@ -25,9 +26,10 @@
     draw=spot5,
     fill=spot5!20,
     text=black,
+    font=\small,
     thin,
-    node distance=8mm,
-    minimum size=8mm,
+    node distance=7mm,
+    minimum size=7mm,
     inner sep=0mm
 ]
 \begin{scaletikzpicturetowidth}{\textwidth}
@@ -40,7 +42,7 @@
 \node[layer] (d1) [below of=n1] {data link};
 \node[layer] (p1) [below of=d1] {physical};
 
-\node[layer] (a2) [right of=a1,node distance=90mm]  {application};
+\node[layer] (a2) [right of=a1,node distance=85mm]  {application};
 \node[layer] (t2) [below of=a2]                     {transport};
 \node[layer] (n2) [below of=t2]                     {network};
 \node[layer] (d2) [below of=n2]                     {data link};
@@ -58,13 +60,13 @@
 
 \draw[red arrow] (a1) to node[packet data] {data} (a2);
 \draw[red arrow] (t1) to node[packet data] (dt) {data}
-                         node[packet header,left of=dt,node distance=10mm] {t}
+                         node[packet header,left of=dt,node distance=9mm] {\SC{T}}
                          (t2);
 \draw[red arrow] (n1) to node[packet data] (dn) {data}
-                         node[packet header,left of=dn,node distance=10mm] (hn1) {t} node[packet header,left of=dn,node distance=18mm] (hn2) {n}
+                         node[packet header,left of=dn,node distance=9mm] (hn1) {\SC{T}} node[packet header,left of=dn,node distance=16mm] (hn2) {\SC{N}}
                          (n2);
 \draw[red arrow] (d1) to node[packet data] (dd) {data}
-                         node[packet header,left of=dd,node distance=10mm] (hd1) {t} node[packet header,left of=dd,node distance=18mm] (hd2) {n} node[packet header,left of=dd,node distance=26mm] (hd3) {d} node[packet header,right of=dd,node distance=10mm] (td) {d}
+                         node[packet header,left of=dd,node distance=9mm] (hd1) {\SC{T}} node[packet header,left of=dd,node distance=16mm] (hd2) {\SC{N}} node[packet header,left of=dd,node distance=23mm] (hd3) {\SC{D}} node[packet header,right of=dd,node distance=9mm] (td) {\SC{D}}
                          (d2);
 \end{tikzpicture}
 \end{scaletikzpicturetowidth}

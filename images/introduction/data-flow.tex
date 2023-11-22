@@ -35,14 +35,14 @@
     fill=spot1!20
 ]
 
-\begin{tikzpicture}[node distance=18mm]
+\begin{tikzpicture}[node distance=17mm]
 
 % network topology
 \node at (45mm,12mm) {\bfseries network topology};
 \node[enode] (A)                {\footnotesize host A};
-\node[nnode] (R1) [node distance=30mm,right of=A]  {\footnotesize router};
-\node[nnode] (R2) [node distance=30mm,right of=R1] {\footnotesize router};
-\node[enode] (B)  [node distance=30mm,right of=R2] {\footnotesize host B};
+\node[nnode] (R1) [node distance=28mm,right of=A]  {\footnotesize router};
+\node[nnode] (R2) [node distance=28mm,right of=R1] {\footnotesize router};
+\node[enode] (B)  [node distance=28mm,right of=R2] {\footnotesize host B};
 \draw[arrow] (A) -- (R1);
 \draw[arrow] (R1)-- (R2);
 \draw[arrow] (R2)-- (B);
@@ -68,10 +68,10 @@
 \draw[double arrow] (AA) to node[auto,color=black] {\footnotesize process-to-process} (BA);
 \draw[double arrow] (AT) to node[auto,color=black] {\footnotesize host-to-host} (BT);
 
-\node[layer] (R1N) [node distance=30mm,right of=AN]  {\small network};
-\node[layer] (R2N) [node distance=30mm,right of=R1N] {\small network};
-\node[layer] (R1D) [node distance=30mm,right of=AD]  {\small data link};
-\node[layer] (R2D) [node distance=30mm,right of=R1D] {\small data link};
+\node[layer] (R1N) [node distance=28mm,right of=AN]  {\small network};
+\node[layer] (R2N) [node distance=28mm,right of=R1N] {\small network};
+\node[layer] (R1D) [node distance=28mm,right of=AD]  {\small data link};
+\node[layer] (R2D) [node distance=28mm,right of=R1D] {\small data link};
 
 \draw[arrow] ($(R1N.south)+(.2,0)$) -- ($(R1D.north)+(.2,0)$);
 \draw[arrow] ($(R1D.north)-(.2,0)$) -- ($(R1N.south)-(.2,0)$);

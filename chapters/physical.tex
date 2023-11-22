@@ -41,8 +41,7 @@ See \vref{tab:tp-categories} for an overview of the different categories.
 
 
 \begin{table}
-   \caption{Twisted pair categories}
-   \label{tab:tp-categories}
+\begin{sidecaption}{Twisted pair categories}[tab:tp-categories]
    \centering
    \begin{tabular}{lrrr}
    {cat.} & {dist. (m)} & {\textsc{BW} (MHz)} & {application} \\
@@ -58,6 +57,7 @@ See \vref{tab:tp-categories} for an overview of the different categories.
    8.1 & 30 & 2000 & \SC{40GBASE-T} \\
    8.2 & 30 & 2000 & \SC{40GBASE-T} \\
    \end{tabular}
+\end{sidecaption}
 \end{table}
 
 % Encoding
@@ -100,10 +100,10 @@ To make a straight-through patch cable, either use the order defined by \SC{T568
 To create a crossover patch cable, use \SC{T568A} on one side and \SC{T568B} on the other.
 
 \begin{figure}
+\begin{sidecaption}{The \SC{T568} standard for twisted-pair cabling}[fig:t568]
 \centering
 \includegraphics[width=.7\textwidth]{images/physical/t568.jpeg}
-\caption{The \SC{T568} standard for twisted-pair cabling}
-\label{fig:t568}
+\end{sidecaption}
 \end{figure}
 
 % TODO: explain (with a drawing?) that pair 1/3 is used for sending and the other for receiving data.
@@ -139,10 +139,10 @@ an \SC{SFP28} housing for \SI{25}{\giga\bit\per\second},
 and there also exists a \acs{QSFP} version for \SI{40}{\giga\bit\per\second}.
 
 \begin{figure}
+\begin{sidecaption}{A direct-attach copper cable}[fig:dac]
 \centering
 \includegraphics[width=\textwidth]{images/physical/dac-cable.jpeg}
-\caption{A direct-attach copper cable}
-\label{fig:dac}
+\end{sidecaption}
 \end{figure}
 
 \paragraph{optical fibre}
@@ -153,11 +153,11 @@ The concept of a direct-attech copper cable also exist with optical cables.
 These are then called \acf{AOC}.
 
 \begin{table}
-   \caption{Fibre optic categories}
-   \label{tab:fo-categories}
+\begin{sidecaption}{Fibre optic categories}[tab:fo-categories]
    \centering
    \begin{tabular}{lrrll}
-   {cat.} & {core ($\bm{\mathrm{\upmu{}m}}$)} & \SC{BW} (MHz) & {color} & {Ethernet standard} \\
+   {cat.} & core                                   & \SC{BW} & {color} & Ethernet standard \\
+          & \footnotesize($\bm{\mathrm{\upmu{}m}}$) & \footnotesize (MHz) & & \\
    \midrule
    \SC{OM1} & 62.5    &  200 & orange & {\small \SC{10GBASE-SR} (\SI{33}{\metre})} \\
    \SC{OM2} & 50      &  500 & orange & {\small \SC{10GBASE-SR} (\SI{82}{\metre})} \\
@@ -166,6 +166,7 @@ These are then called \acf{AOC}.
    \SC{OS1} & 8--10.5 &      & yellow & {\small \SC{100GBASE-ER4} (\SI{40}{\kilo\metre})} \\
    \SC{OS2} & 8--10.5 &      & yellow & {\small \SC{100GBASE-ER4} (\SI{40}{\kilo\metre})} \\
    \end{tabular}
+\end{sidecaption}
 \end{table}
 
 \paragraph{single-mode}
@@ -189,6 +190,7 @@ It is more convenient to have a modular system where you can plug in the transce
 There are different form factors available, including \acs{SFP}, \acs{SFP+} and \acs{QSFP}.
 
 \begin{figure}
+\begin{sidecaption}{Two small \acf{SFP} transceivers}[fig:sfp]
    \begin{subfigure}[b]{0.45\textwidth}
    \centering
    \includegraphics[width=\textwidth]{images/physical/sfp.png}
@@ -202,11 +204,11 @@ There are different form factors available, including \acs{SFP}, \acs{SFP+} and 
    \caption{An \acs{SFP} with a \acs{RJ45} connector}
    \label{fig:sfp-rj45}
    \end{subfigure}
-   \caption{Two small \acf{SFP} transceivers}
-   \label{fig:sfp}
+\end{sidecaption}
 \end{figure}
 
 \begin{table}
+\begin{sidecaption}{Speed per form factor of tranceiver}[tab:speed-formfactor]
 \centering
 \begin{tabular}{lrc}
 {form factor} & {max speed} & {channels} \\
@@ -220,6 +222,7 @@ There are different form factors available, including \acs{SFP}, \acs{SFP+} and 
 \acs{QSFP}28 & \SI{100}{\giga\bit\per\second}   & 4\\
 \acs{QSFP}56 & \SI{200}{\giga\bit\per\second}   & 4\\
 \end{tabular}
+\end{sidecaption}
 \end{table}
 
 Nowadays most connectors are \acs{LC} (as in \vref{fig:sfp}) but in data centres \acs{MPO} cables (\vref{fig:mpo}) are also used for high-speed connections and for interconnecting patch panels.
@@ -232,17 +235,17 @@ for more information on different fibre optic connectors.
    \index{network cable!MPO@\acs{MPO}}
 
 \begin{figure}
+\begin{sidecaption}{\acs{MPO} connnector}[fig:mpo]
    \centering
    \includegraphics[width=\textwidth]{images/physical/mpo.png}
-   \caption{\acs{MPO} connnector}
-   \label{fig:mpo}
+\end{sidecaption}
 \end{figure}
 
 \begin{figure}
+\begin{sidecaption}{\acs{MPO} cassette}[fig:mpo-cassette]
    \centering
    \includegraphics[width=\textwidth]{images/physical/mpo-cassette.png}
-   \caption{\acs{MPO} cassette}
-   \label{fig:mpo-cassette}
+\end{sidecaption}
 \end{figure}
 
 
@@ -262,10 +265,11 @@ data link and physical layer protocols for implementing \acf{WLAN} computer comm
 The standard and amendments provide the basis for wireless network products using the Wi-Fi brand and are the world's most widely used wireless computer networking standards.
 
 \begin{table}
+\begin{sidecaption}{Wi-Fi generations}[fig:wifi-generations]
    \centering
    \begin{tabular}{lrrrl}
-   {standard} & {generation} & {max linkrate}   & {adoption} & {frequency} \\
-                     &                     & {\small {(Mbps)}} &                   & {\small {(GHz)}} \\
+   {standard} & {gen.} & {max linkrate}           & {adoption} & {frequency} \\
+              &        & {\footnotesize {(Mbps)}} &            & {\footnotesize {(GHz)}} \\
    \midrule
    802.11   & 0  &       2 & 1997 & 2.4 \\
    802.11a  & 2  &      54 & 1999 & 5   \\
@@ -277,8 +281,7 @@ The standard and amendments provide the basis for wireless network products usin
             & 6\SC{E} &  9\,608 & 2020 & 2.4/5/6 \\
    802.11be & 7  & 40\,000 & \emph{t.b.d.} & 2.4/5/6 \\
    \end{tabular}
-   \caption{Wi-Fi generations}
-   \label{fig:wifi-generations}
+\end{sidecaption}
 \end{table}
 
 
@@ -297,10 +300,10 @@ The \SI{5}{\giga\hertz} frequency supports over fifty channels, depending on the
    }
 
 \begin{figure}
+\begin{sidecaption}{Non-overlapping wireless channels in the \SI{2.4}{\giga\hertz}-range}[fig:wifi-channels]
 \centering
 \includegraphics[width=\textwidth]{images/physical/wifi-channels.png}
-\caption{Non-overlapping wireless channels in the \SI{2.4}{\giga\hertz}-range}
-\label{fig:wifi-channels}
+\end{sidecaption}
 \end{figure}
 
 \paragraph{bandwidth}
