@@ -58,7 +58,8 @@ This is the network part or \emph{network number}.%
 All computers attached to the same local network need an \acs{IP} address with the same network number.
 
 \begin{margintable}
-\begin{tabular}{rl@{.}r}
+\footnotesize
+\begin{tabular}{@{}rl@{.}r@{}}
 \textcolor{spot5}{\acs{IP} address} & \textcolor{spot1}{192.0} & \textcolor{spot2}{2.7} \\
 \textcolor{spot5}{subnet mask}      & 255.255                  & 0.0                    \\
 \textcolor{spot5}{network number}   & \textcolor{spot1}{192.0} &                        \\
@@ -85,8 +86,9 @@ This means there can be up to $2^8=256$ hosts in the network.
 This allows for a total of $2^{16}=65536$ hosts in that network.
 
 \begin{margintable}
+\footnotesize
 \begin{tabular}{
-   r
+   @{}r
    p{5mm}@{ }
    p{4mm}@{ }
    p{4mm}@{ }
@@ -94,7 +96,7 @@ This allows for a total of $2^{16}=65536$ hosts in that network.
    p{3mm}@{ }
    p{3mm}@{ }
    p{3mm}@{ }
-   p{3mm}@{ }
+   p{3mm}@{}
 }
 value & 128 & 64 & 32 & 16 & 8 & 4 & 2 & 1 \\
 \midrule
@@ -116,6 +118,11 @@ A second example could be 255.255.255.192.
 Converting these octets to binary gives us 26 consecutive ones followed by 6 zeros.
 This means that the first 26~bits of the accompanying \acs{IP} address are the network number and the last six bits are the host identifier.
 
+\paragraph{prefix}
+   \index{prefix}
+The network prefix is the first part of the \acs{IP} address, identifying the network.
+The term is often used interchangeably with \emph{network address} but technically the prefix is only the network part.
+
 \paragraph{network address}
    \index{network address}
 Each network requires two special addresses that can not be assigned to hosts.
@@ -123,7 +130,8 @@ The first is the network address.
 It is the first \acs{IP} address in the network, i.e.~the \acs{IP} address where the host part consists of only zeros.
 
 \begin{margintable}
-\begin{tabular}{rl@{.}r}
+\footnotesize
+\begin{tabular}{@{}rl@{.}r@{}}
 \textcolor{spot5}{\acs{IP} address}  & \textcolor{spot1}{198.51.100}  & 13 \\
 \textcolor{spot5}{subnet mask}       & 255.255.255 &  0 \\
 \textcolor{spot5}{network addr.}     & \textcolor{spot1}{198.51.100}  & \textcolor{spot2}{0}   \\
@@ -139,11 +147,6 @@ The last 8~bits of the subnet mask are zero so the last octet of the \acs{IP} ad
 The network address is the very first (lowest) address using this network number.
 In this example, the network address is 198.51.100.0; the first three bytes must be identical for it to be the same network.
 The host part -- the last 8~bits -- must be all zeros to give the lowest possible address.
-
-\paragraph{prefix}
-   \index{prefix}
-The network prefix is the first part of the \acs{IP} address, identifying the network.
-The term is often used interchangeably with \emph{network address} but technically the prefix is only the network part.
 
 
 \paragraph{broadcast address}
@@ -174,10 +177,23 @@ Most of the time it is either the first \emph{available}
    \footnote{As the first and last addresses are reserved as the network and broadcast addresses, the first available address would be 198.51.100.1 and the last available address would be 198.51.100.254.}
 But this is not a requirement and it can be any available address in the network.
 
+
+
+\paragraph{\Acl{VRRP}\protect\marginsymbol}
+To increase the fault tolerance of networks, they are often set up with two default gateways.
+To make this work in case of a failure, they both share a \emph{virtual} \IP\ address.
+
+
 \paragraph{loopback address}
    \index{loopback address}
 All \acs{IP} addresses starting with 127 are reserved as loopback address.%
    \footnote{In \acs{IP} version~6 there is only a single loopback address, namely ::1 or 127 binary zeros followed by a single binary one.}
+   \footnote{
+      There are people in the industry who want to free up a large chunk of these addresses for public use and only keep the 127.0.0.0/16 range for loopback addresses --
+      See \href{https://github.com/schoen/unicast-extensions}{The \acs{IP} version~4 cleanup project} on GitHub.
+      All other \acs{IP} addresses will become publicly available.
+      However, this might take a few more years to become a reality, if it will happen at all.      
+   }
 When communicating with the loopback address, the computer connects back to itself.
 For example, a web designer could install a web server on his own laptop which serves the website he is developing.
 He can limit the web server to only allow access from the loopback address so that he alone can see the website, not making it available to the rest of the network.
@@ -186,10 +202,6 @@ A production web server might have both a web server and a database application 
 The web server will listen on a public \acs{IP} address and accept incoming requests from everywhere while the database application will only listen on the loopback address.
 Nobody should access the database directly accept for the web server software running on the local machine.
 
-There are people in the industry who want to free up a large chunk of these addresses for public use and only keep the 127.0.0.0/16 range for loopback addresses.%
-\footnote{See \href{https://github.com/schoen/unicast-extensions}{The \acs{IP} version~4 cleanup project} on GitHub.}
-All other \acs{IP} addresses will become publicly available.
-However, this might take a few more years to become a reality, if it will happen at all.
 
 \section{A bit of history}
 \label{sec:ip-history}
@@ -198,16 +210,16 @@ However, this might take a few more years to become a reality, if it will happen
 At first there were only 256 networks (the first octet) and each network could contain over 16 million hosts (24~bits for the host identifier gives $2^{24}$ or \numprint{16777216} addresses for devices in that network).
 With both the 0 and 255 network reserved, in reality only 254 networks can be used.
 
-\paragraph[1981]{classful addressing}
+\paragraph[1981]{classful addressing (1981)}
    \index{classful addressing}
 As the internet community quickly realised 254 networks were not enough, they kept the networks that were already assigned to companies and created a new system based on classes.
 The first octet of the \acs{IP} address determined that class of \acs{IP} address and the class determined the size of the network, i.e.~which part is used for the network and which part is used for the host address.
 \Vref{tab:classful-addressing} shows the different classes, their subnet mask and the number of hosts per network.
 An \acs{IP} address belongs to a certain class if the first octet falls into the given range.
-For example, the \acs{IP} address 198.51.100.37 falls into the class~c range as $192\le198\le223$. Thus, the first three octets determine the network and the fourth octet identifies the host within the given network.
+For example, the \acs{IP} address 198.51.100.37 falls into the class~c range as the number~198 lies between~192 and~223. Thus, the first three octets determine the network and the fourth octet identifies the host within the given network.
 
 \begin{table}
-\begin{sidecaption}{Classful addressing (1981)}[tab:classful-addressing]
+\begin{sidecaption}{Classful addressing}[tab:classful-addressing]
 \centering
 \begin{tabular}{crllr}
 %\toprule
@@ -243,7 +255,7 @@ Subnetting is the process of taking a block of \acs{IP} addresses from \vref{tab
 For example, the network 14.0.0.0 belongs to class~a and thus has a subnet mask of 255.0.0.0.
 \Cref{tab:classful-addressing} teaches us there are over 16~million \acs{IP} addresses%
    \footnote{%
-      The first address is 14.0.0.0 and the last address is 14.255.255.255.
+      The first \IP\ address is 14.0.0.0 and the last one is 14.255.255.255.
       When we convert both \acs{IP} addresses back to a single large 32-bit number, we get \numprint{234881024} and \numprint{251658239}.
       The difference between these numbers is about 16~million or exactly $2^24$.
    }
@@ -266,11 +278,11 @@ The third row displays the subnet mask in binary format.
 
 \begin{center}
 \tosfstyle
-\begin{tabular}{@{}l@{\qquad}l@{}}
-\color{spot1} 1100 0110 . 0001 001\color{spot2} 0 . 0000 0000 . 0000 0000 & 198.18.0.0/16 \\
-\color{spot1} 1100 0110 . 0001 001\color{spot2} 1 . 0000 0000 . 0000 0000 & 198.19.0.0/16 \\
+\begin{tabular}{@{}l@{.}l@{.}l@{.}l@{\quad}l@{}}
+\color{spot1} 1100 0110 & 0001 001\color{spot2} 0 & 0000 0000 & 0000 0000 & 198.18.0.0/16 \\
+\color{spot1} 1100 0110 & 0001 001\color{spot2} 1 & 0000 0000 & 0000 0000 & 198.19.0.0/16 \\
 \midrule
-\textcolor{spot1}{1111 1111 . 1111 111}0 . 0000 0000 . 0000 0000 & 255.254.0.0 \\
+\textcolor{spot1}{1111 1111} & \textcolor{spot1}{1111 111}0 & 0000 0000 & 0000 0000 & 255.254.0.0 \\
 \end{tabular}
 \end{center}
 
@@ -278,12 +290,12 @@ Both networks have a prefix length of 16 bits meaning the network part or networ
 These are unique for both networks, the second octet is 18 versus 19.
 We can also see this in the binary form as the sixteenth bit from the left (in \textcolor{spot2}{magenta}) is different for both networks.
 
-As the first fifteen bits (in \textcolor{spot1}{some kind of green}) are identical for both networks we can group both networks into a single supernet.
+As the first fifteen bits (in \textcolor{spot1}{some kind of green}) are iden\-ti\-cal for both networks we can group both networks into a single supernet.
 We keep the value for these fifteen bits and fill up with zeros till we have a total of 32~bits.
 If we then group these 32 bits in four octets and write it is dotted decimal notation, we get the prefix 198.18.0.0 with the a prefix length of 15.
 The prefix length of 15 translates into a subnet mask of 255.254.0.0.
 
-\newthought{For the second example}, take 198.19.0.0/16 and 198.20.0.0/16, displayed in the middle in the table below.
+\newthought{For the second example}, take the networks 198.19.0.0/16 and 198.20.0.0/16, displayed in the middle in the table below.
 When we want to combine both networks in a supernet, we must take together the identical bits on the left and turn all the hosts bits to zero (to make the network address).
 There are only thirteen identical bits. The last three bits differ.
 Thus this supernet would be 198.16.0.0 with a subnet mask of 255.248.0.0.
@@ -294,18 +306,18 @@ However, this supernet includes all the other networks as well, from 198.16.0.0 
 
 \begin{center}
 \tosfstyle
-\begin{tabular}{@{}ll@{}}
-\textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{000} . 0000 0000 . 0000 0000 & 198.16.0.0/16 \\
-\textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{001} . 0000 0000 . 0000 0000 & 198.17.0.0/16 \\
-\textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{010} . 0000 0000 . 0000 0000 & 198.18.0.0/16 \\
-\textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{011} . 0000 0000 . 0000 0000 & 198.19.0.0/16 \\
-\textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{100} . 0000 0000 . 0000 0000 & 198.20.0.0/16 \\
-\textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{101} . 0000 0000 . 0000 0000 & 198.21.0.0/16 \\
-\textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{110} . 0000 0000 . 0000 0000 & 198.22.0.0/16 \\
-\textcolor{spot1}{1100 0110 . 0001 0}\textcolor{spot2}{111} . 0000 0000 . 0000 0000 & 198.23.0.0/16 \\
+\begin{tabular}{@{}l@{.}ll@{}}
+\textcolor{spot1}{1100 0110} & \textcolor{spot1}{0001 0}\textcolor{spot2}{000} . 0000 0000 . 0000 0000 & 198.16.0.0/16 \\
+\textcolor{spot1}{1100 0110} & \textcolor{spot1}{0001 0}\textcolor{spot2}{001} . 0000 0000 . 0000 0000 & 198.17.0.0/16 \\
+\textcolor{spot1}{1100 0110} & \textcolor{spot1}{0001 0}\textcolor{spot2}{010} . 0000 0000 . 0000 0000 & 198.18.0.0/16 \\
+\textcolor{spot1}{1100 0110} & \textcolor{spot1}{0001 0}\textcolor{spot2}{011} . 0000 0000 . 0000 0000 & 198.19.0.0/16 \\
+\textcolor{spot1}{1100 0110} & \textcolor{spot1}{0001 0}\textcolor{spot2}{100} . 0000 0000 . 0000 0000 & 198.20.0.0/16 \\
+\textcolor{spot1}{1100 0110} & \textcolor{spot1}{0001 0}\textcolor{spot2}{101} . 0000 0000 . 0000 0000 & 198.21.0.0/16 \\
+\textcolor{spot1}{1100 0110} & \textcolor{spot1}{0001 0}\textcolor{spot2}{110} . 0000 0000 . 0000 0000 & 198.22.0.0/16 \\
+\textcolor{spot1}{1100 0110} & \textcolor{spot1}{0001 0}\textcolor{spot2}{111} . 0000 0000 . 0000 0000 & 198.23.0.0/16 \\
 \midrule
-1111 1111 . 1111 1111 . 0000 0000 . 0000 0000 & 255.255.0.0 \\
-1111 1111 . 1111 1000 . 0000 0000 . 0000 0000 & 255.248.0.0 \\
+1111 1111 & 1111 1111 . 0000 0000 . 0000 0000 & 255.255.0.0 \\
+1111 1111 & 1111 1000 . 0000 0000 . 0000 0000 & 255.248.0.0 \\
 \end{tabular}
 \end{center}
 
@@ -328,7 +340,7 @@ As every additionanl bit doubles the amount of addresses, the growth is exponent
       In fact, every atom on the surface of the earth can be assigned an address and we would still have addresses to spare.
    }
 It is not feasible to write these large addresses using decimal notation so \acs{IP} version~6 addresses are written using the hexadecimal number system.
-An example of such an address is \SC{2001:ef45:4db9:ae02:0023:ba3b:ae10:0de3}, not exactly easy to remember.
+An example of such an address is \SC{2001:\-ef45:\-4db9:\-ae02:\-0023:\-ba3b:\-ae10:\-0de3}, not exactly easy to remember.
 
 In this course I will not cover \acs{IP} version~6.
 There are a few reasons why this is the case.
@@ -533,7 +545,7 @@ The ranges 192.0.2.0/24, 198.51.100.0/24, and 203.0.113.0/24 have been reserved 
 The range 100.64.0.0/10 was added in 2012 for use in carrier-grade \ac{NAT} scenarios (\rfc{6598}):
 
 \begin{quote}
-Shared-address space is distinct from \rfc{1918} private-address space because it is intended for use on service-provider networks.
+Shared-address space is distinct from \rfc{1918} private address space because it is intended for use on service-provider networks.
 However, it may be used in a manner similar to \rfc{1918} private-address space on routing equipment that is able to do address translation across router interfaces when the addresses are identical on two different interfaces.
 \end{quote}
 
@@ -572,7 +584,7 @@ It is possible to use multiple public \acs{IP} addresses to translate the privat
 When this is used in combination with port-based address translation, it allows for multiple thousands of private hosts to communicate on the Internet.
 
 % TODO: either explain more, or delete?
-\paragraph{one-to-one translation}
+\extrap{one-to-one translation}
    \index{NAT@\acs{NAT}!static}
    \index{NAT@\acs{NAT}!one-to-one}
 This method is most often used to translate a range of private \acs{IP} addresses into a different range of private \acs{IP} addresses.
@@ -580,65 +592,6 @@ This is often needed when two companies with overlapping \acs{IP} address space 
 
 
 
-
-\section{\Acl{ICMP}}
-\label{sec:ip-icmp}
-
-The \acf{ICMP} is a supporting protocol in the internet protocol suite.
-It is used by network devices, including routers, to send error messages and operational information indicating success or failure when communicating with another \acs{IP} address, for example, an error is indicated when a requested service is not available or that a host or router could not be reached.
-
-The program \cmd{ping} uses \acs{ICMP} to detect whether the destination is reachable and alive.
-It sends out an \acs{ICMP} echo request (\cref{tab:icmp}) and expects to receive an \acs{ICMP} echo reply from the destination.
-Receiving this reply tells us two things:
-\begin{itemize}
-\item
-   the destination host is turned on and connected to the network as it was able to receive our message and reply to it;
-\item
-   the network between our computer and the destination is working as all the devices in the middle were able to send our request to the destination as well as send its reply back to us.
-\end{itemize}
-
-\begin{table}
-\begin{sidecaption}{Most common \acs{ICMP} types and codes}[tab:icmp]
-\centering
-\begin{tabular}{rrl}
-{type} & {code} & {description} \\
-\midrule
- 0 &  0 & echo reply \\
- 3 &  0 & destination network unreachable \\
- 3 &  1 & destination host unreachable \\
- 3 &  2 & destination protocol unreachable \\
- 3 &  3 & destination port unreachable \\
- 3 &  4 & fragmentation needed but \SC{DF}-bit set \\
- 3 & 13 & communication administratively prohibited \\
- 5 &  0 & redirect datagram for the network \\
- 5 &  1 & redirect datagram for the host \\
- 8 &  0 & echo request \\
-11 &  0 & \acs{TTL} expired in transit \\
-\end{tabular}
-\end{sidecaption}
-\end{table}
-
-If we do not receive a reply from the end host it can be because of one or more issue in the network.
-\begin{itemize}
-\item
-   The end host could be turned off, have a firewall configured which prohibits sending or receiving \acs{ICMP} messages, or have an incorrect gateway configured so that the reply cannot reach us.
-\item
-   A network firewall in the path between source and destination can prevent the \acs{ICMP} query from reaching the destination.
-   It could also prevent the reply form reaching us.
-\item
-   The destination network could be unknown to one of the routers in the path preventing the query from reaching its destination.
-   Our own network could also be unknown to one of the routers in the path preventing the reply from reaching us.
-\end{itemize}
-More troubleshooting is needed to determine the exact problem or problems so that they can get fixed.
-A good place to start would be to use the program \cmd{traceroute} (on Windows it is called \cmd{tracert}).
-
-\fxwarning{Complete this section.}
-
-
-\paragraph{path \acs{MTU} discovery}
-
-See also \emph{time-to-live} on p.~\pageref{par:ip-ttl} and \emph{fragmentation} on p.~\pageref{par:ip-fragmentation}.
-\fxwarning{Complete this section.}
 
 
 
@@ -713,6 +666,81 @@ For example the IPsec \acf{AH} and \acf{ESP} headers are implemented as \IPsix\ 
 Fragmentation is also implemented using an extension header although \IPsix\ packets are not supposed to be fragmented.
 
 
+
+
+
+\section{\Acl{ICMP}}
+\label{sec:ip-icmp}
+
+The \acf{ICMP} is a supporting protocol in the internet protocol suite.
+It is used by network devices, including routers, to send error messages and operational information indicating success or failure when communicating with another \acs{IP} address, for example, an error is indicated when a requested service is not available or that a host or router could not be reached.
+
+The program \cmd{ping} uses \acs{ICMP} to detect whether the destination is reachable and alive.
+It sends out an \acs{ICMP} echo request (\cref{tab:icmp}) and expects to receive an \acs{ICMP} echo reply from the destination.
+Receiving this reply tells us two things:
+\begin{itemize}
+\item
+   the destination host is turned on and connected to the network as it was able to receive our message and reply to it;
+\item
+   the network between our computer and the destination is working as all the devices in the middle were able to send our request to the destination as well as send its reply back to us.
+\end{itemize}
+
+\begin{table}
+\begin{sidecaption}{Most common \acs{ICMP} types and codes}[tab:icmp]
+\centering
+\begin{tabular}{rrl}
+{type} & {code} & {description} \\
+\midrule
+ 0 &  0 & echo reply \\
+ 3 &  0 & destination network unreachable \\
+ 3 &  1 & destination host unreachable \\
+ 3 &  2 & destination protocol unreachable \\
+ 3 &  3 & destination port unreachable \\
+ 3 &  4 & fragmentation needed but \SC{DF}-bit set \\
+ 3 & 13 & communication administratively prohibited \\
+ 5 &  0 & redirect datagram for the network \\
+ 5 &  1 & redirect datagram for the host \\
+ 8 &  0 & echo request \\
+11 &  0 & \acs{TTL} expired in transit \\
+\end{tabular}
+\end{sidecaption}
+\end{table}
+
+If we do not receive a reply from the end host it can be because of one or more issue in the network.
+\begin{itemize}
+\item
+   The end host could be turned off, have a firewall configured which prohibits sending or receiving \acs{ICMP} messages, or have an incorrect gateway configured so that the reply cannot reach us.
+\item
+   A network firewall in the path between source and destination can prevent the \acs{ICMP} query from reaching the destination.
+   It could also prevent the reply form reaching us.
+\item
+   The destination network could be unknown to one of the routers in the path preventing the query from reaching its destination.
+   Our own network could also be unknown to one of the routers in the path preventing the reply from reaching us.
+\end{itemize}
+More troubleshooting is needed to determine the exact problem or problems so that they can get fixed.
+A good place to start would be to use the program \cmd{traceroute} (on Windows it is called \cmd{tracert}).
+
+\fxwarning{Complete this section.}
+
+
+\paragraph{\acl{PMTUD}}
+
+\Acf{PMTUD} is a standardized technique in computer networking for determining the \acf{MTU} size on the network path between two \IP\ hosts, usually with the goal of avoiding \IP\ fragmentation.
+\Acl{PMTUD} was originally intended for routers in \IP\ version~4.
+However, all modern operating systems use it on endpoints.
+
+\Acl{PMTUD} works by setting the \emph{don't fragment} (\SC{DF}) flag bit in the \IP\ headers of outgoing packets.
+Then, any device along the path whose \acs{MTU} is smaller than the packet will drop it, and send back an \acs{ICMP} \emph{fragmentation needed} (type~3, code~4) message containing its \acs{MTU}, allowing the source host to reduce its path \acs{MTU} appropriately.
+The process is repeated until the \acs{MTU} is small enough to traverse the entire path without fragmentation.
+
+See also \emph{time-to-live} on p.~\pageref{par:ip-ttl} and \emph{fragmentation} on p.~\pageref{par:ip-fragmentation}.
+
+
+
+
+
+
+
 \section{Routing}
 \label{sec:ip-routing}
 
@@ -750,7 +778,7 @@ When a router receives a packet with a destination \acs{IP} address which does n
 \begin{sidecaption}{The routing table on a linux machine}[fig:routing-table]
 \begin{lstlisting}
 [doyle] ~ $ netstat -rn
-Kernel \acs{IP} routing table
+Kernel IP routing table
 Destination     Gateway         Genmask         Iface
 10.0.0.0        172.24.12.1     255.255.240.0   eth1
 10.0.16.0       172.24.12.1     255.255.240.0   eth1
@@ -824,10 +852,10 @@ It thus does not need detailed knowledge about the network but can usually route
 }
 or to provide a gateway of last resort.
 
-
-\paragraph{dynamic routing protocols}
-   \index{routing protocol!distance-vector}
-   \index{routing protocol!link-state}
+\pagebreak
+\paragraph{dynamic routing protocols}%
+   \index{routing protocol!distance-vector}%
+   \index{routing protocol!link-state}%
 \begin{description}
 \item[distance-vector]
 A distance-vector routing protocol is like putting signposts on every crossroads with the router being the crossroads.
@@ -887,7 +915,7 @@ It is a very simple protocol useful in smaller networks.
 The protocol is not suitable for larger networks because of its slow \emph{convergence time} and its tendency to propagate good information slowly and negative information quickly.
    \index{convergence time}
 
-\paragraph{route poisoning}
+\extrap{route poisoning}
    \index{route poisoning}
 % source: https://www.geeksforgeeks.org/route-poisoning-and-count-to-infinity-problem-in-routing/
 The main issue with distance-vector routing protocols is routing loops.%
@@ -901,7 +929,7 @@ Routing loops usually occur when an interface goes down or two routers send upda
 Route poisoning helps to alleviate this problem by advertising the route back to its source with a metric of infinity.
 This ensures that the router originally advertising the prefix can never use its neighbours to reach the given network.
 
-\paragraph{split horizon}
+\extrap{split horizon}
    \index{split horizon}
 Split horizon is another method to prevent routing loops from occuring.%
    \index{routing loop}
@@ -909,7 +937,7 @@ This time, instead of advertising the routes back with a metric of infinity, we 
 This method is not as good as using route poisoning to prevent routing loops.
 Logically you can not use both both methods. Either you use neither method, or you use one or the other.
 
-\paragraph{hold-down timer}
+\extrap{hold-down timer}
    \index{hold-down timer}
 When a router receives a routing update advertising a network to be unreachable, it starts a hold-down timer.
 Until the timer expires, the router will discard any subsequent route messages that indicate the route is in fact reachable.
@@ -1080,6 +1108,7 @@ You can tweak the protocol so that you can exactly control the path a packet has
 \item
    To test the \IP\ stack on your local host, which \IP\ address would you ping?
    \begin{multicols}{2}
+   \raggedcolumns
    \begin{enumerate}
    \item 127.0.0.0
    \item 1.0.0.127

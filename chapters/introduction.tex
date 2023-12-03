@@ -14,7 +14,7 @@ used to withdraw money from a bank account, the computer systems present in mode
 When you connect these computers together using network cables or using wireless network adapters, they form a network.
 A computer network is used to exchange information between different computers.
 
-In this introductory chapter we will first discuss a few names used to talk about the geographic and organisational size of a network.
+In this introductory chapter we will discuss a few names used to talk about the geographic and organisational size of a network.
 We will then take a look at some different topologies that can arise when connecting computers together in a network.
 This includes both physical and logical topologies.
 
@@ -24,7 +24,41 @@ local networks and wide-area networks, of which the internet is the best-known e
 We then move on to a more theoretical part of the introduction where we will talk about the networking models and explain what a protocol is, as well as give some examples.
 We also cover routing schemes.
 We will ask some questions about how network communication works and circle back to the network models when we talk about encapsulation.
-Finally, we will talk about network symbols used in literature to create network diagrams.
+But first, we will talk about network symbols used in literature to create network diagrams.
+
+
+
+\section{Network icons}
+\label{sec:network-icons}
+
+\Vref{fig:icons} shows the three basic network icons used most often in network drawings.
+Many different variants exist for these icons, depending on taste or function (e.g.~a core switch versus an access switch).
+There are more icons available for devices such as wireless \acs{LAN} controllers, acccess points, load balancers, and many more.
+\begin{figure}
+\begin{sidecaption}{Network icons for a router, a switch, and a firewall}[fig:icons]
+   \centering
+   \begin{subfigure}[b]{18mm}
+   \includegraphics[width=\textwidth]{images/introduction/router.jpg}
+   \caption{router}
+   \label{fig:icon-router}
+   \end{subfigure}
+   \qquad
+   \begin{subfigure}[b]{18mm}
+   \includegraphics[width=\textwidth]{images/introduction/switch.png}
+   \caption{switch}
+   \label{fig:icon-switch}
+   \end{subfigure}
+   \qquad
+   \begin{subfigure}[b]{18mm}
+   \includegraphics[width=\textwidth]{images/introduction/firewall.png}
+   \caption{firewall}
+   \label{fig:icon-firewall}
+   \end{subfigure}
+\end{sidecaption}
+\end{figure}
+
+If you want to see visually very pleasing diagrams take a look at \url{https://networkdiagram101.com/}.
+He creates diagrams full of technical details yet very pleasing on the eyes.
 
 
 
@@ -199,7 +233,7 @@ The implementation of \gls{SNA} takes the form of various communications package
 \SC{10BASE5} (also known as thick Ethernet or \emph{thicknet}) was the first commercially available variant of Ethernet.
 The technology was standardised in 1982 as \acs{IEEE} 802.3.
 \SC{10BASE5} uses a thick and stiff coaxial cable up to 500~metres in length.
-Up to 100~stations can be connected to the cable using vampire taps and share a single collision domain with \SI{10}{\mega\bit\per\second}%
+Up to 100~stations can be connected to the cable using vampire taps and share a single collision domain with 10~Mbit/s%\SI{10}{\mega\bit\per\second}%
    \footnote{These units are often displayed as `Mbps' for megabit-per-second. In this case it is important to differentiate between a lowercase `b' for bit and an uppercase `B' for byte.}
 of bandwidth shared among them.
 The system is difficult to install and maintain.
@@ -223,7 +257,8 @@ Token Ring was a successful technology, particularly in corporate environments, 
    \index{connectors!BNC@\acs{BNC}}
 \SC{10BASE2} (also known as cheapernet, thin Ethernet, \emph{thinnet}, and \emph{thinwire}) is a variant of Ethernet that uses thin coaxial cable terminated with \acs{BNC} connectors to build a local-area network.
 
-During the mid to late 1980s this was the dominant \SI{10}{\mega\bit\per\second} Ethernet standard, but due to the immense demand for high speed networking, the low cost of category~5 cable, and the popularity of 802.11 wireless networks, both \SC{10BASE2} and \SC{10BASE5} have become increasingly obsolete.
+During the mid to late 1980s this was the dominant Ethernet standard for 10~Mbit/s, %\SI{10}{\mega\bit\per\second}
+but due to the immense demand for high speed networking, the low cost of category~5 cable, and the popularity of 802.11 wireless networks, both \SC{10BASE2} and \SC{10BASE5} have become increasingly obsolete.
 
 \paragraph{Ethernet switches (1985)}%
    \index{switch (Ethernet)}%
@@ -298,7 +333,7 @@ The Minitel was in a large proportion of French homes ten years before most Amer
 \paragraph{NSFnet (1985)}%
    \index{NSFnet}%
    \index{backbone (network)}
-The National Science Foundation network (NSFnet) was a program of coordinated, evolving projects sponsored by the \gls{NSF} from 1985 to 1995 to promote advanced research and education networking in the United States.
+The NSFnet was a program of coordinated, evolving projects sponsored by the \gls{NSF} from~1985 to~1995 to promote advanced research and education networking in the United States.
 The program created several nationwide backbone computer networks in support of these initiatives.
 Initially created to link researchers to the \gls{NSF}-funded supercomputing centers, through further public funding and private industry partnerships it developed into a major part of the internet backbone.
 
@@ -519,102 +554,33 @@ See \vref{chap:applications} for more details.
 
 
 \paragraph{\acs{MAC} addresses}
-\acs{MAC} addresses are added to the frame header at the data link layer.
+At the data link layer \acs{MAC} addresses are added to the frame header.
 They are used to deliver the frame on the local network.
 See \vref{chap:ethernet} for further details.
 
-
 \paragraph{\acf{ARP}}
-   \iacs{ARP}
-The \acl{ARP} is a communication protocol used for discovering the data link layer address, such as a \acs{MAC} address, associated with a given network layer address, typically an \acs{IP} version~4 address.
-
-Two computers in an office (host~$A$ and host~$B$) are connected to each other in a local-area network by Ethernet cables and network switches, with no intervening gateways or routers.
-Host~$A$ has a packet to send to host~$B$.
-Through \acs{DNS}, it determines that host~$B$ has the \acs{IP} address 203.0.113.55.
-
-To send the message, it also requires host~$B$'s \acs{MAC} address.
-First, host~$A$ uses a cached \acs{ARP} table to look up 203.0.113.55 for any existing records of host~$B$'s \acs{MAC} address (00eb.\-24b2.\-05ac).
-If the \acs{MAC} address is found, it sends an Ethernet frame containing the \acs{IP} packet onto the link with the destination address 00eb.\-24b2.\-05ac.
-If the cache did not produce a result for 203.0.113.55, host~$A$ has to send a broadcast \acs{ARP} request message (with the destination \acs{MAC} address of ffff.\-ffff.\-ffff), which is accepted by all computers on the local network, requesting an answer for 203.0.113.55.
-
-Host~$B$ responds with an \acs{ARP} response message containing its \acs{MAC} and \acs{IP} addresses.
-As part of fielding the request, host~$B$ may insert an entry for host~$A$ into its \acs{ARP} table for future use.
-Host~$A$ receives and caches the response information in its \acs{ARP} table and can now send the packet.
-
-The above example assumes both computers are located on the same local network.
-Host~$A$ needs to determine this is the case by \SC{AND}'ing%
-\footnote{\SC{AND} is a binary operator used in boolean algebra. It returns a 1 if both its inputs are 1 and returns a 0 in all other cases.}
-both its own \acs{IP} address and the \acs{IP} address of the second computer with its own \emph{subnet mask}.%
-   \index{subnet mask}
-If both results match, both computers are located in the same network; otherwise the second computer is located in a remote network and we need to send the frame to the \emph{default gateway}%
-\footnote{Or to a different \emph{gateway}, depending on the routing table. See \vref{sec:ip-routing} for more details.}
-instead.%
-   \index{default gateway}
-
-In this case, host~$A$ sends an \acs{ARP} request -- assuming there is no valid entry in its cache -- for the \acs{MAC} address of the default gateway.
-When the default gateway receives this frame, it verifies the frame is addressed to its \acs{MAC} address but the destination \acs{IP} address is none an \acs{IP} address owned by the router so it must forward the packet to further along to the destination.
-See \vref{sec:ip-routing} on how routers work.
-
-\Vref{fig:data-flow} shows a topology with two routers between the source and the destination.
-Each router, when sending the frame forward, must do an \acs{ARP} lookup to generate a new frame header as \acs{MAC} addresses are local to a given network segment.
-It is the only layer that gets stripped and regenerated at each router hop.
-The network and transport layers are host-to-host.
-
-
-\begin{figure}
-\begin{sidecaption}%
-   {Encapsulation and data flow in the network}
-   [fig:data-flow]
-\centering
-\input{images/introduction/data-flow}
-\end{sidecaption}
-\end{figure}
-
-
-\Cref{fig:data-flow} is a bit misleading in this way.
-Although the routers check the \acs{IP} addresses of the network layer header, the header does not change significantly.
-See \vref{sec:ip-nat} for an example of a router that changes the \acs{IP} addresses in the header.
-
-
-\section{Network icons}
-\label{sec:network-icons}
-
-\Vref{fig:icons} shows the three basic network icons used most often in network drawings.
-Many different variants exist for these icons, depending on taste or function (e.g.~a core switch versus an access switch).
-There are more icons available for devices such as wireless \acs{LAN} controllers, acccess points, load balancers, and many more.
-\begin{figure}
-\begin{sidecaption}{Network icons for a router, a switch, and a firewall}[fig:icons]
-   \centering
-   \begin{subfigure}[b]{18mm}
-   \includegraphics[width=\textwidth]{images/introduction/router.jpg}
-   \caption{router}
-   \label{fig:icon-router}
-   \end{subfigure}
-   \qquad
-   \begin{subfigure}[b]{18mm}
-   \includegraphics[width=\textwidth]{images/introduction/switch.png}
-   \caption{switch}
-   \label{fig:icon-switch}
-   \end{subfigure}
-   \qquad
-   \begin{subfigure}[b]{18mm}
-   \includegraphics[width=\textwidth]{images/introduction/firewall.png}
-   \caption{firewall}
-   \label{fig:icon-firewall}
-   \end{subfigure}
-\end{sidecaption}
-\end{figure}
-
-If you want to see visually very pleasing diagrams take a look at \url{https://networkdiagram101.com/}.
-He creates diagrams full of technical details yet very pleasing on the eyes.
-
-
+The \acl{ARP} is used to translate \IP\ addresses into \acs{MAC} addresses required for communication on the local network.
+We will discuss this protocol in \vref{chap:ethernet}.
+%Note that these \acs{MAC} addresses are only used on Ethernet networks; Frame Relay uses addresses known as \acf{DLCI}.
+%Token Ring also uses \acs{MAC} addresses.
+%   \index{Frame Relay}
 
 \section{Review questions}
 \begin{enumerate}
 \item
+   In which of the following routing schemes, there is only one receiver?
+   \begin{multicols}{2}
+   \begin{enumerate}
+   \item broadcast
+   \item anycast
+   \item unicast
+   \item multicast
+   \end{enumerate}
+   \end{multicols}
+\item
    Which of the following are layers in the \acs{TCP}/\IP\ model?
    Choose three options.
+   \begin{multicols}{2}
    \begin{enumerate}
    \item application
    \item internet
@@ -622,5 +588,14 @@ He creates diagrams full of technical details yet very pleasing on the eyes.
    \item transport
    \item data link
    \item physical
+   \end{enumerate}
+   \end{multicols}
+\item
+   When data is encapsulated, which is the correct order?
+   \begin{enumerate}
+   \item data, frame, packet, segment, bit
+   \item segment, data, packet, frame, bit
+   \item data, segment, packet, frame, bit
+   \item data, segment, frame, packet, bit
    \end{enumerate}
 \end{enumerate}

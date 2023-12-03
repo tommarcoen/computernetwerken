@@ -14,7 +14,7 @@ A \ac{MAC} address consists of 48~bits, most often displayed as six groups of tw
 Sometimes the address is displayed as three groups of four hexadecimal digits, separated by dots, e.g. 0200.33aa.bbcc.%
    \footnote{Hexadecimal numbers are not case-sensitive, the value of `4F' is equivalent to that of `4f.'}
 
-\paragraph{\acf{OUI}}
+\paragraph{\acl{OUI}}
    \iacs{OUI}
 The first twenty-four bits of a \ac{MAC} address identify the vendor or manufacturer of the network card.
 \Acp{OUI} are purchased from the \acs{IEEE} registration authority by the vendor.
@@ -39,6 +39,59 @@ See \cref{fig:mac-format} for the complete picture of a \acs{MAC} address.
 \includegraphics[width=\textwidth]{images/ethernet/mac-address-format.png}
 \end{sidecaption}
 \end{figure}
+
+
+\paragraph{\acf{ARP}}
+   \iacs{ARP}
+The \acl{ARP} is a communication protocol used for discovering the data link layer address, such as a \acs{MAC} address, associated with a given network layer address, typically an \acs{IP} version~4 address.
+
+Two computers in an office (host~$A$ and host~$B$) are connected to each other in a local-area network by Ethernet cables and network switches, with no intervening gateways or routers.
+Host~$A$ has a packet to send to host~$B$.
+Through \acs{DNS}, it determines that host~$B$ has the \acs{IP} address 203.0.113.55.
+
+To send the message, it also requires host~$B$'s \acs{MAC} address.
+First, host~$A$ uses a cached \acs{ARP} table to look up 203.0.113.55 for any existing records of host~$B$'s \acs{MAC} address (00eb.\-24b2.\-05ac).
+If the \acs{MAC} address is found, it sends an Ethernet frame containing the \acs{IP} packet onto the link with the destination address 00eb.\-24b2.\-05ac.
+If the cache did not produce a result for 203.0.113.55, host~$A$ has to send a broadcast \acs{ARP} request message (with the destination \acs{MAC} address of ffff.\-ffff.\-ffff), which is accepted by all computers on the local network, requesting an answer for 203.0.113.55.
+
+Host~$B$ responds with an \acs{ARP} response message containing its \acs{MAC} and \acs{IP} addresses.
+As part of fielding the request, host~$B$ may insert an entry for host~$A$ into its \acs{ARP} table for future use.
+Host~$A$ receives and caches the response information in its \acs{ARP} table and can now send the packet.
+
+The above example assumes both computers are located on the same local network.
+Host~$A$ needs to determine this is the case by \SC{AND}'ing%
+\footnote{\SC{AND} is a binary operator used in boolean algebra. It returns a 1 if both its inputs are 1 and returns a 0 in all other cases.}
+both its own \acs{IP} address and the \acs{IP} address of the second computer with its own \emph{subnet mask}.%
+   \index{subnet mask}
+If both results match, both computers are located in the same network; otherwise the second computer is located in a remote network and we need to send the frame to the \emph{default gateway}%
+\footnote{Or to a different \emph{gateway}, depending on the routing table. See \vref{sec:ip-routing} for more details.}
+instead.%
+   \index{default gateway}
+
+In this case, host~$A$ sends an \acs{ARP} request -- assuming there is no valid entry in its cache -- for the \acs{MAC} address of the default gateway.
+When the default gateway receives this frame, it verifies the frame is addressed to its \acs{MAC} address but the destination \acs{IP} address is none an \acs{IP} address owned by the router so it must forward the packet to further along to the destination.
+See \vref{sec:ip-routing} on how routers work.
+
+\Vref{fig:data-flow} shows a topology with two routers between the source and the destination.
+Each router, when sending the frame forward, must do an \acs{ARP} lookup to generate a new frame header as \acs{MAC} addresses are local to a given network segment.
+It is the only layer that gets stripped and regenerated at each router hop.
+The network and transport layers are host-to-host.
+
+
+\begin{figure}
+\begin{sidecaption}%
+   {Encapsulation and data flow in the network}
+   [fig:data-flow]
+\centering
+\input{images/introduction/data-flow}
+\end{sidecaption}
+\end{figure}
+
+
+\Cref{fig:data-flow} is a bit misleading in this way.
+Although the routers check the \acs{IP} addresses of the network layer header, the header does not change significantly.
+See \vref{sec:ip-nat} for an example of a router that changes the \acs{IP} addresses in the header.
+
 
 \paragraph{1522 bytes}
    \index{frame!size}
@@ -104,6 +157,16 @@ These frames can be up to 9000 bytes in size.%
    \footnote{For example the Juniper QFX series of switches support frames up to {9216}~bytes.}
 Jumbo frames are mainly used in data centres as the use of these larger frames require all intermediate devices to support them which is impossible to require from devices on the internet.
    \index{data centre}
+
+
+\paragraph{Energy-efficient Ethernet}
+\fxwarning{Write something about \acf{EEE}.}
+
+\paragraph{Power-over-Ethernet}
+\fxwarning{Write something about \acs{POE}.}
+
+\paragraph{Ethernet \acs{OAM}}
+\fxwarning{Write something about Ethernet \acf{OAM}.}
 
 
 \section{Ethernet switch}
