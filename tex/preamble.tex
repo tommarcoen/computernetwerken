@@ -96,7 +96,7 @@
 }
 \newfloat[chapter]{fltlisting}{lol}{Listing}
 
-\usepackage{bytefield}
+\usepackage[bitwidth=10pt]{bytefield}
 
 
 
@@ -114,9 +114,10 @@
 }
 \usepackage{tabto}
 \def\marginsymbol{\protect\marginsymbolhelper}
-\def\marginsymbolhelper{\tabto*{-8.2mm}\makebox[0cm]{\faUniversity}\tabto*{\TabPrevPos}}
+\def\marginsymbolhelper{\tabto*{-5mm}\makebox[0cm]{\faUniversity}\tabto*{\TabPrevPos}}
 \newcommand{\extrap}[1]{\paragraph{#1\marginsymbol}}
 \newcommand{\extrat}[1]{\newthought{#1\marginsymbol}}
+\newcommand{\extras}[1]{\section[#1]{#1\protect\marginsymbol}}
 
 
 

@@ -3,6 +3,15 @@
 
 \section{Remote access}
 
+
+\paragraph{\acl{RDP}}
+\Acf{RDP} is a proprietary protocol developed by Microsoft Corporation which provides a user with a graphical interface to connect to another computer over a network connection.
+Clients exist for most versions of Microsoft Windows (including Windows Mobile but the support has ended), Linux (for example Remmina), Unix, macOS, iOS, Android, and other operating systems.
+\acs{RDP} servers are built into the server and professional editions of Windows operating systems but not home editions; an \acs{RDP} server for Unix and OS~X also exists (for example xrdp).
+By default, the server listens on \acs{TCP} port~3389 and \acs{UDP} port~3389.
+
+
+
 \paragraph{Telnet}
    \index{Telnet}
    \index{terminal!virtual}
@@ -40,21 +49,6 @@ The server then initiates a data channel to the client from its port~20, the \ac
 In situations where the client is behind a firewall and unable to accept incoming \acs{TCP} connections, passive mode may be used.
 In this mode, the client uses the control connection to send a \SC{PASV} command to the server and then receives a server \acs{IP} address and server port number from the server, which the client then uses to open a data connection from an arbitrary client port to the server \acs{IP} address and server port number received.
 
-\paragraph{\acs{TFTP}}
-   \iacs{TFTP}
-\acf{TFTP} is a simple file transfer protocol which allows a client to get a file from or put a file onto a remote host.
-One of its primary uses is in the early stages of nodes booting from a local-area network.
-\acs{TFTP} has been used for this application because it is very simple to implement.
-
-Due to its simple design, \acs{TFTP} can be easily implemented by code with a small memory footprint.
-It is therefore the protocol of choice for the initial stages of any network booting strategy like \acs{BOOTP}, \acs{PXE}, \acs{BSDP}, etc., when targeting from highly resourced computers to very low resourced \acp{SBC} and \acp{SOC}.
-It is also used to transfer firmware images and configuration files to network appliances like routers, firewalls, \acs{IP} phones, etc.
-   \iacs{BOOTP}
-   \iacs{PXE}
-   \iacs{BSDP}
-   \iacs{SBC}
-   \iacs{SOC}
-
 \paragraph{\acs{FTPS}}
    \iacs{FTPS}
    \iacs{SSL}
@@ -80,6 +74,29 @@ It was designed by the \acs{IETF} as an extension of the \acf{SSH} protocol vers
 This protocol assumes that it is run over a secure channel, such as \acs{SSH}, that the server has already authenticated the client, and that the identity of the client user is available to the protocol.
 
 \acs{SFTP} is not \acs{FTP} run over \acs{SSH}, but rather a new protocol designed from the ground up by the \acs{IETF} \SC{SECSH} working group.
+
+
+
+
+\paragraph{\acs{TFTP}}
+   \iacs{TFTP}
+\acf{TFTP} is a simple file transfer protocol which allows a client to get a file from or put a file onto a remote host.
+One of its primary uses is in the early stages of nodes booting from a local-area network.
+\acs{TFTP} has been used for this application because it is very simple to implement.
+
+Due to its simple design, \acs{TFTP} can be easily implemented by code with a small memory footprint.
+It is therefore the protocol of choice for the initial stages of any network booting strategy like \acs{BOOTP}, \acs{PXE}, \acs{BSDP}, etc., when targeting from highly resourced computers to very low resourced \acp{SBC} and \acp{SOC}.
+It is also used to transfer firmware images and configuration files to network appliances like routers, firewalls, \acs{IP} phones, etc.
+   \iacs{BOOTP}
+   \iacs{PXE}
+   \iacs{BSDP}
+   \iacs{SBC}
+   \iacs{SOC}
+
+
+
+
+
 
 
 \section{\acl{DNS}}

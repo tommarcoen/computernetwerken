@@ -10,6 +10,7 @@ The \acs{UDP} datagram header consists of four fields, each of which is two byte
 
 \begin{figure}
 \begin{sidecaption}{The \acs{UDP} header}[fig:transport-udp-header]
+\centering
 \begin{bytefield}{32}
 \bitheader{0,15,16,31} \\
 \bitbox{16}{source port}
@@ -142,6 +143,7 @@ Following the completion of these steps, both the client and server have receive
 
 \begin{table}
 \centering
+\begin{fullwidth}
 \begin{tabular}{rlll}
 {\#} & {source} & {destination} & {info} \\
 \midrule
@@ -149,6 +151,7 @@ Following the completion of these steps, both the client and server have receive
 2 & 203.0.113.80 & 10.0.0.1 & 443 $\rightarrow$ 53501 [\SC{SYN}, \SC{ACK}] seq=0 ack=1 \dots\\
 3 & 10.0.0.1 & 203.0.113.80 & 53501 $\rightarrow$ 443 [\SC{ACK}] seq=1 ack=1 \ldots\\
 \end{tabular}
+\end{fullwidth}
 \caption{A few fields that Wireshark shows about a three-way handshake}
 \label{tab:tcp-handshake}
 \end{table}
@@ -240,7 +243,10 @@ There is no need to acknowledge intermediate packets, since \acs{TCP} uses cumul
 
 
 
-\section[Other transport protocols]{Other transport protocols\protect\marginsymbol}
+
+
+
+\extras{Other transport protocols}
 
 \acs{TCP} and \acs{UDP} are not the only protocols that operate at the transport layer.
 The \acf{SCTP} is a protocol used in telecommunications and supports multihoming.
@@ -265,7 +271,10 @@ This can be very useful in improving performance on error-prone links, as in mos
 In \SC{QUIC}, this data is free to be processed while the single multiplexed stream is repaired.
 
 
-\section{Load balancing}
+
+
+
+\extras{Load balancing}
 \fxwarning{Write something about load balancing.}
 Load balancing is the process of distributing a set of tasks over a set of resources (computing units), with the aim of making their overall processing more efficient.
 

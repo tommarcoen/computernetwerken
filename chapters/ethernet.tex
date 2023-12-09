@@ -159,13 +159,13 @@ Jumbo frames are mainly used in data centres as the use of these larger frames r
    \index{data centre}
 
 
-\paragraph{Energy-efficient Ethernet}
+\extrap{Energy-efficient Ethernet}
 \fxwarning{Write something about \acf{EEE}.}
 
-\paragraph{Power-over-Ethernet}
+\extrap{Power-over-Ethernet}
 \fxwarning{Write something about \acs{POE}.}
 
-\paragraph{Ethernet \acs{OAM}}
+\extrap{Ethernet \acs{OAM}}
 \fxwarning{Write something about Ethernet \acf{OAM}.}
 
 
@@ -274,20 +274,6 @@ This greatly cuts down on the resources the switch needs to allocate for these t
 \section{Advanced features}
 \label{sec:ethernet-advanced-features}
 
-\paragraph{\acf{LAG}}
-   \iacs{LAG}
-Link aggregation is the combining (aggregating) of multiple network connections in parallel by any of several methods, in order to increase throughput beyond what a single connection could sustain, to provide redundancy in case one of the links should fail, or both.
-A \ac{LAG} is the combined collection of physical ports.
-Other umbrella terms used to describe the concept include trunking%
-   \footnote{Not to be confused with \acs{VLAN} trunking which is something entirely different than link aggregation trunking.}%
-, bundling, bonding, channeling, ether-channel or teaming.
-
-
-\paragraph{switch stack}
-A stackable switch is a network switch that is fully functional operating standalone but which can also be set up to operate together with one or more other network switches, with this group of switches showing the characteristics of a single switch but having the port capacity of the sum of the combined switches.
-The term \emph{stack} refers to the group of switches that have been set up in this way.
-The common characteristic of a stack acting as a single switch is that there is a single \acs{IP} address for remote administration of the stack as a whole, not an \acs{IP} address for the administration of each unit in the stack.
-
 \paragraph{managed switch}
 \label{par:ethernet-switch-managed}
    \index{switch!managed}
@@ -301,11 +287,27 @@ Examples of configuration changes that one can do from a managed switch include:
 
 We will take a quick look at the following features of managed switches:
 \begin{inlinelist}
+\item \acfp{LAG}
+\item switch stacks
 \item \aclp{VLAN},
 \item port security and \SC{802.1X},
 \item \acs{DHCP} snooping, and
 \item \acl{DAI}.
 \end{inlinelist}
+
+\paragraph{\acf{LAG}}
+   \iacs{LAG}
+Link aggregation is the combining (aggregating) of multiple network connections in parallel by any of several methods, in order to increase throughput beyond what a single connection could sustain, to provide redundancy in case one of the links should fail, or both.
+A \ac{LAG} is the combined collection of physical ports.
+Other umbrella terms used to describe the concept include trunking%
+   \footnote{Not to be confused with \acs{VLAN} trunking which is something entirely different than link aggregation trunking.}%
+, bundling, bonding, channeling, ether-channel or teaming.
+
+
+\paragraph{switch stack}
+A stackable switch is a network switch that is fully functional operating standalone but which can also be set up to operate together with one or more other network switches, with this group of switches showing the characteristics of a single switch but having the port capacity of the sum of the combined switches.
+The term \emph{stack} refers to the group of switches that have been set up in this way.
+The common characteristic of a stack acting as a single switch is that there is a single \acs{IP} address for remote administration of the stack as a whole, not an \acs{IP} address for the administration of each unit in the stack.
 
 \paragraph{\acs{VLAN}}
       \iacs{VLAN}
@@ -353,6 +355,10 @@ Should a trunk port receive frames that lack an \SC{802.1Q} tag, it is considere
 The network administrator can configure which \acs{VLAN} should be considered to be the native \acs{VLAN} for each interface.
 
 
+\extrap{voice \acs{VLAN}}
+
+
+
 \paragraph{layer-3 switch}
    \index{switch!layer-3}
    \index{switch!multi-layer switch}
@@ -366,7 +372,7 @@ As a result, it has become increasingly convenient to implement a layer-3 switch
 
 \section{Security}
 
-\paragraph{\acs{MAC} filtering}
+\extrap{\acs{MAC} filtering}
    \index{MAC filtering@\acs{MAC} filtering}
    \iacs{NIC}
 \ac{MAC} \emph{filtering} is a security access control method whereby the \acs{MAC} address assigned to each network card is used to determine access to the network.
@@ -376,7 +382,7 @@ Whitelisted \ac{MAC} addresses are allowed through any port on the device and bl
 Other devices, such as Cisco Catalyst switches, support \acs{MAC} filtering on a port-by-port basis.
 Cisco refers to \acs{MAC} filtering as port security.
 
-\paragraph{\SC{802.1X}}
+\extrap{\SC{802.1X}}
    \iacs{NAC}
 \acs{IEEE} \SC{802.1X} is an \acs{IEEE} standard for \ac{PNAC}.
 It provides an authentication mechanism to devices wishing to attach to a \ac{LAN} or \ac{WAN}.
@@ -394,7 +400,7 @@ Authentication servers typically run software supporting the \ac{RADIUS} protoco
    \iacs{RADIUS}
    \iacs{EAP}
 
-\paragraph{\acs{DHCP} snooping}
+\extrap{\acs{DHCP} snooping}
    \index{DHCP@\acs{DHCP}!snooping}
 \ac{DHCP} snooping is a series of techniques applied to improve the security of a \ac{DHCP} infrastructure.
 \ac{DHCP} snooping can be configured on \ac{LAN} switches to exclude rogue \ac{DHCP} servers and remove malicious or malformed \ac{DHCP} traffic.
@@ -409,7 +415,7 @@ The \ac{DHCP} snooping feature performs the following activities:
 \item it utilises the \acs{DHCP} snooping binding database to validate subsequent requests from untrusted hosts.
 \end{itemize}
 
-\paragraph{\acl{DAI}}
+\extrap{\acl{DAI}}
    \index{dynamic ARP@dynamic \acs{ARP} inspection}
 \Acf{DAI} is a security feature that validates \acs{ARP} packets in a network.
    \iacs{ARP}

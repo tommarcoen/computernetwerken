@@ -179,9 +179,10 @@ But this is not a requirement and it can be any available address in the network
 
 
 
-\paragraph{\Acl{VRRP}\protect\marginsymbol}
-To increase the fault tolerance of networks, they are often set up with two default gateways.
-To make this work in case of a failure, they both share a \emph{virtual} \IP\ address.
+\extrap{\acs{VRRP}}
+To increase the fault tolerance of networks, they are often set up with two routers that can be used by end hosts as the default gateway.
+To make this work both routers share a \emph{virtual} \IP\ address which is used as the default gateway address by the end hosts.
+\acf{VRRP} is used between these two routers to negotaite the use of this virtual \IP\ address.
 
 
 \paragraph{loopback address}
@@ -813,7 +814,7 @@ As it is an 8-bit field, the maximum value is~255 but a recommended initial valu
 As it does not really signify some time spent in transit, with the development of \acs{IP} version~6, they changed the name of this field to \emph{hop limit} as that is what it really does: limit the number of hops (routers) that a packet can travel.
 
 
-\paragraph{fragmentation}
+\extrap{fragmentation}
 \label{par:ip-fragmentation}
    \index{fragmentation}
    \iacs{MTU}
@@ -852,7 +853,6 @@ It thus does not need detailed knowledge about the network but can usually route
 }
 or to provide a gateway of last resort.
 
-\pagebreak
 \paragraph{dynamic routing protocols}%
    \index{routing protocol!distance-vector}%
    \index{routing protocol!link-state}%
@@ -895,7 +895,7 @@ Most \acs{OSPF} implementation use a cost value based on the bandwidth of the li
 If both $R_2$ and $R_3$ advertise the same metric towards $R_1$ both paths are equally good and $R_1$ \emph{load balances} traffic over both paths.
 The router uses an algorithm to send roughly fifty percent of packets via $R_2$ and the other fifty percent via~$R_3$.
 
-\paragraph{administrative distance}
+\extrap{administrative distance}
    \index{administrative distance}
 The \emph{metric} indicates the preference of a single route learnt from different routers via the same routing protocol.
 It is however also possible for a router to learn a route from different routing protocols.
@@ -945,7 +945,7 @@ It can solve the case where multiple routers are connected indirectly.
 There are realistic scenarios where split horizon and split horizon with poisoned reverse can do nothing.%
 \fxwarning{This is very vague.}
 
-\paragraph{\acl{EIGRP}}
+\extrap{\acs{EIGRP}}
    \iacs{EIGRP}
 The \acf{EIGRP} was a Cisco proprietary protocol which has been made publicly available in 2013 but has not been implemented by other vendors.
 
