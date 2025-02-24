@@ -108,11 +108,17 @@
     \literal{0}
   }
 }
+
+\newbibmacro*{entryhead:full}{%
+  \printnames[labelname][-1]{labelname}%
+  \setunit*{\addcolon\space}%
+  \printfield{labeltitle}\setunit*{\space}\printfield{edition}}
 % RFCs
 \newcommand{\rfc}[1]{\acs{RFC}~\cite{rfc#1}}
 
 \usepackage[xindy]{imakeidx}
-%\indexsetup{othercode=\small}
+\indexsetup{headers={\indexname}{\indexname}}
 \makeindex[intoc,columns=2]
+
 
 \input{main}
