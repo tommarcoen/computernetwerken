@@ -598,4 +598,18 @@ We will discuss this protocol in \vref{chap:ethernet}.
    \item data, segment, packet, frame, bit
    \item data, segment, frame, packet, bit
    \end{enumerate}
+\item
+   Both an Ethernet hub and a Token Ring \acs{MAU} have a central device to which all computers connect.
+   Both have thus a physical star topology.
+   Why does the hub have logical bus topology while the \acs{MAU} has a logical ring topology?
+\end{enumerate}
+
+\section{Practice questions}
+\begin{enumerate}
+\item
+   When writing software or configuraton network services, you can often use the protocol name instead of the \acs{TCP} or \acs{UDP} port number.
+   The operating system needs to translate this name into a number and uses a lookup table for this.
+   On Unix-based system you can find this file in \emph{/etc/services};
+   on Windows this file is located in \emph{C:\textbackslash{}Windows\textbackslash{}System32\textbackslash{}drivers\textbackslash{}etc\textbackslash{}services}.
+   Open this file with a text editor and look up the port numbers used by \acs{HTTP} and \acs{SSH}.
 \end{enumerate}
