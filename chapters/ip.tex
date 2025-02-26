@@ -183,6 +183,7 @@ But this is not a requirement and it can be any available address in the network
 To increase the fault tolerance of networks, they are often set up with two routers that can be used by end hosts as the default gateway.
 To make this work both routers share a \emph{virtual} \IP\ address which is used as the default gateway address by the end hosts.
 \acf{VRRP} is used between these two routers to negotaite the use of this virtual \IP\ address.
+Alternatives to \acs{VRRP} include \acs{HSRP} and \acs{GLBP}, both Cisco-proprietary formats, and \acs{CARP}, an open-source alternative developed by OpenBSD.
 
 
 \paragraph{loopback address}
@@ -564,8 +565,8 @@ In a typical configuration, a local network uses one of the designated private \
 One or more routers sit at the border of this private network connecting it to the public Internet.
 
 As traffic passes from the local network to the Internet, the source address in each packet is translated on the fly from its private address to the public address of the router.
-The router tracks basic metadata about each active connection (particularly the destination address and port).
-When a reply returns to the router, it uses the connection tracking data it stored during the outbound phase to determine the private address on the internal network to which to forward the reply.
+The router keeps track of the source and destination addresses as well as the source and destination port numbers (\vref{chap:transport}).
+When a reply returns to the router, it uses the connection tracking data it stored during the outbound connection to determine the private address on the internal network to which to forward the reply.
 
 All \acs{IP} packets have a source \acs{IP} address and a destination \acs{IP} address.
 Typically packets passing from the private network to the public network will have their source address modified, while packets passing from the public network back to the private network will have their destination address modified.
@@ -1018,7 +1019,7 @@ As you can see in \vref{tab:ip-ospf-cost} \acs{OSPF} by default cannot different
 Thus it is very important that you change the refence bandwidth on \emph{all} your routers in the network to a value higher than your highest network link (see the practice questions).
 
 
-\paragraph{\acf{BGP}}
+\extrap{\acf{BGP}}
    \iacs{BGP}
    \index{routing protocol!path-vector}
    \index{autonomous system}
