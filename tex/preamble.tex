@@ -64,7 +64,7 @@
 \newcommand{\iacl}[1]{\index{\acl{#1}}}
 \setabbreviationstyle{long-short-sc}
 %\setabbreviationstyle{long-short}
-\renewcommand*{\glsabbrvscfont}[1]{\SC{#1}}
+\renewcommand*{\glsabbrvscfont}[1]{\textsc{{\lowercase{#1}}}}
 \makeglossaries
 \loadglsentries{tex/abbreviations}
 \loadglsentries{tex/glossary}
@@ -127,6 +127,8 @@
 % ============================================================
 % Citations and index
 % ============================================================
+
+\setlength{\epigraphwidth}{.7\textwidth}
 
 \addbibresource{bib/bibliography.bib}
 \addbibresource{bib/rfc.bib}
