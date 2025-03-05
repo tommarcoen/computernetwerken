@@ -20,3 +20,11 @@ The actual contents is stored in files in the _chapters/_ folder.
   - **beamer** to generate the slides as well as the manual
   - **exsheets** for the exercises in the manual
   - **multiaudience** to create a different version of the manual for instructor and student
+
+# Compilation
+
+```
+pdflatex manual-student
+biber manual-student
+# texindy manual-student
+```
