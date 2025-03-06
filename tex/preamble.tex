@@ -148,6 +148,8 @@
 % ============================================================
 
 \usepackage[nospace]{varioref}
+\AddToHook{begindocument}{\labelformat{lstlisting}{Listing #1}}
+\AddToHook{begindocument}{\labelformat{fltlisting}{Listing #1}}
 \usepackage[final]{hyperref}
 \usepackage{cleveref}
 \urlstyle{rm}

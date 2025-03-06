@@ -726,6 +726,7 @@ A good place to start would be to use the program \cmd{traceroute} (on Windows i
 
 
 \paragraph{\acl{PMTUD}}
+\label{par:pmtud}
 
 \Acf{PMTUD} is a standardized technique in computer networking for determining the \acf{MTU} size on the network path between two \IP\ hosts, usually with the goal of avoiding \IP\ fragmentation.
 \Acl{PMTUD} was originally intended for routers in \IP\ version~4.
@@ -833,6 +834,8 @@ Another example when fragmentation is being used, is in the communication betwee
 
 Finally, you will also encounter fragmentation on IPsec \aclp{VPN} where the maximum transmission unit is slightly smaller than the normal 1500~bytes.
    \index{VPN@\acs{VPN}!IPsec!fragmentation}
+
+To prevent fragmentation, path \acs{MTU} discovery can be used; see \vpageref{par:pmtud}.
 
 \paragraph{broadcast domain}
    \index{broadcast domain}

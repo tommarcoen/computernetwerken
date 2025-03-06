@@ -102,6 +102,38 @@ This lack of reliability makes \ac{UDP} a very fast protocol.
 \label{sec:tcp}
 
 
+\paragraph{header}
+The \acs{TCP} header is quite a bit more complex than the \acs{UDP} header.
+Just like the \acs{UDP} header in \vref{fig:transport-udp-header} it contains source and destination port numbers but in order to guarantee \emph{reliability} it needs to contain a lot more information.
+See \cref{fig:transport-tcp-header} for the header format.
+
+
+
+\begin{figure}
+\begin{sidecaption}{The \acs{TCP} header}[fig:transport-tcp-header]
+\centering
+\begin{bytefield}{32}
+\bitheader{0,15,16,31} \\
+\bitbox{16}{source port}
+\bitbox{16}{destination port} \\
+\bitbox{32}{sequence number} \\
+\bitbox{32}{acknowledgement number} \\
+\bitbox{4}{offset}
+\bitbox{4}{{\small reserved}}
+\bitbox{8}{flags}
+\bitbox{16}{window size} \\
+\bitbox{16}{checksum}
+\bitbox{16}{urgent pointer} \\
+\wordbox[tlr]{1}{options}\\
+\skippedwords \\
+\wordbox[blr]{1}{}\\
+\end{bytefield}
+\end{sidecaption}
+\end{figure}
+
+
+
+
 \paragraph{port numbers and checksum}
 See \cref{sec:udp}.
 
