@@ -1,7 +1,7 @@
 \chapter{Ethernet}
 \label{chap:ethernet}
 
-\paragraph{\acs{MAC} addresses}
+\paragraph{\acs{MAC} address}
    \index{MAC address@\acs{MAC} address}
 A \ac{MAC} address is a unique identifier that is assigned to a \ac{NIC} for use as an address in communication within a network segment.
    \iacs{NIC}
@@ -11,7 +11,9 @@ Nowadays it is often possible to change the \acs{MAC} adddress used on an interf
 
 \paragraph{48 bits}
 A \ac{MAC} address consists of 48~bits, most often displayed as six groups of two hexadecimal digits, separated by hyphens or colons (e.g.~02:\-00:\-33:\-aa:\-bb:\-cc).
-Sometimes the address is displayed as three groups of four hexadecimal digits, separated by dots, e.g. 0200.33aa.bbcc.%
+Sometimes%
+   \footnote{As far as I know only Cisco uses this different format.}
+the address is displayed as three groups of four hexadecimal digits, separated by dots, e.g. 0200.33aa.bbcc.%
    \footnote{Hexadecimal numbers are not case-sensitive, the value of `4F' is equivalent to that of `4f.'}
 
 \paragraph{\acl{OUI}}
@@ -23,8 +25,8 @@ They are used to make sure that -- in theory at least -- every \acs{MAC} address
 
 \extrat{This is not the complete truth} about \acs{MAC} addresses as there are two special bits in the \acs{OUI}.
 The last two bits of the first byte have a special meaning.
-The right-most bit indicates a multicast (or broadcast) address when set to one.
-The left-most of those two special bits indicates a locally administered \acs{MAC} address when set to one.
+The right-most bit, when set to one, indicates that the \acs{MAC} address is used for multicast or broadcast traffic.
+The left-most of those two special bits indicates a locally-administered \acs{MAC} address when set to one.
 The term `locally administered' means that the administrator of the machine has manually set the \acs{MAC} address -- and it is thus not guaranteed to be globally unique.
 In this case, the first three bytes are not an \acl{OUI}.
 See \cref{fig:mac-format} for the complete picture of a \acs{MAC} address.
@@ -99,12 +101,13 @@ See \vref{sec:ip-nat} for an example of a router that changes the \acs{IP} addre
 Ethernet frames have a maximum size of 1522~bytes and a minimum frame size of 64~bytes.
 Twenty-two bytes are used by the Ethernet header (18~bytes) and trailer (4~bytes) so that the encapsulated \acs{IP} packet has a maximum size of 1500~bytes.
 This is also called the \acf{MTU}.
+See also \emph{fragmentation} on p.~\pageref{par:ip-fragmentation}.
 
 
 \paragraph{Ethernet header}
    \index{Ethernet!header}
 The standard length of the Ethernet header is 14~bytes, however, when using \acs{VLAN} tagging, it is extended to 18~bytes.
-It contains the source and destination \acs{MAC} addresses, a field designated for either the \emph{ethertype} or the length of the data payload,%
+The header contains the source and destination \acs{MAC} addresses, a field designated for either the \emph{ethertype} or the length of the data payload,%
    \footnote{%
       The Ethernet version 2 or \acs{DIX} frame, is the most common type in use today.
       It uses the two-byte field to store an ethertype value.
@@ -136,7 +139,7 @@ The ethertype field is located immediately after the destination and source \acs
    \index{Ethernet!trailer}
    \iacs{FCS}
    \iacs{CRC}
-The frame ends with a \acf{FCS}, which is a 32-bit \acf{CRC} used to detect any in-transit corruption of data.
+The frame ends with a \acf{FCS}, which is a 32-bit \acf{CRC} used to detect and correct any in-transit corruption of data.
 
 \extrap{\acl{CRC}}
 A \acs{CRC} is an error-detecting code commonly used in digital networks and storage devices to detect accidental changes to digital data.
@@ -206,13 +209,13 @@ More advanced switches have many additional features, see managed switches on p.
 Assume a switch receives two Ethernet frames at the same time, one on its first interface, the second on its second interface.
 Both have to be sent out through its third interface.
 It is not possible to send both out at the same time as the signals would interfere with each other.
-Thus one of the frames needs to be stored in a temporary buffer while the other is being sent over the wire.
+Thus one of the frames needs to be stored in a temporary memory buffer while the other is being sent over the wire.
 
 
 \extrap{store-and-forward}
    \index{forwarding!store-and-forward}
    \index{forwarding!cut-through}
-When a switch the receives the entire Ethernet frame into its buffer, calculates and verifies the \acs{FCS}, and only then forwards the frame further towards its destination, it is called \emph{store-and-forward} switching.
+When a switch receives the entire Ethernet frame into its buffer, calculates and verifies the \acs{FCS}, and only then forwards the frame further towards its destination, it is called \emph{store-and-forward} switching.
 In contrast, with \emph{cut-through} switching the switch starts sending out the Ethernet frame as soon as the destination \acs{MAC} address (and optionally its \acs{VLAN}) are read it.
 This way the switch introduces less latency into the network transmission but it is possible corrupt Ethernet frames -- whose \acs{FCS} is no longer correct -- are being forwarded.
 
@@ -222,6 +225,7 @@ This way the switch introduces less latency into the network transmission but it
 A network switch learns the identities of connected devices from incoming frames and then only forwards data to the port connected to the device to which it is addressed.
 These learnt \acs{MAC} addresses are stored in the \ac{MAC}-address table or \acf{FIB}.
 
+\paragraph{timer}
 The \acs{MAC}-address table contains the interface number that the frame came in on, the learnt \acs{MAC} address, the \acs{VLAN} that the frame belongs to, and a timer.
 The timer serves to age out entries that are not used for a specific period of time.
 By default, this timeout is three hundred seconds on a Cisco switch.
@@ -229,7 +233,7 @@ By default, this timeout is three hundred seconds on a Cisco switch.
 \paragraph{time to live?}
    \index{network loop}
    \iacs{TTL}
-Ethernet has no \acl{TTL} field so when a loop gets created in the network, the frames will keep traversing the network, bringing the entire network down.
+Ethernet, unlike the \acl{IP}, has no \acl{TTL} field so when a loop gets created in the network, the frames will keep traversing the network, bringing the entire network down.
 
 \paragraph{\acf{STP}}
    \iacs{STP}
@@ -451,7 +455,7 @@ This capability protects the network from certain man-in-the-middle attacks.
    \end{center}
    \begin{enumerate}
    \item Forward the frame out all interfaces.
-   \item Forward the frame out all interfaces except interface~3.
+   \item Forward the frame out all interfaces except interface~1.
    \item Discard the frame.
    \item Forward the frame out interface~1.
    \item Forward the frame out interface~2.
